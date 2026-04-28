@@ -29,18 +29,28 @@ const apps = defineCollection({
       products: z.array(z.enum(['jira', 'confluence', 'bitbucket', 'jsm'])).default([]),
       pricing: z.string().optional(),
       audiences: z.array(z.string()).default([]),
-      featureList: z.array(z.string()).default([]),
       featured: z.boolean().default(false),
       order: z.number().default(100),
       icon: image().optional(),
       screenshots: z
         .array(
           z.object({
-            url: z.string().url(),
+            image: image(),
             caption: z.string(),
           }),
         )
         .default([]),
+      valueProps: z
+        .array(
+          z.object({
+            title: z.string(),
+            body: z.string(),
+            icon: z.string().optional(),
+          }),
+        )
+        .default([]),
+      keyFeatures: z.array(z.string()).default([]),
+      trustSignals: z.array(z.string()).default([]),
     }),
 });
 

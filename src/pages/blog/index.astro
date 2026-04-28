@@ -14,7 +14,7 @@ const fmtDate = (d: Date) =>
 
 <BaseLayout
   title="Blog"
-  description="Notes from Numeric Oasis — building Atlassian Forge apps and custom SaaS, with the lessons we collect along the way."
+  description="Notes from Numeric Oasis on building Atlassian Forge apps and custom SaaS, with the lessons we collect along the way."
 >
   <section class="bg-gradient-to-b from-slate-50 to-white py-20 sm:py-28">
     <div class="container-wide">
@@ -41,7 +41,7 @@ const fmtDate = (d: Date) =>
   <section class="py-12 sm:py-20">
     <div class="container-wide">
       {posts.length === 0 ? (
-        <p class="text-center text-slate-500">No posts yet — check back soon.</p>
+        <p class="text-center text-slate-500">No posts yet. Check back soon.</p>
       ) : (
         <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3" data-post-grid>
           {posts.map((post) => (

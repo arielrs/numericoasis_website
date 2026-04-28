@@ -44,7 +44,7 @@ const blogJsonLd = {
 const fmt = (d: Date) =>
   d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
 
-const shareText = encodeURIComponent(`${post.data.title} — ${SITE.name}`);
+const shareText = encodeURIComponent(`${post.data.title} · ${SITE.name}`);
 const shareUrl = encodeURIComponent(url);
 ---
 

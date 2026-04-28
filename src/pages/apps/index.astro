@@ -2,6 +2,7 @@
 import { Image } from 'astro:assets';
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import { PRODUCT_LABELS } from '../../consts';
 
 const apps = (await getCollection('apps')).sort(
   (a, b) => a.data.order - b.data.order,
@@ -10,7 +11,7 @@ const apps = (await getCollection('apps')).sort(
 
 <BaseLayout
   title="Apps"
-  description="Apps from Numeric Oasis on the Atlassian Marketplace — built on Forge for Jira and Confluence Cloud."
+  description="Apps from Numeric Oasis on the Atlassian Marketplace. Built on Forge for Jira and Confluence Cloud."
 >
   <section class="bg-gradient-to-b from-slate-50 to-white py-20 sm:py-28">
     <div class="container-wide">
@@ -19,7 +20,7 @@ const apps = (await getCollection('apps')).sort(
         Our apps on the Atlassian Marketplace.
       </h1>
       <p class="mt-6 max-w-2xl text-lg leading-relaxed text-slate-600">
-        Each app is built on Forge — Atlassian's Cloud-native platform. That means data stays in your tenancy, deployment is simple, and updates ship fast.
+        Each app is built on Forge, Atlassian's Cloud native platform. That means data stays in your tenancy, deployment is simple, and updates ship fast.
       </p>
     </div>
   </section>
@@ -52,15 +53,14 @@ const apps = (await getCollection('apps')).sort(
           <p class="mt-5 text-base leading-relaxed text-slate-600">{app.data.tagline}</p>
 
           {app.data.audiences.length > 0 && (
-            <p class="mt-3 text-xs text-slate-500">
-              <span class="font-semibold text-brand-800">Built for:</span> {app.data.audiences.slice(0, 3).join(' · ')}
-              {app.data.audiences.length > 3 && ' · …'}
+            <p class="mt-3 text-xs leading-relaxed text-slate-500">
+              <span class="font-semibold text-brand-800">Built for:</span> {app.data.audiences.join(' · ')}
             </p>
           )}
 
           <div class="mt-6 flex flex-wrap items-center gap-2 text-xs font-semibold">
             {app.data.products.map((p) => (
-              <span class="rounded-full bg-water-50 px-2.5 py-1 capitalize text-water-700">{p}</span>
+              <span class="rounded-full bg-water-50 px-2.5 py-1 text-water-700">{PRODUCT_LABELS[p] ?? p}</span>
             ))}
             {app.data.pricing && /^free$/i.test(app.data.pricing) && (
               <span class="rounded-full bg-sun-50 px-2.5 py-1 text-sun-700">Free</span>

@@ -1,8 +1,8 @@
 ---
 import { Image } from 'astro:assets';
-import { getCollection, render } from 'astro:content';
+import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { SITE } from '../../consts';
+import { SITE, PRODUCT_LABELS } from '../../consts';
 
 export async function getStaticPaths() {
   const apps = await getCollection('apps');
@@ -13,14 +13,6 @@ export async function getStaticPaths() {
 }
 
 const { app } = Astro.props;
-const { Content } = await render(app);
-
-const productLabels: Record<string, string> = {
-  jira: 'Jira',
-  confluence: 'Confluence',
-  bitbucket: 'Bitbucket',
-  jsm: 'Jira Service Management',
-};
 
 const softwareJsonLd = {
   '@context': 'https://schema.org',
@@ -33,8 +25,8 @@ const softwareJsonLd = {
   url: `${SITE.url}/apps/${app.id}/`,
   ...(app.data.marketplaceUrl && { downloadUrl: app.data.marketplaceUrl }),
   ...(app.data.marketplaceUrl && { installUrl: app.data.marketplaceUrl }),
-  ...(app.data.featureList.length > 0 && {
-    featureList: app.data.featureList.join('\n'),
+  ...(app.data.keyFeatures.length > 0 && {
+    featureList: app.data.keyFeatures.join('\n'),
   }),
   ...(app.data.audiences.length > 0 && {
     audience: app.data.audiences.map((a) => ({
@@ -50,13 +42,6 @@ const softwareJsonLd = {
         : { description: app.data.pricing }),
     },
   }),
-  ...(app.data.screenshots.length > 0 && {
-    screenshot: app.data.screenshots.map((s) => ({
-      '@type': 'ImageObject',
-      url: s.url,
-      caption: s.caption,
-    })),
-  }),
   publisher: {
     '@type': 'Organization',
     name: SITE.name,
@@ -71,61 +56,64 @@ const isFree = !!app.data.pricing && /^free$/i.test(app.data.pricing);
 <BaseLayout title={app.data.name} description={app.data.description}>
   <script type="application/ld+json" set:html={JSON.stringify(softwareJsonLd)} />
 
-  <section class="bg-gradient-to-b from-sand-50 to-white py-16 sm:py-24">
-    <div class="container-wide">
+  <!-- HERO -->
+  <section class="relative overflow-hidden bg-gradient-to-b from-sand-50 via-white to-white">
+    <div class="absolute inset-0 -z-10 opacity-50" aria-hidden="true">
+      <div class="absolute -left-24 top-0 h-[460px] w-[460px] rounded-full bg-water-300/40 blur-3xl"></div>
+      <div class="absolute right-0 top-32 h-[400px] w-[400px] rounded-full bg-sun-300/30 blur-3xl"></div>
+    </div>
+
+    <div class="container-wide pt-12 pb-16 sm:pt-16 sm:pb-20">
       <a href="/apps/" class="text-sm font-medium text-slate-500 hover:text-brand-900">← All apps</a>
 
-      <div class="mt-8 grid gap-10 md:grid-cols-[auto_1fr] md:items-start">
+      <div class="mt-8 grid gap-10 lg:grid-cols-[auto_1fr] lg:items-start lg:gap-14">
         {app.data.icon && (
           <Image
             src={app.data.icon}
             alt={`${app.data.name} logo`}
-            width={120}
-            height={120}
-            class="h-24 w-24 shrink-0 rounded-2xl object-cover ring-1 ring-sand-200 shadow-[var(--shadow-soft)] sm:h-28 sm:w-28"
+            width={140}
+            height={140}
+            class="h-28 w-28 shrink-0 rounded-3xl object-cover ring-1 ring-sand-200 shadow-[var(--shadow-soft)] sm:h-32 sm:w-32"
             loading="eager"
           />
         )}
         <div>
           <p class="eyebrow">Atlassian Marketplace app</p>
-          <h1 class="mt-2 font-display text-3xl font-bold tracking-tight text-brand-900 sm:text-4xl md:text-5xl">
+          <h1 class="mt-3 font-display text-4xl font-bold leading-tight tracking-tight text-brand-900 sm:text-5xl md:text-6xl">
             {app.data.name}
           </h1>
-          <p class="mt-4 max-w-2xl text-xl leading-relaxed text-slate-700">
+          <p class="mt-5 max-w-2xl text-xl leading-relaxed text-slate-700 sm:text-2xl">
             {app.data.tagline}
           </p>
 
-          <div class="mt-6 flex flex-wrap items-center gap-2">
+          <div class="mt-7 flex flex-wrap items-center gap-2">
             {app.data.products.map((p) => (
               <span class="rounded-full bg-brand-50 px-3 py-1 text-xs font-semibold text-brand-700">
-                For {productLabels[p] ?? p}
+                For {PRODUCT_LABELS[p] ?? p}
               </span>
             ))}
             {isFree ? (
-              <span class="rounded-full bg-water-50 px-3 py-1 text-xs font-semibold text-water-700">
+              <span class="rounded-full bg-water-100 px-3 py-1 text-xs font-semibold text-water-700">
                 Free
               </span>
             ) : app.data.pricing ? (
               <span class="rounded-full bg-sun-50 px-3 py-1 text-xs font-semibold text-sun-700">
-                Paid · See Marketplace
+                Paid, see Marketplace
               </span>
             ) : null}
-            <span class="rounded-full bg-sand-100 px-3 py-1 text-xs font-semibold text-brand-800">
-              Built on Forge · Runs on Atlassian
-            </span>
           </div>
 
-          <div class="mt-8 flex flex-wrap items-center gap-3">
+          <div class="mt-9 flex flex-wrap items-center gap-3">
             {app.data.marketplaceUrl && (
               <a href={app.data.marketplaceUrl} class="btn-cta" rel="noopener" target="_blank">
-                View on Marketplace
+                Install on Atlassian Marketplace
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7M7 7h10v10"/></svg>
               </a>
             )}
             <a href="/contact/" class="btn-secondary">Talk to the team</a>
           </div>
 
-          <p class="mt-8 max-w-3xl text-base leading-relaxed text-slate-600">
+          <p class="mt-9 max-w-3xl text-base leading-relaxed text-slate-600">
             {app.data.description}
           </p>
         </div>
@@ -133,14 +121,15 @@ const isFree = !!app.data.pricing && /^free$/i.test(app.data.pricing);
     </div>
   </section>
 
-  {app.data.audiences.length > 0 && (
-    <section class="border-y border-sand-200 bg-white py-10">
+  <!-- TRUST SIGNALS -->
+  {app.data.trustSignals.length > 0 && (
+    <section class="border-y border-sand-200 bg-white py-6">
       <div class="container-wide">
-        <p class="text-xs font-semibold uppercase tracking-[0.18em] text-water-700">Built for</p>
-        <ul class="mt-4 flex flex-wrap gap-2">
-          {app.data.audiences.map((a) => (
-            <li class="rounded-full border border-sand-200 bg-sand-50 px-3.5 py-1.5 text-sm font-medium text-brand-800">
-              {a}
+        <ul class="flex flex-wrap items-center justify-center gap-x-6 gap-y-3 text-xs font-semibold uppercase tracking-[0.14em] text-brand-700">
+          {app.data.trustSignals.map((t) => (
+            <li class="flex items-center gap-2">
+              <svg class="text-water-600" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+              {t}
             </li>
           ))}
         </ul>
@@ -148,6 +137,70 @@ const isFree = !!app.data.pricing && /^free$/i.test(app.data.pricing);
     </section>
   )}
 
+  <!-- VALUE PROPS -->
+  {app.data.valueProps.length > 0 && (
+    <section class="bg-sand-50 py-16 sm:py-24">
+      <div class="container-wide">
+        <div class="max-w-2xl">
+          <p class="eyebrow">Why {app.data.name}</p>
+          <h2 class="mt-3 font-display text-3xl font-bold tracking-tight text-brand-900 sm:text-4xl">
+            What teams actually get out of it.
+          </h2>
+        </div>
+        <div class="mt-12 grid gap-6 md:grid-cols-3">
+          {app.data.valueProps.map((vp) => (
+            <article class="rounded-2xl border border-sand-200 bg-white p-7 shadow-[var(--shadow-soft)]">
+              {vp.icon && <div class="text-3xl" aria-hidden="true">{vp.icon}</div>}
+              <h3 class="mt-4 font-display text-xl font-semibold tracking-tight text-brand-900">
+                {vp.title}
+              </h3>
+              <p class="mt-3 text-base leading-relaxed text-slate-600">{vp.body}</p>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- KEY FEATURES + AUDIENCES -->
+  {(app.data.keyFeatures.length > 0 || app.data.audiences.length > 0) && (
+    <section class="py-16 sm:py-24">
+      <div class="container-wide grid gap-12 md:grid-cols-2">
+        {app.data.keyFeatures.length > 0 && (
+          <div>
+            <p class="eyebrow">Key features</p>
+            <h2 class="mt-3 font-display text-2xl font-bold tracking-tight text-brand-900 sm:text-3xl">
+              Everything you need, nothing you don&apos;t.
+            </h2>
+            <ul class="mt-6 flex flex-wrap gap-2">
+              {app.data.keyFeatures.map((f) => (
+                <li class="rounded-full border border-sand-200 bg-white px-3.5 py-1.5 text-sm font-medium text-brand-800">
+                  {f}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+        {app.data.audiences.length > 0 && (
+          <div>
+            <p class="eyebrow">Built for</p>
+            <h2 class="mt-3 font-display text-2xl font-bold tracking-tight text-brand-900 sm:text-3xl">
+              The people who get the most value.
+            </h2>
+            <ul class="mt-6 flex flex-wrap gap-2">
+              {app.data.audiences.map((a) => (
+                <li class="rounded-full bg-water-50 px-3.5 py-1.5 text-sm font-medium text-water-700">
+                  {a}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+      </div>
+    </section>
+  )}
+
+  <!-- SCREENSHOT GALLERY (only renders if local screenshots exist) -->
   {app.data.screenshots.length > 0 && (
     <section class="bg-sand-50 py-16 sm:py-24">
       <div class="container-wide">
@@ -157,35 +210,41 @@ const isFree = !!app.data.pricing && /^free$/i.test(app.data.pricing);
             {app.data.name} at a glance.
           </h2>
         </div>
-        <div class="mt-12 grid gap-6 md:grid-cols-2">
+        <ul class="mt-12 grid gap-6 md:grid-cols-2">
           {app.data.screenshots.map((shot, i) => (
-            <figure class={i === 0 && app.data.screenshots.length > 1 ? 'md:col-span-2' : ''}>
-              <div class="overflow-hidden rounded-2xl border border-sand-200 bg-white shadow-[var(--shadow-soft)]">
-                <img
-                  src={shot.url}
-                  alt={shot.caption}
-                  loading="lazy"
-                  decoding="async"
-                  class="block w-full"
-                />
-              </div>
-              <figcaption class="mt-3 text-sm leading-relaxed text-slate-600">
-                {shot.caption}
-              </figcaption>
-            </figure>
+            <li class:list={[i === 0 && app.data.screenshots.length > 1 ? 'md:col-span-2' : '']}>
+              <button
+                type="button"
+                class="group block w-full overflow-hidden rounded-2xl border border-sand-200 bg-white text-left shadow-[var(--shadow-soft)] transition hover:-translate-y-0.5 hover:shadow-lg focus:outline-2 focus:outline-offset-2 focus:outline-sun-400"
+                data-lightbox-trigger
+                data-caption={shot.caption}
+                data-full={shot.image.src}
+                aria-label={`Open screenshot: ${shot.caption}`}
+              >
+                <div class="relative">
+                  <Image
+                    src={shot.image}
+                    alt={shot.caption}
+                    width={1280}
+                    height={Math.round((shot.image.height / shot.image.width) * 1280)}
+                    class="block w-full"
+                    loading="lazy"
+                  />
+                  <span class="pointer-events-none absolute right-3 top-3 rounded-full bg-brand-900/85 px-3 py-1.5 text-xs font-semibold text-white opacity-0 transition group-hover:opacity-100">
+                    Click to enlarge
+                  </span>
+                </div>
+              </button>
+              <p class="mt-3 px-1 text-sm leading-relaxed text-slate-600">{shot.caption}</p>
+            </li>
           ))}
-        </div>
+        </ul>
       </div>
     </section>
   )}
 
-  <section class="py-12 sm:py-20">
-    <div class="container-prose prose-custom">
-      <Content />
-    </div>
-  </section>
-
-  <section class="pb-20">
+  <!-- FINAL CTA -->
+  <section class="py-16 sm:py-24">
     <div class="container-wide">
       <div class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-brand-900 via-brand-800 to-deep-700 p-10 sm:p-16">
         <div class="absolute -right-20 -top-20 h-64 w-64 rounded-full bg-sun-500/30 blur-3xl" aria-hidden="true"></div>
@@ -195,7 +254,9 @@ const isFree = !!app.data.pricing && /^free$/i.test(app.data.pricing);
             Ready to try {app.data.name}?
           </h2>
           <p class="mt-4 text-lg text-brand-100">
-            Install it from the Atlassian Marketplace, or get in touch if you want a walk-through, an enterprise quote, or something custom built around it.
+            {isFree
+              ? `${app.data.name} is free on the Atlassian Marketplace. Install it now and see results in minutes.`
+              : `Install ${app.data.name} from the Atlassian Marketplace, or get in touch for a walkthrough or enterprise quote.`}
           </p>
           <div class="mt-8 flex flex-wrap gap-3">
             {app.data.marketplaceUrl && (
@@ -209,4 +270,47 @@ const isFree = !!app.data.pricing && /^free$/i.test(app.data.pricing);
       </div>
     </div>
   </section>
+
+  <!-- LIGHTBOX -->
+  {app.data.screenshots.length > 0 && (
+    <dialog
+      id="screenshot-lightbox"
+      class="m-auto w-[min(92vw,1400px)] max-w-none rounded-3xl border-0 bg-transparent p-0 backdrop:bg-brand-950/80 backdrop:backdrop-blur-sm"
+    >
+      <div class="relative">
+        <button
+          type="button"
+          aria-label="Close"
+          data-lightbox-close
+          class="absolute right-3 top-3 z-10 inline-flex h-10 w-10 items-center justify-center rounded-full bg-brand-900/85 text-white transition hover:bg-brand-800"
+        >
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>
+        </button>
+        <img id="lightbox-image" alt="" class="block max-h-[80vh] w-full rounded-3xl object-contain bg-brand-950" />
+        <p id="lightbox-caption" class="mt-3 px-2 text-center text-sm text-white/90 drop-shadow"></p>
+      </div>
+    </dialog>
+
+    <script>
+      const dialog = document.getElementById('screenshot-lightbox') as HTMLDialogElement | null;
+      const image = document.getElementById('lightbox-image') as HTMLImageElement | null;
+      const caption = document.getElementById('lightbox-caption');
+      const closeBtn = document.querySelector('[data-lightbox-close]') as HTMLButtonElement | null;
+
+      document.querySelectorAll<HTMLButtonElement>('[data-lightbox-trigger]').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          if (!dialog || !image) return;
+          image.src = btn.dataset.full ?? '';
+          image.alt = btn.dataset.caption ?? '';
+          if (caption) caption.textContent = btn.dataset.caption ?? '';
+          dialog.showModal();
+        });
+      });
+
+      closeBtn?.addEventListener('click', () => dialog?.close());
+      dialog?.addEventListener('click', (e) => {
+        if (e.target === dialog) dialog.close();
+      });
+    </script>
+  )}
 </BaseLayout>

@@ -18,3 +18,10 @@ export const NAV_LINKS = [
   { href: '/about/', label: 'About' },
   { href: '/contact/', label: 'Contact' },
 ] as const;
+
+export const PRODUCT_LABELS: Record<string, string> = {
+  jira: 'Jira',
+  confluence: 'Confluence',
+  bitbucket: 'Bitbucket',
+  jsm: 'JSM',
+};

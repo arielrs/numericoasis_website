@@ -1,127 +1,41 @@
 ---
 name: Astrolink
 tagline: Visualize Jira work item links as an interactive star map.
-description: Astrolink turns Jira's hidden web of issue links into a navigable star map — every blocker, dependency, hierarchy, and Confluence connection rendered as a force-directed graph in your issue panel. Cross-project, permission-aware, and built on Forge.
+description: Astrolink turns Jira's hidden web of issue links into a navigable star map. Every blocker, dependency, hierarchy, and Confluence connection rendered as a force-directed graph in your issue panel. Cross-project, permission-aware, and built on Forge.
 marketplaceUrl: https://marketplace.atlassian.com/apps/2775238726/astrolink-work-item-link-graph-for-jira
 supportUrl: https://numericoasis.atlassian.net/servicedesk/customer/portal/39
-products: ["jira"]
+products: ["jira", "jsm"]
 featured: true
 order: 1
 icon: ../../assets/logos/astrolink.jpg
-pricing: See Marketplace for pricing
+pricing: See Marketplace
 audiences:
   - Developers
   - Project Managers
   - Scrum Masters
   - Product Owners
   - Product Discovery Teams
-featureList:
-  - Interactive star-map visualization
-  - 5-level deep cross-project traversal
+valueProps:
+  - title: See every connection at a glance
+    body: Up to five levels deep, across projects, with Confluence pages and external links rendered as nodes.
+    icon: "✨"
+  - title: Find the blocker behind the blocker
+    body: Color coded link types make critical paths obvious in two clicks.
+    icon: "🎯"
+  - title: Present with confidence
+    body: Five themes including High Contrast, fullscreen mode, and timeline replay built in.
+    icon: "🎬"
+keyFeatures:
+  - Cross project link traversal
+  - Real time search and filtering
   - Jira Product Discovery support
-  - Confluence and external link nodes
-  - Filtering by type, status, assignee, label, project, link
-  - Real-time search highlighting
-  - 5 themes including High Contrast for projectors
-  - 5 node styles (Icons, Circles, Avatars, Cards, Compact)
-  - Subtask shrinking
-  - Timeline playback of how the network grew
-  - Configurable hover tooltips
-  - Fullscreen presentation mode
-  - Permission-aware locked nodes
-  - Read-only — no data stored on any server
-screenshots:
-  - url: https://marketplace.atlassian.com/product-listing/files/77d6815e-d8e6-47a7-8243-504e7b896117?width=1600
-    caption: Astrolink centered on epic AST-11 — 15 connected work items, 39 links, Confluence pages and external URLs as nodes.
-  - url: https://marketplace.atlassian.com/product-listing/files/1389b035-c518-479c-9cbc-87123809f149?width=1600
-    caption: Layout panel in Light theme with Cards node style, theme picker, spread/size controls and stale-threshold settings.
-  - url: https://marketplace.atlassian.com/product-listing/files/9027f447-363a-4ac7-8974-f3bea3cb137a?width=1600
-    caption: Timeline replay scrubbed to a point in time — only work items created by that date are shown, with a speed selector.
-  - url: https://marketplace.atlassian.com/product-listing/files/1a0427f3-3cbc-422a-8a54-3308cbdd2de7?width=1600
-    caption: Astrolink rendered directly in the Jira issue panel alongside Assignee, Labels, Priority and comments.
-  - url: https://marketplace.atlassian.com/product-listing/files/4ca8a7be-9d1c-4eac-9e09-cdf591a45990?width=1600
-    caption: Astrolink launch screen with four entry points — work item, JQL, saved filter or project — plus a Saved Maps panel.
-  - url: https://marketplace.atlassian.com/product-listing/files/a27cafd6-6304-4f2f-aff5-5c9fed71f5b5?width=1600
-    caption: Apply saved Jira filters or raw JQL to focus the graph, with filtering and color-node options.
+  - 5 themes, 5 node styles
+  - Timeline playback
+  - Permission aware nodes
+  - Read only access
+trustSignals:
+  - Built on Atlassian Forge
+  - Read only access
+  - Permission aware
+  - Runs on Atlassian
 ---
-
-## What Astrolink does
-
-Astrolink is an Atlassian Forge app for Jira Cloud that visualizes your work item connections as an interactive star map. Every link, hierarchy, epic, subtask, Confluence page, and external resource shows up as a node — rendered as a beautiful force-directed graph directly in your Jira issue panel.
-
-It traverses links and hierarchies up to **5 levels deep** and **across projects**, revealing dependencies, blockers, and relationships that boards and lists simply cannot show. Click any node to navigate — no matter which project the work lives in.
-
-## The problems Astrolink solves
-
-**"I can't see how my work items are connected."**  
-Instantly visualize every link, hierarchy, and dependency radiating from any issue. The graph layout makes structure obvious in a way no list can.
-
-**"Dependencies are spread across multiple projects."**  
-Astrolink crosses project boundaries automatically. Connections to issues in any project, Confluence pages, and external URLs all appear in the same view.
-
-**"I don't know what's blocking what."**  
-Color-coded link types make blockers and critical paths immediately visible at a glance.
-
-**"Our issue map is too complex to understand."**  
-Powerful filtering by type, status, assignee, label, project, or link type — all combinable. Shrink subtasks. Search nodes instantly.
-
-**"I need to present our work structure to stakeholders."**  
-Five themes (including High Contrast for projectors), fullscreen mode, and customizable node styles make Astrolink a confident presentation tool.
-
-**"I want to see how things evolved over time."**  
-Built-in timeline playback replays how your network of work items grew, with adjustable playback speed.
-
-**"Our JPD ideas feel disconnected from delivery."**  
-Jira Product Discovery ideas linked to delivery tickets appear naturally in the graph. See the full chain from idea to implementation.
-
-## Who it's for
-
-| Role | Use case |
-| --- | --- |
-| **Developers** | Understand the full dependency chain before starting work. See what blocks you and what you block. |
-| **Project Managers** | Visualize project structure, identify bottlenecks, and present work relationships to stakeholders. |
-| **Scrum Masters** | Identify cross-team dependencies during sprint planning. Spot disconnected work items. |
-| **Product Owners** | See the full scope of an epic or initiative, including all linked work across projects. |
-| **Product Discovery Teams** | Visualize how JPD ideas connect to delivery tickets, epics, and implementation work. |
-
-## Key features
-
-- **Interactive star map** — Zoom, pan, drag, and click to navigate. Explore your work item network visually.
-- **Deep traversal** — Follows links, hierarchies, epics, and subtasks up to 5 levels deep across projects.
-- **Cross-project navigation** — Click any node to jump to that work item, regardless of project.
-- **Jira Product Discovery** — JPD ideas linked to delivery tickets appear naturally in the graph.
-- **Confluence & external links** — Linked Confluence pages and external URLs shown as distinct nodes.
-- **Powerful filtering** — Filter by issue type, status, assignee, label, project, or link type. All combinable.
-- **Real-time search** — Highlights matching nodes as you type.
-- **5 themes** — Dark, Light, Sky, High Contrast, and Sunset.
-- **5 node styles** — Icons, Circles, Avatars, Cards, and Compact.
-- **Subtask shrinking** — Toggle to render subtasks at 50% size for cleaner views.
-- **Timeline playback** — Replay how your work item network grew over time.
-- **Configurable tooltips** — Choose which fields appear on hover.
-- **Fullscreen mode** — Expand to fill the entire screen for presentations.
-- **Permission-aware** — Restricted work items appear as locked nodes with no data exposed.
-
-## Built for Jira Product Discovery
-
-Astrolink works with **Jira Product Discovery (JPD)** out of the box. Links between ideas and delivery tickets are automatically traversed, letting you visualize the full journey from product idea to implementation.
-
-> Astrolink appears in the standard Jira issue panel. To view the star map for a JPD idea, open it in the standard Jira issue view.
-
-## Security & privacy
-
-- **Read-only access** — Astrolink cannot modify any of your data.
-- **No data storage** — Nothing is stored on any server. User preferences are saved in your browser only.
-- **Permission-aware** — Work items you cannot access show as locked nodes with no information exposed.
-- **Runs on Atlassian** — Fully hosted on Atlassian Forge. No external data transfers.
-
-## Getting started
-
-After installing Astrolink, a Jira administrator enables it for your projects:
-
-1. Open any work item in your Jira project.
-2. Click the **View App Actions** icon (puzzle piece) in the issue panel area.
-3. Select **Astrolink** from the list.
-4. Click the **…** (three dots) menu on the Astrolink panel header.
-5. Select **Show for all work items** to enable Astrolink across the project.
-
-Once enabled, Astrolink appears automatically on every work item in that project for all users.

@@ -2,7 +2,7 @@
 import { Image } from 'astro:assets';
 import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { SITE } from '../consts';
+import { SITE, PRODUCT_LABELS } from '../consts';
 
 const apps = (await getCollection('apps'))
   .filter((a) => a.data.featured)
@@ -28,7 +28,7 @@ const posts = (await getCollection('blog', ({ data }) => !data.draft))
         <span class="bg-gradient-to-r from-brand-700 via-water-500 to-sun-500 bg-clip-text text-transparent">crafted to last.</span>
       </h1>
       <p class="mt-6 max-w-2xl text-lg leading-relaxed text-slate-600 sm:text-xl">
-        We build Forge apps for the Atlassian Marketplace and bespoke SaaS for teams that demand reliability, speed, and craft. From Jira admin tooling to Confluence-first workflows — we ship.
+        We build Forge apps for the Atlassian Marketplace and bespoke SaaS for teams that demand reliability, speed, and craft. From Jira admin tooling to Confluence first workflows. We ship.
       </p>
       <div class="mt-10 flex flex-wrap items-center gap-3">
         <a href="/contact/" class="btn-primary">
@@ -68,12 +68,12 @@ const posts = (await getCollection('blog', ({ data }) => !data.draft))
         {[
           {
             title: 'Forge app development',
-            desc: 'From a one-page Jira admin tool to a multi-product Marketplace app — we design, build, and maintain Forge apps end-to-end.',
+            desc: 'From a one page Jira admin tool to a multi product Marketplace app. We design, build, and maintain Forge apps end to end.',
             icon: '⚙️',
           },
           {
             title: 'Custom SaaS & integrations',
-            desc: 'Bespoke web apps and integrations that talk to Jira, Confluence, Bitbucket, and the rest of your stack — without reinventing the platform.',
+            desc: 'Bespoke web apps and integrations that talk to Jira, Confluence, Bitbucket, and the rest of your stack, without reinventing the platform.',
             icon: '🧩',
           },
           {
@@ -147,15 +147,14 @@ const posts = (await getCollection('blog', ({ data }) => !data.draft))
                 {app.data.description}
               </p>
               {app.data.audiences.length > 0 && (
-                <p class="mt-4 text-xs text-slate-500">
-                  <span class="font-semibold text-brand-800">Built for:</span> {app.data.audiences.slice(0, 3).join(' · ')}
-                  {app.data.audiences.length > 3 && ' · …'}
+                <p class="mt-4 text-xs leading-relaxed text-slate-500">
+                  <span class="font-semibold text-brand-800">Built for:</span> {app.data.audiences.join(' · ')}
                 </p>
               )}
             </div>
-            <div class="mt-6 flex items-center gap-2 text-xs font-semibold">
+            <div class="mt-6 flex flex-wrap items-center gap-2 text-xs font-semibold">
               {app.data.products.map((p) => (
-                <span class="rounded-full bg-water-50 px-2.5 py-1 capitalize text-water-700">{p}</span>
+                <span class="rounded-full bg-water-50 px-2.5 py-1 text-water-700">{PRODUCT_LABELS[p] ?? p}</span>
               ))}
               {app.data.pricing && /^free$/i.test(app.data.pricing) && (
                 <span class="rounded-full bg-sun-50 px-2.5 py-1 text-sun-700">Free</span>

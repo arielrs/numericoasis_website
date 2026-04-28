@@ -1,146 +1,41 @@
 ---
 name: Configuration Monitor
-tagline: A project audit log for Jira — see what changed, when, and who did it.
-description: Configuration Monitor gives Jira project administrators full visibility into their project configuration — automatically tracking 13 sections including permissions, workflows, screens, JSM queues and request types, and Sprints, with hourly syncing, change attribution, and CSV export. No escalation to Site Admin needed.
+tagline: A project audit log for Jira. See what changed, when, and who did it.
+description: Configuration Monitor gives Jira project administrators full visibility into their project configuration. Thirteen sections tracked automatically, including JSM queues and request types, with hourly syncing, change attribution, and CSV export. No escalation to Site Admin needed.
 marketplaceUrl: https://marketplace.atlassian.com/apps/3948220256/configuration-monitor-project-audit-log-for-jira
 supportUrl: https://numericoasis.atlassian.net/servicedesk/customer/portal/39
 products: ["jira", "jsm"]
 featured: true
 order: 2
 icon: ../../assets/logos/configuration-monitor.jpg
-pricing: See Marketplace for pricing
+pricing: See Marketplace
 audiences:
   - Project Administrators
   - Jira Site Administrators
-  - Compliance & Audit Teams
-  - Operations & Platform Teams
-featureList:
-  - Automatic hourly syncing across 13 configuration sections
-  - Change attribution via audit log correlation
-  - Section, date range, and change-type filtering
-  - Clickable stats dashboard
-  - Full dataset filtering — not just current page
-  - CSV export with before/after values
+  - Compliance and Audit Teams
+  - Operations and Platform Teams
+valueProps:
+  - title: Stop filing tickets to find what changed
+    body: Project Admins get full change visibility right inside their project settings. No Site Admin needed.
+    icon: "🔎"
+  - title: Cover every setting that matters
+    body: 13 sections tracked automatically, including permissions, workflows, screens, JSM queues and request types, and sprints.
+    icon: "📋"
+  - title: Audit ready in one click
+    body: CSV export with before and after values, change attribution, and a full year of retained history.
+    icon: "📊"
+keyFeatures:
+  - 13 configuration sections tracked
+  - Hourly automatic syncing
+  - Change attribution via audit log
+  - CSV export with before and after values
+  - JSM queues and request types
   - Sprint tracking on Scrum boards
-  - JSM Queues and Request Types support
-  - Issue Security scheme tracking
-  - GDPR Admin Panel for site-wide user data
-  - Smart anonymization preserving ongoing accountability
-  - 1-year data retention with automatic purge
-  - Forge Queue support for large instances (100+ projects)
-  - Clean uninstall — all stored data removed
-screenshots:
-  - url: https://marketplace.atlassian.com/product-listing/files/a4cec02d-14f6-4a53-842e-62709807fae1?width=1600
-    caption: Project-level change log with user attribution, date filters, and section grouping.
-  - url: https://marketplace.atlassian.com/product-listing/files/d07c3d93-8e6c-4b93-8856-9a1ebe8ec1cf?width=1600
-    caption: Sprint audit trail showing creation, modification, and removal events with timestamps and user attribution.
-  - url: https://marketplace.atlassian.com/product-listing/files/5c58bb4a-015f-47c6-8d0c-24559c3dbadd?width=1600
-    caption: Admin panel with GDPR user data export, anonymization controls, and admin action audit trail.
+  - 1 year retention with auto purge
+  - GDPR Admin Panel for site admins
+trustSignals:
+  - Built on Atlassian Forge
+  - GDPR ready
+  - Runs on Atlassian
+  - Clean uninstall
 ---
-
-## What Configuration Monitor does
-
-Configuration Monitor is an Atlassian Forge app for Jira Cloud that gives **Project Administrators** full visibility into what changed in their project configuration, when it changed, and who changed it. It automatically monitors **13 configuration sections** across all project types — including Jira Service Management — and provides filtering, export, and audit capabilities right inside your project settings.
-
-Instead of filing a ticket with your Jira Site Admin every time something breaks or looks different, you can see exactly what changed, when, and who did it — right from your project settings. **No escalation needed.**
-
-## The problems Configuration Monitor solves
-
-**"Something broke, but I don't know what changed."**  
-Instantly see every configuration change with before/after values. Filter by date range to pinpoint exactly when a breaking change was introduced.
-
-**"I don't know who changed our permissions."**  
-Change attribution identifies the administrator who made each change via audit log correlation.
-
-**"I can't keep track of all the settings that matter."**  
-Monitors 13 configuration sections automatically — permissions, notifications, workflows, screens, security, roles, work types, components, versions, project settings, JSM queues and request types, and Sprints (for Scrum projects).
-
-**"I need to report on configuration changes for compliance."**  
-Generate CSV exports of all filtered changes directly in the app. Drop into Excel or Google Sheets for compliance reporting.
-
-**"I only notice problems long after they happen."**  
-Automatic hourly syncing captures changes within an hour. No manual checking required.
-
-**"Multiple admins manage our project and we step on each other."**  
-The change log serves as a shared record of all configuration activity.
-
-**"I always have to ask the Site Admin to check what changed."**  
-Project Admins get full change visibility directly in their project settings — no need to escalate to Site Admins for routine configuration investigations.
-
-## Who it's for
-
-| Role | Use case |
-| --- | --- |
-| **Project Administrators** | The primary audience. Run their own configuration investigations without filing Site Admin tickets. |
-| **Jira Site Administrators** | Site-wide oversight, GDPR Admin Panel, and reduced inbound questions about who-changed-what. |
-| **Compliance & Audit Teams** | Continuous audit trail of every configuration change, exportable at any time. |
-| **Operations & Platform Teams** | Onboarding new admins, incident response, change management. |
-
-## Tracked configuration sections
-
-Configuration Monitor tracks 13 sections automatically:
-
-- **Permissions** — scheme assignment + individual grants
-- **Notifications** — scheme assignment + event rules
-- **Workflows** — scheme assignment, statuses, transitions, and rules
-- **Screens** — issue type screen scheme, screen scheme assignments, tab fields
-- **Issue Security** — scheme, levels, and level membership
-- **Roles** — project role membership (users and groups added or removed)
-- **Work Types** — additions, removals, and property modifications
-- **Components** — additions, removals, lead and default-assignee changes
-- **Versions** — additions, removals, release and archive status
-- **General** — project name, description, lead, default assignee type, category, type
-- **Queues (JSM)** — additions, removals, JQL filter and column changes
-- **Request Types (JSM)** — additions, removals, description and portal group changes
-- **Sprints** — creation, deletion, start, close, reopen, name/date/goal changes (Scrum only)
-
-Team-managed projects automatically skip Components and Versions (which they don't use), and contextual disclaimers explain limitations on Screens, Permissions, and Issue Security.
-
-## Key features
-
-- **Automatic syncing** — Configuration snapshots every hour and on install. Manual refresh available. Large instances (100+ projects) use Forge Queue for batched processing.
-- **Change detection** — Compares snapshots to detect additions, removals, and modifications across all tracked sections.
-- **Change attribution** — Identifies which administrator made each change via audit log correlation.
-- **Section filtering** — Filter changes by any of the 13 tracked sections.
-- **Date range filtering** — Narrow to a specific period.
-- **Change-type filtering** — Added, Removed, or Modified — one click each.
-- **Clickable stats dashboard** — Click any stat box (Total / Added / Removed / Modified) to filter the view.
-- **Full dataset filtering** — Filters and stats reflect your complete history, not just the current page.
-- **CSV export** — Includes date, time, section, type, entity, details, changed-by (name + account ID), and before/after values.
-- **Sync log** — Sync history with zero-change syncs hidden for a clean view.
-- **Smart team-managed handling** — Hides irrelevant sections automatically with contextual disclaimers.
-- **Sprint tracking** — Scrum-board sprint creation, start, close, reopen, name/date/goal changes. Kanban auto-skipped.
-- **JSM support** — Queues and Request Types tracked alongside the standard sections.
-- **Issue Security tracking** — Scheme assignments, levels, and level membership.
-- **GDPR Admin Panel** — Site administrators can export or anonymize user data across all tracked projects.
-- **Smart anonymization** — Only historical activity is anonymized; if the same user remains active, ongoing accountability is preserved.
-- **Data retention** — Changes older than 1 year are automatically purged. Maximum 1000 changes per project.
-- **Clean uninstall** — All stored data is removed when the app is uninstalled.
-
-## Permissions matrix
-
-| Capability | Project Admin | Site Admin |
-| --- | :-: | :-: |
-| View configuration changes | ✅ | ✅ |
-| Run manual sync | ✅ | ✅ |
-| Filter and search | ✅ | ✅ |
-| Generate CSV export | ✅ | ✅ |
-| View sync log | ✅ | ✅ |
-| GDPR Admin Panel | ❌ | ✅ |
-
-## Security & privacy
-
-- **Runs on Atlassian** — Fully eligible. All data stays within Atlassian infrastructure. No data egress.
-- **Project-scoped data** — Each project maintains its own independent change history.
-- **GDPR compliance** — The Admin Panel satisfies Right of Access and Right to Erasure.
-- **Bounded retention** — 1-year retention, max 1000 changes per project, full purge on uninstall.
-
-## Getting started
-
-1. Install Configuration Monitor from the Atlassian Marketplace.
-2. Go to your project's **Project settings** sidebar.
-3. Open **Configuration Monitor**.
-4. The first sync runs automatically; subsequent syncs run hourly.
-5. (Optional) Click **Refresh now** to force an immediate sync.
-
-Site administrators access the **GDPR Admin Panel** from the global app settings.

@@ -1,10 +1,10 @@
 ---
 name: Field Scout
-tagline: Custom field audit for Jira — stay under the 700-field limit, find duplicates, clean up safely.
-description: Field Scout is a free Atlassian Forge app that gives Jira Cloud administrators a centralized dashboard to audit and clean up custom fields. Field Health Score, automatic Active / Stale / Likely-Unused / Unused classification, potential-duplicate detection, per-project breakdowns, and CSV export — built for the 700-field reality.
+tagline: Custom field audit for Jira. Stay under the 700 field limit, find duplicates, clean up safely.
+description: Field Scout is a free Atlassian Forge app that gives Jira Cloud administrators a centralized dashboard to audit and clean up custom fields. Field Health Score, automatic Active, Stale, Likely Unused, or Unused classification, potential duplicate detection, per project breakdowns, and CSV export. Built for the 700 field reality.
 marketplaceUrl: https://marketplace.atlassian.com/apps/388046425/field-scout-custom-field-audit-for-jira
 supportUrl: https://numericoasis.atlassian.net/servicedesk/customer/portal/39
-products: ["jira"]
+products: ["jira", "jsm"]
 featured: true
 order: 4
 icon: ../../assets/logos/field-scout.png
@@ -14,118 +14,27 @@ audiences:
   - Platform Teams
   - Migration Engineers
   - Atlassian Consultants
-featureList:
-  - Field Health Score with prioritized cleanup guidelines
-  - Automatic classification (Active / Stale / Likely Unused / Unused)
-  - Potential-duplicate detection (exact and similar names)
-  - Fields by Origin (Jira Core, JSM, ScriptRunner, Tempo, Advanced Roadmaps, etc.)
-  - Fields by Type with table, chart, and tag-cloud views
-  - Fields per Project breakdown
-  - Field Scope (all / team-managed / company-managed)
-  - Comprehensive filtering — name, status, type, origin, scope, last-used recency
-  - Direct links to admin field pages
-  - CSV export of full or filtered inventory
-  - Sortable table with 25/50/100 page sizes
-  - Share filters as a copyable string
-  - Description column for inline auditing
-  - Read-only — no data stored on any server
-screenshots:
-  - url: https://marketplace.atlassian.com/product-listing/files/268843b2-fe79-4b69-b99a-af38ae03c6a0?width=1600
-    caption: Dashboard with Field Health Score, status cards, and prioritized cleanup guidelines.
-  - url: https://marketplace.atlassian.com/product-listing/files/666c4067-8a22-4b36-a80d-6125064caa51?width=1600
-    caption: Potential Duplicates panel with exact-match and similar-name groups, and the field table with advanced filters.
-  - url: https://marketplace.atlassian.com/product-listing/files/1e5db5f2-27c6-432a-88e2-fa75e43c9bac?width=1600
-    caption: Field table — names with JQL links, types, origins, screen and context counts, last-used dates, and status classifications.
-  - url: https://marketplace.atlassian.com/product-listing/files/fbeda940-9a3e-4940-922e-5428e45cf2dc?width=1600
-    caption: Per-project field tracking — see how many fields each project uses and which are unused.
-  - url: https://marketplace.atlassian.com/product-listing/files/625a2461-334c-4a2f-8d2f-99bef68ec6ce?width=1600
-    caption: Field distribution by origin and type, with health percentages per origin (Jira Core, JSM, ScriptRunner, Tempo, etc.).
-  - url: https://marketplace.atlassian.com/product-listing/files/1b395e30-7996-4a7c-a757-6aa51c850e2e?width=1600
-    caption: Export your audit as CSV in four modes — Full Export, Cleanup List, Screen Audit, or Doc Template.
-  - url: https://marketplace.atlassian.com/product-listing/files/1fac4ef1-df3d-4ada-8904-a39b73181c9e?width=1600
-    caption: Detailed field table with advanced filters, JQL links, last-used dates, status badges, and scope tracking.
+valueProps:
+  - title: Stay under the 700 custom field limit
+    body: Live total with visual warnings as you approach, exceed, or recover from the cap.
+    icon: "📈"
+  - title: See exactly what is safe to clean up
+    body: Every field classified Active, Stale, Likely Unused, or Unused based on real Jira usage data.
+    icon: "🧹"
+  - title: Audit before any migration
+    body: Full CSV export with screens, contexts, last used dates, origins, and duplicate detection.
+    icon: "📤"
+keyFeatures:
+  - Field Health Score
+  - Active, Stale, Likely Unused, Unused classification
+  - Potential duplicate detection
+  - Per project field breakdowns
+  - Origin tracking (Jira Core, JSM, ScriptRunner, Tempo, etc.)
+  - CSV export in 4 modes
+  - Comprehensive filtering
+trustSignals:
+  - Free forever
+  - Built on Atlassian Forge
+  - Read only access
+  - Runs on Atlassian
 ---
-
-## What Field Scout does
-
-Field Scout is a **free** Atlassian Forge app for Jira Cloud that gives administrators a centralized dashboard to analyze and manage custom-field usage across their entire instance.
-
-Jira Cloud enforces a **700 custom field limit**. Over time, fields accumulate — from plugins, migrations, and changing workflows — and many end up unused, duplicated, or forgotten. Field Scout scans every custom field, classifies it by usage, and shows you exactly where you stand and which fields are safe to clean up.
-
-## The problems Field Scout solves
-
-**"We're approaching the 700 custom field limit."**  
-Instantly see your total field count with visual warnings as you approach or exceed the limit.
-
-**"I don't know which fields are actually being used."**  
-Every field is classified as Active, Stale, Likely Unused, or Unused based on real usage data from Jira.
-
-**"Old fields from removed plugins are cluttering our instance."**  
-Filter by origin to see fields from ScriptRunner, Tempo, JSM, and other plugins — even after the plugin is removed.
-
-**"I need to audit fields before a migration."**  
-Export your entire field inventory to CSV with all metadata — screens, contexts, last-used dates, classifications.
-
-**"Some fields have no description and nobody knows what they do."**  
-Toggle the *Missing Description* filter to instantly find undocumented fields that need attention.
-
-**"I need to report on field hygiene to management."**  
-The Field Health Score gives you a single percentage that summarizes your instance's field hygiene, with actionable cleanup guidelines.
-
-**"We have duplicate fields with similar names."**  
-Potential Duplicates detection finds exact-match and similar-name fields across your instance, including team-managed projects.
-
-## Who it's for
-
-| Role | Use case |
-| --- | --- |
-| **Jira Administrators** | Audit custom fields, identify cleanup candidates, and stay within Jira's field limits. |
-| **Platform Teams** | Monitor field sprawl across the instance and enforce field governance policies. |
-| **Migration Engineers** | Export a complete field inventory before migrations to identify what to keep, merge, or remove. |
-| **Atlassian Consultants** | Quickly assess a client's field health and provide data-driven cleanup recommendations. |
-
-## Key features
-
-- **Field Health Score** — Single percentage that summarizes your instance's field hygiene at a glance.
-- **Field classification** — Every custom field is automatically classified as Active, Stale (>6mo, >1y), Likely Unused, or Unused based on real usage data.
-- **Actionable guidelines** — Prioritized recommendations with clear ACTION, REVIEW, and TIP labels.
-- **Summary dashboard** — Cards showing health score, total field count, system fields, team-managed fields, unused fields, likely unused, and stale fields.
-- **Potential duplicates** — Spot fields with identical or similar names that could be consolidated, with filtering by match type and field type.
-- **Fields by Origin** — Understand which products and plugins created your fields, with per-origin health breakdowns in table or chart views.
-- **Fields by Type** — See how your fields are distributed across data types (text, select, date, etc.) in table, chart, or tag-cloud views.
-- **Fields per Project** — See how many fields each project uses and which are unused.
-- **Field Scope** — Know whether each field applies to all projects, only team-managed, or only company-managed.
-- **Origin tracking** — See which product or plugin created each field: Jira Core, Jira Software, JSM, ScriptRunner, Tempo, Advanced Roadmaps, and more.
-- **Comprehensive filtering** — Name, status, field type, origin, scope, last-used recency. Toggles for locked fields, missing descriptions, zero screens, zero contexts.
-- **Direct admin links** — Click any field name to jump to its configuration page in Jira admin.
-- **CSV export** — Filtered view or full inventory, ready for spreadsheets and migration planning.
-- **Sortable table** — Sort by any column. Configurable page sizes (25, 50, 100).
-- **Share filters** — Share your current filter view with colleagues via a copyable text string.
-- **Description column** — Toggle to show each field's description directly in the table.
-
-## Field classifications
-
-| Classification | What it means |
-| --- | --- |
-| **Active** | On screens, has contexts configured, used within the last year. |
-| **Stale (>6 months)** | On screens with contexts, but unused for 6+ months. Trending toward disuse. |
-| **Stale (>1 year)** | On screens with contexts, unused for over a year. |
-| **Likely Unused** | Missing screen associations or context assignments, or Jira does not track its usage. |
-| **Unused** | Zero screens and zero contexts. Not visible anywhere in Jira. |
-| **System** | Built-in Jira field managed by Atlassian. Cannot be deleted. |
-| **Not Tracked** | Team-managed-only field where Jira does not provide usage tracking. |
-
-## Security & privacy
-
-- **Read-only access** — Field Scout only reads field metadata. It cannot modify, create, or delete any fields or data.
-- **No data storage** — Nothing is stored on any server. All data is fetched in real-time and displayed in your browser.
-- **Admin-only** — Only Jira site administrators can access Field Scout.
-- **Runs on Atlassian** — Fully hosted on Atlassian Forge. No external data transfers.
-
-## Getting started
-
-1. Install Field Scout from the Atlassian Marketplace.
-2. In Jira, go to **Settings** (gear icon) → **Apps**.
-3. Select **Field Scout** from the sidebar.
-4. Your custom field analysis loads automatically.
-5. (Optional) Click **Load project data** to see per-project field counts and discover team-managed-only fields.

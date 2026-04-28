@@ -1,13 +1,13 @@
 @import "tailwindcss";
 
 @theme {
-  /* Sand — soft warm background reminiscent of the logo's parchment field */
+  /* Sand - soft warm background reminiscent of the logo's parchment field */
   --color-sand-50: #FAF7EE;
   --color-sand-100: #F5EFE0;
   --color-sand-200: #ECE2C8;
   --color-sand-300: #D9C9A0;
 
-  /* Brand navy — primary text + dark surfaces (taken from the wordmark) */
+  /* Brand navy - primary text + dark surfaces (taken from the wordmark) */
   --color-brand-50: #E8EFF6;
   --color-brand-100: #C9D6E5;
   --color-brand-200: #9DB4CC;
@@ -20,7 +20,7 @@
   --color-brand-900: #091C32;
   --color-brand-950: #050F1E;
 
-  /* Sun — warm gold/orange CTAs (top of the logo's circle gradient) */
+  /* Sun - warm gold/orange CTAs (top of the logo's circle gradient) */
   --color-sun-50: #FFF7E6;
   --color-sun-100: #FFEAB8;
   --color-sun-200: #FCD787;
@@ -32,7 +32,7 @@
   --color-sun-800: #834510;
   --color-sun-900: #5E3010;
 
-  /* Water — teal/cyan secondary accent (the logo's wave) */
+  /* Water - teal/cyan secondary accent (the logo's wave) */
   --color-water-50: #E6FAF5;
   --color-water-100: #C0F1E5;
   --color-water-200: #8AE3D0;
@@ -44,7 +44,7 @@
   --color-water-800: #0F5448;
   --color-water-900: #093C34;
 
-  /* Deep — cool blue (lower wave of the logo) */
+  /* Deep - cool blue (lower wave of the logo) */
   --color-deep-400: #4DA3DD;
   --color-deep-500: #1F7FBE;
   --color-deep-600: #14649A;
@@ -102,7 +102,7 @@
     @apply mx-auto max-w-3xl px-4 sm:px-6;
   }
   .container-wide {
-    @apply mx-auto max-w-6xl px-4 sm:px-6 lg:px-8;
+    @apply mx-auto max-w-7xl px-4 sm:px-6 lg:px-10 xl:px-14;
   }
   .eyebrow {
     @apply text-xs font-semibold uppercase tracking-[0.18em] text-water-700;
