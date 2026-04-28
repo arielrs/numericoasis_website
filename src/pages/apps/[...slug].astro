@@ -1,0 +1,77 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { SITE } from '../../consts';
+
+export async function getStaticPaths() {
+  const apps = await getCollection('apps');
+  return apps.map((app) => ({
+    params: { slug: app.id },
+    props: { app },
+  }));
+}
+
+const { app } = Astro.props;
+const { Content } = await render(app);
+
+const softwareJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'SoftwareApplication',
+  name: app.data.name,
+  description: app.data.description,
+  applicationCategory: 'BusinessApplication',
+  operatingSystem: 'Atlassian Cloud',
+  url: `${SITE.url}/apps/${app.id}/`,
+  ...(app.data.marketplaceUrl && { downloadUrl: app.data.marketplaceUrl }),
+  publisher: {
+    '@type': 'Organization',
+    name: SITE.name,
+    url: SITE.url,
+  },
+};
+---
+
+<BaseLayout title={app.data.name} description={app.data.description}>
+  <script type="application/ld+json" set:html={JSON.stringify(softwareJsonLd)} />
+
+  <section class="bg-gradient-to-b from-slate-50 to-white py-16 sm:py-24">
+    <div class="container-wide">
+      <a href="/apps/" class="text-sm font-medium text-slate-500 hover:text-slate-900">← All apps</a>
+
+      <div class="mt-8 flex items-center gap-4">
+        <div class="flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-brand-900 to-brand-700 font-display text-2xl font-bold text-white">
+          {app.data.name.charAt(0)}
+        </div>
+        <div>
+          <p class="eyebrow">Atlassian Marketplace app</p>
+          <h1 class="mt-2 font-display text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl md:text-5xl">
+            {app.data.name}
+          </h1>
+        </div>
+      </div>
+
+      <p class="mt-6 max-w-3xl text-xl leading-relaxed text-slate-700">
+        {app.data.tagline}
+      </p>
+
+      <div class="mt-8 flex flex-wrap items-center gap-3">
+        {app.data.marketplaceUrl && (
+          <a href={app.data.marketplaceUrl} class="btn-primary" rel="noopener" target="_blank">
+            View on Marketplace
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7M7 7h10v10"/></svg>
+          </a>
+        )}
+        <a href="/contact/" class="btn-secondary">Talk to the team</a>
+        {app.data.products.map((p) => (
+          <span class="rounded-full bg-accent-50 px-3 py-1 text-xs font-semibold capitalize text-accent-700">{p}</span>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="py-12 sm:py-20">
+    <div class="container-prose prose-custom">
+      <Content />
+    </div>
+  </section>
+</BaseLayout>

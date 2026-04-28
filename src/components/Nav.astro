@@ -1,0 +1,82 @@
+---
+import { SITE, NAV_LINKS } from '../consts';
+
+const path = Astro.url.pathname;
+const isActive = (href: string) =>
+  href === '/' ? path === '/' : path.startsWith(href);
+---
+
+<header class="sticky top-0 z-50 border-b border-slate-200/60 bg-white/80 backdrop-blur-lg">
+  <nav class="container-wide flex h-16 items-center justify-between" aria-label="Main">
+    <a href="/" class="group flex items-center gap-2.5" aria-label={`${SITE.name} home`}>
+      <span class="relative flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-brand-900 to-brand-700 text-white shadow-[var(--shadow-soft)]">
+        <span class="absolute inset-0.5 rounded-[10px] bg-gradient-to-br from-accent-400 to-accent-600 opacity-0 transition group-hover:opacity-100"></span>
+        <span class="relative font-display text-base font-bold">N</span>
+      </span>
+      <span class="font-display text-base font-semibold tracking-tight text-slate-900">
+        Numeric<span class="text-accent-600">·</span>Oasis
+      </span>
+    </a>
+
+    <div class="hidden items-center gap-1 md:flex">
+      {NAV_LINKS.map((link) => (
+        <a
+          href={link.href}
+          class:list={[
+            'rounded-full px-3 py-2 text-sm font-medium transition',
+            isActive(link.href)
+              ? 'bg-slate-100 text-slate-900'
+              : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900',
+          ]}
+          aria-current={isActive(link.href) ? 'page' : undefined}
+        >
+          {link.label}
+        </a>
+      ))}
+    </div>
+
+    <a href="/contact/" class="hidden md:inline-flex btn-primary !py-2 !px-4">
+      Start a project
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+    </a>
+
+    <button
+      type="button"
+      id="nav-toggle"
+      class="inline-flex h-10 w-10 items-center justify-center rounded-lg text-slate-700 hover:bg-slate-100 md:hidden"
+      aria-label="Toggle menu"
+      aria-expanded="false"
+      aria-controls="mobile-menu"
+    >
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+  </nav>
+
+  <div id="mobile-menu" class="hidden border-t border-slate-200 bg-white md:hidden">
+    <div class="container-wide flex flex-col py-3">
+      {NAV_LINKS.map((link) => (
+        <a
+          href={link.href}
+          class:list={[
+            'rounded-lg px-3 py-2.5 text-sm font-medium transition',
+            isActive(link.href)
+              ? 'bg-slate-100 text-slate-900'
+              : 'text-slate-700 hover:bg-slate-50',
+          ]}
+        >
+          {link.label}
+        </a>
+      ))}
+      <a href="/contact/" class="mt-2 btn-primary justify-center">Start a project</a>
+    </div>
+  </div>
+</header>
+
+<script>
+  const btn = document.getElementById('nav-toggle');
+  const menu = document.getElementById('mobile-menu');
+  btn?.addEventListener('click', () => {
+    const open = menu?.classList.toggle('hidden') === false;
+    btn.setAttribute('aria-expanded', String(open));
+  });
+</script>

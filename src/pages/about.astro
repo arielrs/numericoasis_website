@@ -1,0 +1,44 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { SITE } from '../consts';
+---
+
+<BaseLayout
+  title="About"
+  description={`About Numeric Oasis — an Atlassian Marketplace partner based in ${SITE.location}.`}
+>
+  <section class="bg-gradient-to-b from-slate-50 to-white py-20 sm:py-28">
+    <div class="container-wide">
+      <p class="eyebrow">About us</p>
+      <h1 class="mt-3 max-w-4xl font-display text-4xl font-bold leading-tight tracking-tight text-slate-900 sm:text-5xl md:text-6xl">
+        A small studio with a long view.
+      </h1>
+      <p class="mt-6 max-w-3xl text-lg leading-relaxed text-slate-600">
+        We're a focused Atlassian shop based in {SITE.location}. We build Marketplace apps and custom software for teams that want their tools to work the way the team does — not the other way around.
+      </p>
+    </div>
+  </section>
+
+  <section class="py-16 sm:py-24">
+    <div class="container-prose">
+      <div class="prose-custom">
+        <h2>What we believe</h2>
+        <p>
+          A great Atlassian app is invisible. It does its job, does not get in the way, and does not show off. We aim for that.
+        </p>
+        <h2>How we work</h2>
+        <p>
+          Small teams. Direct contact with the people doing the building. Short feedback loops, real release cadence, and honest assessments of what is worth shipping vs. what is not.
+        </p>
+        <h2>Why "Numeric Oasis"</h2>
+        <p>
+          Because the work we love most lives at the intersection of clean numbers and breathing room — data you can trust, and software that gives you space to think.
+        </p>
+        <h2>Where we are</h2>
+        <p>
+          Headquartered in {SITE.location}. We work across Brazilian, European, and US-East time zones. Most of our calls are async. Most of our async is in writing.
+        </p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

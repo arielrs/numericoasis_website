@@ -1,0 +1,22 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Page not found" description="That page does not exist on Numeric Oasis." noindex>
+  <section class="flex min-h-[60vh] items-center justify-center py-20">
+    <div class="container-wide text-center">
+      <p class="eyebrow">404</p>
+      <h1 class="mt-3 font-display text-4xl font-bold tracking-tight text-slate-900 sm:text-5xl md:text-6xl">
+        We couldn't find that page.
+      </h1>
+      <p class="mx-auto mt-4 max-w-lg text-lg text-slate-600">
+        The link may be old, or we may have moved things around. Try the homepage or our most popular sections.
+      </p>
+      <div class="mt-8 flex flex-wrap justify-center gap-3">
+        <a href="/" class="btn-primary">Back to home</a>
+        <a href="/blog/" class="btn-secondary">Read the blog</a>
+        <a href="/apps/" class="btn-secondary">Browse apps</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
