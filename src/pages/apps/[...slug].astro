@@ -15,75 +15,160 @@ export async function getStaticPaths() {
 const { app } = Astro.props;
 const { Content } = await render(app);
 
+const productLabels: Record<string, string> = {
+  jira: 'Jira',
+  confluence: 'Confluence',
+  bitbucket: 'Bitbucket',
+  jsm: 'Jira Service Management',
+};
+
 const softwareJsonLd = {
   '@context': 'https://schema.org',
   '@type': 'SoftwareApplication',
   name: app.data.name,
   description: app.data.description,
   applicationCategory: 'BusinessApplication',
+  applicationSubCategory: 'AtlassianMarketplaceApp',
   operatingSystem: 'Atlassian Cloud',
   url: `${SITE.url}/apps/${app.id}/`,
   ...(app.data.marketplaceUrl && { downloadUrl: app.data.marketplaceUrl }),
+  ...(app.data.marketplaceUrl && { installUrl: app.data.marketplaceUrl }),
+  ...(app.data.featureList.length > 0 && {
+    featureList: app.data.featureList.join('\n'),
+  }),
+  ...(app.data.audiences.length > 0 && {
+    audience: app.data.audiences.map((a) => ({
+      '@type': 'Audience',
+      audienceType: a,
+    })),
+  }),
+  ...(app.data.pricing && {
+    offers: {
+      '@type': 'Offer',
+      ...(/^free$/i.test(app.data.pricing)
+        ? { price: '0', priceCurrency: 'USD' }
+        : { description: app.data.pricing }),
+    },
+  }),
   publisher: {
     '@type': 'Organization',
     name: SITE.name,
     url: SITE.url,
+    logo: `${SITE.url}/logo.jpg`,
   },
 };
+
+const isFree = !!app.data.pricing && /^free$/i.test(app.data.pricing);
 ---
 
 <BaseLayout title={app.data.name} description={app.data.description}>
   <script type="application/ld+json" set:html={JSON.stringify(softwareJsonLd)} />
 
-  <section class="bg-gradient-to-b from-slate-50 to-white py-16 sm:py-24">
+  <section class="bg-gradient-to-b from-sand-50 to-white py-16 sm:py-24">
     <div class="container-wide">
-      <a href="/apps/" class="text-sm font-medium text-slate-500 hover:text-slate-900">← All apps</a>
+      <a href="/apps/" class="text-sm font-medium text-slate-500 hover:text-brand-900">← All apps</a>
 
-      <div class="mt-8 flex items-center gap-5">
-        {app.data.icon ? (
+      <div class="mt-8 grid gap-10 md:grid-cols-[auto_1fr] md:items-start">
+        {app.data.icon && (
           <Image
             src={app.data.icon}
             alt={`${app.data.name} logo`}
-            width={88}
-            height={88}
-            class="h-20 w-20 shrink-0 rounded-2xl object-cover ring-1 ring-sand-200 shadow-[var(--shadow-soft)] sm:h-22 sm:w-22"
+            width={120}
+            height={120}
+            class="h-24 w-24 shrink-0 rounded-2xl object-cover ring-1 ring-sand-200 shadow-[var(--shadow-soft)] sm:h-28 sm:w-28"
             loading="eager"
           />
-        ) : (
-          <div class="flex h-20 w-20 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-brand-900 to-brand-700 font-display text-2xl font-bold text-white">
-            {app.data.name.charAt(0)}
-          </div>
         )}
         <div>
           <p class="eyebrow">Atlassian Marketplace app</p>
           <h1 class="mt-2 font-display text-3xl font-bold tracking-tight text-brand-900 sm:text-4xl md:text-5xl">
             {app.data.name}
           </h1>
+          <p class="mt-4 max-w-2xl text-xl leading-relaxed text-slate-700">
+            {app.data.tagline}
+          </p>
+
+          <div class="mt-6 flex flex-wrap items-center gap-2">
+            {app.data.products.map((p) => (
+              <span class="rounded-full bg-brand-50 px-3 py-1 text-xs font-semibold text-brand-700">
+                For {productLabels[p] ?? p}
+              </span>
+            ))}
+            {isFree ? (
+              <span class="rounded-full bg-water-50 px-3 py-1 text-xs font-semibold text-water-700">
+                Free
+              </span>
+            ) : app.data.pricing ? (
+              <span class="rounded-full bg-sun-50 px-3 py-1 text-xs font-semibold text-sun-700">
+                Paid · See Marketplace
+              </span>
+            ) : null}
+            <span class="rounded-full bg-sand-100 px-3 py-1 text-xs font-semibold text-brand-800">
+              Built on Forge · Runs on Atlassian
+            </span>
+          </div>
+
+          <div class="mt-8 flex flex-wrap items-center gap-3">
+            {app.data.marketplaceUrl && (
+              <a href={app.data.marketplaceUrl} class="btn-cta" rel="noopener" target="_blank">
+                View on Marketplace
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7M7 7h10v10"/></svg>
+              </a>
+            )}
+            <a href="/contact/" class="btn-secondary">Talk to the team</a>
+          </div>
+
+          <p class="mt-8 max-w-3xl text-base leading-relaxed text-slate-600">
+            {app.data.description}
+          </p>
         </div>
-      </div>
-
-      <p class="mt-6 max-w-3xl text-xl leading-relaxed text-slate-700">
-        {app.data.tagline}
-      </p>
-
-      <div class="mt-8 flex flex-wrap items-center gap-3">
-        {app.data.marketplaceUrl && (
-          <a href={app.data.marketplaceUrl} class="btn-primary" rel="noopener" target="_blank">
-            View on Marketplace
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7M7 7h10v10"/></svg>
-          </a>
-        )}
-        <a href="/contact/" class="btn-secondary">Talk to the team</a>
-        {app.data.products.map((p) => (
-          <span class="rounded-full bg-water-50 px-3 py-1 text-xs font-semibold capitalize text-water-700">{p}</span>
-        ))}
       </div>
     </div>
   </section>
 
+  {app.data.audiences.length > 0 && (
+    <section class="border-y border-sand-200 bg-white py-10">
+      <div class="container-wide">
+        <p class="text-xs font-semibold uppercase tracking-[0.18em] text-water-700">Built for</p>
+        <ul class="mt-4 flex flex-wrap gap-2">
+          {app.data.audiences.map((a) => (
+            <li class="rounded-full border border-sand-200 bg-sand-50 px-3.5 py-1.5 text-sm font-medium text-brand-800">
+              {a}
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  )}
+
   <section class="py-12 sm:py-20">
     <div class="container-prose prose-custom">
       <Content />
+    </div>
+  </section>
+
+  <section class="pb-20">
+    <div class="container-wide">
+      <div class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-brand-900 via-brand-800 to-deep-700 p-10 sm:p-16">
+        <div class="absolute -right-20 -top-20 h-64 w-64 rounded-full bg-sun-500/30 blur-3xl" aria-hidden="true"></div>
+        <div class="absolute -left-10 bottom-0 h-48 w-48 rounded-full bg-water-400/30 blur-3xl" aria-hidden="true"></div>
+        <div class="relative max-w-2xl">
+          <h2 class="font-display text-3xl font-bold tracking-tight text-white sm:text-4xl">
+            Ready to try {app.data.name}?
+          </h2>
+          <p class="mt-4 text-lg text-brand-100">
+            Install it from the Atlassian Marketplace, or get in touch if you want a walk-through, an enterprise quote, or something custom built around it.
+          </p>
+          <div class="mt-8 flex flex-wrap gap-3">
+            {app.data.marketplaceUrl && (
+              <a href={app.data.marketplaceUrl} class="btn-cta" rel="noopener" target="_blank">
+                Install on Marketplace
+              </a>
+            )}
+            <a href="/contact/" class="btn-secondary !bg-white">Contact us</a>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 </BaseLayout>
