@@ -1,4 +1,5 @@
 ---
+import { Image } from 'astro:assets';
 import { getCollection, render } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { SITE } from '../../consts';
@@ -50,6 +51,7 @@ const shareUrl = encodeURIComponent(url);
 <BaseLayout
   title={post.data.title}
   description={post.data.description}
+  image={post.data.heroImage?.src}
   article={{
     publishedTime: post.data.pubDate.toISOString(),
     modifiedTime: post.data.updatedDate?.toISOString(),
@@ -92,6 +94,19 @@ const shareUrl = encodeURIComponent(url);
         </div>
       </div>
     </header>
+
+    {post.data.heroImage && (
+      <div class="container-wide -mt-4 mb-10 sm:mb-14">
+        <Image
+          src={post.data.heroImage}
+          alt={post.data.title}
+          width={1200}
+          height={800}
+          class="w-full rounded-3xl object-cover shadow-[var(--shadow-soft)] ring-1 ring-sand-200"
+          loading="eager"
+        />
+      </div>
+    )}
 
     <div class="container-prose prose-custom pb-16">
       <Content />

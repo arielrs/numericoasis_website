@@ -1,0 +1,157 @@
+Title: Atlassian Team 26: What We Expect, Think, and Hope Ahead
+Tags: Atlassian, Atlassian Teams, Blog Post
+
+Subtitle:  From the perspective of an Atlassian Partner building integrations every day
+
+Text:
+
+Why Team ‘26 actually matters
+Every year, Atlassian Team is where things stop being ideas and start becoming direction.
+
+For customers, it’s about features.
+For partners like us at Numeric Oasis, it’s about signals.
+
+What is Atlassian really investing in?
+What problems are they trying to solve?
+And just as important, what gaps are they leaving for companies like ours to fill?
+
+Team ‘26 feels like one of those turning points. AI is no longer optional, enterprise customers are driving decisions, and integrations are becoming the real battleground.
+
+So here’s our honest take.
+
+
+What we expect to see
+AI becoming part of the workflow, not just a feature
+We’ve already seen Atlassian push hard on AI, but now it needs to feel useful in day-to-day work.
+
+What we expect is less “look what AI can do” and more “this saves you time right now”.
+
+Things like:
+
+AI helping route tickets in Jira Service Management without complex rules 
+Smarter suggestions in Jira based on real context, not just text 
+Confluence turning into something closer to a knowledge engine than a document tool 
+
+If this lands well, it will reduce a lot of the manual configuration we deal with today.
+
+
+The “System of Work” becoming more concrete
+Atlassian has been talking about this for a while. The idea is strong, but it still feels a bit abstract in practice.
+
+We expect to see tighter connections between products:
+
+Jira issues flowing naturally into Confluence content 
+Loom, Jira, and JSM feeling like one experience instead of separate tools 
+Better visibility across teams without needing custom dashboards everywhere 
+
+Right now, we spend a lot of time building those connections manually for customers. It would be great to see more of that handled natively.
+
+
+More focus on enterprise needs
+This is already happening, and it’s not slowing down.
+
+We expect improvements in:
+
+Governance and access control 
+Data residency and compliance 
+Scalable automation and reporting 
+
+From a consulting perspective, this is good and bad. It solves real problems, but it also increases complexity. And complexity is exactly where partners get pulled in.
+
+
+What we believe will happen (based on what we’re seeing with customers)
+Integrations will matter more than features
+Most of our customers don’t struggle because Jira is missing something.
+
+They struggle because Jira is not fully connected to everything else they use.
+
+Slack, Miro, CI/CD tools, internal systems, data platforms… that’s where things break.
+
+We believe Team ‘26 will push integrations further, but not far enough to cover real-world complexity.
+
+That’s where custom integrations, apps, and platforms like what we build at Numeric Oasis will keep playing a big role.
+
+
+Automation will start replacing complexity
+A lot of Jira environments today are overbuilt.
+
+Too many workflows, too many conditions, too many edge cases.
+
+With better automation and AI, we expect a shift:
+
+Less rigid workflows 
+More dynamic behavior based on context 
+Fewer manual rules trying to handle every scenario 
+
+This is something we’re already starting to design for in new implementations.
+
+
+The Marketplace will need to evolve
+This is a big one for vendors.
+
+The Atlassian platform has moved forward fast, but the Marketplace experience hasn’t kept the same pace.
+
+We believe changes are coming. Possibly around:
+
+How apps integrate more deeply into the platform 
+How customers discover and trust apps 
+How vendors build AI-powered features 
+
+For companies like ours, this can either unlock a lot of value or create new constraints. Probably both.
+
+
+What we hope to see
+A stronger developer platform
+Forge has come a long way, but it still has limitations that matter when you’re building real products.
+
+What we hope for:
+
+Better support across all Atlassian products, including Bitbucket 
+Fewer restrictions on performance and architecture 
+More flexibility in how apps are built and deployed 
+
+If Atlassian improves this, the ecosystem will grow much faster.
+
+
+Real investment in integrations as a first-class concept
+Not just APIs, but actual integration thinking.
+
+Things like:
+
+Event-driven workflows across products 
+Easier ways to connect external systems 
+Native orchestration between tools 
+
+Right now, we spend a lot of time building these layers ourselves. It would be great to see Atlassian meet us halfway.
+
+
+Clearer communication with partners
+Partners are building a lot of what customers rely on.
+
+We don’t just need new features, we need clarity:
+
+Where Atlassian is going 
+What they plan to build vs what they expect partners to build 
+How we can align early instead of reacting later 
+
+This makes a big difference in what we choose to invest in.
+
+
+Final thoughts
+From where we sit, Atlassian is becoming less of a toolset and more of a platform that shapes how companies operate.
+
+Team ‘26 will likely confirm that direction.
+
+AI will be everywhere.
+Integrations will define real value.
+And complexity will move from users to systems.
+
+At Numeric Oasis, this is exactly the space we care about.
+
+We build where things don’t connect yet.
+We simplify what gets too complex.
+And we try to stay one step ahead of where the platform is going.
+
+Team ‘26 will give us a clearer picture of that future.
+
+And we’re ready for it.

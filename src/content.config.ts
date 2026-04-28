@@ -33,6 +33,14 @@ const apps = defineCollection({
       featured: z.boolean().default(false),
       order: z.number().default(100),
       icon: image().optional(),
+      screenshots: z
+        .array(
+          z.object({
+            url: z.string().url(),
+            caption: z.string(),
+          }),
+        )
+        .default([]),
     }),
 });
 
