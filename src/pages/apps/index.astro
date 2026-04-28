@@ -1,4 +1,5 @@
 ---
+import { Image } from 'astro:assets';
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 
@@ -28,23 +29,33 @@ const apps = (await getCollection('apps')).sort(
       {apps.map((app) => (
         <a
           href={`/apps/${app.id}/`}
-          class="group flex flex-col rounded-2xl border border-slate-200 bg-white p-8 transition hover:-translate-y-0.5 hover:border-brand-300 hover:shadow-[var(--shadow-soft)]"
+          class="group flex flex-col rounded-2xl border border-sand-200 bg-white p-8 transition hover:-translate-y-0.5 hover:border-water-400 hover:shadow-[var(--shadow-soft)]"
         >
-          <div class="flex items-center gap-3">
-            <div class="flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-brand-900 to-brand-700 font-display text-base font-bold text-white">
-              {app.data.name.charAt(0)}
-            </div>
-            <h2 class="font-display text-xl font-semibold text-slate-900 group-hover:text-brand-700">
+          <div class="flex items-center gap-4">
+            {app.data.icon ? (
+              <Image
+                src={app.data.icon}
+                alt={`${app.data.name} logo`}
+                width={64}
+                height={64}
+                class="h-16 w-16 shrink-0 rounded-2xl object-cover ring-1 ring-sand-200"
+              />
+            ) : (
+              <div class="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-brand-900 to-brand-700 font-display text-lg font-bold text-white">
+                {app.data.name.charAt(0)}
+              </div>
+            )}
+            <h2 class="font-display text-xl font-semibold text-brand-900 group-hover:text-brand-700">
               {app.data.name}
             </h2>
           </div>
-          <p class="mt-4 text-base leading-relaxed text-slate-600">{app.data.tagline}</p>
+          <p class="mt-5 text-base leading-relaxed text-slate-600">{app.data.tagline}</p>
 
           <div class="mt-6 flex flex-wrap items-center gap-2 text-xs font-semibold">
             {app.data.products.map((p) => (
-              <span class="rounded-full bg-accent-50 px-2.5 py-1 capitalize text-accent-700">{p}</span>
+              <span class="rounded-full bg-water-50 px-2.5 py-1 capitalize text-water-700">{p}</span>
             ))}
-            <span class="ml-auto text-slate-400 transition group-hover:text-accent-600">Read more →</span>
+            <span class="ml-auto text-slate-400 transition group-hover:text-water-600">Read more →</span>
           </div>
         </a>
       ))}

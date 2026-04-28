@@ -6,9 +6,9 @@ export const SITE = {
     'Numeric Oasis builds Atlassian Forge apps and custom SaaS for teams that demand reliability, speed, and craft. Marketplace apps, bespoke integrations, and platform consulting.',
   email: 'contact@numericoasis.com',
   location: 'Canoas, RS, Brasil',
-  marketplaceUrl: 'https://marketplace.atlassian.com/vendors/1232568/numeric-oasis',
+  marketplaceUrl: 'https://marketplace.atlassian.com/vendors/1064627585/numeric-oasis',
   twitter: '',
-  linkedin: 'https://www.linkedin.com/company/numericoasis',
+  linkedin: 'https://www.linkedin.com/company/numeric-oasis/',
 } as const;
 
 export const NAV_LINKS = [

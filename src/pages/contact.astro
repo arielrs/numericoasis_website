@@ -26,16 +26,16 @@ import { SITE } from '../consts';
         <ul class="mt-5 space-y-4 text-sm">
           <li>
             <p class="text-slate-500">Email</p>
-            <a class="font-medium text-slate-900 hover:text-accent-600" href={`mailto:${SITE.email}`}>{SITE.email}</a>
+            <a class="font-medium text-slate-900 hover:text-water-600" href={`mailto:${SITE.email}`}>{SITE.email}</a>
           </li>
           <li>
             <p class="text-slate-500">Marketplace</p>
-            <a class="font-medium text-slate-900 hover:text-accent-600" href={SITE.marketplaceUrl} rel="noopener" target="_blank">View our apps →</a>
+            <a class="font-medium text-slate-900 hover:text-water-600" href={SITE.marketplaceUrl} rel="noopener" target="_blank">View our apps →</a>
           </li>
           {SITE.linkedin && (
             <li>
               <p class="text-slate-500">LinkedIn</p>
-              <a class="font-medium text-slate-900 hover:text-accent-600" href={SITE.linkedin} rel="noopener" target="_blank">@numericoasis →</a>
+              <a class="font-medium text-slate-900 hover:text-water-600" href={SITE.linkedin} rel="noopener" target="_blank">@numericoasis →</a>
             </li>
           )}
           <li>
@@ -54,25 +54,25 @@ import { SITE } from '../consts';
         >
           <h2 class="font-display text-xl font-semibold text-slate-900">Send us a note</h2>
           <p class="mt-1 text-sm text-slate-500">
-            Submitting opens your mail client. Prefer a form-handler? <a class="text-accent-700 underline underline-offset-4" href={`mailto:${SITE.email}`}>Just email us instead.</a>
+            Submitting opens your mail client. Prefer a form-handler? <a class="text-water-700 underline underline-offset-4" href={`mailto:${SITE.email}`}>Just email us instead.</a>
           </p>
 
           <div class="mt-6 grid gap-4">
             <label class="grid gap-1.5 text-sm font-medium text-slate-800">
               Your name
-              <input type="text" name="name" required class="rounded-lg border border-slate-200 px-3 py-2.5 text-sm text-slate-900 outline-none transition focus:border-accent-500 focus:ring-2 focus:ring-accent-500/30" />
+              <input type="text" name="name" required class="rounded-lg border border-slate-200 px-3 py-2.5 text-sm text-slate-900 outline-none transition focus:border-water-500 focus:ring-2 focus:ring-water-500/30" />
             </label>
             <label class="grid gap-1.5 text-sm font-medium text-slate-800">
               Email
-              <input type="email" name="email" required class="rounded-lg border border-slate-200 px-3 py-2.5 text-sm text-slate-900 outline-none transition focus:border-accent-500 focus:ring-2 focus:ring-accent-500/30" />
+              <input type="email" name="email" required class="rounded-lg border border-slate-200 px-3 py-2.5 text-sm text-slate-900 outline-none transition focus:border-water-500 focus:ring-2 focus:ring-water-500/30" />
             </label>
             <label class="grid gap-1.5 text-sm font-medium text-slate-800">
               Company (optional)
-              <input type="text" name="company" class="rounded-lg border border-slate-200 px-3 py-2.5 text-sm text-slate-900 outline-none transition focus:border-accent-500 focus:ring-2 focus:ring-accent-500/30" />
+              <input type="text" name="company" class="rounded-lg border border-slate-200 px-3 py-2.5 text-sm text-slate-900 outline-none transition focus:border-water-500 focus:ring-2 focus:ring-water-500/30" />
             </label>
             <label class="grid gap-1.5 text-sm font-medium text-slate-800">
               What can we help with?
-              <textarea name="message" rows="5" required class="rounded-lg border border-slate-200 px-3 py-2.5 text-sm text-slate-900 outline-none transition focus:border-accent-500 focus:ring-2 focus:ring-accent-500/30"></textarea>
+              <textarea name="message" rows="5" required class="rounded-lg border border-slate-200 px-3 py-2.5 text-sm text-slate-900 outline-none transition focus:border-water-500 focus:ring-2 focus:ring-water-500/30"></textarea>
             </label>
             <button type="submit" class="btn-primary mt-2 w-full justify-center">Send →</button>
           </div>

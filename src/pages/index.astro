@@ -1,4 +1,5 @@
 ---
+import { Image } from 'astro:assets';
 import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { SITE } from '../consts';
@@ -16,15 +17,15 @@ const posts = (await getCollection('blog', ({ data }) => !data.draft))
   <!-- Hero -->
   <section class="relative overflow-hidden bg-gradient-to-b from-slate-50 via-white to-white">
     <div class="absolute inset-0 -z-10 opacity-60" aria-hidden="true">
-      <div class="absolute -left-32 top-0 h-[480px] w-[480px] rounded-full bg-brand-200/40 blur-3xl"></div>
-      <div class="absolute right-0 top-32 h-[420px] w-[420px] rounded-full bg-accent-300/30 blur-3xl"></div>
+      <div class="absolute -left-32 top-0 h-[480px] w-[480px] rounded-full bg-water-300/40 blur-3xl"></div>
+      <div class="absolute right-0 top-32 h-[420px] w-[420px] rounded-full bg-sun-300/30 blur-3xl"></div>
     </div>
 
     <div class="container-wide pt-20 pb-24 sm:pt-28 sm:pb-32">
       <p class="eyebrow">Atlassian Marketplace Partner</p>
       <h1 class="mt-4 max-w-4xl font-display text-4xl font-bold leading-[1.05] tracking-tight text-slate-900 sm:text-5xl md:text-6xl lg:text-7xl">
         Atlassian apps & custom software,<br class="hidden md:block" />
-        <span class="bg-gradient-to-r from-brand-700 to-accent-500 bg-clip-text text-transparent">crafted to last.</span>
+        <span class="bg-gradient-to-r from-brand-700 via-water-500 to-sun-500 bg-clip-text text-transparent">crafted to last.</span>
       </h1>
       <p class="mt-6 max-w-2xl text-lg leading-relaxed text-slate-600 sm:text-xl">
         We build Forge apps for the Atlassian Marketplace and bespoke SaaS for teams that demand reliability, speed, and craft. From Jira admin tooling to Confluence-first workflows — we ship.
@@ -81,8 +82,8 @@ const posts = (await getCollection('blog', ({ data }) => !data.draft))
             icon: '🧭',
           },
         ].map((s) => (
-          <article class="group rounded-2xl border border-slate-200 bg-white p-7 shadow-[var(--shadow-soft)] transition hover:-translate-y-0.5 hover:border-accent-300 hover:shadow-lg">
-            <div class="flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-brand-50 to-accent-300/20 text-xl">
+          <article class="group rounded-2xl border border-slate-200 bg-white p-7 shadow-[var(--shadow-soft)] transition hover:-translate-y-0.5 hover:border-water-300 hover:shadow-lg">
+            <div class="flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-brand-50 to-water-300/20 text-xl">
               <span aria-hidden="true">{s.icon}</span>
             </div>
             <h3 class="mt-5 font-display text-lg font-semibold text-slate-900">{s.title}</h3>
@@ -92,7 +93,7 @@ const posts = (await getCollection('blog', ({ data }) => !data.draft))
       </div>
 
       <div class="mt-10">
-        <a href="/services/" class="text-sm font-semibold text-accent-700 hover:text-accent-600">
+        <a href="/services/" class="text-sm font-semibold text-water-700 hover:text-water-600">
           See all services →
         </a>
       </div>
@@ -109,7 +110,7 @@ const posts = (await getCollection('blog', ({ data }) => !data.draft))
             Apps trusted by Atlassian teams.
           </h2>
         </div>
-        <a href="/apps/" class="text-sm font-semibold text-accent-700 hover:text-accent-600">
+        <a href="/apps/" class="text-sm font-semibold text-water-700 hover:text-water-600">
           Browse all apps →
         </a>
       </div>
@@ -118,26 +119,36 @@ const posts = (await getCollection('blog', ({ data }) => !data.draft))
         {apps.map((app) => (
           <a
             href={`/apps/${app.id}/`}
-            class="group flex flex-col justify-between rounded-2xl border border-slate-200 bg-white p-7 transition hover:-translate-y-0.5 hover:border-brand-300 hover:shadow-[var(--shadow-soft)]"
+            class="group flex flex-col justify-between rounded-2xl border border-sand-200 bg-white p-7 transition hover:-translate-y-0.5 hover:border-water-400 hover:shadow-[var(--shadow-soft)]"
           >
             <div>
-              <div class="flex items-center gap-3">
-                <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-br from-brand-900 to-brand-700 font-display text-sm font-bold text-white">
-                  {app.data.name.charAt(0)}
-                </div>
-                <h3 class="font-display text-xl font-semibold text-slate-900 group-hover:text-brand-700">
+              <div class="flex items-center gap-4">
+                {app.data.icon ? (
+                  <Image
+                    src={app.data.icon}
+                    alt={`${app.data.name} logo`}
+                    width={56}
+                    height={56}
+                    class="h-14 w-14 shrink-0 rounded-xl object-cover ring-1 ring-sand-200"
+                  />
+                ) : (
+                  <div class="flex h-14 w-14 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-brand-900 to-brand-700 font-display text-base font-bold text-white">
+                    {app.data.name.charAt(0)}
+                  </div>
+                )}
+                <h3 class="font-display text-xl font-semibold text-brand-900 group-hover:text-brand-700">
                   {app.data.name}
                 </h3>
               </div>
-              <p class="mt-4 text-sm leading-relaxed text-slate-600">
+              <p class="mt-5 text-sm leading-relaxed text-slate-600">
                 {app.data.tagline}
               </p>
             </div>
-            <div class="mt-6 flex items-center gap-2 text-xs font-semibold text-accent-700">
+            <div class="mt-6 flex items-center gap-2 text-xs font-semibold text-water-700">
               {app.data.products.map((p) => (
-                <span class="rounded-full bg-accent-50 px-2.5 py-1 capitalize">{p}</span>
+                <span class="rounded-full bg-water-50 px-2.5 py-1 capitalize">{p}</span>
               ))}
-              <span class="ml-auto text-slate-400 transition group-hover:text-accent-600">→</span>
+              <span class="ml-auto text-slate-400 transition group-hover:text-water-600">→</span>
             </div>
           </a>
         ))}
@@ -156,7 +167,7 @@ const posts = (await getCollection('blog', ({ data }) => !data.draft))
               Notes from the workshop.
             </h2>
           </div>
-          <a href="/blog/" class="text-sm font-semibold text-accent-700 hover:text-accent-600">
+          <a href="/blog/" class="text-sm font-semibold text-water-700 hover:text-water-600">
             All posts →
           </a>
         </div>
@@ -176,7 +187,7 @@ const posts = (await getCollection('blog', ({ data }) => !data.draft))
               <p class="mt-2 line-clamp-3 text-sm leading-relaxed text-slate-600">
                 {post.data.description}
               </p>
-              <span class="mt-4 text-xs font-semibold text-accent-700">Read post →</span>
+              <span class="mt-4 text-xs font-semibold text-water-700">Read post →</span>
             </a>
           ))}
         </div>
@@ -187,8 +198,9 @@ const posts = (await getCollection('blog', ({ data }) => !data.draft))
   <!-- CTA -->
   <section class="py-20 sm:py-28">
     <div class="container-wide">
-      <div class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-brand-900 to-brand-700 p-10 sm:p-16">
-        <div class="absolute -right-20 -top-20 h-64 w-64 rounded-full bg-accent-500/30 blur-3xl" aria-hidden="true"></div>
+      <div class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-brand-900 via-brand-800 to-deep-700 p-10 sm:p-16">
+        <div class="absolute -right-20 -top-20 h-64 w-64 rounded-full bg-sun-500/30 blur-3xl" aria-hidden="true"></div>
+        <div class="absolute -left-10 bottom-0 h-48 w-48 rounded-full bg-water-400/30 blur-3xl" aria-hidden="true"></div>
         <div class="relative max-w-2xl">
           <h2 class="font-display text-3xl font-bold tracking-tight text-white sm:text-4xl">
             Have a Forge app idea or a thorny Atlassian problem?
