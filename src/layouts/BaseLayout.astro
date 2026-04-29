@@ -1,6 +1,6 @@
 ---
 import '../styles/global.css';
-import { SITE } from '../consts';
+import { SITE, ORG_DETAILS } from '../consts';
 import SEO from '../components/SEO.astro';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
@@ -23,16 +23,28 @@ const { title, description, image, article, noindex } = Astro.props;
 const orgJsonLd = {
   '@context': 'https://schema.org',
   '@type': 'Organization',
+  '@id': `${SITE.url}/#organization`,
   name: SITE.name,
   url: SITE.url,
   logo: `${SITE.url}/logo.jpg`,
+  image: `${SITE.url}/logo.jpg`,
   description: SITE.description,
+  slogan: ORG_DETAILS.slogan,
   email: SITE.email,
+  foundingDate: ORG_DETAILS.foundingDate,
   address: {
     '@type': 'PostalAddress',
     addressLocality: 'Canoas',
     addressRegion: 'RS',
     addressCountry: 'BR',
+  },
+  areaServed: ORG_DETAILS.serviceArea.map((name) => ({ '@type': 'Place', name })),
+  knowsAbout: ORG_DETAILS.knowsAbout,
+  contactPoint: {
+    '@type': 'ContactPoint',
+    contactType: 'sales',
+    email: SITE.email,
+    availableLanguage: ['English', 'Portuguese'],
   },
   sameAs: [SITE.marketplaceUrl, SITE.linkedin].filter(Boolean),
 };
