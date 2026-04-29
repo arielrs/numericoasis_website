@@ -3,59 +3,76 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
 const services = [
   {
-    title: 'Atlassian Forge app development',
-    summary: 'Marketplace-ready apps built on the Forge platform.',
-    body: 'We design, build, and ship Forge apps end to end, from a single Jira admin panel to a multi product Marketplace listing with paid tiers. Cloud native, security reviewed, supported.',
+    title: 'Custom software & SaaS development',
+    summary: 'Greenfield SaaS, web and mobile apps, integrations, and bespoke platforms.',
+    body: 'When the right tool does not exist yet, we build it. Modern, hosted, fully owned by you, with the integrations to plug into the rest of your stack.',
     bullets: [
-      'Jira, Confluence, JSM, and Bitbucket Cloud apps',
-      'UI Kit and Custom UI surfaces',
-      'Forge SQL, KVS, scheduled triggers, and webhooks',
-      'Marketplace listing strategy and pricing',
-      'Security review preparation',
-    ],
-    icon: '⚙️',
-  },
-  {
-    title: 'Custom SaaS & integrations',
-    summary: 'Bespoke web apps that talk to Atlassian and the rest of your stack.',
-    body: 'When a Marketplace app cannot quite fit, we build the SaaS that does. Modern, hosted, fully owned by you, with the integrations to plug into Jira, Confluence, Slack, GitHub, and beyond.',
-    bullets: [
-      'Greenfield SaaS in TypeScript / Node / React',
-      'Atlassian Connect & Forge hybrid integrations',
-      'OAuth, SSO, fine-grained permissions',
+      'TypeScript, Node, React, and modern frameworks',
+      'Web and mobile applications',
+      'OAuth, SSO, and fine grained permissions',
       'Background jobs, queues, and scheduled work',
       'Cloud hosting on AWS, Cloudflare, or Render',
+      'Integrations with Atlassian, Slack, GitHub, and beyond',
+    ],
+    icon: '🛠️',
+  },
+  {
+    title: 'Atlassian apps & platform expertise',
+    summary: 'Forge apps for the Marketplace plus deep Jira and Confluence platform work.',
+    body: 'We design, build, and ship Forge apps end to end, from a single Jira admin panel to a multi product Marketplace listing. We also clean up, audit, and migrate the platforms that run them.',
+    bullets: [
+      'Forge apps for Jira, Confluence, JSM, and Bitbucket Cloud',
+      'UI Kit and Custom UI surfaces',
+      'Forge SQL, KVS, scheduled triggers, and webhooks',
+      'Marketplace listing strategy, pricing, and security review prep',
+      'Server and Data Center to Cloud migration planning',
+      'App rationalization, audits, and performance tuning',
     ],
     icon: '🧩',
   },
   {
-    title: 'Atlassian platform consulting',
-    summary: 'Cleanups, migrations, and architecture reviews.',
-    body: 'A senior set of eyes on a Jira instance that is starting to drag, or on a Server to Cloud migration that needs to land cleanly. We assess, recommend, and where invited, execute.',
+    title: 'Business & IT service consulting',
+    summary: 'ITIL, ITSM, process design, governance, and the rollouts that make them stick.',
+    body: 'Tools alone do not change how a team works. We pair the platform side with deep process and governance work, so your investment lands as actual operational improvement.',
     bullets: [
-      'Custom field, scheme, and workflow audits',
-      'Server / Data Center to Cloud migration planning',
-      'Permission and access reviews',
-      'Performance tuning of Jira and Confluence',
-      'App rationalization (which Marketplace apps to keep)',
+      'ITIL v4 and ITSM advisory',
+      'Process design, mapping, and rollout',
+      'Governance, change, and release management',
+      'Tooling roadmaps and Marketplace strategy',
+      'Service catalog design',
+      'Org and team enablement',
     ],
     icon: '🧭',
+  },
+  {
+    title: 'Customer support & managed services',
+    summary: 'Long term support, SLAs, and operations for the software and platforms that matter.',
+    body: 'Once the build lands, the real work starts. We run tier 1 to tier 3 support, manage releases, and stay close to the teams using what we ship, with SLAs you can plan around.',
+    bullets: [
+      'Tier 1, 2, and 3 support models',
+      'SLA backed operations and on call',
+      'Release cadence and patch management',
+      'Documentation, runbooks, and training',
+      'Long term partnership and retainer arrangements',
+      'Continuous improvement loops',
+    ],
+    icon: '🎧',
   },
 ];
 ---
 
 <BaseLayout
   title="Services"
-  description="Atlassian Forge app development, custom SaaS, and platform consulting from the team at Numeric Oasis."
+  description="Custom software development, Atlassian apps and platform consulting, business and IT service consulting, and managed support from Numeric Oasis."
 >
   <section class="bg-gradient-to-b from-slate-50 to-white py-20 sm:py-28">
     <div class="container-wide">
       <p class="eyebrow">What we do</p>
       <h1 class="mt-3 max-w-4xl font-display text-4xl font-bold leading-tight tracking-tight text-slate-900 sm:text-5xl md:text-6xl">
-        Services for teams that take Atlassian seriously.
+        Build, advise, and run. Across software, Atlassian, and operations.
       </h1>
       <p class="mt-6 max-w-3xl text-lg leading-relaxed text-slate-600">
-        Three core practices, all built on the same belief: tools that enable your team should be a joy to use, not a tax to pay.
+        Four practices, one team. Fifteen years of experience pairing custom software with the consulting and support that makes it land. Atlassian heavy, but not Atlassian only.
       </p>
     </div>
   </section>

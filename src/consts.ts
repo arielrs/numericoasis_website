@@ -3,7 +3,7 @@ export const SITE = {
   url: 'https://numericoasis.com',
   tagline: 'Atlassian Marketplace Partner & SaaS Custom Solutions',
   description:
-    'Numeric Oasis builds Atlassian Forge apps and custom SaaS for teams that demand reliability, speed, and craft. Marketplace apps, bespoke integrations, and platform consulting.',
+    'Numeric Oasis is a software house and consulting company. Fifteen years of building custom software, shipping Atlassian Forge apps, advising on business and IT processes, and supporting the teams who run it all.',
   email: 'contact@numericoasis.com',
   location: 'Canoas, RS, Brasil',
   marketplaceUrl: 'https://marketplace.atlassian.com/vendors/1064627585/numeric-oasis',
