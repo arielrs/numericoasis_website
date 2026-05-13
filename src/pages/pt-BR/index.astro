@@ -38,9 +38,10 @@ const posts = (await getCollection('blog', ({ data }) => data.lang === 'pt-BR' &
         <a href="/pt-BR/apps/" class="btn-secondary">Veja nossos apps</a>
       </div>
 
-      <dl class="mt-16 grid grid-cols-2 gap-8 border-t border-slate-200 pt-10 sm:grid-cols-4">
+      <dl class="mt-16 grid grid-cols-2 gap-8 border-t border-slate-200 pt-10 sm:grid-cols-3 lg:grid-cols-5">
         {[
           { k: '15 anos', v: 'Construindo e consultando' },
+          { k: '1000+', v: 'Softwares customizados entregues' },
           { k: '4+ apps', v: 'No Atlassian Marketplace' },
           { k: 'Atlassian', v: 'Parceiro Forge Marketplace' },
           { k: 'BR · EU · US', v: 'Fusos atendidos' },
