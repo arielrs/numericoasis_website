@@ -39,12 +39,11 @@ const posts = (await getCollection('blog', ({ data }) => data.lang === 'en' && !
         <a href="/apps/" class="btn-secondary">Browse our apps</a>
       </div>
 
-      <dl class="mt-16 grid grid-cols-2 gap-8 border-t border-slate-200 pt-10 sm:grid-cols-3 lg:grid-cols-5">
+      <dl class="mt-16 grid grid-cols-2 gap-8 border-t border-slate-200 pt-10 sm:grid-cols-4">
         {[
           { k: '15 years', v: 'Of building and consulting' },
           { k: '1000+', v: 'Custom software delivered' },
-          { k: '4+ apps', v: 'On the Atlassian Marketplace' },
-          { k: 'Atlassian', v: 'Forge Marketplace partner' },
+          { k: '4+ apps', v: 'Atlassian Forge Marketplace partner' },
           { k: '6 continents', v: 'Customers worldwide, every time zone' },
         ].map(({ k, v }) => (
           <div>
