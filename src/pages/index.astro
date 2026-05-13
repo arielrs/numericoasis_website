@@ -13,7 +13,7 @@ const posts = (await getCollection('blog', ({ data }) => !data.draft))
   .slice(0, 3);
 ---
 
-<BaseLayout title="Software house, Atlassian partner, IT consultancy" description={SITE.description}>
+<BaseLayout title={SITE.name} description={SITE.description}>
   <!-- Hero -->
   <section class="relative overflow-hidden bg-gradient-to-b from-slate-50 via-white to-white">
     <div class="absolute inset-0 -z-10 opacity-60" aria-hidden="true">

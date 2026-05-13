@@ -1,5 +1,5 @@
 export const SITE = {
-  name: 'Numeric Oasis',
+  name: 'Numeric Oasis Technologies',
   url: 'https://numericoasis.com',
   tagline: 'Atlassian Marketplace Partner & SaaS Custom Solutions',
   description:
