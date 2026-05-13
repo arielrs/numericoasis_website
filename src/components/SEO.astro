@@ -1,5 +1,13 @@
 ---
 import { SITE } from '../consts';
+import {
+  LOCALES,
+  DEFAULT_LOCALE,
+  OG_LOCALE_MAP,
+  stripLocaleFromPath,
+  withLocale,
+  type Locale,
+} from '../i18n';
 
 interface Props {
   title: string;
@@ -12,6 +20,7 @@ interface Props {
     tags?: readonly string[];
   };
   noindex?: boolean;
+  lang: Locale;
 }
 
 const {
@@ -20,16 +29,28 @@ const {
   image = '/og/default.jpg',
   article,
   noindex = false,
+  lang,
 } = Astro.props;
 
-const canonical = new URL(Astro.url.pathname, Astro.site).toString();
+const barePath = stripLocaleFromPath(Astro.url.pathname);
+const canonical = new URL(withLocale(lang, barePath), Astro.site).toString();
 const ogImage = new URL(image, Astro.site).toString();
 const fullTitle = title === SITE.name ? title : `${title} · ${SITE.name}`;
+
+const alternates = LOCALES.map((l) => ({
+  hreflang: l,
+  href: new URL(withLocale(l, barePath), Astro.site).toString(),
+}));
+const xDefaultHref = new URL(withLocale(DEFAULT_LOCALE, barePath), Astro.site).toString();
 ---
 
 <title>{fullTitle}</title>
 <meta name="description" content={description} />
 <link rel="canonical" href={canonical} />
+{alternates.map((a) => (
+  <link rel="alternate" hreflang={a.hreflang} href={a.href} />
+))}
+<link rel="alternate" hreflang="x-default" href={xDefaultHref} />
 {noindex && <meta name="robots" content="noindex, nofollow" />}
 
 <meta property="og:type" content={article ? 'article' : 'website'} />
@@ -40,7 +61,10 @@ const fullTitle = title === SITE.name ? title : `${title} · ${SITE.name}`;
 <meta property="og:image" content={ogImage} />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
-<meta property="og:locale" content="en_US" />
+<meta property="og:locale" content={OG_LOCALE_MAP[lang]} />
+{LOCALES.filter((l) => l !== lang).map((l) => (
+  <meta property="og:locale:alternate" content={OG_LOCALE_MAP[l]} />
+))}
 
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content={fullTitle} />

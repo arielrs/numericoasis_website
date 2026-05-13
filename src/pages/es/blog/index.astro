@@ -1,34 +1,34 @@
 ---
 import { Image } from 'astro:assets';
 import { getCollection } from 'astro:content';
-import BaseLayout from '../../layouts/BaseLayout.astro';
-import { contentSlug } from '../../i18n/paths';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { contentSlug } from '../../../i18n/paths';
 
 const posts = (
-  await getCollection('blog', ({ data }) => data.lang === 'en' && !data.draft)
+  await getCollection('blog', ({ data }) => data.lang === 'es' && !data.draft)
 ).sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime());
 
 const allTags = Array.from(new Set(posts.flatMap((p) => p.data.tags))).sort();
 const fmtDate = (d: Date) =>
-  d.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+  d.toLocaleDateString('es-ES', { year: 'numeric', month: 'short', day: 'numeric' });
 ---
 
 <BaseLayout
   title="Blog"
-  description="Notes from Numeric Oasis on building Atlassian Forge apps and custom SaaS, with the lessons we collect along the way."
+  description="Notas de Numeric Oasis sobre apps Forge de Atlassian y SaaS a medida, con las lecciones que vamos recogiendo en el camino."
 >
   <section class="bg-gradient-to-b from-slate-50 to-white py-20 sm:py-28">
     <div class="container-wide">
-      <p class="eyebrow">Writing</p>
+      <p class="eyebrow">Escritura</p>
       <h1 class="mt-3 max-w-4xl font-display text-4xl font-bold leading-tight tracking-tight text-slate-900 sm:text-5xl md:text-6xl">
-        Notes from the workshop.
+        Notas del taller.
       </h1>
       <p class="mt-6 max-w-2xl text-lg leading-relaxed text-slate-600">
-        Forge tales, Marketplace go-to-market notes, and the occasional opinion. Subscribe via <a href="/rss.xml" class="text-water-700 underline underline-offset-4">RSS</a>.
+        Historias sobre Forge, notas de go-to-market en el Marketplace y alguna opinión que otra. Suscríbete vía <a href="/rss.xml" class="text-water-700 underline underline-offset-4">RSS</a>.
       </p>
       {allTags.length > 0 && (
         <div class="mt-8 flex flex-wrap gap-2" data-tag-filters>
-          <button type="button" data-tag="" class="rounded-full bg-slate-900 px-3 py-1 text-xs font-semibold text-white">All</button>
+          <button type="button" data-tag="" class="rounded-full bg-slate-900 px-3 py-1 text-xs font-semibold text-white">Todos</button>
           {allTags.map((t) => (
             <button type="button" data-tag={t} class="rounded-full border border-slate-200 bg-white px-3 py-1 text-xs font-semibold text-slate-700 hover:border-slate-300">
               #{t}
@@ -42,12 +42,12 @@ const fmtDate = (d: Date) =>
   <section class="py-12 sm:py-20">
     <div class="container-wide">
       {posts.length === 0 ? (
-        <p class="text-center text-slate-500">No posts yet. Check back soon.</p>
+        <p class="text-center text-slate-500">Aún no hay posts. Vuelve pronto.</p>
       ) : (
         <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3" data-post-grid>
           {posts.map((post) => (
             <a
-              href={`/blog/${contentSlug(post.id)}/`}
+              href={`/es/blog/${contentSlug(post.id)}/`}
               class="group flex flex-col overflow-hidden rounded-2xl border border-sand-200 bg-white transition hover:-translate-y-0.5 hover:shadow-[var(--shadow-soft)]"
               data-tags={post.data.tags.join(',')}
             >
@@ -80,7 +80,7 @@ const fmtDate = (d: Date) =>
                     ))}
                   </div>
                 )}
-                <span class="mt-auto pt-4 text-xs font-semibold text-water-700">Read post →</span>
+                <span class="mt-auto pt-4 text-xs font-semibold text-water-700">Leer post →</span>
               </div>
             </a>
           ))}

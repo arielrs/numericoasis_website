@@ -12,11 +12,11 @@ export const SITE = {
 } as const;
 
 export const NAV_LINKS = [
-  { href: '/services/', label: 'Services' },
-  { href: '/apps/', label: 'Apps' },
-  { href: '/blog/', label: 'Blog' },
-  { href: '/about/', label: 'About' },
-  { href: '/contact/', label: 'Contact' },
+  { href: '/services/', labelKey: 'services' },
+  { href: '/apps/', labelKey: 'apps' },
+  { href: '/blog/', labelKey: 'blog' },
+  { href: '/about/', labelKey: 'about' },
+  { href: '/contact/', labelKey: 'contact' },
 ] as const;
 
 export const PRODUCT_LABELS: Record<string, string> = {

@@ -1,0 +1,111 @@
+---
+import {
+  LOCALES,
+  LOCALE_LABELS,
+  LOCALE_FULL_LABELS,
+  stripLocaleFromPath,
+  withLocale,
+  type Locale,
+} from '../i18n';
+
+interface Props {
+  currentLang: Locale;
+  variant?: 'desktop' | 'mobile';
+}
+const { currentLang, variant = 'desktop' } = Astro.props;
+const bare = stripLocaleFromPath(Astro.url.pathname);
+---
+
+{variant === 'desktop' ? (
+  <div class="relative" data-langswitcher>
+    <button
+      type="button"
+      class="inline-flex items-center gap-1.5 rounded-full border border-sand-200 bg-white/70 px-3 py-1.5 text-xs font-semibold text-brand-700 transition hover:border-brand-300 hover:bg-white"
+      aria-haspopup="listbox"
+      aria-expanded="false"
+      aria-label={LOCALE_FULL_LABELS[currentLang]}
+      data-langswitcher-trigger
+    >
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 0 20M12 2a15 15 0 0 0 0 20"/></svg>
+      <span>{LOCALE_LABELS[currentLang]}</span>
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+    </button>
+    <ul
+      role="listbox"
+      class="absolute right-0 z-50 mt-2 hidden min-w-[160px] rounded-xl border border-sand-200 bg-white p-1 shadow-lg"
+      data-langswitcher-menu
+    >
+      {LOCALES.map((l) => (
+        <li>
+          <a
+            href={withLocale(l, bare)}
+            data-locale={l}
+            data-langswitcher-link
+            class:list={[
+              'block rounded-lg px-3 py-2 text-sm font-medium transition',
+              l === currentLang
+                ? 'bg-sand-100 text-brand-900'
+                : 'text-brand-700 hover:bg-sand-50 hover:text-brand-900',
+            ]}
+            aria-current={l === currentLang ? 'true' : undefined}
+          >
+            {LOCALE_FULL_LABELS[l]}
+          </a>
+        </li>
+      ))}
+    </ul>
+  </div>
+) : (
+  <div class="flex items-center gap-2 px-3 py-2" data-langswitcher-mobile>
+    {LOCALES.map((l) => (
+      <a
+        href={withLocale(l, bare)}
+        data-locale={l}
+        data-langswitcher-link
+        class:list={[
+          'rounded-full px-3 py-1.5 text-xs font-semibold transition',
+          l === currentLang
+            ? 'bg-brand-900 text-white'
+            : 'border border-sand-200 bg-white text-brand-700 hover:border-brand-300',
+        ]}
+        aria-current={l === currentLang ? 'true' : undefined}
+      >
+        {LOCALE_LABELS[l]}
+      </a>
+    ))}
+  </div>
+)}
+
+<script>
+  const triggers = document.querySelectorAll('[data-langswitcher-trigger]');
+  triggers.forEach((trigger) => {
+    const root = trigger.closest('[data-langswitcher]');
+    const menu = root?.querySelector('[data-langswitcher-menu]');
+    trigger.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const open = menu?.classList.toggle('hidden') === false;
+      trigger.setAttribute('aria-expanded', String(open));
+    });
+  });
+  document.addEventListener('click', (e) => {
+    document.querySelectorAll('[data-langswitcher]').forEach((root) => {
+      if (!root.contains(e.target as Node)) {
+        root.querySelector('[data-langswitcher-menu]')?.classList.add('hidden');
+        root.querySelector('[data-langswitcher-trigger]')?.setAttribute('aria-expanded', 'false');
+      }
+    });
+  });
+  document.querySelectorAll('[data-langswitcher-link]').forEach((link) => {
+    link.addEventListener('click', () => {
+      const locale = link.getAttribute('data-locale');
+      if (locale) {
+        try {
+          localStorage.setItem('preferred-locale', locale);
+          sessionStorage.setItem('locale-redirect-done', '1');
+        } catch (e) {
+          // swallow storage errors (private browsing, etc.)
+        }
+      }
+    });
+  });
+</script>

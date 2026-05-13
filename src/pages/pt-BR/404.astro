@@ -1,0 +1,22 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Página não encontrada" description="Essa página não existe na Numeric Oasis." noindex>
+  <section class="flex min-h-[60vh] items-center justify-center py-20">
+    <div class="container-wide text-center">
+      <p class="eyebrow">404</p>
+      <h1 class="mt-3 font-display text-4xl font-bold tracking-tight text-slate-900 sm:text-5xl md:text-6xl">
+        Não conseguimos encontrar essa página.
+      </h1>
+      <p class="mx-auto mt-4 max-w-lg text-lg text-slate-600">
+        O link pode estar desatualizado, ou podemos ter reorganizado o site. Tente voltar para a página inicial ou para uma das seções mais visitadas.
+      </p>
+      <div class="mt-8 flex flex-wrap justify-center gap-3">
+        <a href="/pt-BR/" class="btn-primary">Voltar ao início</a>
+        <a href="/pt-BR/blog/" class="btn-secondary">Ler o blog</a>
+        <a href="/pt-BR/apps/" class="btn-secondary">Ver os apps</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

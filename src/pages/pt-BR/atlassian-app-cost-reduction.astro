@@ -1,0 +1,221 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { SITE } from '../../consts';
+
+const faqs = [
+  {
+    q: 'Apps Forge customizados conseguem mesmo substituir ScriptRunner, Power Scripts ou outros apps enterprise do Marketplace?',
+    a: 'Para a maioria dos times, sim — mas só para os 20% das funcionalidades que vocês realmente usam. A gente começa auditando o uso com dados reais, identifica os fluxos de que vocês dependem e reconstrói isso como um app Forge focado e seu. Os outros 80% das features do app do Marketplace normalmente ficam sem uso e não valem o que custam.',
+  },
+  {
+    q: 'Qual é o payback típico de um Forge customizado vs. uma assinatura do Marketplace?',
+    a: 'Depende do número de seats e da faixa de preço do app no Marketplace. Para times de médio porte pagando por usuário em apps grandes do Marketplace, a substituição customizada costuma se pagar entre 12 e 24 meses. Depois disso, todo mês é só economia, e o app continua sendo seu.',
+  },
+  {
+    q: 'Quem fica com a propriedade intelectual do app Forge customizado?',
+    a: 'Vocês. Os projetos transferem a propriedade do código-fonte, da conta de developer da Atlassian que hospeda o app e do direito de modificar ou distribuir. Documentamos o build e treinamos seu time. Se algum dia a gente deixar de trabalhar junto, vocês ficam com o app e as chaves.',
+  },
+  {
+    q: 'E se a Atlassian descontinuar uma API do Forge que o app customizado usa?',
+    a: 'A Atlassian dá meses de aviso para mudanças de API breaking. A gente desenha o app pensando nisso, e oferece um pequeno retainer para manutenção e migração de APIs. O mesmo risco vale para apps do Marketplace, com a diferença de que lá vocês não controlam se o vendor investe em manter o app atualizado.',
+  },
+  {
+    q: 'Quanto tempo leva uma auditoria de footprint de apps?',
+    a: 'Duas a quatro semanas para uma instância Atlassian de médio porte. Puxamos dados de uso da sua instância, conversamos com alguns power users e entregamos um relatório escrito: quais apps são essenciais, quais se sobrepõem, quais features são realmente usadas e qual é o custo de reconstrução e o payback de cada candidato a substituição.',
+  },
+  {
+    q: 'Mantemos o app atual do Marketplace enquanto vocês constroem o substituto?',
+    a: 'Sim. A gente nunca recomenda cortar o app antes do substituto estar em produção. O app do Marketplace fica vivo durante o build, o teste interno e um período de execução em paralelo. Quando o time todo estiver no app customizado, vocês desinstalam o do Marketplace e param de pagar.',
+  },
+  {
+    q: 'O app Forge customizado fica dentro da segurança do Atlassian Cloud?',
+    a: 'Sim. Apps Forge rodam dentro da infraestrutura hospedada pela Atlassian, no mesmo limite de segurança da sua instância de Jira ou Confluence. Os dados não saem da Atlassian a menos que você acrescente explicitamente uma integração com terceiros. É a mesma postura de compliance dos apps do Marketplace que vocês trocariam, normalmente com um discurso mais forte porque vocês passam a controlar para onde cada dado vai.',
+  },
+  {
+    q: 'Qual é o menor footprint Atlassian em que vale a pena fazer isso?',
+    a: 'Raramente vale reconstruir se você tem um app do Marketplace, menos de 50 usuários e o app faz exatamente o que vocês precisam. Quase sempre vale ao menos uma auditoria quando você tem três ou mais apps pagos, mais que algumas centenas de usuários, ou qualquer app no qual vocês usam só uma fração dos recursos.',
+  },
+];
+
+const faqPageJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  inLanguage: 'pt-BR',
+  mainEntity: faqs.map((f) => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a },
+  })),
+};
+
+const servicePageJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  '@id': `${SITE.url}/pt-BR/atlassian-app-cost-reduction/#service`,
+  serviceType: 'Redução de custo de apps Atlassian',
+  name: 'Redução de custo de apps Atlassian · Migração de Marketplace para Forge customizado',
+  description: 'Auditoria do seu footprint de apps no Atlassian Marketplace, identificação de apps pagos que podem ser substituídos por apps Forge customizados de propriedade da sua empresa, e a entrega dos substitutos. Menos licenciamento, melhor encaixe de features, mesma segurança do Atlassian Cloud.',
+  provider: { '@id': `${SITE.url}/#organization` },
+  areaServed: ['Brazil', 'Europe', 'United States'],
+  url: `${SITE.url}/pt-BR/atlassian-app-cost-reduction/`,
+};
+---
+
+<BaseLayout
+  title="Redução de custo de apps Atlassian · Substitua o gasto do Marketplace por Forge customizado"
+  description="Serviço de redução de custo de apps Atlassian. Auditamos seu footprint no Marketplace e reconstruímos os apps mais usados como Forge customizado, de propriedade da sua empresa. Licença por usuário vira custo fixo, o fluxo continua o mesmo e tudo roda dentro da segurança do Atlassian Cloud."
+>
+  <script type="application/ld+json" set:html={JSON.stringify(faqPageJsonLd)} />
+  <script type="application/ld+json" set:html={JSON.stringify(servicePageJsonLd)} />
+
+  <section class="relative overflow-hidden bg-gradient-to-b from-brand-50 via-water-50 to-white">
+    <div class="absolute inset-0 -z-10 opacity-50" aria-hidden="true">
+      <div class="absolute -left-32 top-0 h-[480px] w-[480px] rounded-full bg-water-300/40 blur-3xl"></div>
+      <div class="absolute right-0 top-32 h-[420px] w-[420px] rounded-full bg-sun-300/30 blur-3xl"></div>
+    </div>
+
+    <div class="container-wide pt-20 pb-20 sm:pt-28 sm:pb-24">
+      <p class="eyebrow">Marketplace → Forge customizado</p>
+      <h1 class="mt-4 max-w-5xl font-display text-4xl font-bold leading-[1.05] tracking-tight text-brand-900 sm:text-5xl md:text-6xl lg:text-7xl">
+        Redução de custo de apps Atlassian:<br class="hidden md:block" />
+        <span class="bg-gradient-to-r from-brand-700 via-water-500 to-sun-500 bg-clip-text text-transparent">transforme gasto de Marketplace em apps Forge seus.</span>
+      </h1>
+      <p class="mt-6 max-w-3xl text-lg leading-relaxed text-slate-700 sm:text-xl">
+        Apps de Marketplace cobram por usuário, para sempre. Apps Forge customizados são pagos uma vez, com IP que fica com você — construídos só para as features que o seu time realmente usa, rodando dentro do mesmo limite de segurança do Atlassian Cloud que a sua instância de Jira ou Confluence.
+      </p>
+      <div class="mt-10 flex flex-wrap items-center gap-3">
+        <a href="/pt-BR/contact/" class="btn-primary">
+          Solicite uma auditoria de footprint
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </a>
+        <a href="/pt-BR/apps/" class="btn-secondary">Veja nossos apps no Marketplace</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-20 sm:py-28">
+    <div class="container-wide">
+      <div class="max-w-3xl">
+        <p class="eyebrow">A conta</p>
+        <h2 class="mt-3 font-display text-3xl font-bold tracking-tight text-brand-900 sm:text-4xl md:text-5xl">
+          Por que isso funciona, em três números.
+        </h2>
+      </div>
+      <dl class="mt-12 grid gap-8 md:grid-cols-3">
+        <div class="rounded-3xl border border-sand-200 bg-white p-8 shadow-[var(--shadow-soft)]">
+          <dt class="font-display text-4xl font-bold text-brand-900 sm:text-5xl">Por usuário → fixo</dt>
+          <dd class="mt-4 text-base leading-relaxed text-slate-600">
+            Preço de Marketplace escala com toda contratação nova. Um Forge customizado é um build único mais um pequeno retainer. A linha para de subir.
+          </dd>
+        </div>
+        <div class="rounded-3xl border border-sand-200 bg-white p-8 shadow-[var(--shadow-soft)]">
+          <dt class="font-display text-4xl font-bold text-brand-900 sm:text-5xl">12–24 meses</dt>
+          <dd class="mt-4 text-base leading-relaxed text-slate-600">
+            Janela típica de payback para um time de médio porte substituindo um app grande do Marketplace. Depois disso, todo mês é economia pura, e o app continua funcionando.
+          </dd>
+        </div>
+        <div class="rounded-3xl border border-sand-200 bg-white p-8 shadow-[var(--shadow-soft)]">
+          <dt class="font-display text-4xl font-bold text-brand-900 sm:text-5xl">Mesma segurança</dt>
+          <dd class="mt-4 text-base leading-relaxed text-slate-600">
+            Apps Forge rodam dentro da infraestrutura da Atlassian. Os dados ficam no seu tenant, sem trânsito por terceiros, e a postura de compliance é a mesma do app do Marketplace que vocês estão trocando.
+          </dd>
+        </div>
+      </dl>
+    </div>
+  </section>
+
+  <section class="bg-sand-50 py-20 sm:py-28">
+    <div class="container-wide">
+      <div class="max-w-3xl">
+        <p class="eyebrow">Como funciona</p>
+        <h2 class="mt-3 font-display text-3xl font-bold tracking-tight text-brand-900 sm:text-4xl md:text-5xl">
+          Quatro passos da fatura do Marketplace até o app Forge seu.
+        </h2>
+      </div>
+      <ol class="mt-14 grid gap-8 md:grid-cols-2 lg:grid-cols-4">
+        {[
+          { n: '01', title: 'Auditamos o footprint', body: 'Puxamos dados reais de uso da sua instância: quais apps, quais features, por quais usuários. Conversamos com power users. Engajamento de duas a quatro semanas, relatório escrito.' },
+          { n: '02', title: 'Encontramos os 20% reais', body: 'A maioria dos apps do Marketplace entrega cem features. Os times usam um punhado. Identificamos os fluxos de que vocês dependem e desenhamos uma substituição focada só neles.' },
+          { n: '03', title: 'Construímos o app Forge', body: 'Atlassian Forge nativo, UI Kit ou Custom UI, hospedado dentro do seu tenant. Mesmo limite de dados, mesma postura de compliance, foco só no que vocês precisam.' },
+          { n: '04', title: 'Execução em paralelo, depois descomissionamento', body: 'O app do Marketplace continua vivo durante o teste e a migração. Quando o time inteiro estiver no customizado, vocês desinstalam o do Marketplace e param de pagar.' },
+        ].map((step) => (
+          <li class="rounded-3xl border border-sand-200 bg-white p-7 shadow-[var(--shadow-soft)]">
+            <p class="font-mono text-sm font-semibold text-water-700">{step.n}</p>
+            <h3 class="mt-4 font-display text-xl font-semibold text-brand-900">{step.title}</h3>
+            <p class="mt-3 text-sm leading-relaxed text-slate-600">{step.body}</p>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <section class="py-20 sm:py-28">
+    <div class="container-wide grid gap-12 lg:grid-cols-[2fr_3fr]">
+      <div>
+        <p class="eyebrow">Por que Forge</p>
+        <h2 class="mt-3 font-display text-3xl font-bold tracking-tight text-brand-900 sm:text-4xl md:text-5xl">
+          Customizado, mas dentro do limite de segurança da Atlassian.
+        </h2>
+        <p class="mt-6 text-base leading-relaxed text-slate-600">
+          Forge é a plataforma de apps Cloud-nativa da Atlassian. É a mesma plataforma em que rodam os apps do Marketplace que vocês trocariam. A diferença é que o seu fica escopado só no que o time precisa, é seu, e não cobra por usuário.
+        </p>
+      </div>
+      <ul class="grid gap-4 sm:grid-cols-2">
+        {[
+          { h: 'Runtime hospedado pela Atlassian', p: 'Sem servidor para provisionar, sem VPC para gerenciar, sem escopo de compliance separado.' },
+          { h: 'Execução em sandbox', p: 'Apps rodam dentro do isolamento controlado pela Atlassian, com permissões explícitas.' },
+          { h: 'Dados ficam no seu tenant', p: 'Sem trânsito de dados por terceiros. Armazenamento no Forge KVS ou SQL dentro do seu limite.' },
+          { h: 'Herda seu SSO e auditoria', p: 'Mesma identidade, mesmo controle de acesso, mesmo audit log do resto da sua instância Atlassian.' },
+        ].map((c) => (
+          <li class="rounded-2xl border border-sand-200 bg-white p-5">
+            <p class="font-display text-base font-semibold text-brand-900">{c.h}</p>
+            <p class="mt-2 text-sm leading-relaxed text-slate-600">{c.p}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="bg-sand-50 py-20 sm:py-28">
+    <div class="container-wide">
+      <div class="max-w-3xl">
+        <p class="eyebrow">FAQ</p>
+        <h2 class="mt-3 font-display text-3xl font-bold tracking-tight text-brand-900 sm:text-4xl md:text-5xl">
+          As perguntas que mais escutamos.
+        </h2>
+      </div>
+      <dl class="mt-12 space-y-4">
+        {faqs.map((f) => (
+          <details class="group rounded-2xl border border-sand-200 bg-white p-6 shadow-[var(--shadow-soft)]">
+            <summary class="flex cursor-pointer list-none items-start justify-between gap-4">
+              <dt class="font-display text-lg font-semibold text-brand-900">{f.q}</dt>
+              <svg class="mt-1 shrink-0 text-water-700 transition group-open:rotate-45" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+            </summary>
+            <dd class="mt-4 text-base leading-relaxed text-slate-600">{f.a}</dd>
+          </details>
+        ))}
+      </dl>
+    </div>
+  </section>
+
+  <section class="py-20 sm:py-28">
+    <div class="container-wide">
+      <div class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-brand-900 via-brand-800 to-deep-700 p-10 sm:p-16">
+        <div class="absolute -right-20 -top-20 h-64 w-64 rounded-full bg-sun-500/30 blur-3xl" aria-hidden="true"></div>
+        <div class="absolute -left-10 bottom-0 h-48 w-48 rounded-full bg-water-400/30 blur-3xl" aria-hidden="true"></div>
+        <div class="relative max-w-2xl">
+          <h2 class="font-display text-3xl font-bold tracking-tight text-white sm:text-4xl md:text-5xl">
+            Quer saber como ficaria seu footprint Atlassian numa auditoria?
+          </h2>
+          <p class="mt-4 text-lg text-brand-100">
+            Mande o esboço — quantidade de usuários, lista de apps pagos do Marketplace e quais custam mais. Voltamos dizendo se faz sentido auditar e, se fizer, com uma estimativa do payback e da reconstrução.
+          </p>
+          <a href="/pt-BR/contact/" class="mt-8 inline-flex btn-primary !bg-white !text-brand-900 hover:!bg-brand-50">
+            Começar uma auditoria de footprint
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

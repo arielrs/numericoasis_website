@@ -1,6 +1,8 @@
 import { defineCollection, z } from 'astro:content';
 import { glob } from 'astro/loaders';
 
+const langEnum = z.enum(['en', 'pt-BR', 'es']);
+
 const blog = defineCollection({
   loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/blog' }),
   schema: ({ image }) =>
@@ -13,6 +15,8 @@ const blog = defineCollection({
       author: z.string().default('Numeric Oasis Team'),
       heroImage: image().optional(),
       draft: z.boolean().default(false),
+      lang: langEnum,
+      translationKey: z.string(),
     }),
 });
 
@@ -51,6 +55,8 @@ const apps = defineCollection({
         .default([]),
       keyFeatures: z.array(z.string()).default([]),
       trustSignals: z.array(z.string()).default([]),
+      lang: langEnum,
+      translationKey: z.string(),
     }),
 });
 

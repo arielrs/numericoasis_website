@@ -1,21 +1,20 @@
 ---
 import { Image } from 'astro:assets';
 import { getCollection } from 'astro:content';
-import BaseLayout from '../layouts/BaseLayout.astro';
-import { SITE, PRODUCT_LABELS } from '../consts';
-import { contentSlug } from '../i18n/paths';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { SITE, PRODUCT_LABELS } from '../../consts';
+import { contentSlug } from '../../i18n/paths';
 
-const apps = (await getCollection('apps', ({ data }) => data.lang === 'en'))
+const apps = (await getCollection('apps', ({ data }) => data.lang === 'es'))
   .filter((a) => a.data.featured)
   .sort((a, b) => a.data.order - b.data.order);
 
-const posts = (await getCollection('blog', ({ data }) => data.lang === 'en' && !data.draft))
+const posts = (await getCollection('blog', ({ data }) => data.lang === 'es' && !data.draft))
   .sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime())
   .slice(0, 3);
 ---
 
-<BaseLayout title={SITE.name} description={SITE.description}>
-  <!-- Hero -->
+<BaseLayout title={SITE.name} description="Numeric Oasis es una software house y consultoría. Quince años construyendo software a medida, publicando apps Atlassian Forge, asesorando sobre procesos de negocio y TI, y dando soporte a los equipos que lo hacen funcionar.">
   <section class="relative overflow-hidden bg-gradient-to-b from-slate-50 via-white to-white">
     <div class="absolute inset-0 -z-10 opacity-60" aria-hidden="true">
       <div class="absolute -left-32 top-0 h-[480px] w-[480px] rounded-full bg-water-300/40 blur-3xl"></div>
@@ -23,28 +22,28 @@ const posts = (await getCollection('blog', ({ data }) => data.lang === 'en' && !
     </div>
 
     <div class="container-wide pt-20 pb-24 sm:pt-28 sm:pb-32">
-      <p class="eyebrow">Software house · Atlassian Marketplace Partner · IT consultancy</p>
+      <p class="eyebrow">Software house · Partner Atlassian Marketplace · Consultoría TI</p>
       <h1 class="mt-4 max-w-4xl font-display text-4xl font-bold leading-[1.05] tracking-tight text-slate-900 sm:text-5xl md:text-6xl lg:text-7xl">
-        Software, services, and<br class="hidden md:block" />
-        <span class="bg-gradient-to-r from-brand-700 via-water-500 to-sun-500 bg-clip-text text-transparent">15 years of know-how.</span>
+        Software, servicios y<br class="hidden md:block" />
+        <span class="bg-gradient-to-r from-brand-700 via-water-500 to-sun-500 bg-clip-text text-transparent">15 años de know-how.</span>
       </h1>
       <p class="mt-6 max-w-2xl text-lg leading-relaxed text-slate-600 sm:text-xl">
-        We build custom SaaS and Atlassian Forge apps. We consult on business and IT processes. We support the teams that run them. One partner across build, advise, and run.
+        Construimos SaaS a medida y apps Atlassian Forge. Asesoramos sobre procesos de negocio y TI. Damos soporte a los equipos que los operan. Un único partner para construir, asesorar y operar.
       </p>
       <div class="mt-10 flex flex-wrap items-center gap-3">
-        <a href="/contact/" class="btn-primary">
-          Start a project
+        <a href="/es/contact/" class="btn-primary">
+          Iniciar un proyecto
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
         </a>
-        <a href="/apps/" class="btn-secondary">Browse our apps</a>
+        <a href="/es/apps/" class="btn-secondary">Ver nuestras apps</a>
       </div>
 
       <dl class="mt-16 grid grid-cols-2 gap-8 border-t border-slate-200 pt-10 sm:grid-cols-4">
         {[
-          { k: '15 years', v: 'Of building and consulting' },
-          { k: '4+ apps', v: 'On the Atlassian Marketplace' },
-          { k: 'Atlassian', v: 'Forge Marketplace partner' },
-          { k: 'BR · EU · US', v: 'Time zones served' },
+          { k: '15 años', v: 'Construyendo y asesorando' },
+          { k: '4+ apps', v: 'En el Atlassian Marketplace' },
+          { k: 'Atlassian', v: 'Partner Forge Marketplace' },
+          { k: 'BR · EU · US', v: 'Horarios cubiertos' },
         ].map(({ k, v }) => (
           <div>
             <dt class="font-display text-3xl font-bold text-slate-900">{k}</dt>
@@ -55,36 +54,35 @@ const posts = (await getCollection('blog', ({ data }) => data.lang === 'en' && !
     </div>
   </section>
 
-  <!-- Services -->
   <section class="border-y border-slate-200 bg-paper-soft py-20 sm:py-28">
     <div class="container-wide">
       <div class="max-w-2xl">
-        <p class="eyebrow">What we do</p>
+        <p class="eyebrow">Qué hacemos</p>
         <h2 class="mt-3 font-display text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
-          Four ways we help teams build, run, and improve their software.
+          Cuatro formas de ayudar a los equipos a construir, operar y mejorar su software.
         </h2>
       </div>
 
       <div class="mt-14 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
         {[
           {
-            title: 'Custom software & SaaS',
-            desc: 'Greenfield SaaS, web and mobile apps, integrations, and bespoke platforms in TypeScript, Node, and React.',
+            title: 'Software a medida y SaaS',
+            desc: 'SaaS desde cero, apps web y móviles, integraciones y plataformas a medida en TypeScript, Node y React.',
             icon: '🛠️',
           },
           {
-            title: 'Atlassian apps & platform',
-            desc: 'Forge apps for the Marketplace, custom plugins, migrations, audits, and Jira and Confluence health work.',
+            title: 'Apps de Atlassian y plataforma',
+            desc: 'Apps Forge para el Marketplace, plugins a medida, migraciones, auditorías y salud de Jira y Confluence.',
             icon: '🧩',
           },
           {
-            title: 'Business & IT consulting',
-            desc: 'ITIL and ITSM, process design, governance, and the rollouts that turn a strategy into an actually working operation.',
+            title: 'Consultoría de negocio y TI',
+            desc: 'ITIL e ITSM, diseño de procesos, gobernanza y rollouts que convierten estrategia en operación real.',
             icon: '🧭',
           },
           {
-            title: 'Customer support & managed services',
-            desc: 'Long term support, SLAs, and operations for the software we build and the platforms you run on.',
+            title: 'Soporte y servicios gestionados',
+            desc: 'Soporte a largo plazo, SLAs y operación para el software que construimos y las plataformas que ejecutas.',
             icon: '🎧',
           },
         ].map((s) => (
@@ -99,8 +97,8 @@ const posts = (await getCollection('blog', ({ data }) => data.lang === 'en' && !
       </div>
 
       <div class="mt-10">
-        <a href="/services/" class="text-sm font-semibold text-water-700 hover:text-water-600">
-          See all services →
+        <a href="/es/services/" class="text-sm font-semibold text-water-700 hover:text-water-600">
+          Ver todos los servicios →
         </a>
       </div>
     </div>
@@ -110,32 +108,32 @@ const posts = (await getCollection('blog', ({ data }) => data.lang === 'en' && !
   <section class="py-20 sm:py-28">
     <div class="container-wide grid gap-12 lg:grid-cols-[2fr_3fr] lg:items-center">
       <div>
-        <p class="eyebrow">Software house · 15 years</p>
+        <p class="eyebrow">Software house · 15 años</p>
         <h2 class="mt-3 font-display text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl md:text-5xl">
-          We build custom software for clients on three continents.
+          Construimos software a medida para clientes en tres continentes.
         </h2>
         <p class="mt-6 text-lg leading-relaxed text-slate-600">
-          SaaS, in-house tools, customizations and integrations, mobile apps. If it's software, it's in scope. We work with teams in Brazil, Europe, and the United States, and every time zone in between.
+          SaaS, herramientas internas, personalizaciones e integraciones, apps móviles. Si es software, está dentro de nuestro alcance. Trabajamos con empresas en América Latina, Europa y Estados Unidos, y todos los horarios intermedios.
         </p>
         <div class="mt-8 flex flex-wrap gap-2">
-          {['SaaS', 'In-house', 'Mobile', 'Integrations', 'Customizations'].map((tag) => (
+          {['SaaS', 'Software interno', 'Mobile', 'Integraciones', 'Personalizaciones'].map((tag) => (
             <span class="rounded-full border border-sand-200 bg-white px-3.5 py-1.5 text-sm font-medium text-brand-800">{tag}</span>
           ))}
         </div>
         <div class="mt-8 flex flex-wrap items-center gap-3">
-          <a href="/services/#custom-software" class="btn-primary">
-            See our services
+          <a href="/es/services/#custom-software" class="btn-primary">
+            Ver nuestros servicios
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
           </a>
-          <a href="/contact/" class="btn-secondary">Talk to the team</a>
+          <a href="/es/contact/" class="btn-secondary">Habla con el equipo</a>
         </div>
       </div>
       <div class="grid gap-4 sm:grid-cols-2">
         {[
-          { h: 'Greenfield SaaS', p: 'Modern, hosted platforms that are fully yours. Integrations into the stack you already run.' },
-          { h: 'In-house tools', p: 'Dashboards, automations, and bespoke workflows that take hours out of your day.' },
-          { h: 'Mobile apps', p: 'iOS and Android applications when the customer\'s problem happens away from the desktop.' },
-          { h: 'Integrations & customizations', p: 'We connect systems. We extend platforms. We customize without breaking upgradability.' },
+          { h: 'SaaS desde cero', p: 'Plataformas modernas, alojadas, totalmente tuyas. Integraciones con el stack que ya usas.' },
+          { h: 'Herramientas internas', p: 'Paneles, automatizaciones y flujos a medida que ahorran horas a tu día a día.' },
+          { h: 'Apps móviles', p: 'Aplicaciones iOS y Android cuando el problema del cliente está lejos del escritorio.' },
+          { h: 'Integraciones y personalizaciones', p: 'Conectamos sistemas. Extendemos plataformas. Personalizamos sin romper actualizaciones.' },
         ].map((c) => (
           <article class="rounded-2xl border border-slate-200 bg-white p-6 shadow-[var(--shadow-soft)]">
             <h3 class="font-display text-lg font-semibold text-brand-900">{c.h}</h3>
@@ -152,24 +150,24 @@ const posts = (await getCollection('blog', ({ data }) => data.lang === 'en' && !
       <div>
         <p class="eyebrow">Marketplace → Forge</p>
         <h2 class="mt-3 font-display text-3xl font-bold tracking-tight text-brand-900 sm:text-4xl md:text-5xl">
-          Cut your Atlassian app licensing without losing the workflow.
+          Reduce tu gasto en apps Atlassian sin perder el workflow.
         </h2>
         <p class="mt-6 max-w-2xl text-lg leading-relaxed text-slate-700">
-          Marketplace apps charge per user, forever. We rebuild the parts you actually use as custom Forge apps that live inside Atlassian cloud security and belong to you. Fewer seats, better fit, same trust.
+          Las apps del Marketplace cobran por usuario, para siempre. Reconstruimos el uso que realmente haces como apps Forge a medida, que viven dentro de la seguridad cloud de Atlassian y son tuyas. Menos licencias, mejor encaje, la misma confianza.
         </p>
         <div class="mt-8">
-          <a href="/atlassian-app-cost-reduction/" class="btn-primary">
-            See how we shrink Atlassian costs
+          <a href="/es/atlassian-app-cost-reduction/" class="btn-primary">
+            Ve cómo bajamos tu coste en Atlassian
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
           </a>
         </div>
       </div>
       <ul class="grid gap-3 text-sm text-slate-700">
         {[
-          'Per-seat → flat cost',
-          'Forge sandbox, inside your tenant',
-          'No third-party data transit',
-          'You own the code and the roadmap',
+          'Por usuario → coste fijo',
+          'Sandbox de Forge, dentro de tu tenant',
+          'Sin tránsito de datos por terceros',
+          'Tú eres dueño del código y del roadmap',
         ].map((b) => (
           <li class="flex items-start gap-3 rounded-xl border border-white/60 bg-white/70 p-4 backdrop-blur">
             <svg class="mt-0.5 shrink-0 text-water-700" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
@@ -180,25 +178,24 @@ const posts = (await getCollection('blog', ({ data }) => data.lang === 'en' && !
     </div>
   </section>
 
-  <!-- Apps -->
   <section class="py-20 sm:py-28">
     <div class="container-wide">
       <div class="flex flex-col items-start justify-between gap-4 md:flex-row md:items-end">
         <div class="max-w-2xl">
-          <p class="eyebrow">From the Marketplace</p>
+          <p class="eyebrow">Del Marketplace</p>
           <h2 class="mt-3 font-display text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
-            Apps trusted by Atlassian teams.
+            Apps usadas por equipos Atlassian.
           </h2>
         </div>
-        <a href="/apps/" class="text-sm font-semibold text-water-700 hover:text-water-600">
-          Browse all apps →
+        <a href="/es/apps/" class="text-sm font-semibold text-water-700 hover:text-water-600">
+          Ver todas las apps →
         </a>
       </div>
 
       <div class="mt-12 grid gap-5 md:grid-cols-2">
         {apps.map((app) => (
           <a
-            href={`/apps/${contentSlug(app.id)}/`}
+            href={`/es/apps/${contentSlug(app.id)}/`}
             class="group flex flex-col justify-between rounded-2xl border border-sand-200 bg-white p-7 transition hover:-translate-y-0.5 hover:border-water-400 hover:shadow-[var(--shadow-soft)]"
           >
             <div>
@@ -206,7 +203,7 @@ const posts = (await getCollection('blog', ({ data }) => data.lang === 'en' && !
                 {app.data.icon ? (
                   <Image
                     src={app.data.icon}
-                    alt={`${app.data.name} logo`}
+                    alt={`Logo ${app.data.name}`}
                     width={56}
                     height={56}
                     class="h-14 w-14 shrink-0 rounded-xl object-cover ring-1 ring-sand-200"
@@ -228,7 +225,7 @@ const posts = (await getCollection('blog', ({ data }) => data.lang === 'en' && !
               </p>
               {app.data.audiences.length > 0 && (
                 <p class="mt-4 text-xs leading-relaxed text-slate-500">
-                  <span class="font-semibold text-brand-800">Built for:</span> {app.data.audiences.join(' · ')}
+                  <span class="font-semibold text-brand-800">Hecho para:</span> {app.data.audiences.join(' · ')}
                 </p>
               )}
             </div>
@@ -236,10 +233,10 @@ const posts = (await getCollection('blog', ({ data }) => data.lang === 'en' && !
               {app.data.products.map((p) => (
                 <span class="rounded-full bg-water-50 px-2.5 py-1 text-water-700">{PRODUCT_LABELS[p] ?? p}</span>
               ))}
-              {app.data.pricing && /^free$/i.test(app.data.pricing) && (
-                <span class="rounded-full bg-sun-50 px-2.5 py-1 text-sun-700">Free</span>
+              {app.data.pricing && /^(free|gratis|gratuito)$/i.test(app.data.pricing) && (
+                <span class="rounded-full bg-sun-50 px-2.5 py-1 text-sun-700">Gratis</span>
               )}
-              <span class="ml-auto text-slate-400 transition group-hover:text-water-600">Read more →</span>
+              <span class="ml-auto text-slate-400 transition group-hover:text-water-600">Saber más →</span>
             </div>
           </a>
         ))}
@@ -247,26 +244,25 @@ const posts = (await getCollection('blog', ({ data }) => data.lang === 'en' && !
     </div>
   </section>
 
-  <!-- Recent posts -->
   {posts.length > 0 && (
     <section class="border-t border-slate-200 bg-paper-soft py-20 sm:py-28">
       <div class="container-wide">
         <div class="flex flex-col items-start justify-between gap-4 md:flex-row md:items-end">
           <div>
-            <p class="eyebrow">From the blog</p>
+            <p class="eyebrow">Del blog</p>
             <h2 class="mt-3 font-display text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
-              Notes from the workshop.
+              Notas del taller.
             </h2>
           </div>
-          <a href="/blog/" class="text-sm font-semibold text-water-700 hover:text-water-600">
-            All posts →
+          <a href="/es/blog/" class="text-sm font-semibold text-water-700 hover:text-water-600">
+            Todos los posts →
           </a>
         </div>
 
         <div class="mt-12 grid gap-6 md:grid-cols-3">
           {posts.map((post) => (
             <a
-              href={`/blog/${contentSlug(post.id)}/`}
+              href={`/es/blog/${contentSlug(post.id)}/`}
               class="group flex flex-col overflow-hidden rounded-2xl border border-sand-200 bg-white transition hover:-translate-y-0.5 hover:shadow-[var(--shadow-soft)]"
             >
               {post.data.heroImage && (
@@ -283,7 +279,7 @@ const posts = (await getCollection('blog', ({ data }) => data.lang === 'en' && !
               )}
               <div class="flex flex-1 flex-col p-6">
                 <time datetime={post.data.pubDate.toISOString()} class="text-xs font-semibold uppercase tracking-wider text-slate-500">
-                  {post.data.pubDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+                  {post.data.pubDate.toLocaleDateString('es-ES', { month: 'short', day: 'numeric', year: 'numeric' })}
                 </time>
                 <h3 class="mt-3 font-display text-lg font-semibold text-brand-900 group-hover:text-brand-700">
                   {post.data.title}
@@ -291,7 +287,7 @@ const posts = (await getCollection('blog', ({ data }) => data.lang === 'en' && !
                 <p class="mt-2 line-clamp-3 text-sm leading-relaxed text-slate-600">
                   {post.data.description}
                 </p>
-                <span class="mt-auto pt-4 text-xs font-semibold text-water-700">Read post →</span>
+                <span class="mt-auto pt-4 text-xs font-semibold text-water-700">Leer post →</span>
               </div>
             </a>
           ))}
@@ -300,7 +296,6 @@ const posts = (await getCollection('blog', ({ data }) => data.lang === 'en' && !
     </section>
   )}
 
-  <!-- CTA -->
   <section class="py-20 sm:py-28">
     <div class="container-wide">
       <div class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-brand-900 via-brand-800 to-deep-700 p-10 sm:p-16">
@@ -308,13 +303,13 @@ const posts = (await getCollection('blog', ({ data }) => data.lang === 'en' && !
         <div class="absolute -left-10 bottom-0 h-48 w-48 rounded-full bg-water-400/30 blur-3xl" aria-hidden="true"></div>
         <div class="relative max-w-2xl">
           <h2 class="font-display text-3xl font-bold tracking-tight text-white sm:text-4xl">
-            Got something to build, fix, or rethink?
+            ¿Tienes algo que construir, arreglar o repensar?
           </h2>
           <p class="mt-4 text-lg text-brand-100">
-            Tell us about it. We'll reply within one working day with an honest take and, if we're a fit, a path forward.
+            Cuéntanos. Respondemos en un día hábil con una visión honesta y, si encajamos, con un camino a seguir.
           </p>
-          <a href="/contact/" class="mt-8 inline-flex btn-primary !bg-white !text-brand-900 hover:!bg-brand-50">
-            Start the conversation
+          <a href="/es/contact/" class="mt-8 inline-flex btn-primary !bg-white !text-brand-900 hover:!bg-brand-50">
+            Empieza la conversación
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
           </a>
         </div>

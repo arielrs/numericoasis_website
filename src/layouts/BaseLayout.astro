@@ -4,6 +4,7 @@ import { SITE, ORG_DETAILS } from '../consts';
 import SEO from '../components/SEO.astro';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
+import { detectLangFromPath, HTML_LANG_MAP, useTranslations } from '../i18n';
 
 interface Props {
   title: string;
@@ -19,6 +20,8 @@ interface Props {
 }
 
 const { title, description, image, article, noindex } = Astro.props;
+const lang = detectLangFromPath(Astro.url.pathname);
+const t = useTranslations(lang);
 
 const orgJsonLd = {
   '@context': 'https://schema.org',
@@ -44,14 +47,14 @@ const orgJsonLd = {
     '@type': 'ContactPoint',
     contactType: 'sales',
     email: SITE.email,
-    availableLanguage: ['English', 'Portuguese'],
+    availableLanguage: ['English', 'Portuguese', 'Spanish'],
   },
   sameAs: [SITE.marketplaceUrl, SITE.linkedin].filter(Boolean),
 };
 ---
 
 <!doctype html>
-<html lang="en" class="scroll-smooth">
+<html lang={HTML_LANG_MAP[lang]} class="scroll-smooth">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -61,18 +64,55 @@ const orgJsonLd = {
     <link rel="preconnect" href="https://rsms.me" />
     <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
     <link rel="alternate" type="application/rss+xml" title={`${SITE.name} blog`} href="/rss.xml" />
-    <SEO title={title} description={description} image={image} article={article} noindex={noindex} />
+    <SEO title={title} description={description} image={image} article={article} noindex={noindex} lang={lang} />
     <script type="application/ld+json" set:html={JSON.stringify(orgJsonLd)} />
+    <script is:inline>
+      (function () {
+        try {
+          var p = location.pathname;
+          if (p !== '/' && p !== '/index.html') return;
+          if (sessionStorage.getItem('locale-redirect-done') === '1') return;
+          var stored = localStorage.getItem('preferred-locale');
+          if (stored === 'pt-BR' || stored === 'es') {
+            sessionStorage.setItem('locale-redirect-done', '1');
+            location.replace('/' + stored + '/');
+            return;
+          }
+          if (stored === 'en') {
+            sessionStorage.setItem('locale-redirect-done', '1');
+            return;
+          }
+          var langs = (navigator.languages && navigator.languages.length)
+            ? navigator.languages
+            : [navigator.language || ''];
+          for (var i = 0; i < langs.length; i++) {
+            var l = (langs[i] || '').toLowerCase();
+            if (l === 'pt-br' || l === 'pt' || l.indexOf('pt-') === 0) {
+              sessionStorage.setItem('locale-redirect-done', '1');
+              location.replace('/pt-BR/');
+              return;
+            }
+            if (l === 'es' || l.indexOf('es-') === 0) {
+              sessionStorage.setItem('locale-redirect-done', '1');
+              location.replace('/es/');
+              return;
+            }
+            if (l === 'en' || l.indexOf('en-') === 0) break;
+          }
+          sessionStorage.setItem('locale-redirect-done', '1');
+        } catch (e) { /* swallow */ }
+      })();
+    </script>
   </head>
   <body class="flex min-h-screen flex-col bg-white text-slate-900">
     <a
       href="#main"
       class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:rounded-md focus:bg-brand-900 focus:px-3 focus:py-2 focus:text-sm focus:text-white"
-    >Skip to content</a>
-    <Nav />
+    >{t.common.skipToContent}</a>
+    <Nav lang={lang} />
     <main id="main" class="flex-1">
       <slot />
     </main>
-    <Footer />
+    <Footer lang={lang} />
   </body>
 </html>
