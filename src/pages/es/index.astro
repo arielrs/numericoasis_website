@@ -44,7 +44,7 @@ const posts = (await getCollection('blog', ({ data }) => data.lang === 'es' && !
           { k: '1000+', v: 'Soluciones a medida entregadas' },
           { k: '4+ apps', v: 'En el Atlassian Marketplace' },
           { k: 'Atlassian', v: 'Partner Forge Marketplace' },
-          { k: 'BR · EU · US', v: 'Horarios cubiertos' },
+          { k: '6 continentes', v: 'Clientes en todo el mundo, todos los horarios' },
         ].map(({ k, v }) => (
           <div>
             <dt class="font-display text-3xl font-bold text-slate-900">{k}</dt>
@@ -111,10 +111,10 @@ const posts = (await getCollection('blog', ({ data }) => data.lang === 'es' && !
       <div>
         <p class="eyebrow">Software house · 15 años</p>
         <h2 class="mt-3 font-display text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl md:text-5xl">
-          Construimos software a medida para clientes en tres continentes.
+          Construimos software a medida para clientes en seis continentes.
         </h2>
         <p class="mt-6 text-lg leading-relaxed text-slate-600">
-          SaaS, herramientas internas, personalizaciones e integraciones, apps móviles. Si es software, está dentro de nuestro alcance. Trabajamos con empresas en América Latina, Europa y Estados Unidos, y todos los horarios intermedios.
+          SaaS, herramientas internas, personalizaciones e integraciones, apps móviles. Si es software, está dentro de nuestro alcance. Atendemos clientes en seis continentes y cubrimos todos los horarios.
         </p>
         <div class="mt-8 flex flex-wrap gap-2">
           {['SaaS', 'Software interno', 'Mobile', 'Integraciones', 'Personalizaciones'].map((tag) => (

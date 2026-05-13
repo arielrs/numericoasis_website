@@ -30,7 +30,7 @@ export const ORG_DETAILS = {
   foundingYear: 2011,
   foundingDate: '2011-01-01',
   slogan: 'Build, advise, and run. Across software, Atlassian, and operations.',
-  serviceArea: ['Brazil', 'Europe', 'United States'],
+  serviceArea: ['Africa', 'Asia', 'Europe', 'North America', 'Oceania', 'South America'],
   knowsAbout: [
     'Atlassian Marketplace',
     'Atlassian Forge',

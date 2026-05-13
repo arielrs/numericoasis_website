@@ -45,7 +45,7 @@ const posts = (await getCollection('blog', ({ data }) => data.lang === 'en' && !
           { k: '1000+', v: 'Custom software delivered' },
           { k: '4+ apps', v: 'On the Atlassian Marketplace' },
           { k: 'Atlassian', v: 'Forge Marketplace partner' },
-          { k: 'BR · EU · US', v: 'Time zones served' },
+          { k: '6 continents', v: 'Customers worldwide, every time zone' },
         ].map(({ k, v }) => (
           <div>
             <dt class="font-display text-3xl font-bold text-slate-900">{k}</dt>
@@ -113,10 +113,10 @@ const posts = (await getCollection('blog', ({ data }) => data.lang === 'en' && !
       <div>
         <p class="eyebrow">Software house · 15 years</p>
         <h2 class="mt-3 font-display text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl md:text-5xl">
-          We build custom software for clients on three continents.
+          We build custom software for clients on six continents.
         </h2>
         <p class="mt-6 text-lg leading-relaxed text-slate-600">
-          SaaS, in-house tools, customizations and integrations, mobile apps. If it's software, it's in scope. We work with teams in Brazil, Europe, and the United States, and every time zone in between.
+          SaaS, in-house tools, customizations and integrations, mobile apps. If it's software, it's in scope. We serve customers on six continents and cover every time zone in between.
         </p>
         <div class="mt-8 flex flex-wrap gap-2">
           {['SaaS', 'In-house', 'Mobile', 'Integrations', 'Customizations'].map((tag) => (
