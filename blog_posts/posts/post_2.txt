@@ -1,0 +1,97 @@
+Title: Pay for the 20% You Use: Shrinking Your Atlassian App Footprint Without Losing the Workflow
+
+Tags: Atlassian, Forge, Marketplace, Cost Reduction, App Rationalization, Consulting
+
+Subtitle: How an honest audit and a focused custom Forge app turn pay-per-seat-forever into pay-once-you-own-it.
+
+Text:
+
+The bill that quietly grows
+
+Most teams discover the cost of their Atlassian app footprint the same way they discover most operational debt: by the time it hurts, it has been hurting for a while.
+
+Marketplace apps are billed per user. Every new hire raises the bill on every app you have ever installed. Every app you tried during a project, every plugin a contractor recommended, every tool that solved a problem two years ago is still on the invoice. Linear cost growth, with nothing pushing back the other way.
+
+We see this with customers at every size. Small teams hit it when they realize the apps cost more than a junior engineer's hours. Mid-sized teams hit it during a renewal cycle when the numbers no longer round down. Large enterprises hit it when finance asks why the Atlassian line item is growing faster than headcount.
+
+The good news is that the same audit fixes all three.
+
+
+The 80/20 of Marketplace usage
+
+The pattern we find, almost every time we audit an instance, is the same.
+
+Most teams use a small fraction of what they are paying for. Lots of apps installed during a past project, never decommissioned. Lots of premium features that nobody on the team can name. Lots of overlap, where two apps cover similar ground because they were bought by different people for different problems at different times.
+
+The 20% that teams actually depend on is usually obvious to the people doing the work. They can name it in a five-minute conversation. The other 80% is paying for features that exist, technically, but might as well not.
+
+That is the gap we close.
+
+
+What a footprint audit actually looks like
+
+A footprint audit is a short, focused engagement. Two to four weeks for a typical mid-sized instance.
+
+We pull real usage data from your Atlassian instance directly: which apps are installed, which features are active, who actually uses each one, how often. We talk to a handful of power users on each of the apps that look load-bearing. We cross-reference against your Marketplace bill.
+
+At the end you get a written report. For each app, four questions answered with evidence:
+
+- Is it essential, replaceable, or unused?
+- Does it overlap with another app you already pay for?
+- What fraction of its features does your team actually use?
+- If it is a candidate for replacement, what would the rebuild cost, what would the break-even look like, and how long would the build take?
+
+No tool sells you on the audit. The report is the audit.
+
+
+Why custom Forge beats the Marketplace alternative
+
+Some apps you keep. The Marketplace is full of excellent vendors, and rebuilding a deep tool for the sake of saving money is a bad trade. We say so when that is the answer.
+
+For the ones we recommend rebuilding, the case is straightforward. A custom Forge app is scoped only to the 20% your team uses. It runs inside Atlassian Cloud, in the same security perimeter as your Jira or Confluence instance, so data never leaves your tenancy. The codebase is yours. The roadmap is yours. The pricing model is pay-once-plus-retainer, not pay-per-seat-forever.
+
+The fit is the underrated part. Marketplace apps are designed for the average customer in their segment. Yours is designed for you. The screens have the fields you actually need. The workflows match how your team actually works. The integrations connect to your systems, not generic ones.
+
+> Marketplace apps optimize for the median customer. Custom Forge apps optimize for you.
+
+
+Small team, large team, same logic, different math
+
+The 80/20 holds at every size. The reasons to act are different.
+
+Small teams benefit because they are price-sensitive and every dollar that is not going to per-seat licensing is going somewhere useful. The savings compound quickly because the audit work is the same shape regardless of team size, but the spend curve is steeper for small teams as they grow.
+
+Mid-sized teams benefit because they are paying enterprise prices for fragmented use. Different departments bought different apps for the same problem. The audit consolidates, the rebuild focuses on the consolidated need, and what used to be three line items becomes one.
+
+Large enterprises benefit because the absolute spend is huge and the audit reveals the most savings in absolute terms. They also benefit from the security story: a Forge app sits inside Atlassian Cloud, so the compliance posture matches the rest of the Atlassian footprint without adding a third-party vendor review.
+
+The conversation looks different at each size. The economics work at all three.
+
+
+The numbers, plainly
+
+We do not publish fabricated percentages, and we will not pretend the math is universal. Every instance is different.
+
+What we can say is this. For a mid-sized team replacing a major Marketplace app on per-user pricing, the break-even on a custom Forge replacement typically lands between 12 and 24 months. After that, every month is savings. The app keeps working as long as you keep the small ongoing retainer for maintenance and Atlassian API tracking, and even that is a fraction of what the Marketplace bill was.
+
+The actual numbers we put in front of you come out of your audit, not our marketing page. They are based on your seat count, your apps, your contracts.
+
+
+The risks, and how we address them
+
+The two questions we hear most often:
+
+What if Atlassian deprecates a Forge API the custom app depends on? Atlassian announces breaking changes months in advance. We design custom apps with that in mind and offer a light retainer that covers exactly this kind of migration work. The same risk applies to the Marketplace apps you are replacing, with the difference that there you do not control whether the vendor invests in keeping their app current.
+
+Who owns it, and what if we stop working together? You own it. Source code, the Atlassian developer account, the right to modify and redistribute. We document the build and walk your team through it. If we ever part ways, you keep the app and the keys.
+
+A third one we hear less often but worth answering: are we replacing one vendor lock-in with another? No, because the new "vendor" is your own team. The code is yours, the platform is the same Atlassian Cloud you already trust, and the maintenance is small and well-scoped.
+
+
+Where to start
+
+If you have read this far and you are looking at your Atlassian bill thinking some of this might apply to you, send us the rough shape. Number of users, the list of paid Marketplace apps, what is costing the most. We will come back within a working day, honestly, about whether an audit makes sense for your situation and what the rough numbers would look like if it does.
+
+The audit details live on our /atlassian-app-cost-reduction/ page. The conversation starts at /contact/.
+
+A focused custom Forge app is not the answer for every Marketplace line on your bill. It is the answer for more of them than most teams realize. The audit is how we find out which.
