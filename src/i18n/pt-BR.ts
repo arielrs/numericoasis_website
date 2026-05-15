@@ -3,6 +3,7 @@ import type { en } from './en';
 export const ptBR = {
   nav: {
     services: 'Serviços',
+    costReduction: 'Custos Atlassian',
     apps: 'Apps',
     blog: 'Blog',
     about: 'Sobre',

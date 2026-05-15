@@ -1,6 +1,7 @@
 export const en = {
   nav: {
     services: 'Services',
+    costReduction: 'Atlassian costs',
     apps: 'Apps',
     blog: 'Blog',
     about: 'About',

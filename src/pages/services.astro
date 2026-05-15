@@ -80,6 +80,30 @@ const services = [
     </div>
   </section>
 
+  <!-- FEATURED OFFERING -->
+  <section class="py-8 sm:py-12">
+    <div class="container-wide">
+      <div class="grid gap-8 rounded-3xl border-2 border-water-200 bg-gradient-to-br from-water-50 via-white to-sun-50/50 p-8 shadow-[var(--shadow-soft)] sm:p-12 lg:grid-cols-[3fr_2fr] lg:items-center">
+        <div>
+          <p class="eyebrow">Featured offering</p>
+          <h2 class="mt-3 font-display text-3xl font-bold tracking-tight text-brand-900 sm:text-4xl">
+            Cut your Atlassian Marketplace bill, not your workflow.
+          </h2>
+          <p class="mt-4 text-base leading-relaxed text-slate-700">
+            Most teams use 20% of the features they pay for per seat. We audit your footprint, identify the apps worth rebuilding, and ship custom Forge replacements you own. Pay-once instead of pay-per-seat-forever, same Atlassian Cloud security, better fit for your team.
+          </p>
+        </div>
+        <div class="flex flex-col gap-3">
+          <a href="/atlassian-app-cost-reduction/" class="btn-primary justify-center">
+            See how the audit works
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+          </a>
+          <a href="/contact/" class="btn-secondary justify-center">Start a footprint review</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <section class="py-12 sm:py-20">
     <div class="container-wide grid gap-12">
       {services.map((s, i) => (

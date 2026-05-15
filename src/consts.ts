@@ -13,6 +13,7 @@ export const SITE = {
 
 export const NAV_LINKS = [
   { href: '/services/', labelKey: 'services' },
+  { href: '/atlassian-app-cost-reduction/', labelKey: 'costReduction' },
   { href: '/apps/', labelKey: 'apps' },
   { href: '/blog/', labelKey: 'blog' },
   { href: '/about/', labelKey: 'about' },

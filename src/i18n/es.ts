@@ -3,6 +3,7 @@ import type { en } from './en';
 export const es = {
   nav: {
     services: 'Servicios',
+    costReduction: 'Costos Atlassian',
     apps: 'Apps',
     blog: 'Blog',
     about: 'Nosotros',
