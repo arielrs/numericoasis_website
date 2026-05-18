@@ -104,8 +104,8 @@ const shareUrl = encodeURIComponent(url);
           src={post.data.heroImage}
           alt={post.data.title}
           width={1200}
-          height={800}
-          class="w-full rounded-3xl object-cover shadow-[var(--shadow-soft)] ring-1 ring-sand-200"
+          height={Math.round((post.data.heroImage.height / post.data.heroImage.width) * 1200)}
+          class="w-full rounded-3xl shadow-[var(--shadow-soft)] ring-1 ring-sand-200"
           loading="eager"
         />
       </div>
