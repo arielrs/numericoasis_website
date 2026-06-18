@@ -8,6 +8,7 @@ import { LEVEL_SECONDS, newBlind, newBreak } from './defaults';
 import * as fs from './fullscreen';
 import { icon } from './icons';
 import { applyPalette, isHex, normalizeHex, palettesEqual, pickInk, PRESETS } from './palette';
+import * as storage from './storage';
 import {
   blindNumber, currentEntry, isBreak, nextEntry, progressFraction,
   resumingBlindNumber, totalBlinds,
@@ -26,6 +27,7 @@ let lastAnnouncedKey = '';
 let pendingCustom: { id: string; name: string } | null = null;
 let editorTab: 'blinds' | 'chips' = 'blinds';
 let seekDragging = false;
+let logoUrl: string | null = null;
 
 // ---- markup builders --------------------------------------------------
 
@@ -37,7 +39,7 @@ function chipRowsHTML(chips: ChipDef[]): string {
   return chips.map(
     (c) => `
     <div class="legend__row">
-      <dt aria-label="Chip worth ${formatNum(c.value)}"><span class="chip" style="${chipStyle(c.color)}"><span class="chip__val">${formatNum(c.value)}</span></span></dt>
+      <dt aria-label="Chip worth ${formatNum(c.value)}"><span class="chip" style="${chipStyle(c.color)}"></span></dt>
       <dd>${formatNum(c.value)}</dd>
     </div>`,
   ).join('');
@@ -45,7 +47,7 @@ function chipRowsHTML(chips: ChipDef[]): string {
 
 function fsChipsHTML(chips: ChipDef[]): string {
   return chips.map(
-    (c) => `<span class="fs-chip" aria-label="Chip ${c.value}"><span class="chip" style="${chipStyle(c.color)}"><span class="chip__val">${formatNum(c.value)}</span></span><b class="num">${formatNum(c.value)}</b></span>`,
+    (c) => `<span class="fs-chip" aria-label="Chip ${c.value}"><span class="chip" style="${chipStyle(c.color)}"></span><b class="num">${formatNum(c.value)}</b></span>`,
   ).join('');
 }
 
@@ -98,17 +100,15 @@ function appHTML(): string {
   </header>
 
   <div class="main">
+    <img class="main__logo" id="club-logo" src="/poker/oliclub.webp" alt="Oliclub" />
     <div class="stage-col">
       <section class="stage" aria-label="Tournament timer">
         <div class="fs-level num" id="fs-level"></div>
         <div class="level-pill"><span class="level-pill__dot"></span><span id="level-text">Level 1</span></div>
 
-        <div class="clock-row">
-          <img class="clock-row__logo" src="/poker/oliclub.webp" alt="Oliclub" />
-          <div class="clock-wrap">
-            <div class="clock" id="clock" aria-hidden="true"><span id="clk-pre">0</span><span class="clock__colon">:</span><span id="clk-post">00</span></div>
-            <span class="paused-tag">Paused</span>
-          </div>
+        <div class="clock-wrap">
+          <div class="clock" id="clock" aria-hidden="true"><span id="clk-pre">0</span><span class="clock__colon">:</span><span id="clk-post">00</span></div>
+          <span class="paused-tag">Paused</span>
         </div>
 
         <div class="progress"><div class="progress__fill" id="progress-fill"></div></div>
@@ -206,10 +206,20 @@ function appHTML(): string {
         <span class="eyebrow">Display</span>
         ${switchHTML('set-flashLast60', 'Flash the clock in the final minute')}
         ${switchHTML('set-showChips', 'Show chip values')}
-        ${switchHTML('set-showChipsFullscreen', 'Show chip values in fullscreen')}
         ${switchHTML('set-autoFullscreen', 'Go fullscreen when I press play')}
         ${switchHTML('set-keepAwake', 'Keep the screen awake while running')}
         ${switchHTML('set-resumeRunningOnReload', 'Keep running after a page reload', 'Off = pause on reload (safer)')}
+      </div>
+
+      <div class="opt-group">
+        <span class="eyebrow">Logo</span>
+        ${switchHTML('set-showLogo', 'Show club logo')}
+        ${switchHTML('set-logoFullscreen', 'Show logo in fullscreen')}
+        <div class="opt-row">
+          <button class="btn btn--ghost" id="logo-upload-btn">${icon('upload')}<span>Replace logo…</span></button>
+          <button class="btn btn--ghost" id="logo-reset-btn">${icon('restart')}<span>Reset</span></button>
+        </div>
+        <input type="file" id="logo-file" accept="image/*" class="visually-hidden" />
       </div>
 
       <div class="opt-group">
@@ -434,7 +444,7 @@ function rebuildLegend(s: AppState): void {
 function chipEditRowHTML(c: ChipDef): string {
   const hex = normalizeHex(c.color);
   return `<div class="chip-edit" data-chiprow="${c.id}">
-    <span class="chip chip--sm" data-chippreview style="${chipStyle(c.color)}"><span class="chip__val">${formatNum(c.value)}</span></span>
+    <span class="chip chip--sm" data-chippreview style="${chipStyle(c.color)}"></span>
     <input type="color" data-chipfield="color" data-chipid="${c.id}" value="${hex}" aria-label="Chip colour" />
     <input type="text" class="pal-hex" data-chiphex data-chipid="${c.id}" value="${hex}" maxlength="7" spellcheck="false" aria-label="Chip hex code" />
     <input type="number" class="cellinput" data-chipfield="value" data-chipid="${c.id}" min="0" step="1" value="${c.value}" aria-label="Chip value" />
@@ -573,7 +583,8 @@ function bind(): void {
   bindSwitch('set-warn60', 'warn60');
   bindSwitch('set-flashLast60', 'flashLast60');
   bindSwitch('set-showChips', 'showChips');
-  bindSwitch('set-showChipsFullscreen', 'showChipsFullscreen');
+  bindSwitch('set-showLogo', 'showLogo');
+  bindSwitch('set-logoFullscreen', 'logoFullscreen');
   bindSwitch('set-autoFullscreen', 'autoFullscreen');
   bindSwitch('set-keepAwake', 'keepAwake');
   bindSwitch('set-resumeRunningOnReload', 'resumeRunningOnReload');
@@ -593,6 +604,10 @@ function bind(): void {
   $('test-btn').onclick = () => audio.preview();
   $('upload-btn').onclick = () => $('sound-file').click();
   $<HTMLInputElement>('sound-file').addEventListener('change', onUpload);
+
+  $('logo-upload-btn').onclick = () => $('logo-file').click();
+  $('logo-reset-btn').onclick = onLogoReset;
+  $<HTMLInputElement>('logo-file').addEventListener('change', onLogoUpload);
 
   // Palette colour pickers (live on input, persist on change)
   const palette = $('palette');
@@ -666,6 +681,42 @@ function onUpload(e: Event): void {
       showToast(res.error);
     }
   });
+}
+
+const LOGO_KEY = 'logo';
+const DEFAULT_LOGO = '/poker/oliclub.webp';
+
+export function applyLogo(): void {
+  const img = document.getElementById('club-logo') as HTMLImageElement | null;
+  if (!img) return;
+  if (logoUrl) { URL.revokeObjectURL(logoUrl); logoUrl = null; }
+  if (store.getState().settings.customLogo) {
+    void storage.getImage(LOGO_KEY).then((blob) => {
+      if (blob) { logoUrl = URL.createObjectURL(blob); img.src = logoUrl; }
+      else img.src = DEFAULT_LOGO;
+    }).catch(() => { img.src = DEFAULT_LOGO; });
+  } else {
+    img.src = DEFAULT_LOGO;
+  }
+}
+
+function onLogoUpload(e: Event): void {
+  const input = e.target as HTMLInputElement;
+  const file = input.files?.[0];
+  input.value = '';
+  if (!file) return;
+  if (!file.type.startsWith('image/')) { showToast('That file is not an image.'); return; }
+  if (file.size > 4 * 1024 * 1024) { showToast('Image is too large (max 4 MB).'); return; }
+  void storage.putImage(LOGO_KEY, file)
+    .then(() => { store.setSetting('customLogo', true); applyLogo(); showToast('Logo updated'); })
+    .catch(() => showToast("Couldn't save that image."));
+}
+
+function onLogoReset(): void {
+  void storage.deleteImage(LOGO_KEY).catch(() => {});
+  store.setSetting('customLogo', false);
+  applyLogo();
+  showToast('Logo reset to default');
 }
 
 function onEditorClick(e: Event): void {
@@ -746,8 +797,6 @@ function onChipInput(e: Event): void {
     if (!Number.isFinite(v) || v < 0) { t.setAttribute('aria-invalid', 'true'); return; }
     t.removeAttribute('aria-invalid');
     store.updateChip(id, { value: v });
-    const valEl = row.querySelector<HTMLElement>('[data-chippreview] .chip__val');
-    if (valEl) valEl.textContent = formatNum(v);
   } else return;
   flashSaved();
 }
@@ -868,18 +917,18 @@ export function update(s: AppState): void {
   $('fs-btn').setAttribute('aria-label', fs.isActive() ? 'Exit fullscreen' : 'Enter fullscreen');
   $('fs-btn').innerHTML = fs.isActive() ? icon('collapse') : icon('expand');
 
-  // legend visibility
-  const showLegend = fs.isActive() ? s.settings.showChipsFullscreen : s.settings.showChips;
+  // legend (windowed) + logo visibility; the fullscreen chip strip is always shown (CSS)
   $('legend').hidden = !s.settings.showChips;
-  $('fs-chips').style.display = fs.isActive() && s.settings.showChipsFullscreen ? 'flex' : 'none';
-  void showLegend;
+  const clubLogo = document.getElementById('club-logo');
+  if (clubLogo) clubLogo.hidden = fs.isActive() ? !s.settings.logoFullscreen : !s.settings.showLogo;
 
   // settings reflections
   reflectSwitch('set-soundEnabled', s.settings.soundEnabled);
   reflectSwitch('set-warn60', s.settings.warn60);
   reflectSwitch('set-flashLast60', s.settings.flashLast60);
   reflectSwitch('set-showChips', s.settings.showChips);
-  reflectSwitch('set-showChipsFullscreen', s.settings.showChipsFullscreen);
+  reflectSwitch('set-showLogo', s.settings.showLogo);
+  reflectSwitch('set-logoFullscreen', s.settings.logoFullscreen);
   reflectSwitch('set-autoFullscreen', s.settings.autoFullscreen);
   reflectSwitch('set-keepAwake', s.settings.keepAwake);
   reflectSwitch('set-resumeRunningOnReload', s.settings.resumeRunningOnReload);
@@ -976,6 +1025,7 @@ export function mount(): void {
   app.removeAttribute('aria-busy');
   app.innerHTML = appHTML();
   bind();
+  applyLogo();
   document.addEventListener('keydown', trapTab, true);
   fs.init(app);
 }

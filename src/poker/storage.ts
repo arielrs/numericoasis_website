@@ -66,7 +66,8 @@ function coerceSettings(raw: unknown): Settings {
   if (isFiniteNum(s.volume)) out.volume = Math.min(1, Math.max(0, s.volume));
   for (const k of [
     'muted', 'soundEnabled', 'warn60', 'flashLast60', 'showChips',
-    'showChipsFullscreen', 'autoFullscreen', 'keepAwake', 'resumeRunningOnReload',
+    'showLogo', 'logoFullscreen', 'customLogo',
+    'autoFullscreen', 'keepAwake', 'resumeRunningOnReload',
   ] as const) {
     if (typeof s[k] === 'boolean') (out[k] as boolean) = s[k] as boolean;
   }
@@ -235,4 +236,56 @@ export async function listSounds(): Promise<StoredSound[]> {
   });
   db.close();
   return all;
+}
+
+// ---- IndexedDB: media (replacement logo) ------------------------------
+
+const MEDIA_DB = 'oliclub-media';
+const MEDIA_STORE = 'images';
+
+function openMediaDb(): Promise<IDBDatabase> {
+  return new Promise((resolve, reject) => {
+    if (typeof indexedDB === 'undefined') { reject(new Error('no-indexeddb')); return; }
+    const req = indexedDB.open(MEDIA_DB, 1);
+    req.onupgradeneeded = () => {
+      const db = req.result;
+      if (!db.objectStoreNames.contains(MEDIA_STORE)) db.createObjectStore(MEDIA_STORE);
+    };
+    req.onsuccess = () => resolve(req.result);
+    req.onerror = () => reject(req.error ?? new Error('idb-open-failed'));
+  });
+}
+
+export async function putImage(key: string, blob: Blob): Promise<void> {
+  const db = await openMediaDb();
+  await new Promise<void>((resolve, reject) => {
+    const tx = db.transaction(MEDIA_STORE, 'readwrite');
+    tx.objectStore(MEDIA_STORE).put(blob, key);
+    tx.oncomplete = () => resolve();
+    tx.onerror = () => reject(tx.error);
+  });
+  db.close();
+}
+
+export async function getImage(key: string): Promise<Blob | null> {
+  const db = await openMediaDb();
+  const blob = await new Promise<Blob | null>((resolve, reject) => {
+    const tx = db.transaction(MEDIA_STORE, 'readonly');
+    const req = tx.objectStore(MEDIA_STORE).get(key);
+    req.onsuccess = () => resolve((req.result as Blob) ?? null);
+    req.onerror = () => reject(req.error);
+  });
+  db.close();
+  return blob;
+}
+
+export async function deleteImage(key: string): Promise<void> {
+  const db = await openMediaDb();
+  await new Promise<void>((resolve, reject) => {
+    const tx = db.transaction(MEDIA_STORE, 'readwrite');
+    tx.objectStore(MEDIA_STORE).delete(key);
+    tx.oncomplete = () => resolve();
+    tx.onerror = () => reject(tx.error);
+  });
+  db.close();
 }

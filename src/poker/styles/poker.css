@@ -141,15 +141,26 @@ img { display: block; max-width: 100%; }
 
 /* ---------- Main stage ----------------------------------------------- */
 
+/* Three columns with EQUAL flexible sides → the centre (stage) is always
+   centred in the viewport, so the clock never shifts regardless of the logo. */
 .main {
+  position: relative;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) clamp(220px, 22vw, 300px);
-  gap: clamp(1rem, 2.5vw, 2rem);
-  align-content: start;
+  grid-template-columns: minmax(0, 1fr) minmax(0, clamp(340px, 48vw, 880px)) minmax(0, 1fr);
+  gap: clamp(0.75rem, 2vw, 2rem);
+  align-items: start;
   padding: clamp(1rem, 3vw, 2.5rem);
-  max-width: 1500px; width: 100%; margin-inline: auto;
+  max-width: 1800px; width: 100%; margin-inline: auto;
+}
+/* Club logo: lives in the left column, hugs the stage, as big as the column allows. */
+.main__logo {
+  justify-self: end; min-width: 0; width: 100%; height: auto;
+  max-width: clamp(180px, 30vw, 560px);
+  border-radius: clamp(10px, 1.5vw, 22px);
+  filter: drop-shadow(0 8px 26px rgb(var(--shadow-rgb) / 0.5));
 }
 .stage-col { display: grid; gap: 1.25rem; align-content: start; min-width: 0; }
+.legend { justify-self: start; }
 
 .stage {
   position: relative;
@@ -174,17 +185,6 @@ img { display: block; max-width: 100%; }
   border-radius: calc(var(--radius-lg) - 4px);
   border: 1px dashed color-mix(in oklab, var(--felt-line) 55%, transparent);
   pointer-events: none;
-}
-
-/* Club logo sits to the left of the clock, sized to the clock. */
-.clock-row {
-  display: flex; align-items: center; justify-content: center;
-  gap: clamp(0.75rem, 3cqmin, 2.5rem); width: 100%;
-}
-.clock-row__logo {
-  height: clamp(3rem, min(17cqw, 34cqh), 13rem); width: auto; flex: none;
-  border-radius: clamp(8px, 1.4cqmin, 18px);
-  filter: drop-shadow(0 6px 22px rgb(var(--shadow-rgb) / 0.45));
 }
 
 .level-pill {
@@ -331,10 +331,8 @@ img { display: block; max-width: 100%; }
   content: ""; position: absolute; inset: 22%; border-radius: 50%;
   border: 1px dashed color-mix(in oklab, var(--chip-ink) 45%, transparent);
 }
-.chip__val { position: relative; font-family: var(--font-num); font-weight: 600; font-size: 0.72rem; color: var(--chip-ink); }
 .legend__row:hover .chip { transform: translateY(-2px) rotate(-4deg); box-shadow: inset 0 0 0 2px var(--edge), 0 8px 18px rgb(var(--shadow-rgb) / 0.4); }
 .chip--sm { width: 34px; height: 34px; }
-.chip--sm .chip__val { font-size: 0.56rem; }
 
 /* ===================================================================== */
 /* Last-60s emphasis                                                     */
@@ -374,11 +372,19 @@ img { display: block; max-width: 100%; }
 .app[data-fullscreen="true"][data-controls-hidden="true"] .fs-bar { opacity: 0; pointer-events: none; transform: translateX(-50%) translateY(12px); }
 .app[data-fullscreen="true"][data-controls-hidden="true"] { cursor: none; }
 
-/* Compact chip strip inside the stage (fullscreen only, opt-in) */
+/* Compact chip strip inside the stage — always shown in fullscreen. */
 .fs-chips { display: none; gap: clamp(0.5rem, 2cqmin, 1.6rem); flex-wrap: wrap; justify-content: center; margin-top: clamp(0.4rem, 1.6cqh, 1.4rem); }
+.app[data-fullscreen="true"] .fs-chips { display: flex; }
 .fs-chip { display: inline-flex; align-items: center; gap: 0.4rem; color: var(--felt-ink-muted); font-size: clamp(0.7rem, 1.5cqmin, 1.05rem); }
 .fs-chip .chip { width: clamp(26px, 3.8cqmin, 46px); height: clamp(26px, 3.8cqmin, 46px); }
-.fs-chip .chip__val { font-size: 0.58rem; }
+.fs-chip b { font-weight: 600; }
+
+/* In fullscreen the logo (if enabled) floats at the left edge so it never
+   shifts the centred clock. */
+.app[data-fullscreen="true"] .main__logo {
+  position: absolute; left: clamp(1rem, 3vw, 3.5rem); top: 50%; transform: translateY(-50%);
+  width: auto; height: auto; max-width: clamp(120px, 15vw, 300px); max-height: 42vh; z-index: 1;
+}
 
 /* Show level indicator top-right in fullscreen */
 .app[data-fullscreen="true"] .fs-level {
@@ -572,14 +578,15 @@ kbd {
 /* Responsive                                                            */
 /* ===================================================================== */
 @media (max-width: 1080px) {
-  .main { grid-template-columns: 1fr; }
-  .legend { order: 3; }
+  .main { grid-template-columns: 1fr; justify-items: center; }
+  .main__logo { justify-self: center; width: auto; max-width: clamp(140px, 34vw, 320px); }
+  .legend { justify-self: stretch; order: 3; width: 100%; }
   .legend__list { grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); }
 }
 @media (max-width: 640px) {
   .main { padding: 0.85rem; gap: 0.85rem; }
   .stage { min-height: 52vh; }
-  .clock-row__logo { display: none; }   /* keep the clock dominant on phones */
+  .main__logo { display: none; }   /* keep the clock dominant on phones */
   .transport { gap: 0.4rem; }
   .transport .btn span.btn__txt { display: none; }   /* icon-only secondary on phone */
   .transport .btn--primary span.btn__txt { display: inline; }

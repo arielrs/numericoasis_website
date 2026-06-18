@@ -67,7 +67,12 @@ export interface Settings {
   /** flash/pulse the clock during the final minute */
   flashLast60: boolean;
   showChips: boolean;
-  showChipsFullscreen: boolean;
+  /** show the club logo beside the clock (windowed) */
+  showLogo: boolean;
+  /** also show the logo in fullscreen (off by default) */
+  logoFullscreen: boolean;
+  /** a replacement logo image is stored in IndexedDB */
+  customLogo: boolean;
   autoFullscreen: boolean;
   keepAwake: boolean;
   /** if true, a reload while running keeps running instead of pausing */
