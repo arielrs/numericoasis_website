@@ -749,20 +749,24 @@ function positionLogo(sizeOverride?: number): void {
   const stage = app.querySelector('.stage') as HTMLElement | null;
   if (!main || !stage) return;
   const mainRect = main.getBoundingClientRect();
-  let gutter: number, targetY: number;
+  const vh = window.innerHeight;
+  let gutter: number, bandTop: number;
   if (fs.isActive()) {
-    const clock = document.getElementById('clock')!.getBoundingClientRect();
-    gutter = clock.left;
-    targetY = window.innerHeight / 2;
+    gutter = document.getElementById('clock')!.getBoundingClientRect().left;
+    bandTop = 0; // no header in fullscreen
   } else {
-    const s = stage.getBoundingClientRect();
-    gutter = s.left;
-    targetY = s.top + s.height / 2;
+    gutter = stage.getBoundingClientRect().left;
+    const hdr = app.querySelector('.hdr') as HTMLElement | null;
+    bandTop = hdr ? hdr.getBoundingClientRect().bottom : 0;
   }
-  const targetX = gutter / 2; // midpoint between the wall (0) and the timer
-  const maxW = Math.max(60, gutter - 28); // keep a margin from the timer
+  // Centre between the wall and the timer (X) and between the header line and the
+  // screen bottom (Y); cap to BOTH so the logo never invades or leaves the screen.
+  const targetX = gutter / 2;
+  const targetY = (bandTop + vh) / 2;
+  const maxW = gutter - 28;
+  const maxH = (vh - bandTop) - 28;
   const reqW = sizeOverride ?? store.getState().settings.logoSize;
-  const W = Math.max(LOGO_MIN, Math.min(reqW, maxW, window.innerHeight * 0.9));
+  const W = Math.max(40, Math.min(reqW, maxW, maxH));
   box.style.width = `${W}px`;
   box.style.height = `${W}px`;
   box.style.left = `${Math.round(targetX - mainRect.left - W / 2)}px`;
@@ -786,6 +790,7 @@ function bindLogoResize(): void {
     store.setSetting('logoSize', cur);
   };
   box.addEventListener('pointerdown', (e) => {
+    if (fs.isActive()) return; // resizing is disabled in fullscreen
     if (!(e.target as HTMLElement).closest('[data-resize]')) return;
     e.preventDefault();
     const r = box.getBoundingClientRect();
@@ -797,6 +802,7 @@ function bindLogoResize(): void {
     document.addEventListener('pointerup', onUp);
   });
   box.addEventListener('keydown', (e) => {
+    if (fs.isActive()) return; // resizing is disabled in fullscreen
     let d = 0;
     if (['ArrowUp', 'ArrowRight', '+', '='].includes(e.key)) d = 20;
     else if (['ArrowDown', 'ArrowLeft', '-', '_'].includes(e.key)) d = -20;

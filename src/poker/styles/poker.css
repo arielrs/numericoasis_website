@@ -404,7 +404,9 @@ img { display: block; max-width: 100%; }
 .fs-chip b { font-weight: 600; }
 
 /* The logo (if enabled in fullscreen) is positioned by positionLogo() — centred in
-   the gap between the wall and the clock, above the stage. */
+   the gap between the wall and the clock, above the stage. Resizing is disabled in
+   fullscreen, so its handles are hidden. */
+.app[data-fullscreen="true"] .logo-handle { display: none; }
 
 /* Show level indicator top-right in fullscreen */
 .app[data-fullscreen="true"] .fs-level {
