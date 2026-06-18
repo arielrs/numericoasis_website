@@ -158,11 +158,10 @@ img { display: block; max-width: 100%; }
    It sits below the stage (z-index), so an oversized logo tucks behind the panel
    rather than covering the clock. */
 .logo-cell { display: contents; }
+/* Size + position are driven by positionLogo() in JS (centred in the left gutter,
+   capped so it never covers the clock). No transform → no fullscreen repaint glitch. */
 .logo-box {
-  grid-column: 1; grid-row: 1; justify-self: center; align-self: center;
-  position: relative; min-width: 0;
-  width: min(var(--logo-size, 440px), 100%, 90vh);
-  aspect-ratio: 1; touch-action: none;
+  position: absolute; z-index: 2; min-width: 0; touch-action: none;
 }
 .logo-box:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 8px; border-radius: 18px; }
 .main__logo {
@@ -404,13 +403,8 @@ img { display: block; max-width: 100%; }
 .fs-chip .chip { width: clamp(26px, 3.8cqmin, 46px); height: clamp(26px, 3.8cqmin, 46px); }
 .fs-chip b { font-weight: 600; }
 
-/* In fullscreen the logo (if enabled) floats in the left area, above the stage,
-   so it never shifts the centred clock; still corner-resizable. */
-.app[data-fullscreen="true"] .logo-cell { display: contents; }
-.app[data-fullscreen="true"] .logo-box {
-  position: absolute; left: clamp(0.5rem, 4vw, 4rem); top: 50%; transform: translateY(-50%);
-  width: min(var(--logo-size, 440px), 34vw, 86vh); z-index: 2;
-}
+/* The logo (if enabled in fullscreen) is positioned by positionLogo() — centred in
+   the gap between the wall and the clock, above the stage. */
 
 /* Show level indicator top-right in fullscreen */
 .app[data-fullscreen="true"] .fs-level {
@@ -607,9 +601,8 @@ kbd {
   .main { grid-template-columns: 1fr; justify-items: center; }
   .logo-cell { display: contents; }
   .logo-box {
-    position: static; transform: none; left: auto; top: auto;
-    grid-column: 1; grid-row: auto; order: 0; justify-self: center;
-    width: min(var(--logo-size, 440px), 70vw, 38vh);
+    position: static; grid-column: 1; grid-row: auto; order: 0; justify-self: center;
+    width: min(var(--logo-size, 440px), 70vw, 38vh); aspect-ratio: 1;
   }
   .main > .stage { grid-column: 1; grid-row: auto; order: 1; width: 100%; }
   .underbar { grid-column: 1; grid-row: auto; order: 2; width: 100%; }

@@ -732,6 +732,43 @@ function onLogoReset(): void {
   showToast('Logo reset to default');
 }
 
+/**
+ * Position + size the logo with JS so it is truly centred in the gap between the
+ * window's left edge and the timer (the clock in fullscreen, the panel windowed),
+ * and capped so it never covers the clock. On small screens the logo is laid out
+ * by CSS (static, stacked) — we just clear our inline styles and bail.
+ */
+function positionLogo(sizeOverride?: number): void {
+  const box = document.getElementById('logo-box');
+  if (!box || box.hidden) return;
+  if (getComputedStyle(box).position !== 'absolute') {
+    box.style.left = box.style.top = box.style.width = box.style.height = '';
+    return;
+  }
+  const main = app.querySelector('.main') as HTMLElement | null;
+  const stage = app.querySelector('.stage') as HTMLElement | null;
+  if (!main || !stage) return;
+  const mainRect = main.getBoundingClientRect();
+  let gutter: number, targetY: number;
+  if (fs.isActive()) {
+    const clock = document.getElementById('clock')!.getBoundingClientRect();
+    gutter = clock.left;
+    targetY = window.innerHeight / 2;
+  } else {
+    const s = stage.getBoundingClientRect();
+    gutter = s.left;
+    targetY = s.top + s.height / 2;
+  }
+  const targetX = gutter / 2; // midpoint between the wall (0) and the timer
+  const maxW = Math.max(60, gutter - 28); // keep a margin from the timer
+  const reqW = sizeOverride ?? store.getState().settings.logoSize;
+  const W = Math.max(LOGO_MIN, Math.min(reqW, maxW, window.innerHeight * 0.9));
+  box.style.width = `${W}px`;
+  box.style.height = `${W}px`;
+  box.style.left = `${Math.round(targetX - mainRect.left - W / 2)}px`;
+  box.style.top = `${Math.round(targetY - mainRect.top - W / 2)}px`;
+}
+
 /** Drag any corner to resize the logo (symmetric about its centre); persist on release. */
 function bindLogoResize(): void {
   const box = $('logo-box');
@@ -739,8 +776,8 @@ function bindLogoResize(): void {
   const onMove = (e: PointerEvent) => {
     const dist = Math.hypot(e.clientX - cx, e.clientY - cy);
     const requested = Math.min(LOGO_MAX, Math.max(LOGO_MIN, dist * Math.SQRT2));
-    box.style.setProperty('--logo-size', Math.round(requested) + 'px');
-    cur = Math.round(box.getBoundingClientRect().width); // persist the effective (capped) size
+    positionLogo(requested);
+    cur = Math.round(box.getBoundingClientRect().width); // effective (capped) size
   };
   const onUp = () => {
     logoResizing = false;
@@ -975,7 +1012,10 @@ export function update(s: AppState): void {
   const logoBox = document.getElementById('logo-box');
   if (logoBox) {
     logoBox.hidden = fs.isActive() ? !s.settings.logoFullscreen : !s.settings.showLogo;
-    if (!logoResizing) logoBox.style.setProperty('--logo-size', `${s.settings.logoSize}px`);
+    if (!logoResizing) {
+      logoBox.style.setProperty('--logo-size', `${s.settings.logoSize}px`);
+      positionLogo();
+    }
   }
 
   // settings reflections
@@ -1084,6 +1124,11 @@ export function mount(): void {
   applyLogo();
   document.addEventListener('keydown', trapTab, true);
   fs.init(app);
+  // Keep the logo centred in the left gutter across resizes and fullscreen toggles.
+  window.addEventListener('resize', () => positionLogo());
+  document.addEventListener('fullscreenchange', () => { window.setTimeout(positionLogo, 60); });
+  document.addEventListener('webkitfullscreenchange', () => { window.setTimeout(positionLogo, 60); });
+  positionLogo();
 }
 
 export { closeTopmost, anyOverlayOpen, startPlayGesture as playPause };
