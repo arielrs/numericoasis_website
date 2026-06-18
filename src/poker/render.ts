@@ -1020,7 +1020,10 @@ export function update(s: AppState): void {
     logoBox.hidden = fs.isActive() ? !s.settings.logoFullscreen : !s.settings.showLogo;
     if (!logoResizing) {
       logoBox.style.setProperty('--logo-size', `${s.settings.logoSize}px`);
-      positionLogo();
+      // Position only when not actively counting down — never touch the logo on
+      // each tick (this is what made it vanish on play in some fullscreen GPUs).
+      // It is also repositioned on resize and fullscreenchange via listeners.
+      if (status !== 'running') positionLogo();
     }
   }
 
