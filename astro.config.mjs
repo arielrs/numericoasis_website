@@ -16,6 +16,8 @@ export default defineConfig({
   integrations: [
     mdx(),
     sitemap({
+      // Keep the hidden /poker/ timer out of the sitemap.
+      filter: (page) => !page.includes('/poker'),
       i18n: {
         defaultLocale: 'en',
         locales: {

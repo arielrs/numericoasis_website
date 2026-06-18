@@ -1,0 +1,59 @@
+---
+// Oliclub Poker Timer — a self-contained, hidden tournament timer.
+// Deliberately standalone: it does NOT use BaseLayout/Nav/Footer/SEO/global.css.
+// All logic lives in ../poker/*.ts (Astro/Vite bundles the module <script> below).
+// Self-hosted fonts (portable, offline-safe) per ui-craft typography guidance.
+import '@fontsource/inter/400.css';
+import '@fontsource/inter/500.css';
+import '@fontsource/inter/600.css';
+import '@fontsource-variable/jetbrains-mono';
+import '../poker/styles/poker.css';
+---
+
+<!doctype html>
+<html lang="en" data-theme="midnight-felt">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>Oliclub Poker Timer</title>
+    <meta name="description" content="Oliclub Poker Timer" />
+    <meta name="robots" content="noindex,nofollow" />
+    <meta name="theme-color" content="#15171c" />
+    <link rel="icon" type="image/png" href="/poker/oliclub-favicon.png" />
+    <link rel="apple-touch-icon" href="/poker/oliclub-favicon.png" />
+
+    {/* No-flash theme bootstrap: set the saved theme before first paint. */}
+    <script is:inline>
+      (function () {
+        try {
+          var valid = ['midnight-felt', 'casino-classic', 'oled-contrast', 'amber-warm', 'slate-cool', 'paper-light'];
+          var t = localStorage.getItem('oliclub.theme');
+          if (t && valid.indexOf(t) !== -1) {
+            document.documentElement.setAttribute('data-theme', t);
+          }
+        } catch (e) {
+          /* swallow — fall back to the default dark theme */
+        }
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="app" class="app-loading" aria-busy="true">
+      <div class="boot-splash" role="status" aria-label="Loading Oliclub Poker Timer">
+        <img src="/poker/oliclub.webp" alt="" width="96" height="96" />
+        <span class="boot-splash__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+      </div>
+    </div>
+
+    <noscript>
+      <p style="color:#eee;background:#15171c;font:16px/1.6 system-ui;padding:2rem;text-align:center;">
+        The Oliclub Poker Timer needs JavaScript enabled to run.
+      </p>
+    </noscript>
+
+    <script>
+      import { boot } from '../poker/main.ts';
+      boot();
+    </script>
+  </body>
+</html>
