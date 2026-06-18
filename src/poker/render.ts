@@ -101,7 +101,7 @@ function appHTML(): string {
 
   <div class="main">
     <div class="logo-cell" id="logo-box">
-      <img class="main__logo" id="club-logo" src="/poker/oliclub.webp" alt="Oliclub" />
+      <img class="main__logo club-logo-img" id="club-logo" src="/poker/oliclub.webp" alt="Oliclub" />
     </div>
     <section class="stage" aria-label="Tournament timer">
         <div class="fs-level num" id="fs-level"></div>
@@ -137,6 +137,10 @@ function appHTML(): string {
       <div class="legend__title"><span class="eyebrow">Chip values</span></div>
       <dl class="legend__list" id="legend-list"></dl>
     </aside>
+
+    <div class="logo-cell logo-cell--right" id="logo-box-right" aria-hidden="true">
+      <img class="main__logo club-logo-img" src="/poker/oliclub.webp" alt="" />
+    </div>
 
     <div class="underbar">
       <div class="seek">
@@ -687,16 +691,17 @@ const LOGO_KEY = 'logo';
 const DEFAULT_LOGO = '/poker/oliclub.webp';
 
 export function applyLogo(): void {
-  const img = document.getElementById('club-logo') as HTMLImageElement | null;
-  if (!img) return;
+  const imgs = Array.from(document.querySelectorAll<HTMLImageElement>('.club-logo-img'));
+  if (!imgs.length) return;
+  const setSrc = (src: string) => imgs.forEach((im) => { im.src = src; });
   if (logoUrl) { URL.revokeObjectURL(logoUrl); logoUrl = null; }
   if (store.getState().settings.customLogo) {
     void storage.getImage(LOGO_KEY).then((blob) => {
-      if (blob) { logoUrl = URL.createObjectURL(blob); img.src = logoUrl; }
-      else img.src = DEFAULT_LOGO;
-    }).catch(() => { img.src = DEFAULT_LOGO; });
+      if (blob) { logoUrl = URL.createObjectURL(blob); setSrc(logoUrl); }
+      else setSrc(DEFAULT_LOGO);
+    }).catch(() => setSrc(DEFAULT_LOGO));
   } else {
-    img.src = DEFAULT_LOGO;
+    setSrc(DEFAULT_LOGO);
   }
 }
 
@@ -919,10 +924,13 @@ export function update(s: AppState): void {
 
   // legend (windowed) + logo visibility/size; the fullscreen chip strip is always shown (CSS)
   $('legend').hidden = !s.settings.showChips;
-  // Logo is shown in both modes when enabled; sized/positioned purely by CSS
-  // (50% of the left gutter) so nothing mutates it during play.
+  // Logos shown when enabled; sized/placed purely by CSS so nothing mutates them
+  // on play. The right logo is CSS-gated to fullscreen only (legend's slot).
+  const showLogo = s.settings.showLogo;
   const logoBox = document.getElementById('logo-box');
-  if (logoBox) logoBox.hidden = !s.settings.showLogo;
+  const logoBoxR = document.getElementById('logo-box-right');
+  if (logoBox) logoBox.hidden = !showLogo;
+  if (logoBoxR) logoBoxR.hidden = !showLogo;
 
   // settings reflections
   reflectSwitch('set-soundEnabled', s.settings.soundEnabled);

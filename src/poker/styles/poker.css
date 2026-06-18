@@ -146,21 +146,23 @@ img { display: block; max-width: 100%; }
 .main {
   position: relative;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, clamp(320px, 42vw, 720px)) minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1fr) minmax(0, clamp(300px, 34vw, 580px)) minmax(0, 1fr);
   gap: clamp(0.75rem, 2vw, 2rem);
   align-items: start;
   padding: clamp(1rem, 3vw, 2.5rem);
   max-width: 1800px; width: 100%; margin-inline: auto;
 }
-/* Club logo: a plain in-flow grid item in the left gutter (col 1), always 50% of
-   that gutter's width, centred horizontally in the gutter and vertically in the
-   area beside the timer. No absolute/overlay and no JS — robust against the
-   fullscreen compositing glitch that made the overlay vanish on play. */
+/* Club logo: a plain in-flow grid item in a gutter beside the timer, filling the
+   gutter and centred in it. No absolute/overlay and no JS — robust against the
+   fullscreen compositing glitch that made the overlay vanish on play.
+   Windowed: left gutter only. Fullscreen: both gutters flank the centred clock. */
 .logo-cell {
   grid-column: 1; grid-row: 1;
   justify-self: center; align-self: center;
   width: 100%; min-width: 0;
 }
+.logo-cell--right { grid-column: 3; display: none; } /* only shown in fullscreen */
+.app[data-fullscreen="true"] .logo-cell--right { display: block; }
 .main__logo {
   width: 100%; height: auto; display: block;
   max-height: 78vh; object-fit: contain; /* never overflow vertically on short screens */
@@ -180,7 +182,7 @@ img { display: block; max-width: 100%; }
   display: grid;
   align-content: center; justify-items: center;
   gap: clamp(0.5rem, 1.6cqh, 1.5rem);
-  padding: clamp(1.25rem, 4cqmin, 3rem) clamp(1rem, 3cqmin, 2.5rem);
+  padding: clamp(1.25rem, 4cqmin, 3rem) clamp(0.6rem, 1.5cqmin, 1.25rem);
   min-height: clamp(360px, 56vh, 760px);
   border-radius: var(--radius-lg);
   color: var(--felt-ink);
@@ -214,7 +216,7 @@ img { display: block; max-width: 100%; }
   font-family: var(--font-num);
   font-variant-numeric: tabular-nums; font-feature-settings: "tnum" 1, "zero" 1;
   font-weight: 500; line-height: 0.95; letter-spacing: -0.02em;
-  font-size: clamp(3.5rem, min(20cqw, 42cqh), 16rem);
+  font-size: clamp(3.5rem, 30cqw, 15rem);
   color: var(--clock-ink);
   text-shadow: 0 2px 24px color-mix(in oklab, black 35%, transparent);
 }
