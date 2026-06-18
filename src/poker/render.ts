@@ -27,11 +27,7 @@ let lastAnnouncedKey = '';
 let pendingCustom: { id: string; name: string } | null = null;
 let editorTab: 'blinds' | 'chips' = 'blinds';
 let seekDragging = false;
-let logoResizing = false;
 let logoUrl: string | null = null;
-
-const LOGO_MIN = 100;
-const LOGO_MAX = 1400;
 
 // ---- markup builders --------------------------------------------------
 
@@ -104,14 +100,8 @@ function appHTML(): string {
   </header>
 
   <div class="main">
-    <div class="logo-cell">
-      <div class="logo-box" id="logo-box" tabindex="0" role="img" aria-label="Club logo — drag a corner or use arrow keys to resize">
-        <img class="main__logo" id="club-logo" src="/poker/oliclub.webp" alt="Oliclub" />
-        <span class="logo-handle logo-handle--nw" data-resize aria-hidden="true"></span>
-        <span class="logo-handle logo-handle--ne" data-resize aria-hidden="true"></span>
-        <span class="logo-handle logo-handle--sw" data-resize aria-hidden="true"></span>
-        <span class="logo-handle logo-handle--se" data-resize aria-hidden="true"></span>
-      </div>
+    <div class="logo-cell" id="logo-box">
+      <img class="main__logo" id="club-logo" src="/poker/oliclub.webp" alt="Oliclub" />
     </div>
     <section class="stage" aria-label="Tournament timer">
         <div class="fs-level num" id="fs-level"></div>
@@ -226,7 +216,6 @@ function appHTML(): string {
       <div class="opt-group">
         <span class="eyebrow">Logo</span>
         ${switchHTML('set-showLogo', 'Show club logo')}
-        ${switchHTML('set-logoFullscreen', 'Show logo in fullscreen')}
         <div class="opt-row">
           <button class="btn btn--ghost" id="logo-upload-btn">${icon('upload')}<span>Replace logo…</span></button>
           <button class="btn btn--ghost" id="logo-reset-btn">${icon('restart')}<span>Reset</span></button>
@@ -596,7 +585,6 @@ function bind(): void {
   bindSwitch('set-flashLast60', 'flashLast60');
   bindSwitch('set-showChips', 'showChips');
   bindSwitch('set-showLogo', 'showLogo');
-  bindSwitch('set-logoFullscreen', 'logoFullscreen');
   bindSwitch('set-autoFullscreen', 'autoFullscreen');
   bindSwitch('set-keepAwake', 'keepAwake');
   bindSwitch('set-resumeRunningOnReload', 'resumeRunningOnReload');
@@ -620,7 +608,6 @@ function bind(): void {
   $('logo-upload-btn').onclick = () => $('logo-file').click();
   $('logo-reset-btn').onclick = onLogoReset;
   $<HTMLInputElement>('logo-file').addEventListener('change', onLogoUpload);
-  bindLogoResize();
 
   // Palette colour pickers (live on input, persist on change)
   const palette = $('palette');
@@ -730,89 +717,6 @@ function onLogoReset(): void {
   store.setSetting('customLogo', false);
   applyLogo();
   showToast('Logo reset to default');
-}
-
-/**
- * Position + size the logo with JS so it is truly centred in the gap between the
- * window's left edge and the timer (the clock in fullscreen, the panel windowed),
- * and capped so it never covers the clock. On small screens the logo is laid out
- * by CSS (static, stacked) — we just clear our inline styles and bail.
- */
-function positionLogo(sizeOverride?: number): void {
-  const box = document.getElementById('logo-box');
-  if (!box || box.hidden) return;
-  if (getComputedStyle(box).position !== 'absolute') {
-    box.style.left = box.style.top = box.style.width = box.style.height = '';
-    return;
-  }
-  const main = app.querySelector('.main') as HTMLElement | null;
-  const stage = app.querySelector('.stage') as HTMLElement | null;
-  if (!main || !stage) return;
-  const mainRect = main.getBoundingClientRect();
-  const vh = window.innerHeight;
-  let gutter: number, bandTop: number;
-  if (fs.isActive()) {
-    gutter = document.getElementById('clock')!.getBoundingClientRect().left;
-    bandTop = 0; // no header in fullscreen
-  } else {
-    gutter = stage.getBoundingClientRect().left;
-    const hdr = app.querySelector('.hdr') as HTMLElement | null;
-    bandTop = hdr ? hdr.getBoundingClientRect().bottom : 0;
-  }
-  // Centre between the wall and the timer (X) and between the header line and the
-  // screen bottom (Y); cap to BOTH so the logo never invades or leaves the screen.
-  const targetX = gutter / 2;
-  const targetY = (bandTop + vh) / 2;
-  const maxW = gutter - 28;
-  const maxH = (vh - bandTop) - 28;
-  const reqW = sizeOverride ?? store.getState().settings.logoSize;
-  const W = Math.max(40, Math.min(reqW, maxW, maxH));
-  box.style.width = `${W}px`;
-  box.style.height = `${W}px`;
-  box.style.left = `${Math.round(targetX - mainRect.left - W / 2)}px`;
-  box.style.top = `${Math.round(targetY - mainRect.top - W / 2)}px`;
-}
-
-/** Drag any corner to resize the logo (symmetric about its centre); persist on release. */
-function bindLogoResize(): void {
-  const box = $('logo-box');
-  let cx = 0, cy = 0, cur = store.getState().settings.logoSize;
-  const onMove = (e: PointerEvent) => {
-    const dist = Math.hypot(e.clientX - cx, e.clientY - cy);
-    const requested = Math.min(LOGO_MAX, Math.max(LOGO_MIN, dist * Math.SQRT2));
-    positionLogo(requested);
-    cur = Math.round(box.getBoundingClientRect().width); // effective (capped) size
-  };
-  const onUp = () => {
-    logoResizing = false;
-    document.removeEventListener('pointermove', onMove);
-    document.removeEventListener('pointerup', onUp);
-    store.setSetting('logoSize', cur);
-  };
-  box.addEventListener('pointerdown', (e) => {
-    if (fs.isActive()) return; // resizing is disabled in fullscreen
-    if (!(e.target as HTMLElement).closest('[data-resize]')) return;
-    e.preventDefault();
-    const r = box.getBoundingClientRect();
-    cx = r.left + r.width / 2;
-    cy = r.top + r.height / 2;
-    cur = store.getState().settings.logoSize;
-    logoResizing = true;
-    document.addEventListener('pointermove', onMove);
-    document.addEventListener('pointerup', onUp);
-  });
-  box.addEventListener('keydown', (e) => {
-    if (fs.isActive()) return; // resizing is disabled in fullscreen
-    let d = 0;
-    if (['ArrowUp', 'ArrowRight', '+', '='].includes(e.key)) d = 20;
-    else if (['ArrowDown', 'ArrowLeft', '-', '_'].includes(e.key)) d = -20;
-    else return;
-    e.preventDefault();
-    e.stopPropagation(); // don't trigger the global prev/next shortcuts
-    const base = Math.round(box.getBoundingClientRect().width); // effective size (capped)
-    const next = Math.min(LOGO_MAX, Math.max(LOGO_MIN, base + d));
-    store.setSetting('logoSize', next);
-  });
 }
 
 function onEditorClick(e: Event): void {
@@ -1015,17 +919,10 @@ export function update(s: AppState): void {
 
   // legend (windowed) + logo visibility/size; the fullscreen chip strip is always shown (CSS)
   $('legend').hidden = !s.settings.showChips;
+  // Logo is shown in both modes when enabled; sized/positioned purely by CSS
+  // (50% of the left gutter) so nothing mutates it during play.
   const logoBox = document.getElementById('logo-box');
-  if (logoBox) {
-    logoBox.hidden = fs.isActive() ? !s.settings.logoFullscreen : !s.settings.showLogo;
-    if (!logoResizing) {
-      logoBox.style.setProperty('--logo-size', `${s.settings.logoSize}px`);
-      // Position only when not actively counting down — never touch the logo on
-      // each tick (this is what made it vanish on play in some fullscreen GPUs).
-      // It is also repositioned on resize and fullscreenchange via listeners.
-      if (status !== 'running') positionLogo();
-    }
-  }
+  if (logoBox) logoBox.hidden = !s.settings.showLogo;
 
   // settings reflections
   reflectSwitch('set-soundEnabled', s.settings.soundEnabled);
@@ -1033,7 +930,6 @@ export function update(s: AppState): void {
   reflectSwitch('set-flashLast60', s.settings.flashLast60);
   reflectSwitch('set-showChips', s.settings.showChips);
   reflectSwitch('set-showLogo', s.settings.showLogo);
-  reflectSwitch('set-logoFullscreen', s.settings.logoFullscreen);
   reflectSwitch('set-autoFullscreen', s.settings.autoFullscreen);
   reflectSwitch('set-keepAwake', s.settings.keepAwake);
   reflectSwitch('set-resumeRunningOnReload', s.settings.resumeRunningOnReload);
@@ -1133,11 +1029,6 @@ export function mount(): void {
   applyLogo();
   document.addEventListener('keydown', trapTab, true);
   fs.init(app);
-  // Keep the logo centred in the left gutter across resizes and fullscreen toggles.
-  window.addEventListener('resize', () => positionLogo());
-  document.addEventListener('fullscreenchange', () => { window.setTimeout(positionLogo, 60); });
-  document.addEventListener('webkitfullscreenchange', () => { window.setTimeout(positionLogo, 60); });
-  positionLogo();
 }
 
 export { closeTopmost, anyOverlayOpen, startPlayGesture as playPause };
