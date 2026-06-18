@@ -159,10 +159,11 @@ img { display: block; max-width: 100%; }
 .logo-cell {
   grid-column: 1; grid-row: 1;
   justify-self: center; align-self: center;
-  width: 50%; min-width: 0;
+  width: 100%; min-width: 0;
 }
 .main__logo {
   width: 100%; height: auto; display: block;
+  max-height: 78vh; object-fit: contain; /* never overflow vertically on short screens */
   border-radius: clamp(10px, 1.5vw, 22px);
   filter: drop-shadow(0 8px 26px rgb(var(--shadow-rgb) / 0.5));
   -webkit-user-drag: none; user-select: none;
