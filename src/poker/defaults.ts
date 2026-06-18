@@ -1,4 +1,5 @@
-import type { BlindLevel, BreakEntry, LevelEntry, Settings, TimerState } from './types';
+import type { BlindLevel, BreakEntry, ChipDef, LevelEntry, Settings, TimerState } from './types';
+import { defaultPalette } from './palette';
 
 export const LEVEL_SECONDS = 12 * 60; // 12 minutes
 export const BREAK_SECONDS = 15 * 60; // 15 minutes
@@ -81,7 +82,8 @@ export function defaultTimer(entries: LevelEntry[]): TimerState {
 
 export function defaultSettings(): Settings {
   return {
-    theme: 'midnight-felt',
+    palette: defaultPalette(),
+    savedPalettes: [],
     sound: 'air-horn',
     volume: 0.85,
     muted: false,
@@ -96,13 +98,21 @@ export function defaultSettings(): Settings {
   };
 }
 
-/** Chip denominations for the legend (colour → value). */
-export const CHIPS: ReadonlyArray<{ key: string; name: string; value: number }> = [
-  { key: 'blue', name: 'Blue', value: 50 },
-  { key: 'white', name: 'White', value: 100 },
-  { key: 'red', name: 'Red', value: 500 },
-  { key: 'black', name: 'Black', value: 1000 },
-  { key: 'yellow', name: 'Yellow', value: 5000 },
-  { key: 'purple', name: 'Purple', value: 10000 },
-  { key: 'green', name: 'Green', value: 25000 },
+/** Default chip denominations (colour → value), editable in the Chips tab. */
+const CHIP_BASE: ReadonlyArray<{ color: string; value: number }> = [
+  { color: '#2f6fd0', value: 50 },     // blue
+  { color: '#e9e9ec', value: 100 },    // white
+  { color: '#cf2b3a', value: 500 },    // red
+  { color: '#2b2b30', value: 1000 },   // black
+  { color: '#e6c12e', value: 5000 },   // yellow
+  { color: '#7b3fb5', value: 10000 },  // purple
+  { color: '#2f9e5f', value: 25000 },  // green
 ];
+
+export function newChip(color = '#cccccc', value = 0): ChipDef {
+  return { id: makeId(), color, value };
+}
+
+export function defaultChips(): ChipDef[] {
+  return CHIP_BASE.map((c) => newChip(c.color, c.value));
+}

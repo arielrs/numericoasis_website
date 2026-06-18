@@ -4,51 +4,76 @@
 
 import * as audio from './audio';
 import { formatClock, formatNum } from './clock';
-import { CHIPS, LEVEL_SECONDS, newBlind, newBreak } from './defaults';
+import { LEVEL_SECONDS, newBlind, newBreak } from './defaults';
 import * as fs from './fullscreen';
 import { icon } from './icons';
+import { applyPalette, isHex, normalizeHex, palettesEqual, pickInk, PRESETS } from './palette';
 import {
   blindNumber, currentEntry, isBreak, nextEntry, progressFraction,
   resumingBlindNumber, totalBlinds,
 } from './selectors';
 import { store } from './store';
-import { applyTheme, THEMES } from './themes';
-import type { AppState, LevelEntry } from './types';
+import type { AppState, ChipDef, LevelEntry, Palette } from './types';
 import { SOUND_PRESETS } from './audio';
 
 const $ = <T extends HTMLElement = HTMLElement>(id: string): T => document.getElementById(id) as T;
 
 let app: HTMLElement;
 let structureSig = '';
+let chipDisplaySig = '';
+let chipIdSig = '';
 let lastAnnouncedKey = '';
 let pendingCustom: { id: string; name: string } | null = null;
+let editorTab: 'blinds' | 'chips' = 'blinds';
+let seekDragging = false;
 
 // ---- markup builders --------------------------------------------------
 
-function chipRowsHTML(): string {
-  return CHIPS.map(
+function chipStyle(color: string): string {
+  return `--chip-face:${normalizeHex(color)};--chip-ink:${pickInk(color)}`;
+}
+
+function chipRowsHTML(chips: ChipDef[]): string {
+  return chips.map(
     (c) => `
     <div class="legend__row">
-      <dt aria-label="${c.name} chip"><span class="chip chip--${c.key}"><span class="chip__val">${formatNum(c.value)}</span></span></dt>
-      <dd>${formatNum(c.value)}<span class="legend__name">${c.name}</span></dd>
+      <dt aria-label="Chip worth ${formatNum(c.value)}"><span class="chip" style="${chipStyle(c.color)}"><span class="chip__val">${formatNum(c.value)}</span></span></dt>
+      <dd>${formatNum(c.value)}</dd>
     </div>`,
   ).join('');
 }
 
-function fsChipsHTML(): string {
-  return CHIPS.map(
-    (c) => `<span class="fs-chip" aria-label="${c.name} chip ${c.value}"><span class="chip chip--${c.key}"><span class="chip__val">${formatNum(c.value)}</span></span><b class="num">${formatNum(c.value)}</b></span>`,
+function fsChipsHTML(chips: ChipDef[]): string {
+  return chips.map(
+    (c) => `<span class="fs-chip" aria-label="Chip ${c.value}"><span class="chip" style="${chipStyle(c.color)}"><span class="chip__val">${formatNum(c.value)}</span></span><b class="num">${formatNum(c.value)}</b></span>`,
   ).join('');
 }
 
-function themeSwatchesHTML(): string {
-  return THEMES.map(
-    (t) => `
-    <button type="button" class="theme-swatch" data-theme-id="${t.id}" aria-pressed="false">
-      <span class="theme-swatch__chips" aria-hidden="true">${t.swatch.map((c) => `<span style="background:${c}"></span>`).join('')}</span>
-      <span class="theme-swatch__name">${t.name}</span>
-    </button>`,
+const PAL_ROLES: ReadonlyArray<[keyof Palette, string]> = [
+  ['bg', 'Background'], ['text', 'Text'], ['primary', 'Primary'], ['accent', 'Accent'], ['muted', 'Muted'],
+];
+
+function paletteRowsHTML(): string {
+  return PAL_ROLES.map(
+    ([key, label]) => `
+    <div class="pal-row">
+      <label class="pal-row__label" for="pal-${key}">${label}</label>
+      <span class="pal-row__controls">
+        <input type="color" id="pal-${key}" data-pal="${key}" aria-label="${label} colour" />
+        <input type="text" class="pal-hex" data-palhex="${key}" aria-label="${label} hex code" spellcheck="false" maxlength="7" />
+      </span>
+    </div>`,
   ).join('');
+}
+
+function presetHTML(id: string, name: string, p: Palette, deletable: boolean): string {
+  return `<div class="preset" data-presetwrap="${id}">
+    <button type="button" class="preset__apply" data-preset="${id}" aria-pressed="false">
+      <span class="preset__chips" aria-hidden="true"><span style="background:${p.bg}"></span><span style="background:${p.primary}"></span><span style="background:${p.accent}"></span></span>
+      <span class="preset__name">${name}</span>
+    </button>
+    ${deletable ? `<button type="button" class="preset__del" data-delpreset="${id}" aria-label="Delete ${name}">${icon('close')}</button>` : ''}
+  </div>`;
 }
 
 function switchHTML(id: string, label: string, hint = ''): string {
@@ -63,13 +88,7 @@ function appHTML(): string {
   return `
   <div class="notice" id="notice" hidden>Storage is unavailable — settings won't be saved this session.</div>
   <header class="hdr">
-    <div class="hdr__brand">
-      <img class="hdr__logo" src="/poker/oliclub.webp" alt="" width="40" height="40" />
-      <span class="hdr__titles">
-        <span class="hdr__title">Oliclub Poker Timer</span>
-        <span class="hdr__sub">Tournament clock</span>
-      </span>
-    </div>
+    <span class="hdr__title">Oliclub Poker Timer</span>
     <span class="hdr__spacer"></span>
     <div class="hdr__actions">
       <button class="iconbtn" id="edit-btn" aria-label="Edit blind structure" title="Edit structure">${icon('edit')}</button>
@@ -81,13 +100,15 @@ function appHTML(): string {
   <div class="main">
     <div class="stage-col">
       <section class="stage" aria-label="Tournament timer">
-        <img class="stage__corner-logo" src="/poker/oliclub.webp" alt="" />
         <div class="fs-level num" id="fs-level"></div>
         <div class="level-pill"><span class="level-pill__dot"></span><span id="level-text">Level 1</span></div>
 
-        <div class="clock-wrap">
-          <div class="clock" id="clock" aria-hidden="true"><span id="clk-pre">0</span><span class="clock__colon">:</span><span id="clk-post">00</span></div>
-          <span class="paused-tag">Paused</span>
+        <div class="clock-row">
+          <img class="clock-row__logo" src="/poker/oliclub.webp" alt="Oliclub" />
+          <div class="clock-wrap">
+            <div class="clock" id="clock" aria-hidden="true"><span id="clk-pre">0</span><span class="clock__colon">:</span><span id="clk-post">00</span></div>
+            <span class="paused-tag">Paused</span>
+          </div>
         </div>
 
         <div class="progress"><div class="progress__fill" id="progress-fill"></div></div>
@@ -108,7 +129,7 @@ function appHTML(): string {
           <span class="nextup__value" id="next-val">—</span>
         </div>
 
-        <div class="fs-chips" id="fs-chips" aria-hidden="true">${fsChipsHTML()}</div>
+        <div class="fs-chips" id="fs-chips" aria-hidden="true"></div>
       </section>
 
       <div class="seek">
@@ -128,7 +149,7 @@ function appHTML(): string {
 
     <aside class="legend" id="legend">
       <div class="legend__title"><span class="eyebrow">Chip values</span></div>
-      <dl class="legend__list">${chipRowsHTML()}</dl>
+      <dl class="legend__list" id="legend-list"></dl>
     </aside>
   </div>
 
@@ -172,11 +193,17 @@ function appHTML(): string {
       </div>
 
       <div class="opt-group">
-        <span class="eyebrow">Display</span>
+        <span class="eyebrow">Theme colours</span>
+        <div class="palette" id="palette">${paletteRowsHTML()}</div>
         <div class="opt-row opt-row--stack">
-          <span class="opt-row__label"><span>Theme</span></span>
-          <div class="themes" id="themes">${themeSwatchesHTML()}</div>
+          <span class="opt-row__label"><span>Quick themes</span></span>
+          <div class="presets" id="presets"></div>
+          <button class="btn btn--ghost" id="save-palette">${icon('plus')}<span>Save current colours…</span></button>
         </div>
+      </div>
+
+      <div class="opt-group">
+        <span class="eyebrow">Display</span>
         ${switchHTML('set-flashLast60', 'Flash the clock in the final minute')}
         ${switchHTML('set-showChips', 'Show chip values')}
         ${switchHTML('set-showChipsFullscreen', 'Show chip values in fullscreen')}
@@ -194,21 +221,37 @@ function appHTML(): string {
   <!-- Editor -->
   <section class="editor" id="editor" role="dialog" aria-modal="true" aria-labelledby="editor-title">
     <div class="editor__head">
-      <h2 id="editor-title">Edit blind structure</h2>
-      <button class="btn btn--ghost" id="editor-reset">${icon('restart')}<span>Reset to default</span></button>
+      <h2 id="editor-title">Structure</h2>
+      <div class="tabs" role="tablist" aria-label="Structure tabs">
+        <button class="tab" id="tab-blinds" role="tab" aria-selected="true">Blinds</button>
+        <button class="tab" id="tab-chips" role="tab" aria-selected="false">Chips</button>
+      </div>
+      <span class="hdr__spacer"></span>
       <button class="btn btn--primary" id="editor-done">Done</button>
     </div>
     <div class="editor__body">
-      <table class="editor__table">
-        <thead>
-          <tr><th>Order</th><th>Level</th><th>Small</th><th>Big</th><th>Ante</th><th>Minutes</th><th></th></tr>
-        </thead>
-        <tbody id="editor-rows"></tbody>
-      </table>
+      <div id="panel-blinds" role="tabpanel" aria-labelledby="tab-blinds">
+        <table class="editor__table">
+          <thead>
+            <tr><th>Order</th><th>Level</th><th>Small</th><th>Big</th><th>Ante</th><th>Minutes</th><th></th></tr>
+          </thead>
+          <tbody id="editor-rows"></tbody>
+        </table>
+      </div>
+      <div id="panel-chips" role="tabpanel" aria-labelledby="tab-chips" hidden>
+        <div class="chip-editor" id="chip-rows"></div>
+        <p class="chip-editor__hint">These colours and values appear on the timer's chip legend.</p>
+      </div>
     </div>
     <div class="editor__foot">
-      <button class="btn btn--ghost" id="add-level">${icon('plus')}<span>Add level</span></button>
-      <button class="btn btn--ghost" id="add-break">${icon('coffee')}<span>Add break</span></button>
+      <span class="foot-group" id="foot-blinds">
+        <button class="btn btn--ghost" id="add-level">${icon('plus')}<span>Add level</span></button>
+        <button class="btn btn--ghost" id="add-break">${icon('coffee')}<span>Add break</span></button>
+        <button class="btn btn--ghost" id="editor-reset">${icon('restart')}<span>Reset levels</span></button>
+      </span>
+      <span class="foot-group" id="foot-chips" hidden>
+        <button class="btn btn--ghost" id="add-chip">${icon('plus')}<span>Add chip</span></button>
+      </span>
       <span class="spacer"></span>
       <span class="saved-flag" id="saved-flag">${icon('check')}<span>Saved</span></span>
       <span class="num" id="level-count"></span>
@@ -247,6 +290,18 @@ function appHTML(): string {
       <div class="modal__actions">
         <button class="btn btn--ghost" id="confirm-cancel">Cancel</button>
         <button class="btn btn--primary" id="confirm-ok">Confirm</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Prompt modal (name a palette) -->
+  <div class="modal" id="prompt-modal" role="dialog" aria-modal="true" aria-labelledby="prompt-title">
+    <div class="modal__card">
+      <div class="modal__head"><h2 id="prompt-title">Save palette</h2></div>
+      <div class="modal__body"><input type="text" class="field" id="prompt-input" maxlength="40" placeholder="Name this palette" /></div>
+      <div class="modal__actions">
+        <button class="btn btn--ghost" id="prompt-cancel">Cancel</button>
+        <button class="btn btn--primary" id="prompt-ok">Save</button>
       </div>
     </div>
   </div>
@@ -369,6 +424,60 @@ function flashSaved(): void {
   (flashSaved as unknown as { t?: number }).t = window.setTimeout(() => f.classList.remove('is-on'), 1200);
 }
 
+// ---- chips ------------------------------------------------------------
+
+function rebuildLegend(s: AppState): void {
+  $('legend-list').innerHTML = chipRowsHTML(s.chips);
+  $('fs-chips').innerHTML = fsChipsHTML(s.chips);
+}
+
+function chipEditRowHTML(c: ChipDef): string {
+  const hex = normalizeHex(c.color);
+  return `<div class="chip-edit" data-chiprow="${c.id}">
+    <span class="chip chip--sm" data-chippreview style="${chipStyle(c.color)}"><span class="chip__val">${formatNum(c.value)}</span></span>
+    <input type="color" data-chipfield="color" data-chipid="${c.id}" value="${hex}" aria-label="Chip colour" />
+    <input type="text" class="pal-hex" data-chiphex data-chipid="${c.id}" value="${hex}" maxlength="7" spellcheck="false" aria-label="Chip hex code" />
+    <input type="number" class="cellinput" data-chipfield="value" data-chipid="${c.id}" min="0" step="1" value="${c.value}" aria-label="Chip value" />
+    <button class="iconbtn" data-chipdel="${c.id}" aria-label="Delete chip">${icon('trash')}</button>
+  </div>`;
+}
+
+function rebuildChipsEditor(s: AppState): void {
+  $('chip-rows').innerHTML = s.chips.map(chipEditRowHTML).join('');
+}
+
+// ---- editor tabs ------------------------------------------------------
+
+function setEditorTab(tab: 'blinds' | 'chips'): void {
+  editorTab = tab;
+  const blinds = tab === 'blinds';
+  $('tab-blinds').setAttribute('aria-selected', blinds ? 'true' : 'false');
+  $('tab-chips').setAttribute('aria-selected', blinds ? 'false' : 'true');
+  $('panel-blinds').hidden = !blinds;
+  $('panel-chips').hidden = blinds;
+  $('foot-blinds').hidden = !blinds;
+  $('foot-chips').hidden = blinds;
+}
+
+// ---- prompt dialog ----------------------------------------------------
+
+function openPrompt(title: string, onOk: (value: string) => void): void {
+  const modal = $('prompt-modal');
+  const input = $<HTMLInputElement>('prompt-input');
+  $('prompt-title').textContent = title;
+  input.value = '';
+  modal.classList.add('is-open');
+  const ok = $('prompt-ok');
+  const cancel = $('prompt-cancel');
+  const close = () => { modal.classList.remove('is-open'); overlayStack.pop()?.restore?.focus?.(); ok.onclick = null; cancel.onclick = null; input.onkeydown = null; };
+  const submit = () => { const v = input.value.trim(); if (v) onOk(v); close(); };
+  ok.onclick = submit;
+  cancel.onclick = close;
+  input.onkeydown = (e) => { if (e.key === 'Enter') { e.preventDefault(); submit(); } };
+  overlayStack.push({ node: modal, restore: document.activeElement as HTMLElement, onClose: () => modal.classList.remove('is-open') });
+  input.focus();
+}
+
 // ---- confirm dialog ---------------------------------------------------
 
 function openConfirm(message: string, onOk: () => void): void {
@@ -387,12 +496,16 @@ function openConfirm(message: string, onOk: () => void): void {
 // ---- public surface toggles ------------------------------------------
 
 export function openEditor(): void {
-  rebuildEditor(store.getState());
-  structureSig = sig(store.getState());
+  const s = store.getState();
+  setEditorTab('blinds');
+  rebuildEditor(s);
+  rebuildChipsEditor(s);
+  structureSig = sig(s);
+  chipIdSig = s.chips.map((c) => c.id).join(',');
   const ed = $('editor');
   ed.classList.add('is-open');
   openOverlay(ed, () => ed.classList.remove('is-open'));
-  update(store.getState()); // mark the current row now that the editor is open
+  update(s); // mark the current row now that the editor is open
 }
 export function openSheet(): void {
   const scrim = $('scrim');
@@ -443,8 +556,12 @@ function bind(): void {
   $('fs-exit').onclick = () => fs.exit();
 
   const seek = $<HTMLInputElement>('seek');
+  seek.addEventListener('pointerdown', () => { seekDragging = true; });
+  seek.addEventListener('keydown', () => { seekDragging = true; });
   seek.addEventListener('input', () => store.seek(Number(seek.value), false));
-  seek.addEventListener('change', () => store.seek(Number(seek.value), true));
+  seek.addEventListener('change', () => { seekDragging = false; store.seek(Number(seek.value), true); });
+  seek.addEventListener('blur', () => { seekDragging = false; });
+  window.addEventListener('pointerup', () => { seekDragging = false; });
 
   // Sheet
   $('sheet-close').onclick = closeTopmost;
@@ -477,16 +594,40 @@ function bind(): void {
   $('upload-btn').onclick = () => $('sound-file').click();
   $<HTMLInputElement>('sound-file').addEventListener('change', onUpload);
 
-  $('themes').addEventListener('click', (e) => {
-    const btn = (e.target as HTMLElement).closest<HTMLElement>('[data-theme-id]');
-    if (!btn) return;
-    const id = btn.dataset.themeId as import('./types').ThemeId;
-    store.setSetting('theme', id);
-    applyTheme(id);
+  // Palette colour pickers (live on input, persist on change)
+  const palette = $('palette');
+  palette.addEventListener('input', (e) => {
+    const t = e.target as HTMLInputElement;
+    if (t.matches('input[data-pal]')) setChannel(t.dataset.pal as keyof Palette, t.value, false);
   });
+  palette.addEventListener('change', (e) => {
+    const t = e.target as HTMLInputElement;
+    if (t.matches('input[data-pal]')) setChannel(t.dataset.pal as keyof Palette, t.value, true);
+    else if (t.matches('input[data-palhex]') && isHex(t.value)) setChannel(t.dataset.palhex as keyof Palette, t.value, true);
+  });
+
+  $('presets').addEventListener('click', (e) => {
+    const t = e.target as HTMLElement;
+    const del = t.closest<HTMLElement>('[data-delpreset]');
+    if (del) { store.deletePalette(del.dataset.delpreset!); return; }
+    const apply = t.closest<HTMLElement>('[data-preset]');
+    if (!apply) return;
+    const id = apply.dataset.preset!;
+    const pal = PRESETS.find((p) => p.id === id)?.palette
+      ?? store.getState().settings.savedPalettes.find((p) => p.id === id)?.palette;
+    if (pal) { applyPalette(pal, true); store.setPalette({ ...pal }); }
+  });
+  $('save-palette').onclick = () => openPrompt('Save palette', (name) => store.savePalette(name));
 
   // Editor
   $('editor-done').onclick = closeTopmost;
+  $('tab-blinds').onclick = () => setEditorTab('blinds');
+  $('tab-chips').onclick = () => setEditorTab('chips');
+  $('add-chip').onclick = () => store.addChip();
+  const chipRows = $('chip-rows');
+  chipRows.addEventListener('input', onChipInput);
+  chipRows.addEventListener('change', onChipInput);
+  chipRows.addEventListener('click', onChipClick);
   $('add-level').onclick = () => {
     const s = store.getState();
     const last = [...s.entries].reverse().find((e) => e.kind === 'blind');
@@ -564,6 +705,65 @@ function onEditorInput(e: Event): void {
   flashSaved();
 }
 
+// ---- palette + chip handlers -----------------------------------------
+
+function setChannel(key: keyof Palette, value: string, commit: boolean): void {
+  const hex = normalizeHex(value);
+  const p: Palette = { ...store.getState().settings.palette, [key]: hex };
+  applyPalette(p, commit);
+  if (commit) store.setPalette(p);
+  const colorEl = document.getElementById('pal-' + key) as HTMLInputElement | null;
+  if (colorEl && colorEl.value.toLowerCase() !== hex) colorEl.value = hex;
+  const hexEl = $('palette').querySelector<HTMLInputElement>(`input[data-palhex="${key}"]`);
+  if (hexEl && document.activeElement !== hexEl) hexEl.value = hex;
+}
+
+function updateChipRowPreview(row: HTMLElement, hex: string): void {
+  const prev = row.querySelector<HTMLElement>('[data-chippreview]');
+  if (prev) prev.setAttribute('style', chipStyle(hex));
+  const hexEl = row.querySelector<HTMLInputElement>('input[data-chiphex]');
+  if (hexEl && document.activeElement !== hexEl) hexEl.value = hex;
+  const colorEl = row.querySelector<HTMLInputElement>('input[data-chipfield="color"]');
+  if (colorEl && colorEl.value.toLowerCase() !== hex) colorEl.value = hex;
+}
+
+function onChipInput(e: Event): void {
+  const t = e.target as HTMLInputElement;
+  const row = t.closest<HTMLElement>('[data-chiprow]');
+  if (!row) return;
+  const id = row.dataset.chiprow!;
+  if (t.matches('input[data-chipfield="color"]')) {
+    const hex = normalizeHex(t.value);
+    store.updateChip(id, { color: hex });
+    updateChipRowPreview(row, hex);
+  } else if (t.matches('input[data-chiphex]')) {
+    if (!isHex(t.value)) return;
+    const hex = normalizeHex(t.value);
+    store.updateChip(id, { color: hex });
+    updateChipRowPreview(row, hex);
+  } else if (t.matches('input[data-chipfield="value"]')) {
+    const v = parseInt(t.value, 10);
+    if (!Number.isFinite(v) || v < 0) { t.setAttribute('aria-invalid', 'true'); return; }
+    t.removeAttribute('aria-invalid');
+    store.updateChip(id, { value: v });
+    const valEl = row.querySelector<HTMLElement>('[data-chippreview] .chip__val');
+    if (valEl) valEl.textContent = formatNum(v);
+  } else return;
+  flashSaved();
+}
+
+function onChipClick(e: Event): void {
+  const del = (e.target as HTMLElement).closest<HTMLElement>('[data-chipdel]');
+  if (!del) return;
+  const id = del.dataset.chipdel!;
+  const s = store.getState();
+  const index = s.chips.findIndex((c) => c.id === id);
+  const chip = s.chips[index];
+  if (!chip) return;
+  store.deleteChip(id);
+  showToast('Chip removed', 'Undo', () => store.insertChipAt(index, chip));
+}
+
 function validateBlindRow(row: HTMLElement | null): void {
   if (!row) return;
   const sbI = row.querySelector<HTMLInputElement>('input[data-field="smallBlind"]');
@@ -578,6 +778,7 @@ function validateBlindRow(row: HTMLElement | null): void {
 // ---- update -----------------------------------------------------------
 
 let lastSound = '';
+let lastPresetSig = ' '; // sentinel so the first update always builds presets
 
 export function update(s: AppState): void {
   const cur = currentEntry(s);
@@ -638,7 +839,7 @@ export function update(s: AppState): void {
   // seek
   const dur = cur?.durationSec ?? 0;
   const seek = $<HTMLInputElement>('seek');
-  if (document.activeElement !== seek) {
+  if (!seekDragging) {
     seek.max = String(dur);
     seek.value = String(remaining);
   }
@@ -690,10 +891,26 @@ export function update(s: AppState): void {
 
   if (lastSound !== s.settings.sound) { lastSound = s.settings.sound; rebuildSoundSelect(s); }
 
-  // theme swatches pressed-state
-  $('themes').querySelectorAll<HTMLElement>('[data-theme-id]').forEach((b) => {
-    b.setAttribute('aria-pressed', b.dataset.themeId === s.settings.theme ? 'true' : 'false');
-  });
+  // palette pickers reflect current values
+  for (const [key] of PAL_ROLES) {
+    const hex = normalizeHex(s.settings.palette[key]);
+    const colorEl = document.getElementById('pal-' + key) as HTMLInputElement | null;
+    if (colorEl && document.activeElement !== colorEl && colorEl.value.toLowerCase() !== hex) colorEl.value = hex;
+    const hexEl = $('palette').querySelector<HTMLInputElement>(`input[data-palhex="${key}"]`);
+    if (hexEl && document.activeElement !== hexEl) hexEl.value = hex;
+  }
+  const presetSig = s.settings.savedPalettes.map((p) => p.id + p.name).join('|');
+  if (presetSig !== lastPresetSig) { lastPresetSig = presetSig; rebuildPresets(s); }
+  reflectActivePreset(s);
+
+  // chips: rebuild legend + fullscreen strip on any chip change;
+  // rebuild the editor panel only when chips are added/removed (keeps focus while typing).
+  const dispSig = s.chips.map((c) => `${c.id}:${c.color}:${c.value}`).join('|');
+  if (dispSig !== chipDisplaySig) { chipDisplaySig = dispSig; rebuildLegend(s); }
+  if ($('editor').classList.contains('is-open')) {
+    const idSig = s.chips.map((c) => c.id).join(',');
+    if (idSig !== chipIdSig) { chipIdSig = idSig; rebuildChipsEditor(s); }
+  }
 
   // editor live bits (no rebuild unless shape changed)
   const newSig = sig(s);
@@ -722,6 +939,22 @@ export function update(s: AppState): void {
 
 function reflectSwitch(id: string, on: boolean): void {
   $(id).setAttribute('aria-checked', on ? 'true' : 'false');
+}
+
+function rebuildPresets(s: AppState): void {
+  const built = PRESETS.map((p) => presetHTML(p.id, p.name, p.palette, false));
+  const saved = s.settings.savedPalettes.map((p) => presetHTML(p.id, p.name, p.palette, true));
+  $('presets').innerHTML = built.concat(saved).join('');
+}
+
+function reflectActivePreset(s: AppState): void {
+  const cur = s.settings.palette;
+  $('presets').querySelectorAll<HTMLElement>('.preset__apply').forEach((b) => {
+    const id = b.dataset.preset!;
+    const pal = PRESETS.find((p) => p.id === id)?.palette
+      ?? s.settings.savedPalettes.find((p) => p.id === id)?.palette;
+    b.setAttribute('aria-pressed', pal && palettesEqual(pal, cur) ? 'true' : 'false');
+  });
 }
 
 function rebuildSoundSelect(s: AppState): void {

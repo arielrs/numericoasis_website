@@ -2,17 +2,23 @@
 // tick pump, and emits domain events (level:end, etc.) for audio / wake lock.
 
 import { clamp, endsAtFromRemaining, remainingFromEndsAt } from './clock';
-import { defaultEntries, defaultSettings, defaultTimer } from './defaults';
+import { defaultChips, defaultEntries, defaultSettings, defaultTimer, newChip } from './defaults';
 import * as storage from './storage';
-import type { AppState, LevelEntry, Settings, TimerEvent, TimerState } from './types';
+import type { AppState, ChipDef, LevelEntry, Palette, Settings, TimerEvent, TimerState } from './types';
 
 const TICK_MS = 250;
+
+function mkid(): string {
+  try { if (typeof crypto !== 'undefined' && 'randomUUID' in crypto) return crypto.randomUUID(); } catch { /* */ }
+  return 'p-' + Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
+}
 
 type StateListener = (s: AppState) => void;
 type EventListener = () => void;
 
 class Store {
   private entries: LevelEntry[] = [];
+  private chips: ChipDef[] = [];
   private timer: TimerState = { status: 'idle', currentIndex: 0, remainingSec: 0, endsAt: null };
   private settings: Settings = defaultSettings();
   private inMemoryOnly = false;
@@ -30,10 +36,12 @@ class Store {
     const loaded = storage.load();
     if (loaded) {
       this.entries = loaded.entries;
+      this.chips = loaded.chips;
       this.timer = loaded.timer;
       this.settings = loaded.settings;
     } else {
       this.entries = defaultEntries();
+      this.chips = defaultChips();
       this.timer = defaultTimer(this.entries);
       this.settings = defaultSettings();
     }
@@ -108,6 +116,7 @@ class Store {
   getState(): AppState {
     return {
       entries: this.entries,
+      chips: this.chips,
       timer: this.timer,
       settings: this.settings,
       inMemoryOnly: this.inMemoryOnly,
@@ -122,6 +131,7 @@ class Store {
         version: storage.CURRENT_VERSION,
         savedAt: Date.now(),
         entries: this.entries,
+        chips: this.chips,
         timer: this.timer,
         settings: this.settings,
       },
@@ -409,7 +419,56 @@ class Store {
 
   setSetting<K extends keyof Settings>(key: K, value: Settings[K]): void {
     this.settings[key] = value;
-    if (key === 'theme') storage.mirrorTheme(this.settings.theme);
+    this.persist(true);
+    this.notify();
+  }
+
+  // ---- palette -------------------------------------------------------
+
+  setPalette(p: Palette): void {
+    this.settings.palette = p;
+    this.persist();
+    this.notify();
+  }
+
+  savePalette(name: string): void {
+    this.settings.savedPalettes = [
+      ...this.settings.savedPalettes,
+      { id: mkid(), name: name.trim() || 'Untitled', palette: { ...this.settings.palette } },
+    ];
+    this.persist(true);
+    this.notify();
+  }
+
+  deletePalette(id: string): void {
+    this.settings.savedPalettes = this.settings.savedPalettes.filter((s) => s.id !== id);
+    this.persist(true);
+    this.notify();
+  }
+
+  // ---- chips ---------------------------------------------------------
+
+  addChip(): void {
+    this.chips = [...this.chips, newChip()];
+    this.persist(true);
+    this.notify();
+  }
+
+  updateChip(id: string, patch: Partial<ChipDef>): void {
+    this.chips = this.chips.map((c) => (c.id === id ? { ...c, ...patch } : c));
+    this.persist();
+    this.notify();
+  }
+
+  deleteChip(id: string): void {
+    this.chips = this.chips.filter((c) => c.id !== id);
+    this.persist(true);
+    this.notify();
+  }
+
+  insertChipAt(index: number, chip: ChipDef): void {
+    const i = clamp(index, 0, this.chips.length);
+    this.chips = [...this.chips.slice(0, i), chip, ...this.chips.slice(i)];
     this.persist(true);
     this.notify();
   }

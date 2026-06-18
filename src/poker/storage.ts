@@ -3,21 +3,12 @@
 // storage may be unavailable (private mode), full, or corrupt; we degrade to
 // in-memory operation rather than crash.
 
-import type { LevelEntry, PersistedState, Settings, ThemeId } from './types';
-import { defaultSettings } from './defaults';
+import type { ChipDef, LevelEntry, PersistedState, Settings } from './types';
+import { defaultChips, defaultSettings } from './defaults';
+import { defaultPalette, isHex, normalizeHex, validPalette, validSavedPalettes } from './palette';
 
 const KEY = 'numericoasis.poker.timer.v1';
-const THEME_KEY = 'oliclub.theme'; // tiny mirror read by the pre-paint bootstrap
-export const CURRENT_VERSION = 1;
-
-const VALID_THEMES: ThemeId[] = [
-  'midnight-felt',
-  'casino-classic',
-  'oled-contrast',
-  'amber-warm',
-  'slate-cool',
-  'paper-light',
-];
+export const CURRENT_VERSION = 2;
 
 let available: boolean | null = null;
 
@@ -52,12 +43,25 @@ function validEntry(e: unknown): e is LevelEntry {
   return false;
 }
 
+function validChip(c: unknown): c is ChipDef {
+  if (!c || typeof c !== 'object') return false;
+  const x = c as Record<string, unknown>;
+  return typeof x.id === 'string' && typeof x.color === 'string' && isHex(x.color) && isFiniteNum(x.value);
+}
+
+function coerceChips(raw: unknown): ChipDef[] {
+  if (!Array.isArray(raw)) return defaultChips();
+  const ok = raw.filter(validChip).map((c) => ({ id: c.id, color: normalizeHex(c.color), value: Math.max(0, c.value) }));
+  return ok.length ? ok : defaultChips();
+}
+
 function coerceSettings(raw: unknown): Settings {
   const d = defaultSettings();
   if (!raw || typeof raw !== 'object') return d;
   const s = raw as Record<string, unknown>;
   const out: Settings = { ...d };
-  if (typeof s.theme === 'string' && (VALID_THEMES as string[]).includes(s.theme)) out.theme = s.theme as ThemeId;
+  out.palette = validPalette(s.palette) ? s.palette : defaultPalette();
+  out.savedPalettes = validSavedPalettes(s.savedPalettes);
   if (typeof s.sound === 'string') out.sound = s.sound;
   if (isFiniteNum(s.volume)) out.volume = Math.min(1, Math.max(0, s.volume));
   for (const k of [
@@ -114,6 +118,7 @@ export function load(): PersistedState | null {
     version: CURRENT_VERSION,
     savedAt: isFiniteNum(p.savedAt) ? (p.savedAt as number) : Date.now(),
     entries,
+    chips: coerceChips(p.chips),
     timer: {
       status: statusOk ? (t.status as PersistedState['timer']['status']) : 'idle',
       currentIndex,
@@ -134,7 +139,6 @@ function writeNow(state: PersistedState): void {
   if (!storageAvailable()) return;
   try {
     localStorage.setItem(KEY, JSON.stringify(state));
-    localStorage.setItem(THEME_KEY, state.settings.theme);
   } catch {
     // Quota or other failure — stop trying to persist this session.
     available = false;
@@ -159,11 +163,6 @@ export function save(state: PersistedState, immediate = false): void {
 export function flush(): void {
   if (timer) { clearTimeout(timer); timer = null; }
   if (pending) { writeNow(pending); pending = null; }
-}
-
-export function mirrorTheme(theme: ThemeId): void {
-  if (!storageAvailable()) return;
-  try { localStorage.setItem(THEME_KEY, theme); } catch { /* ignore */ }
 }
 
 // ---- IndexedDB: custom audio blobs ------------------------------------

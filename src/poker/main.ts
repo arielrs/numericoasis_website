@@ -6,7 +6,7 @@ import { clamp } from './clock';
 import * as fs from './fullscreen';
 import * as render from './render';
 import { store } from './store';
-import { applyTheme } from './themes';
+import { applyPalette } from './palette';
 
 function isTyping(target: EventTarget | null): boolean {
   const el = target as HTMLElement | null;
@@ -73,13 +73,13 @@ function setVolume(v: number): void {
 export function boot(): void {
   store.init();
   const s0 = store.getState();
-  applyTheme(s0.settings.theme);
+  applyPalette(s0.settings.palette);
   render.mount();
   render.update(s0);
 
-  // Re-apply theme + audio gain and re-render on every state change.
+  // Re-apply audio gain and re-render on every state change. (The palette is
+  // applied on change by the settings handlers, not every tick.)
   store.subscribe((s) => {
-    applyTheme(s.settings.theme);
     audio.syncSettings();
     render.update(s);
   });

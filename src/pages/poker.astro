@@ -11,7 +11,7 @@ import '../poker/styles/poker.css';
 ---
 
 <!doctype html>
-<html lang="en" data-theme="midnight-felt">
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
@@ -22,17 +22,21 @@ import '../poker/styles/poker.css';
     <link rel="icon" type="image/png" href="/poker/oliclub-favicon.png" />
     <link rel="apple-touch-icon" href="/poker/oliclub-favicon.png" />
 
-    {/* No-flash theme bootstrap: set the saved theme before first paint. */}
+    {/* No-flash theme bootstrap: apply the saved palette's derived tokens before first paint. */}
     <script is:inline>
       (function () {
         try {
-          var valid = ['midnight-felt', 'casino-classic', 'oled-contrast', 'amber-warm', 'slate-cool', 'paper-light'];
-          var t = localStorage.getItem('oliclub.theme');
-          if (t && valid.indexOf(t) !== -1) {
-            document.documentElement.setAttribute('data-theme', t);
+          var raw = localStorage.getItem('oliclub.tokens');
+          if (!raw) return;
+          var tokens = JSON.parse(raw);
+          var root = document.documentElement;
+          for (var k in tokens) {
+            if (k.charAt(0) === '-' && k.charAt(1) === '-' && typeof tokens[k] === 'string') {
+              root.style.setProperty(k, tokens[k]);
+            }
           }
         } catch (e) {
-          /* swallow — fall back to the default dark theme */
+          /* swallow — fall back to the baked :root defaults */
         }
       })();
     </script>

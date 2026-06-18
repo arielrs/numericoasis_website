@@ -31,16 +31,31 @@ export interface TimerState {
   endsAt: number | null;
 }
 
-export type ThemeId =
-  | 'midnight-felt'
-  | 'casino-classic'
-  | 'oled-contrast'
-  | 'amber-warm'
-  | 'slate-cool'
-  | 'paper-light';
+/** Five editable theme colours; every CSS token is derived from these. */
+export interface Palette {
+  bg: string;
+  text: string;
+  primary: string;
+  accent: string;
+  muted: string;
+}
+
+export interface SavedPalette {
+  id: string;
+  name: string;
+  palette: Palette;
+}
+
+/** A poker chip denomination: a colour + its value. */
+export interface ChipDef {
+  id: string;
+  color: string;
+  value: number;
+}
 
 export interface Settings {
-  theme: ThemeId;
+  palette: Palette;
+  savedPalettes: SavedPalette[];
   /** preset id ('air-horn'…) or 'custom:<id>' */
   sound: string;
   /** 0..1 */
@@ -63,6 +78,7 @@ export interface PersistedState {
   version: number;
   savedAt: number;
   entries: LevelEntry[];
+  chips: ChipDef[];
   timer: TimerState;
   settings: Settings;
 }
@@ -70,6 +86,7 @@ export interface PersistedState {
 /** What the store exposes to renderers — persisted data plus derived view info. */
 export interface AppState {
   entries: LevelEntry[];
+  chips: ChipDef[];
   timer: TimerState;
   settings: Settings;
   /** true when localStorage is unavailable and we run in-memory only */
