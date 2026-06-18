@@ -146,21 +146,45 @@ img { display: block; max-width: 100%; }
 .main {
   position: relative;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, clamp(340px, 48vw, 880px)) minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1fr) minmax(0, clamp(320px, 42vw, 720px)) minmax(0, 1fr);
   gap: clamp(0.75rem, 2vw, 2rem);
   align-items: start;
   padding: clamp(1rem, 3vw, 2.5rem);
   max-width: 1800px; width: 100%; margin-inline: auto;
 }
-/* Club logo: lives in the left column, hugs the stage, as big as the column allows. */
+/* Club logo: lives in the left column, centred in the gap, vertically centred
+   against the timer panel. It is absolutely positioned inside its cell so it can
+   be resized freely WITHOUT ever shifting the stage — the clock stays centred.
+   It sits below the stage (z-index), so an oversized logo tucks behind the panel
+   rather than covering the clock. */
+.logo-cell { display: contents; }
+.logo-box {
+  grid-column: 1; grid-row: 1; justify-self: center; align-self: center;
+  position: relative; min-width: 0;
+  width: min(var(--logo-size, 440px), 100%, 90vh);
+  aspect-ratio: 1; touch-action: none;
+}
+.logo-box:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 8px; border-radius: 18px; }
 .main__logo {
-  justify-self: end; min-width: 0; width: 100%; height: auto;
-  max-width: clamp(180px, 30vw, 560px);
+  width: 100%; height: 100%; object-fit: contain;
   border-radius: clamp(10px, 1.5vw, 22px);
   filter: drop-shadow(0 8px 26px rgb(var(--shadow-rgb) / 0.5));
+  -webkit-user-drag: none; user-select: none; pointer-events: none;
 }
-.stage-col { display: grid; gap: 1.25rem; align-content: start; min-width: 0; }
-.legend { justify-self: start; }
+.logo-handle {
+  position: absolute; width: 18px; height: 18px; border-radius: 50%;
+  background: var(--accent); box-shadow: 0 0 0 2px var(--bg), 0 2px 6px rgb(var(--shadow-rgb) / 0.5);
+  opacity: 0; transition: opacity var(--speed) var(--ease);
+}
+.logo-box:hover .logo-handle, .logo-box:focus-within .logo-handle, .logo-box:focus-visible .logo-handle { opacity: 0.95; }
+.logo-handle--nw { top: -9px; left: -9px; cursor: nwse-resize; }
+.logo-handle--ne { top: -9px; right: -9px; cursor: nesw-resize; }
+.logo-handle--sw { bottom: -9px; left: -9px; cursor: nesw-resize; }
+.logo-handle--se { bottom: -9px; right: -9px; cursor: nwse-resize; }
+
+.main > .stage { grid-column: 2; grid-row: 1; z-index: 1; }
+.legend { grid-column: 3; grid-row: 1; justify-self: start; align-self: start; z-index: 1; }
+.underbar { grid-column: 2; grid-row: 2; display: grid; gap: 1.25rem; min-width: 0; z-index: 1; }
 
 .stage {
   position: relative;
@@ -347,9 +371,10 @@ img { display: block; max-width: 100%; }
 /* ===================================================================== */
 .app[data-fullscreen="true"] { background: var(--bg); }
 .app[data-fullscreen="true"] .hdr,
-.app[data-fullscreen="true"] .legend { display: none; }
+.app[data-fullscreen="true"] .legend,
+.app[data-fullscreen="true"] .underbar { display: none; }
 .app[data-fullscreen="true"] .main { grid-template-columns: 1fr; max-width: none; padding: 0; height: 100dvh; }
-.app[data-fullscreen="true"] .stage-col { gap: 0; height: 100%; }
+.app[data-fullscreen="true"] .main > .stage { grid-column: 1; grid-row: 1; }
 .app[data-fullscreen="true"] .stage {
   border-radius: 0; min-height: 0; height: 100dvh;
   padding-bottom: clamp(5rem, 12cqh, 9rem);
@@ -379,11 +404,12 @@ img { display: block; max-width: 100%; }
 .fs-chip .chip { width: clamp(26px, 3.8cqmin, 46px); height: clamp(26px, 3.8cqmin, 46px); }
 .fs-chip b { font-weight: 600; }
 
-/* In fullscreen the logo (if enabled) floats at the left edge so it never
-   shifts the centred clock. */
-.app[data-fullscreen="true"] .main__logo {
-  position: absolute; left: clamp(1rem, 3vw, 3.5rem); top: 50%; transform: translateY(-50%);
-  width: auto; height: auto; max-width: clamp(120px, 15vw, 300px); max-height: 42vh; z-index: 1;
+/* In fullscreen the logo (if enabled) floats in the left area, above the stage,
+   so it never shifts the centred clock; still corner-resizable. */
+.app[data-fullscreen="true"] .logo-cell { display: contents; }
+.app[data-fullscreen="true"] .logo-box {
+  position: absolute; left: clamp(0.5rem, 4vw, 4rem); top: 50%; transform: translateY(-50%);
+  width: min(var(--logo-size, 440px), 34vw, 86vh); z-index: 2;
 }
 
 /* Show level indicator top-right in fullscreen */
@@ -579,14 +605,21 @@ kbd {
 /* ===================================================================== */
 @media (max-width: 1080px) {
   .main { grid-template-columns: 1fr; justify-items: center; }
-  .main__logo { justify-self: center; width: auto; max-width: clamp(140px, 34vw, 320px); }
-  .legend { justify-self: stretch; order: 3; width: 100%; }
+  .logo-cell { display: contents; }
+  .logo-box {
+    position: static; transform: none; left: auto; top: auto;
+    grid-column: 1; grid-row: auto; order: 0; justify-self: center;
+    width: min(var(--logo-size, 440px), 70vw, 38vh);
+  }
+  .main > .stage { grid-column: 1; grid-row: auto; order: 1; width: 100%; }
+  .underbar { grid-column: 1; grid-row: auto; order: 2; width: 100%; }
+  .legend { grid-column: 1; grid-row: auto; order: 3; justify-self: stretch; width: 100%; }
   .legend__list { grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); }
 }
 @media (max-width: 640px) {
   .main { padding: 0.85rem; gap: 0.85rem; }
   .stage { min-height: 52vh; }
-  .main__logo { display: none; }   /* keep the clock dominant on phones */
+  .logo-box { display: none; }   /* keep the clock dominant on phones */
   .transport { gap: 0.4rem; }
   .transport .btn span.btn__txt { display: none; }   /* icon-only secondary on phone */
   .transport .btn--primary span.btn__txt { display: inline; }

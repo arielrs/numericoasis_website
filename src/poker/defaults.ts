@@ -94,6 +94,7 @@ export function defaultSettings(): Settings {
     showLogo: true,
     logoFullscreen: false,
     customLogo: false,
+    logoSize: 420,
     autoFullscreen: false,
     keepAwake: true,
     resumeRunningOnReload: false,

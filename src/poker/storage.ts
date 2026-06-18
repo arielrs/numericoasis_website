@@ -64,6 +64,7 @@ function coerceSettings(raw: unknown): Settings {
   out.savedPalettes = validSavedPalettes(s.savedPalettes);
   if (typeof s.sound === 'string') out.sound = s.sound;
   if (isFiniteNum(s.volume)) out.volume = Math.min(1, Math.max(0, s.volume));
+  if (isFiniteNum(s.logoSize)) out.logoSize = Math.min(1400, Math.max(100, s.logoSize));
   for (const k of [
     'muted', 'soundEnabled', 'warn60', 'flashLast60', 'showChips',
     'showLogo', 'logoFullscreen', 'customLogo',

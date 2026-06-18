@@ -27,7 +27,11 @@ let lastAnnouncedKey = '';
 let pendingCustom: { id: string; name: string } | null = null;
 let editorTab: 'blinds' | 'chips' = 'blinds';
 let seekDragging = false;
+let logoResizing = false;
 let logoUrl: string | null = null;
+
+const LOGO_MIN = 100;
+const LOGO_MAX = 1400;
 
 // ---- markup builders --------------------------------------------------
 
@@ -100,9 +104,16 @@ function appHTML(): string {
   </header>
 
   <div class="main">
-    <img class="main__logo" id="club-logo" src="/poker/oliclub.webp" alt="Oliclub" />
-    <div class="stage-col">
-      <section class="stage" aria-label="Tournament timer">
+    <div class="logo-cell">
+      <div class="logo-box" id="logo-box" tabindex="0" role="img" aria-label="Club logo — drag a corner or use arrow keys to resize">
+        <img class="main__logo" id="club-logo" src="/poker/oliclub.webp" alt="Oliclub" />
+        <span class="logo-handle logo-handle--nw" data-resize aria-hidden="true"></span>
+        <span class="logo-handle logo-handle--ne" data-resize aria-hidden="true"></span>
+        <span class="logo-handle logo-handle--sw" data-resize aria-hidden="true"></span>
+        <span class="logo-handle logo-handle--se" data-resize aria-hidden="true"></span>
+      </div>
+    </div>
+    <section class="stage" aria-label="Tournament timer">
         <div class="fs-level num" id="fs-level"></div>
         <div class="level-pill"><span class="level-pill__dot"></span><span id="level-text">Level 1</span></div>
 
@@ -132,6 +143,12 @@ function appHTML(): string {
         <div class="fs-chips" id="fs-chips" aria-hidden="true"></div>
       </section>
 
+    <aside class="legend" id="legend">
+      <div class="legend__title"><span class="eyebrow">Chip values</span></div>
+      <dl class="legend__list" id="legend-list"></dl>
+    </aside>
+
+    <div class="underbar">
       <div class="seek">
         <span class="seek__time num" id="seek-start">0:00</span>
         <input class="range" type="range" id="seek" min="0" max="${LEVEL_SECONDS}" value="${LEVEL_SECONDS}" step="1"
@@ -146,11 +163,6 @@ function appHTML(): string {
         <button class="btn btn--ghost" id="next" aria-label="Next level">${icon('next')}<span class="btn__txt">Next</span></button>
       </div>
     </div>
-
-    <aside class="legend" id="legend">
-      <div class="legend__title"><span class="eyebrow">Chip values</span></div>
-      <dl class="legend__list" id="legend-list"></dl>
-    </aside>
   </div>
 
   <!-- Fullscreen floating control bar -->
@@ -608,6 +620,7 @@ function bind(): void {
   $('logo-upload-btn').onclick = () => $('logo-file').click();
   $('logo-reset-btn').onclick = onLogoReset;
   $<HTMLInputElement>('logo-file').addEventListener('change', onLogoUpload);
+  bindLogoResize();
 
   // Palette colour pickers (live on input, persist on change)
   const palette = $('palette');
@@ -717,6 +730,46 @@ function onLogoReset(): void {
   store.setSetting('customLogo', false);
   applyLogo();
   showToast('Logo reset to default');
+}
+
+/** Drag any corner to resize the logo (symmetric about its centre); persist on release. */
+function bindLogoResize(): void {
+  const box = $('logo-box');
+  let cx = 0, cy = 0, cur = store.getState().settings.logoSize;
+  const onMove = (e: PointerEvent) => {
+    const dist = Math.hypot(e.clientX - cx, e.clientY - cy);
+    const requested = Math.min(LOGO_MAX, Math.max(LOGO_MIN, dist * Math.SQRT2));
+    box.style.setProperty('--logo-size', Math.round(requested) + 'px');
+    cur = Math.round(box.getBoundingClientRect().width); // persist the effective (capped) size
+  };
+  const onUp = () => {
+    logoResizing = false;
+    document.removeEventListener('pointermove', onMove);
+    document.removeEventListener('pointerup', onUp);
+    store.setSetting('logoSize', cur);
+  };
+  box.addEventListener('pointerdown', (e) => {
+    if (!(e.target as HTMLElement).closest('[data-resize]')) return;
+    e.preventDefault();
+    const r = box.getBoundingClientRect();
+    cx = r.left + r.width / 2;
+    cy = r.top + r.height / 2;
+    cur = store.getState().settings.logoSize;
+    logoResizing = true;
+    document.addEventListener('pointermove', onMove);
+    document.addEventListener('pointerup', onUp);
+  });
+  box.addEventListener('keydown', (e) => {
+    let d = 0;
+    if (['ArrowUp', 'ArrowRight', '+', '='].includes(e.key)) d = 20;
+    else if (['ArrowDown', 'ArrowLeft', '-', '_'].includes(e.key)) d = -20;
+    else return;
+    e.preventDefault();
+    e.stopPropagation(); // don't trigger the global prev/next shortcuts
+    const base = Math.round(box.getBoundingClientRect().width); // effective size (capped)
+    const next = Math.min(LOGO_MAX, Math.max(LOGO_MIN, base + d));
+    store.setSetting('logoSize', next);
+  });
 }
 
 function onEditorClick(e: Event): void {
@@ -917,10 +970,13 @@ export function update(s: AppState): void {
   $('fs-btn').setAttribute('aria-label', fs.isActive() ? 'Exit fullscreen' : 'Enter fullscreen');
   $('fs-btn').innerHTML = fs.isActive() ? icon('collapse') : icon('expand');
 
-  // legend (windowed) + logo visibility; the fullscreen chip strip is always shown (CSS)
+  // legend (windowed) + logo visibility/size; the fullscreen chip strip is always shown (CSS)
   $('legend').hidden = !s.settings.showChips;
-  const clubLogo = document.getElementById('club-logo');
-  if (clubLogo) clubLogo.hidden = fs.isActive() ? !s.settings.logoFullscreen : !s.settings.showLogo;
+  const logoBox = document.getElementById('logo-box');
+  if (logoBox) {
+    logoBox.hidden = fs.isActive() ? !s.settings.logoFullscreen : !s.settings.showLogo;
+    if (!logoResizing) logoBox.style.setProperty('--logo-size', `${s.settings.logoSize}px`);
+  }
 
   // settings reflections
   reflectSwitch('set-soundEnabled', s.settings.soundEnabled);

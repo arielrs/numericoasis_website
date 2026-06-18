@@ -73,6 +73,8 @@ export interface Settings {
   logoFullscreen: boolean;
   /** a replacement logo image is stored in IndexedDB */
   customLogo: boolean;
+  /** logo display width in px (drag-to-resize); effective size is capped to fit */
+  logoSize: number;
   autoFullscreen: boolean;
   keepAwake: boolean;
   /** if true, a reload while running keeps running instead of pausing */
