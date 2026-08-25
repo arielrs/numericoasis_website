@@ -3,6 +3,8 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches: [main]
+  pull_request:
+    branches: [main]
   workflow_dispatch:
 
 permissions:
@@ -21,12 +23,17 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      # Runs `npm run build`, whose prebuild and postbuild hooks run astro check,
+      # the content-parity and typography checks, and the dist checks. A failure
+      # here means nothing is uploaded, so a broken build cannot reach the site.
       - name: Install, build, and upload your site
         uses: withastro/action@v3
         with:
           node-version: 22
 
   deploy:
+    # Pull requests build and run the checks but must not deploy.
+    if: github.event_name != 'pull_request'
     needs: build
     runs-on: ubuntu-latest
     environment:
@@ -37,28 +44,18 @@ jobs:
         id: deployment
         uses: actions/deploy-pages@v4
 
-  # Bing, Yandex, Seznam and Naver consume IndexNow. Google does not. The reason
-  # to bother is that Bing's index is what ChatGPT search reads, so this is the
-  # shortest path from "published" to "an assistant can cite it".
-  #
   # Requires a repository variable INDEXNOW_KEY (Settings, Secrets and variables,
-  # Actions, Variables) matching the filename in public/. It is a variable rather
+  # Actions, Variables) matching the key file in public/. It is a variable rather
   # than a secret because the key is published at /<key>.txt by design.
   indexnow:
+    if: github.event_name != 'pull_request' && vars.INDEXNOW_KEY != ''
     needs: deploy
-    if: ${{ vars.INDEXNOW_KEY != '' }}
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
       - name: Submit URLs to IndexNow
         env:
           INDEXNOW_KEY: ${{ vars.INDEXNOW_KEY }}
-        run: |
-          set -euo pipefail
-          curl -sSf https://numericoasis.com/sitemap-0.xml             | grep -oP '(?<=<loc>)[^<]+'             | head -n 10000 > urls.txt
-          echo "Submitting $(wc -l < urls.txt) URLs"
-          jq -n             --arg host "numericoasis.com"             --arg key "$INDEXNOW_KEY"             --arg keyLocation "https://numericoasis.com/$INDEXNOW_KEY.txt"             --rawfile urls urls.txt             '{host: $host, key: $key, keyLocation: $keyLocation,
-              urlList: ($urls | split("
-") | map(select(length > 0)))}' > payload.json
-          curl -sS -X POST "https://api.indexnow.org/IndexNow"             -H "Content-Type: application/json; charset=utf-8"             --data @payload.json -w '
-HTTP %{http_code}
-'
+        run: node scripts/indexnow.mjs

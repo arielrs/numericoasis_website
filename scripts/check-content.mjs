@@ -11,6 +11,7 @@
  */
 import { readdir, readFile } from 'node:fs/promises';
 import { join, relative } from 'node:path';
+import { parse as parseYaml } from 'yaml';
 
 const ROOT = process.cwd();
 const LOCALES = ['en', 'pt-BR', 'es'];
@@ -92,6 +93,27 @@ for (const collection of ['apps', 'blog']) {
     lines.forEach((line, i) => {
       if (line.includes(EM_DASH)) errors.push(`${shown}:${i + 1}: em dash (U+2014) in copy`);
     });
+  }
+}
+
+// 3. GitHub workflow files must parse, and must define jobs.
+//
+// An invalid workflow does not fail loudly. GitHub creates a run with zero jobs
+// and a bare "failure", labelled by file path instead of workflow name, and
+// nothing deploys. A mangled inline shell block cost two silent deploys before
+// this check existed.
+{
+  const files = (await walk(join(ROOT, '.github/workflows'))).filter((f) => /\.ya?ml$/.test(f));
+  for (const file of files) {
+    const shown = relative(ROOT, file);
+    try {
+      const doc = parseYaml(await readFile(file, 'utf8'));
+      if (!doc?.jobs || Object.keys(doc.jobs).length === 0) {
+        errors.push(`${shown}: parses, but defines no jobs`);
+      }
+    } catch (error) {
+      errors.push(`${shown}: invalid YAML: ${String(error.message).split('\n')[0]}`);
+    }
   }
 }
 
