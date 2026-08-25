@@ -3,17 +3,19 @@ import {
   LOCALES,
   LOCALE_LABELS,
   LOCALE_FULL_LABELS,
-  stripLocaleFromPath,
-  withLocale,
+  localeUrls,
   type Locale,
+  type LocaleAlternates,
 } from '../i18n';
 
 interface Props {
   currentLang: Locale;
   variant?: 'desktop' | 'mobile';
+  /** Overrides for pages whose per-locale URLs are not simple mirrors. */
+  alternates?: LocaleAlternates;
 }
-const { currentLang, variant = 'desktop' } = Astro.props;
-const bare = stripLocaleFromPath(Astro.url.pathname);
+const { currentLang, variant = 'desktop', alternates } = Astro.props;
+const urls = localeUrls(Astro.url.pathname, alternates);
 ---
 
 {variant === 'desktop' ? (
@@ -38,7 +40,7 @@ const bare = stripLocaleFromPath(Astro.url.pathname);
       {LOCALES.map((l) => (
         <li>
           <a
-            href={withLocale(l, bare)}
+            href={urls[l]}
             data-locale={l}
             data-langswitcher-link
             class:list={[
@@ -59,7 +61,7 @@ const bare = stripLocaleFromPath(Astro.url.pathname);
   <div class="flex items-center gap-2 px-3 py-2" data-langswitcher-mobile>
     {LOCALES.map((l) => (
       <a
-        href={withLocale(l, bare)}
+        href={urls[l]}
         data-locale={l}
         data-langswitcher-link
         class:list={[

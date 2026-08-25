@@ -4,7 +4,12 @@ import { SITE, ORG_DETAILS } from '../consts';
 import SEO from '../components/SEO.astro';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
-import { detectLangFromPath, HTML_LANG_MAP, useTranslations } from '../i18n';
+import {
+  detectLangFromPath,
+  HTML_LANG_MAP,
+  useTranslations,
+  type LocaleAlternates,
+} from '../i18n';
 
 interface Props {
   title: string;
@@ -17,9 +22,11 @@ interface Props {
     tags?: readonly string[];
   };
   noindex?: boolean;
+  /** Overrides for pages whose per-locale URLs are not simple mirrors. */
+  alternates?: LocaleAlternates;
 }
 
-const { title, description, image, article, noindex } = Astro.props;
+const { title, description, image, article, noindex, alternates } = Astro.props;
 const lang = detectLangFromPath(Astro.url.pathname);
 const t = useTranslations(lang);
 
@@ -64,7 +71,15 @@ const orgJsonLd = {
     <link rel="preconnect" href="https://rsms.me" />
     <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
     <link rel="alternate" type="application/rss+xml" title={`${SITE.name} blog`} href="/rss.xml" />
-    <SEO title={title} description={description} image={image} article={article} noindex={noindex} lang={lang} />
+    <SEO
+      title={title}
+      description={description}
+      image={image}
+      article={article}
+      noindex={noindex}
+      lang={lang}
+      alternates={alternates}
+    />
     <script type="application/ld+json" set:html={JSON.stringify(orgJsonLd)} />
     <script is:inline>
       (function () {
@@ -109,7 +124,7 @@ const orgJsonLd = {
       href="#main"
       class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:rounded-md focus:bg-brand-900 focus:px-3 focus:py-2 focus:text-sm focus:text-white"
     >{t.common.skipToContent}</a>
-    <Nav lang={lang} />
+    <Nav lang={lang} alternates={alternates} />
     <main id="main" class="flex-1">
       <slot />
     </main>

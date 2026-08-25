@@ -29,3 +29,25 @@ export function withLocale(lang: Locale, bare: string): string {
 export function contentSlug(id: string): string {
   return id.replace(CONTENT_LOCALE_PREFIX_RE, '');
 }
+
+/** Per-locale URL overrides for a page whose paths are not simple mirrors. */
+export type LocaleAlternates = Partial<Record<Locale, string>>;
+
+/**
+ * The URL of the current page in every locale.
+ *
+ * The default assumes mirrored slugs, which holds for every page on the site.
+ * Pages that cannot mirror pass an override: the shared 404, which exists at one
+ * URL but stands in for all three, and later any content entry whose slug is
+ * translated. Without the override a page would advertise `hreflang` alternates
+ * that 404, and the language switcher would send visitors to a dead end.
+ */
+export function localeUrls(
+  pathname: string,
+  override?: LocaleAlternates,
+): Record<Locale, string> {
+  const bare = stripLocaleFromPath(pathname);
+  return Object.fromEntries(
+    LOCALES.map((l) => [l, override?.[l] ?? withLocale(l, bare)]),
+  ) as Record<Locale, string>;
+}

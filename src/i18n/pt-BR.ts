@@ -1,4 +1,4 @@
-import type { en } from './en';
+import type { Dictionary } from './en';
 
 export const ptBR = {
   nav: {
@@ -41,4 +41,4 @@ export const ptBR = {
     talkToTheTeam: 'Fale com o time',
     getInTouch: 'Entre em contato',
   },
-} as const satisfies typeof en;
+} as const satisfies Dictionary;

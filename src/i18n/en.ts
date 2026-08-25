@@ -1,3 +1,5 @@
+import type { Shape } from './shape';
+
 export const en = {
   nav: {
     services: 'Services',
@@ -40,3 +42,6 @@ export const en = {
     getInTouch: 'Get in touch',
   },
 } as const;
+
+/** The structural contract every locale dictionary must satisfy. */
+export type Dictionary = Shape<typeof en>;

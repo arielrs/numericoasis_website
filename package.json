@@ -7,7 +7,10 @@
   },
   "scripts": {
     "dev": "astro dev",
+    "check": "astro check",
+    "prebuild": "npm run check && node scripts/check-content.mjs",
     "build": "astro build",
+    "postbuild": "node scripts/check-dist.mjs",
     "preview": "astro preview",
     "astro": "astro"
   },
@@ -20,5 +23,9 @@
     "@tailwindcss/vite": "^4.2.4",
     "astro": "^6.1.10",
     "tailwindcss": "^4.2.4"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.10",
+    "typescript": "^5.9.3"
   }
 }

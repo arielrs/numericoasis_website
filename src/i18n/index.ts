@@ -1,9 +1,9 @@
-import { en } from './en';
+import { en, type Dictionary } from './en';
 import { ptBR } from './pt-BR';
 import { es } from './es';
 import { DEFAULT_LOCALE, type Locale } from './config';
 
-export type Dictionary = typeof en;
+export type { Dictionary };
 
 const dicts: Record<Locale, Dictionary> = {
   en,

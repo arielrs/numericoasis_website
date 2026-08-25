@@ -1,22 +1,86 @@
 ---
+/**
+ * One 404 for all three locales.
+ *
+ * GitHub Pages serves `dist/404.html` for every unmatched path, including
+ * locale-prefixed ones like `/es/typo/`, so the build has no idea which language
+ * the visitor was reading. Everything locale-dependent is therefore decided in
+ * the browser from `location.pathname`.
+ *
+ * This file must stay directly in `src/pages/` and stay static. Astro only emits
+ * `dist/404.html` (rather than `dist/404/index.html`) when the route's pathname
+ * is exactly `/404`, and GitHub Pages only recognises the former.
+ */
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { LOCALES, DEFAULT_LOCALE } from '../i18n';
+import { notFound } from '../i18n/pages/not-found';
+
+const copy = notFound[DEFAULT_LOCALE];
 ---
 
-<BaseLayout title="Page not found" description="That page does not exist on Numeric Oasis." noindex>
+<BaseLayout
+  title={copy.title}
+  description={copy.description}
+  noindex
+  alternates={Object.fromEntries(LOCALES.map((l) => [l, l === DEFAULT_LOCALE ? '/' : `/${l}/`]))}
+>
   <section class="flex min-h-[60vh] items-center justify-center py-20">
     <div class="container-wide text-center">
-      <p class="eyebrow">404</p>
-      <h1 class="mt-3 font-display text-4xl font-bold tracking-tight text-slate-900 sm:text-5xl md:text-6xl">
-        We couldn't find that page.
+      <p class="eyebrow">{copy.eyebrow}</p>
+      <h1
+        class="mt-3 font-display text-4xl font-bold tracking-tight text-brand-900 sm:text-5xl md:text-6xl"
+        data-nf="headline"
+      >
+        {copy.headline}
       </h1>
-      <p class="mx-auto mt-4 max-w-lg text-lg text-slate-600">
-        The link may be old, or we may have moved things around. Try the homepage or our most popular sections.
+      <p class="mx-auto mt-4 max-w-xl text-lg leading-relaxed text-slate-600" data-nf="body">
+        {copy.body}
       </p>
       <div class="mt-8 flex flex-wrap justify-center gap-3">
-        <a href="/" class="btn-primary">Back to home</a>
-        <a href="/blog/" class="btn-secondary">Read the blog</a>
-        <a href="/apps/" class="btn-secondary">Browse apps</a>
+        <a href="/" class="btn-primary" data-nf="home">{copy.home}</a>
+        <a href="/apps/" class="btn-secondary" data-nf="apps">{copy.apps}</a>
+        <a href="/blog/" class="btn-secondary" data-nf="blog">{copy.blog}</a>
       </div>
     </div>
   </section>
+
+  <script is:inline define:vars={{ copy: notFound, locales: LOCALES, fallback: DEFAULT_LOCALE }}>
+    (function () {
+      var path = location.pathname;
+      var lang = fallback;
+      for (var i = 0; i < locales.length; i++) {
+        var l = locales[i];
+        if (path === '/' + l || path.indexOf('/' + l + '/') === 0) {
+          lang = l;
+          break;
+        }
+      }
+      if (lang === fallback) return;
+
+      var t = copy[lang];
+      document.documentElement.lang = lang;
+      document.title = t.title;
+
+      var slots = document.querySelectorAll('[data-nf]');
+      for (var j = 0; j < slots.length; j++) {
+        var key = slots[j].getAttribute('data-nf');
+        if (t[key]) slots[j].textContent = t[key];
+      }
+
+      // Every internal href on this page was rendered unprefixed, which is the
+      // English form. Re-point them at the locale the visitor was actually in.
+      var prefix = '/' + lang;
+      var links = document.querySelectorAll('a[href^="/"]');
+      for (var k = 0; k < links.length; k++) {
+        var href = links[k].getAttribute('href');
+        if (!href || href.indexOf(prefix + '/') === 0 || href === prefix) continue;
+        var alreadyLocalised = false;
+        for (var m = 0; m < locales.length; m++) {
+          if (href === '/' + locales[m] || href.indexOf('/' + locales[m] + '/') === 0) alreadyLocalised = true;
+        }
+        if (alreadyLocalised) continue;
+        links[k].setAttribute('href', href === '/' ? prefix + '/' : prefix + href);
+      }
+    })();
+  </script>
 </BaseLayout>

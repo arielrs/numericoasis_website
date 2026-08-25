@@ -4,9 +4,9 @@ import {
   LOCALES,
   DEFAULT_LOCALE,
   OG_LOCALE_MAP,
-  stripLocaleFromPath,
-  withLocale,
+  localeUrls,
   type Locale,
+  type LocaleAlternates,
 } from '../i18n';
 
 interface Props {
@@ -21,6 +21,8 @@ interface Props {
   };
   noindex?: boolean;
   lang: Locale;
+  /** Overrides for pages whose per-locale URLs are not simple mirrors. */
+  alternates?: LocaleAlternates;
 }
 
 const {
@@ -30,18 +32,19 @@ const {
   article,
   noindex = false,
   lang,
+  alternates: alternateOverride,
 } = Astro.props;
 
-const barePath = stripLocaleFromPath(Astro.url.pathname);
-const canonical = new URL(withLocale(lang, barePath), Astro.site).toString();
+const urls = localeUrls(Astro.url.pathname, alternateOverride);
+const canonical = new URL(urls[lang], Astro.site).toString();
 const ogImage = new URL(image, Astro.site).toString();
 const fullTitle = title === SITE.name ? title : `${title} · ${SITE.name}`;
 
 const alternates = LOCALES.map((l) => ({
   hreflang: l,
-  href: new URL(withLocale(l, barePath), Astro.site).toString(),
+  href: new URL(urls[l], Astro.site).toString(),
 }));
-const xDefaultHref = new URL(withLocale(DEFAULT_LOCALE, barePath), Astro.site).toString();
+const xDefaultHref = new URL(urls[DEFAULT_LOCALE], Astro.site).toString();
 ---
 
 <title>{fullTitle}</title>

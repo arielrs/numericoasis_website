@@ -1,4 +1,4 @@
-import type { en } from './en';
+import type { Dictionary } from './en';
 
 export const es = {
   nav: {
@@ -41,4 +41,4 @@ export const es = {
     talkToTheTeam: 'Habla con el equipo',
     getInTouch: 'Contáctanos',
   },
-} as const satisfies typeof en;
+} as const satisfies Dictionary;
