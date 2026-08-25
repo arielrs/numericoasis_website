@@ -4,6 +4,7 @@ import sitemap from '@astrojs/sitemap';
 import mdx from '@astrojs/mdx';
 import tailwindcss from '@tailwindcss/vite';
 import { remarkReadingTime } from './src/lib/remark-reading-time.mjs';
+import { rehypeTableWrapper } from './src/lib/rehype-table-wrapper.mjs';
 
 export default defineConfig({
   site: 'https://numericoasis.com',
@@ -107,6 +108,7 @@ export default defineConfig({
   // extendMarkdownConfig defaults true, so MDX picks this up as well.
   markdown: {
     remarkPlugins: [remarkReadingTime],
+    rehypePlugins: [rehypeTableWrapper],
   },
 
   integrations: [

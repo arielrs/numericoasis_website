@@ -153,14 +153,11 @@
 /* Comparison tables are one of the most extractable content shapes there is,
    for readers and for answer engines alike, so they need to be legible. The
    wrapper scrolls rather than letting a wide table push the page sideways. */
-.prose-custom > table {
-  @apply block overflow-x-auto;
+.prose-custom .table-scroll {
+  @apply my-8 overflow-x-auto;
 }
 .prose-custom table {
-  @apply my-8 w-full min-w-[34rem] border-collapse text-left text-sm;
-}
-.prose-custom :where(table) {
-  display: table;
+  @apply w-full min-w-[34rem] border-collapse text-left text-sm;
 }
 .prose-custom thead tr {
   @apply border-b border-sand-300;
