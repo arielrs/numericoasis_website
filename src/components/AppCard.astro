@@ -29,10 +29,10 @@ const href = withLocale(lang, app.data.landingPath ?? `/apps/${contentSlug(app.i
     'group flex flex-col justify-between rounded-2xl border border-sand-200 bg-paper p-8',
     'transition duration-150 hover:-translate-y-0.5 hover:border-water-400 hover:shadow-[var(--shadow-soft)]',
     'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sun-500',
-    wide && 'md:col-span-2 md:flex-row md:items-start md:gap-10',
+    wide && 'md:col-span-2',
   ]}
 >
-  <div class:list={[wide && 'md:flex-1']}>
+  <div>
     <div class="flex items-center gap-4">
       {app.data.icon ? (
         <Image
@@ -69,34 +69,26 @@ const href = withLocale(lang, app.data.landingPath ?? `/apps/${contentSlug(app.i
       </div>
     </div>
 
-    <p class="mt-5 text-base leading-relaxed text-slate-600">{app.data.description}</p>
+    <p class:list={['mt-5 text-base leading-relaxed text-slate-600', wide && 'max-w-3xl']}>
+      {app.data.description}
+    </p>
 
     {app.data.audiences.length > 0 && (
-      <p class="mt-4 text-xs leading-relaxed text-slate-500">
+      <p class:list={['mt-4 text-xs leading-relaxed text-slate-500', wide && 'max-w-3xl']}>
         <span class="font-semibold text-brand-800">{labels.builtFor}:</span>{' '}
         {app.data.audiences.join(' · ')}
       </p>
     )}
   </div>
 
-  <div
-    class:list={[
-      'mt-6 flex flex-wrap items-center gap-2 text-xs font-semibold',
-      wide && 'md:mt-0 md:w-56 md:shrink-0 md:flex-col md:items-start',
-    ]}
-  >
+  <div class="mt-6 flex flex-wrap items-center gap-2 text-xs font-semibold">
     {app.data.products.map((p) => (
       <span class="rounded-full bg-water-50 px-2.5 py-1 text-water-700">{PRODUCT_LABELS[p] ?? p}</span>
     ))}
     {app.data.priceModel === 'free' && (
       <span class="rounded-full bg-sun-50 px-2.5 py-1 text-sun-700">{t.apps.priceFree}</span>
     )}
-    <span
-      class:list={[
-        'text-slate-400 transition group-hover:text-water-600',
-        wide ? 'md:mt-2' : 'ml-auto',
-      ]}
-    >
+    <span class="ml-auto text-slate-400 transition group-hover:text-water-600">
       {labels.readMore}
       <svg
         class="ml-1 inline-block align-[-0.1em] transition group-hover:translate-x-0.5"
