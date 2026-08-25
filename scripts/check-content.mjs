@@ -81,9 +81,10 @@ for (const collection of ['apps', 'blog']) {
 }
 
 // 2. No em dashes in user-facing copy.
-const copyDirs = ['src/pages', 'src/i18n', 'src/content', 'src/components', 'src/layouts'];
-for (const dir of copyDirs) {
-  const files = (await walk(join(ROOT, dir))).filter((f) => /\.(astro|ts|tsx|mdx?|md)$/.test(f));
+// All of src/, not a hand-listed subset: the first version of this check missed
+// src/consts.ts and src/lib entirely, and silently passed a deliberate em dash.
+{
+  const files = (await walk(join(ROOT, 'src'))).filter((f) => /\.(astro|ts|tsx|mdx?|md|css)$/.test(f));
   for (const file of files) {
     const shown = relative(ROOT, file);
     if (EM_DASH_EXCLUDE.some((ex) => shown.startsWith(ex))) continue;
