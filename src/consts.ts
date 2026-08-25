@@ -6,6 +6,7 @@ export const SITE = {
     'Numeric Oasis is a software house and consulting company. Fifteen years of building custom software for teams worldwide (SaaS, in-house tools, mobile apps, and integrations), shipping Atlassian Forge apps on the Marketplace, advising on business and IT processes, and supporting the teams who run it all.',
   email: 'contact@numericoasis.com',
   location: 'Canoas, RS, Brasil',
+  supportUrl: 'https://numericoasis.atlassian.net/servicedesk/customer/portal/39',
   marketplaceUrl: 'https://marketplace.atlassian.com/vendors/1064627585/numeric-oasis',
   twitter: '',
   linkedin: 'https://www.linkedin.com/company/numeric-oasis/',

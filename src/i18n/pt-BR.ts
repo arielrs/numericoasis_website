@@ -39,6 +39,7 @@ export const ptBR = {
     builtFor: 'Feito para:',
   },
   common: {
+    home: 'Início',
     skipToContent: 'Ir para o conteúdo',
     languagePicker: 'Idioma',
     learnMore: 'Saiba mais',

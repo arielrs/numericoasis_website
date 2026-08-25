@@ -53,7 +53,7 @@ const shareUrl = encodeURIComponent(url);
 <BaseLayout
   title={post.data.title}
   description={post.data.description}
-  image={post.data.heroImage?.src}
+  image={post.data.heroImage}
   article={{
     publishedTime: post.data.pubDate.toISOString(),
     modifiedTime: post.data.updatedDate?.toISOString(),

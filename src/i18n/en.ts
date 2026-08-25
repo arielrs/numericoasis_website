@@ -39,6 +39,7 @@ export const en = {
     builtFor: 'Built for:',
   },
   common: {
+    home: 'Home',
     skipToContent: 'Skip to content',
     languagePicker: 'Language',
     learnMore: 'Learn more',

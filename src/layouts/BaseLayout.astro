@@ -1,13 +1,16 @@
 ---
 import '../styles/global.css';
 import { Font } from 'astro:assets';
-import { SITE, ORG_DETAILS } from '../consts';
+import { SITE } from '../consts';
+import { buildGraph, type Crumb, type JsonLdNode } from '../lib/schema';
+import { resolveOgImage } from '../lib/og';
 import SEO from '../components/SEO.astro';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
 import {
   detectLangFromPath,
   HTML_LANG_MAP,
+  localeUrls,
   useTranslations,
   type LocaleAlternates,
 } from '../i18n';
@@ -15,7 +18,8 @@ import {
 interface Props {
   title: string;
   description?: string;
-  image?: string;
+  /** An imported asset (preferred, so real dimensions are used) or a path into public/. */
+  image?: ImageMetadata | string;
   article?: {
     publishedTime: string;
     modifiedTime?: string;
@@ -25,40 +29,33 @@ interface Props {
   noindex?: boolean;
   /** Overrides for pages whose per-locale URLs are not simple mirrors. */
   alternates?: LocaleAlternates;
+  /** Page-owned structured data, merged into the single per-page @graph. */
+  graph?: {
+    breadcrumbs?: Crumb[];
+    extraNodes?: JsonLdNode[];
+    primaryEntityId?: string;
+    pageType?: string;
+  };
 }
 
-const { title, description, image, article, noindex, alternates } = Astro.props;
+const { title, description, image, article, noindex, alternates, graph = {} } = Astro.props;
 const lang = detectLangFromPath(Astro.url.pathname);
 const t = useTranslations(lang);
 
-const orgJsonLd = {
-  '@context': 'https://schema.org',
-  '@type': 'Organization',
-  '@id': `${SITE.url}/#organization`,
-  name: SITE.name,
-  url: SITE.url,
-  logo: `${SITE.url}/png_logo_main.png`,
-  image: `${SITE.url}/png_logo_main.png`,
-  description: SITE.description,
-  slogan: ORG_DETAILS.slogan,
-  email: SITE.email,
-  foundingDate: ORG_DETAILS.foundingDate,
-  address: {
-    '@type': 'PostalAddress',
-    addressLocality: 'Canoas',
-    addressRegion: 'RS',
-    addressCountry: 'BR',
-  },
-  areaServed: ORG_DETAILS.serviceArea.map((name) => ({ '@type': 'Place', name })),
-  knowsAbout: ORG_DETAILS.knowsAbout,
-  contactPoint: {
-    '@type': 'ContactPoint',
-    contactType: 'sales',
-    email: SITE.email,
-    availableLanguage: ['English', 'Portuguese', 'Spanish'],
-  },
-  sameAs: [SITE.marketplaceUrl, SITE.linkedin].filter(Boolean),
-};
+const urls = localeUrls(Astro.url.pathname, alternates);
+const canonical = new URL(urls[lang], Astro.site!).toString();
+const ogImage = await resolveOgImage(image);
+
+const jsonLd = buildGraph({
+  lang,
+  canonical,
+  name: title,
+  description: description ?? SITE.description,
+  image: ogImage,
+  homeLabel: t.common.home,
+  ...graph,
+});
+
 ---
 
 <!doctype html>
@@ -74,13 +71,13 @@ const orgJsonLd = {
     <SEO
       title={title}
       description={description}
-      image={image}
+      ogImage={ogImage}
       article={article}
       noindex={noindex}
       lang={lang}
       alternates={alternates}
     />
-    <script type="application/ld+json" set:html={JSON.stringify(orgJsonLd)} />
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
     <script is:inline>
       (function () {
         try {
