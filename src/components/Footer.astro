@@ -1,8 +1,9 @@
 ---
 import { Image } from 'astro:assets';
+import { getCollection } from 'astro:content';
 import { SITE } from '../consts';
 import logoRound from '../assets/logos/company-round.jpg';
-import { useTranslations, withLocale, type Locale } from '../i18n';
+import { useTranslations, withLocale, contentSlug, type Locale } from '../i18n';
 
 interface Props {
   lang: Locale;
@@ -10,13 +11,21 @@ interface Props {
 const { lang } = Astro.props;
 const t = useTranslations(lang);
 
+// Generated from the collection so the footer can never drift from /apps/.
+const apps = (await getCollection('apps', ({ data }) => data.lang === lang)).sort(
+  (a, b) => a.data.order - b.data.order,
+);
+
+const rssHref = withLocale(lang, '/rss.xml');
 const year = new Date().getFullYear();
+
+const linkClass = 'rounded-sm text-slate-600 transition hover:text-brand-900 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sun-500';
 ---
 
 <footer class="border-t border-sand-200 bg-sand-50">
   <div class="container-wide py-14">
-    <div class="grid gap-10 md:grid-cols-4">
-      <div class="md:col-span-2">
+    <div class="grid gap-10 md:grid-cols-2 lg:grid-cols-[minmax(0,2fr)_repeat(3,minmax(0,1fr))]">
+      <div>
         <div class="flex items-center gap-2.5">
           <Image
             src={logoRound}
@@ -30,48 +39,64 @@ const year = new Date().getFullYear();
             Numeric<span class="text-sun-500">·</span>Oasis
           </span>
         </div>
-        <p class="mt-4 max-w-sm text-sm leading-relaxed text-slate-600">
-          {SITE.description}
-        </p>
+        <p class="mt-4 max-w-sm text-sm leading-relaxed text-slate-600">{t.site.description}</p>
       </div>
 
       <div>
-        <h3 class="font-display text-sm font-semibold text-brand-900">{t.footer.headings.company}</h3>
+        <h2 class="font-display text-sm font-semibold text-brand-900">{t.footer.headings.apps}</h2>
         <ul class="mt-4 space-y-2 text-sm">
-          <li><a class="text-slate-600 hover:text-brand-900" href={withLocale(lang, '/about/')}>{t.footer.links.about}</a></li>
-          <li><a class="text-slate-600 hover:text-brand-900" href={withLocale(lang, '/services/')}>{t.footer.links.services}</a></li>
-          <li><a class="text-slate-600 hover:text-brand-900" href={withLocale(lang, '/apps/')}>{t.footer.links.apps}</a></li>
-          <li><a class="text-slate-600 hover:text-brand-900" href={withLocale(lang, '/blog/')}>{t.footer.links.blog}</a></li>
-          <li><a class="text-slate-600 hover:text-brand-900" href={withLocale(lang, '/contact/')}>{t.footer.links.contact}</a></li>
+          {apps.map((app) => (
+            <li>
+              <a
+                class={linkClass}
+                href={withLocale(lang, app.data.landingPath ?? `/apps/${contentSlug(app.id)}/`)}
+              >
+                {app.data.name}
+              </a>
+            </li>
+          ))}
         </ul>
       </div>
 
       <div>
-        <h3 class="font-display text-sm font-semibold text-brand-900">{t.footer.headings.connect}</h3>
+        <h2 class="font-display text-sm font-semibold text-brand-900">{t.footer.headings.company}</h2>
         <ul class="mt-4 space-y-2 text-sm">
+          <li><a class={linkClass} href={withLocale(lang, '/apps/')}>{t.footer.links.apps}</a></li>
+          <li><a class={linkClass} href={withLocale(lang, '/blog/')}>{t.footer.links.blog}</a></li>
+          <li><a class={linkClass} href={withLocale(lang, '/about/')}>{t.footer.links.about}</a></li>
+          <li><a class={linkClass} href={withLocale(lang, '/contact/')}>{t.footer.links.contact}</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h2 class="font-display text-sm font-semibold text-brand-900">{t.footer.headings.connect}</h2>
+        <ul class="mt-4 space-y-2 text-sm">
+          <li><a class={linkClass} href={`mailto:${SITE.email}`}>{SITE.email}</a></li>
           <li>
-            <a class="text-slate-600 hover:text-brand-900" href={`mailto:${SITE.email}`}>{SITE.email}</a>
+            <a class={linkClass} href={SITE.supportUrl} rel="noopener" target="_blank">
+              {t.footer.links.support}
+            </a>
           </li>
           <li>
-            <a class="text-slate-600 hover:text-brand-900" href={SITE.marketplaceUrl} rel="noopener" target="_blank">{t.footer.links.marketplace}</a>
+            <a class={linkClass} href={SITE.marketplaceUrl} rel="noopener" target="_blank">
+              {t.footer.links.marketplace}
+            </a>
           </li>
           {SITE.linkedin && (
             <li>
-              <a class="text-slate-600 hover:text-brand-900" href={SITE.linkedin} rel="noopener" target="_blank">{t.footer.links.linkedin}</a>
+              <a class={linkClass} href={SITE.linkedin} rel="noopener" target="_blank">
+                {t.footer.links.linkedin}
+              </a>
             </li>
           )}
-          <li>
-            <a class="text-slate-600 hover:text-brand-900" href="/rss.xml">{t.footer.links.rss}</a>
-          </li>
+          <li><a class={linkClass} href={rssHref}>{t.footer.links.rss}</a></li>
         </ul>
       </div>
     </div>
 
     <div class="mt-12 flex flex-col items-start justify-between gap-3 border-t border-sand-200 pt-6 text-xs text-slate-500 md:flex-row md:items-center">
       <p>{t.footer.copyright(year, SITE.name, SITE.location)}</p>
-      <p class="font-mono">
-        {t.footer.builtWith}
-      </p>
+      <p class="font-mono">{t.footer.builtWith}</p>
     </div>
   </div>
 </footer>

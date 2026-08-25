@@ -1,6 +1,6 @@
 ---
 import { Image } from 'astro:assets';
-import { SITE, NAV_LINKS } from '../consts';
+import { SITE, NAV_LINKS, NAV_CTA } from '../consts';
 import logoRound from '../assets/logos/company-round.jpg';
 import LangSwitcher from './LangSwitcher.astro';
 import { useTranslations, withLocale, type Locale, type LocaleAlternates } from '../i18n';
@@ -55,8 +55,8 @@ const linkLabel = (key: (typeof NAV_LINKS)[number]['labelKey']) => t.nav[key];
 
     <div class="hidden items-center gap-3 md:flex">
       <LangSwitcher currentLang={lang} variant="desktop" alternates={alternates} />
-      <a href={withLocale(lang, '/contact/')} class="inline-flex btn-cta !py-2 !px-4">
-        {t.nav.startProject}
+      <a href={withLocale(lang, NAV_CTA.href)} class="inline-flex btn-cta !py-2 !px-4">
+        {t.nav[NAV_CTA.labelKey]}
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
       </a>
     </div>
@@ -91,7 +91,9 @@ const linkLabel = (key: (typeof NAV_LINKS)[number]['labelKey']) => t.nav[key];
       <div class="mt-2 border-t border-sand-200 pt-2">
         <LangSwitcher currentLang={lang} variant="mobile" alternates={alternates} />
       </div>
-      <a href={withLocale(lang, '/contact/')} class="mt-2 btn-cta justify-center">{t.nav.startProject}</a>
+      <a href={withLocale(lang, NAV_CTA.href)} class="mt-2 btn-cta justify-center">
+        {t.nav[NAV_CTA.labelKey]}
+      </a>
     </div>
   </div>
 </header>

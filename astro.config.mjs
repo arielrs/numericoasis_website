@@ -79,6 +79,23 @@ export default defineConfig({
   // one for a static file. Redirect routes are type 'redirect', which
   // @astrojs/sitemap skips, so the stubs stay out of the sitemap.
   redirects: {
+    // The consulting surface is gone. These six URLs are indexed, so they point
+    // at the app portfolio rather than 404ing. /apps/ and not /onbudget/ on
+    // purpose: someone searching to cut Marketplace spend who lands on a paid
+    // budgeting app has been baited, and would bounce.
+    '/services': '/apps/',
+    '/es/services': '/es/apps/',
+    '/pt-BR/services': '/pt-BR/apps/',
+    '/atlassian-app-cost-reduction': '/apps/',
+    '/es/atlassian-app-cost-reduction': '/es/apps/',
+    '/pt-BR/atlassian-app-cost-reduction': '/pt-BR/apps/',
+
+    // A services pitch end to end, with no product to point at. Drafted rather
+    // than deleted, so the writing survives, but the URLs still resolve.
+    '/blog/real-value-custom-integrations': '/blog/',
+    '/es/blog/real-value-custom-integrations': '/es/blog/',
+    '/pt-BR/blog/real-value-custom-integrations': '/pt-BR/blog/',
+
     // OnBudget is the flagship and lives at its own top-level URL. The
     // predictable /apps/<slug>/ form redirects rather than 404s.
     '/apps/onbudget': '/onbudget/',

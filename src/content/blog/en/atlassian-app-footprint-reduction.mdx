@@ -4,7 +4,7 @@ translationKey: atlassian-app-footprint-reduction
 title: "Pay for the 20% You Use: Shrinking Your Atlassian App Footprint Without Losing the Workflow"
 description: "Most Atlassian Marketplace bills pay for features nobody uses. An honest usage audit and a focused custom Forge app turn pay-per-seat-forever into pay-once-you-own-it, with a better fit for your team."
 pubDate: 2026-05-13
-tags: ["atlassian", "forge", "marketplace", "cost-reduction", "app-rationalization", "consulting"]
+tags: ["atlassian", "forge", "marketplace", "jira-cost-management"]
 author: "Numeric Oasis Team"
 heroImage: ../../../assets/blog/atlassian-app-footprint-reduction.jpg
 ---
@@ -35,20 +35,20 @@ The 20% that teams actually depend on is usually obvious to the people doing the
 
 That is the gap we close.
 
-## What a footprint audit actually looks like
+## How to audit your own footprint
 
-A footprint audit is a short, focused engagement. Two to four weeks for a typical mid-sized instance.
+You do not need an engagement to do this. You need three lists and an afternoon.
 
-We pull real usage data from your Atlassian instance directly: which apps are installed, which features are active, who actually uses each one, how often. We talk to a handful of power users on each of the apps that look load-bearing. We cross-reference against your Marketplace bill.
+Start with what you are paying for: every paid app, its tier, and the annual figure. Your Atlassian admin billing page has all of it. Then get usage: which apps are actually opened, by whom, how often. Some apps report this themselves. For the rest, ask the five people most likely to be power users, and watch what they say when you propose removing it. Finally, cross-reference. Any two apps whose descriptions overlap are worth an hour of scrutiny.
 
-At the end you get a written report. For each app, four questions answered with evidence:
+For each app, answer four questions with evidence rather than instinct:
 
 - Is it essential, replaceable, or unused?
-- Does it overlap with another app you already pay for?
+- Does it overlap with something else you already pay for?
 - What fraction of its features does your team actually use?
-- If it is a candidate for replacement, what would the rebuild cost, what would the break-even look like, and how long would the build take?
+- If it is replaceable, what would replacing it cost, and how long until that pays back?
 
-No tool sells you on the audit. The report is the audit.
+The uncomfortable answers usually cluster around the same two or three lines on the bill.
 
 ## Why custom Forge beats the Marketplace alternative
 
@@ -80,20 +80,18 @@ What we can say is this. For a mid-sized team replacing a major Marketplace app 
 
 The actual numbers we put in front of you come out of your audit, not our marketing page. They are based on your seat count, your apps, your contracts.
 
-## The risks, and how we address them
+## The risks worth thinking about
 
-The two questions we hear most often.
+**What if Atlassian deprecates a Forge API the app depends on?** Atlassian announces breaking changes months ahead, and the same risk applies to the Marketplace app you would be replacing. The difference is who decides whether the work gets done. With a subscription, that is the vendor's call.
 
-**What if Atlassian deprecates a Forge API the custom app depends on?** Atlassian announces breaking changes months in advance. We design custom apps with that in mind and offer a light retainer that covers exactly this kind of migration work. The same risk applies to the Marketplace apps you are replacing, with the difference that there you do not control whether the vendor invests in keeping their app current.
+**Are you replacing one lock-in with another?** Only if you build it as a black box. Code you own, running on the same Atlassian Cloud you already trust, with a documented build and a named maintainer, is a very different kind of dependency from a subscription you cannot fork.
 
-**Who owns it, and what if we stop working together?** You own it. Source code, the Atlassian developer account, the right to modify and redistribute. We document the build and walk your team through it. If we ever part ways, you keep the app and the keys.
-
-A third one we hear less often but worth answering: are we replacing one vendor lock-in with another? No, because the new "vendor" is your own team. The code is yours, the platform is the same Atlassian Cloud you already trust, and the maintenance is small and well-scoped.
+**Is a smaller footprint always better?** No. An app that four hundred people use daily is not a cost problem, it is a load-bearing wall. The point of the audit is to tell those apart, not to get the number down.
 
 ## Where to start
 
-If you have read this far and you are looking at your Atlassian bill thinking some of this might apply to you, send us the rough shape. Number of users, the list of paid Marketplace apps, what is costing the most. We will come back within a working day, honestly, about whether an audit makes sense for your situation and what the rough numbers would look like if it does.
+Start with the inventory, not the decision.
 
-The audit details live on our [Atlassian app cost reduction page](/atlassian-app-cost-reduction/). The conversation starts at [our contact page](/contact/).
+Two of our own apps exist because we kept doing parts of this by hand. [Field Scout](/apps/field-scout/) is free, and audits the custom field sprawl that tends to arrive alongside an over-large app footprint: what is active, what is stale, and what nothing has touched in a year. [OnBudget](/onbudget/) answers the other half of the question, turning the work already tracked in Jira into a number you can put next to the licence line.
 
-A focused custom Forge app is not the answer for every Marketplace line on your bill. It is the answer for more of them than most teams realize. The audit is how we find out which.
+A focused Forge app is not the answer for every Marketplace line on your bill. It is the answer for more of them than most teams realise. Knowing what you actually have is how you find out which.

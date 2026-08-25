@@ -1,9 +1,13 @@
 export const SITE = {
   name: 'Numeric Oasis Technologies',
   url: 'https://numericoasis.com',
-  tagline: 'Atlassian Marketplace Partner & SaaS Custom Solutions',
+  tagline: 'Atlassian Marketplace Partner. Forge apps for Jira and Confluence Cloud.',
+  /**
+   * The canonical English description, used for the Organization node and as a
+   * last-resort meta description. Localised copy lives in the dictionaries.
+   */
   description:
-    'Numeric Oasis is a software house and consulting company. Fifteen years of building custom software for teams worldwide (SaaS, in-house tools, mobile apps, and integrations), shipping Atlassian Forge apps on the Marketplace, advising on business and IT processes, and supporting the teams who run it all.',
+    'Numeric Oasis is a partner in the Atlassian Marketplace. We build Forge apps for Jira and Confluence Cloud: budget and cost reporting, Confluence governance and compliance, work item dependency mapping, project configuration auditing, and custom field cleanup.',
   email: 'contact@numericoasis.com',
   location: 'Canoas, RS, Brasil',
   supportUrl: 'https://numericoasis.atlassian.net/servicedesk/customer/portal/39',
@@ -13,51 +17,54 @@ export const SITE = {
 } as const;
 
 export const NAV_LINKS = [
-  { href: '/services/', labelKey: 'services' },
-  { href: '/atlassian-app-cost-reduction/', labelKey: 'costReduction' },
   { href: '/apps/', labelKey: 'apps' },
   { href: '/blog/', labelKey: 'blog' },
   { href: '/about/', labelKey: 'about' },
   { href: '/contact/', labelKey: 'contact' },
 ] as const;
 
+/**
+ * The header call to action. It points at the flagship rather than at a contact
+ * form: a bare product name in the nav list means nothing to a cold visitor and
+ * competes with "Apps" for the same click, whereas here the verb carries it.
+ */
+export const NAV_CTA = { href: '/onbudget/', labelKey: 'tryOnBudget' } as const;
+
 export const PRODUCT_LABELS: Record<string, string> = {
   jira: 'Jira',
   confluence: 'Confluence',
   bitbucket: 'Bitbucket',
-  jsm: 'JSM',
+  jsm: 'Jira Service Management',
 };
 
 export const ORG_DETAILS = {
   foundingYear: 2011,
   foundingDate: '2011-01-01',
-  slogan: 'Build, advise, and run. Across software, Atlassian, and operations.',
+  slogan: 'Apps that run inside Atlassian, not beside it.',
   serviceArea: ['Africa', 'Asia', 'Europe', 'North America', 'Oceania', 'South America'],
+  /** What the organisation is an authority on. Every entry maps to a shipped app. */
   knowsAbout: [
     'Atlassian Marketplace',
     'Atlassian Forge',
     'Forge app development',
     'Jira',
+    'Jira Cloud',
     'Jira Service Management',
     'Confluence',
-    'Bitbucket',
-    'Atlassian Cloud migration',
-    'Atlassian platform consulting',
-    'Custom software development',
-    'SaaS development',
-    'TypeScript',
-    'Node.js',
-    'React',
-    'Web application development',
-    'Mobile application development',
-    'IT service management',
-    'ITSM',
-    'ITIL',
-    'Business process consulting',
-    'IT governance',
-    'Process design',
-    'Managed services',
-    'Customer support',
-    'Software consulting',
+    'Confluence Cloud',
+    'Project budget management',
+    'Project cost tracking',
+    'Budget versus actual reporting',
+    'Cost forecasting',
+    'Rate cards',
+    'PMO reporting',
+    'Confluence content governance',
+    'Document classification',
+    'Policy acknowledgement and sign-off',
+    'Knowledge base navigation',
+    'Work item dependency mapping',
+    'Jira project configuration auditing',
+    'Jira custom field administration',
+    'Atlassian Cloud governance',
   ],
 } as const;

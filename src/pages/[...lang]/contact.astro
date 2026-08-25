@@ -1,0 +1,130 @@
+---
+/**
+ * Contact, for all three locales.
+ *
+ * The previous page carried a form posting to a mailto: URL, which Chrome has
+ * silently ignored for years. It was the site's primary conversion path and it
+ * did nothing on the most common browser, with no error state. There is no
+ * backend on GitHub Pages to post to, so rather than adding a third-party form
+ * endpoint the page now routes by intent: support to the service desk that
+ * already exists, pre-sales to a person.
+ */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { SITE } from '../../consts';
+import { localeStaticPaths, withLocale, type Locale } from '../../i18n';
+import { contact } from '../../i18n/pages/contact';
+import { ORG_ID } from '../../lib/schema';
+
+export const getStaticPaths = localeStaticPaths;
+
+const { lang } = Astro.props as { lang: Locale };
+const t = contact[lang];
+
+const mailto = `mailto:${SITE.email}?subject=${encodeURIComponent(t.sales.subject)}`;
+
+const linkClass =
+  'font-semibold text-water-700 transition hover:text-water-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sun-500';
+---
+
+<BaseLayout
+  title={t.meta.title}
+  description={t.meta.description}
+  graph={{
+    breadcrumbs: [{ name: t.meta.crumb, path: '/contact/' }],
+    primaryEntityId: ORG_ID,
+    pageType: 'ContactPage',
+  }}
+>
+  <section class="border-b border-sand-200 bg-sand-50 py-16 sm:py-24">
+    <div class="container-wide">
+      <p class="eyebrow">{t.hero.eyebrow}</p>
+      <h1 class="mt-3 max-w-3xl font-display text-4xl font-bold leading-tight tracking-tight text-brand-900 sm:text-5xl">
+        {t.hero.headline}
+      </h1>
+      <p class="mt-6 text-lg leading-relaxed text-slate-600">{t.hero.lede}</p>
+    </div>
+  </section>
+
+  <section class="py-16 sm:py-24">
+    <div class="container-wide grid gap-8 lg:grid-cols-2 lg:gap-10">
+      <!-- SUPPORT -->
+      <article class="flex flex-col rounded-2xl border border-sand-200 bg-paper p-8 sm:p-10">
+        <p class="eyebrow">{t.support.label}</p>
+        <h2 class="mt-3 font-display text-2xl font-bold tracking-tight text-brand-900">
+          {t.support.headline}
+        </h2>
+        <p class="mt-4 text-base leading-relaxed text-slate-600">{t.support.body}</p>
+
+        <p class="mt-7 text-xs font-semibold uppercase tracking-[0.12em] text-brand-700">
+          {t.support.includeTitle}
+        </p>
+        <ul class="mt-3 space-y-2">
+          {t.support.include.map((item) => (
+            <li class="flex gap-2.5 text-sm leading-relaxed text-slate-600">
+              <svg class="mt-1 shrink-0 text-water-600" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12" /></svg>
+              <span>{item}</span>
+            </li>
+          ))}
+        </ul>
+
+        <div class="mt-8 pt-2">
+          <a href={SITE.supportUrl} class="btn-cta" rel="noopener" target="_blank">
+            {t.support.cta}
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7M7 7h10v10" /></svg>
+          </a>
+        </div>
+      </article>
+
+      <!-- PRE-SALES -->
+      <article class="flex flex-col rounded-2xl border border-sand-200 bg-paper p-8 sm:p-10">
+        <p class="eyebrow">{t.sales.label}</p>
+        <h2 class="mt-3 font-display text-2xl font-bold tracking-tight text-brand-900">
+          {t.sales.headline}
+        </h2>
+        <p class="mt-4 text-base leading-relaxed text-slate-600">{t.sales.body}</p>
+
+        <p class="mt-7 text-xs font-semibold uppercase tracking-[0.12em] text-brand-700">
+          {t.sales.includeTitle}
+        </p>
+        <ul class="mt-3 space-y-2">
+          {t.sales.include.map((item) => (
+            <li class="flex gap-2.5 text-sm leading-relaxed text-slate-600">
+              <svg class="mt-1 shrink-0 text-water-600" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12" /></svg>
+              <span>{item}</span>
+            </li>
+          ))}
+        </ul>
+
+        <div class="mt-8 pt-2">
+          <a href={mailto} class="btn-primary">{t.sales.cta}</a>
+          <p class="mt-3 text-sm text-slate-500">
+            <a class={linkClass} href={`mailto:${SITE.email}`}>{SITE.email}</a>
+          </p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="border-t border-sand-200 bg-sand-50 py-14">
+    <div class="container-wide">
+      <p class="eyebrow">{t.elsewhere.label}</p>
+      <ul class="mt-6 grid gap-4 sm:grid-cols-3">
+        <li>
+          <a class={linkClass} href={SITE.marketplaceUrl} rel="noopener" target="_blank">
+            {t.elsewhere.marketplace}
+          </a>
+        </li>
+        {SITE.linkedin && (
+          <li>
+            <a class={linkClass} href={SITE.linkedin} rel="noopener" target="_blank">
+              {t.elsewhere.linkedin}
+            </a>
+          </li>
+        )}
+        <li class="text-slate-600">
+          <span class="font-semibold text-brand-900">{t.elsewhere.location}:</span> {SITE.location}
+        </li>
+      </ul>
+    </div>
+  </section>
+</BaseLayout>

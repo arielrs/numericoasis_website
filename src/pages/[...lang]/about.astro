@@ -1,0 +1,190 @@
+---
+/**
+ * About, for all three locales.
+ *
+ * Repurposed from a services-company story into the E-E-A-T page for an app
+ * vendor: who builds the apps, how they are built, and, per app, exactly what
+ * each one stores. The per-app data table is generated from the collection, so
+ * it cannot drift from what the app pages claim.
+ */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+import { SITE, PRODUCT_LABELS } from '../../consts';
+import { localeStaticPaths, contentSlug, withLocale, type Locale } from '../../i18n';
+import { about } from '../../i18n/pages/about';
+import { ORG_ID } from '../../lib/schema';
+
+export const getStaticPaths = localeStaticPaths;
+
+const { lang } = Astro.props as { lang: Locale };
+const t = about[lang];
+
+const apps = (await getCollection('apps', ({ data }) => data.lang === lang)).sort(
+  (a, b) => a.data.order - b.data.order,
+);
+
+const linkClass =
+  'font-semibold text-water-700 transition hover:text-water-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sun-500';
+---
+
+<BaseLayout
+  title={t.meta.title}
+  description={t.meta.description}
+  graph={{
+    breadcrumbs: [{ name: t.meta.crumb, path: '/about/' }],
+    primaryEntityId: ORG_ID,
+    pageType: 'AboutPage',
+  }}
+>
+  <!-- HERO -->
+  <section class="border-b border-sand-200 bg-sand-50 py-16 sm:py-24">
+    <div class="container-wide">
+      <p class="eyebrow">{t.hero.eyebrow}</p>
+      <h1 class="mt-3 max-w-4xl font-display text-4xl font-bold leading-tight tracking-tight text-brand-900 sm:text-5xl md:text-6xl">
+        {t.hero.headline}
+      </h1>
+      <p class="mt-6 max-w-2xl text-lg leading-relaxed text-slate-600">{t.hero.lede}</p>
+    </div>
+  </section>
+
+  <!-- MARKETPLACE STANDING -->
+  <section class="py-16 sm:py-24">
+    <div class="container-wide grid gap-12 lg:grid-cols-[minmax(0,4fr)_minmax(0,6fr)] lg:gap-16">
+      <div>
+        <p class="eyebrow">{t.standing.eyebrow}</p>
+        <h2 class="mt-3 font-display text-3xl font-bold tracking-tight text-brand-900 sm:text-4xl">
+          {t.standing.headline}
+        </h2>
+      </div>
+      <div>
+        {t.standing.paragraphs.map((p) => (
+          <p class="mb-5 text-base leading-relaxed text-slate-600 last:mb-0">{p}</p>
+        ))}
+        <p class="mt-6">
+          <a class={linkClass} href={SITE.marketplaceUrl} rel="noopener" target="_blank">
+            {t.standing.link}
+          </a>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW WE BUILD -->
+  <section class="border-y border-sand-200 bg-sand-50 py-16 sm:py-24">
+    <div class="container-wide grid gap-12 lg:grid-cols-[minmax(0,4fr)_minmax(0,6fr)] lg:gap-16">
+      <div>
+        <p class="eyebrow">{t.build.eyebrow}</p>
+        <h2 class="mt-3 font-display text-3xl font-bold tracking-tight text-brand-900 sm:text-4xl">
+          {t.build.headline}
+        </h2>
+      </div>
+      <div>
+        {t.build.paragraphs.map((p) => (
+          <p class="mb-5 text-base leading-relaxed text-slate-600 last:mb-0">{p}</p>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- PER-APP DATA TABLE -->
+  <section class="py-16 sm:py-24">
+    <div class="container-wide">
+      <div class="max-w-2xl">
+        <p class="eyebrow">{t.dataTable.eyebrow}</p>
+        <h2 class="mt-3 font-display text-3xl font-bold tracking-tight text-brand-900 sm:text-4xl">
+          {t.dataTable.headline}
+        </h2>
+        <p class="mt-5 text-lg leading-relaxed text-slate-600">{t.dataTable.lede}</p>
+      </div>
+
+      <div class="mt-10 overflow-x-auto">
+        <table class="w-full min-w-[36rem] border-collapse text-left text-sm">
+          <thead>
+            <tr class="border-b border-sand-300 text-xs font-semibold uppercase tracking-[0.12em] text-brand-700">
+              <th scope="col" class="py-3 pr-4">{t.dataTable.columns.app}</th>
+              <th scope="col" class="py-3 pr-4">{t.dataTable.columns.host}</th>
+              <th scope="col" class="py-3">{t.dataTable.columns.personalData}</th>
+            </tr>
+          </thead>
+          <tbody>
+            {apps.map((app) => (
+              <tr class="border-b border-sand-200">
+                <th scope="row" class="py-3 pr-4 font-medium text-brand-900">
+                  <a
+                    class={linkClass}
+                    href={withLocale(lang, app.data.landingPath ?? `/apps/${contentSlug(app.id)}/`)}
+                  >
+                    {app.data.name}
+                  </a>
+                </th>
+                <td class="py-3 pr-4 text-slate-600">
+                  {app.data.hostProducts.map((p) => PRODUCT_LABELS[p] ?? p).join(', ')}
+                </td>
+                <td class="py-3 text-slate-600">
+                  {app.data.storesPersonalData ? t.dataTable.yes : t.dataTable.no}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- SUPPORT -->
+  <section class="border-y border-sand-200 bg-sand-50 py-16 sm:py-24">
+    <div class="container-wide grid gap-12 lg:grid-cols-[minmax(0,4fr)_minmax(0,6fr)] lg:gap-16">
+      <div>
+        <p class="eyebrow">{t.support.eyebrow}</p>
+        <h2 class="mt-3 font-display text-3xl font-bold tracking-tight text-brand-900 sm:text-4xl">
+          {t.support.headline}
+        </h2>
+      </div>
+      <div>
+        <p class="text-base leading-relaxed text-slate-600">{t.support.body}</p>
+        <p class="mt-6">
+          <a class={linkClass} href={SITE.supportUrl} rel="noopener" target="_blank">
+            {t.support.link}
+          </a>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY THE NAME -->
+  <section class="py-16 sm:py-24">
+    <div class="container-prose">
+      <p class="eyebrow">{t.name.eyebrow}</p>
+      <h2 class="mt-3 font-display text-3xl font-bold tracking-tight text-brand-900 sm:text-4xl">
+        {t.name.headline}
+      </h2>
+      <div class="mt-6 space-y-5 text-base leading-relaxed text-slate-600">
+        <p>{t.name.intro}</p>
+        <p><strong class="text-brand-900">{t.name.numericLabel}</strong> {t.name.numeric}</p>
+        <p><strong class="text-brand-900">{t.name.oasisLabel}</strong> {t.name.oasis}</p>
+        <p class="font-medium text-brand-900">{t.name.close}</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHERE WE ARE -->
+  <section class="border-t border-sand-200 bg-sand-50 py-16 sm:py-24">
+    <div class="container-wide grid gap-10 md:grid-cols-2">
+      <div>
+        <p class="eyebrow">{t.where.eyebrow}</p>
+        <h2 class="mt-3 font-display text-3xl font-bold tracking-tight text-brand-900 sm:text-4xl">
+          {t.where.headlinePrefix} {SITE.location}.
+        </h2>
+      </div>
+      <div class="space-y-4 text-base leading-relaxed text-slate-600">
+        {t.where.paragraphs.map((p) => <p>{p}</p>)}
+        <p>
+          {t.where.contactLead}{' '}
+          <a class={linkClass} href={`mailto:${SITE.email}`}>{SITE.email}</a>{' '}
+          {t.where.contactMid}{' '}
+          <a class={linkClass} href={withLocale(lang, '/contact/')}>{t.where.contactLink}</a>.
+        </p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

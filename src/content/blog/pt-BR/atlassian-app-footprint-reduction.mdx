@@ -4,7 +4,7 @@ translationKey: atlassian-app-footprint-reduction
 title: "Pague pelos 20% que você realmente usa: como reduzir o footprint de apps Atlassian sem perder o fluxo"
 description: "A maior parte da fatura de apps Atlassian no Marketplace paga por features que ninguém usa. Uma auditoria honesta de uso e um app Forge customizado focado transformam pagar por usuário para sempre em pagar uma vez e ser dono, com um encaixe melhor para o seu time."
 pubDate: 2026-05-13
-tags: ["atlassian", "forge", "marketplace", "cost-reduction", "app-rationalization", "consulting"]
+tags: ["atlassian", "forge", "marketplace", "jira-cost-management"]
 author: "Numeric Oasis Team"
 heroImage: ../../../assets/blog/atlassian-app-footprint-reduction.jpg
 ---
@@ -35,20 +35,20 @@ Os 20% dos quais o time realmente depende costumam ser óbvios para quem faz o t
 
 É essa lacuna que a gente fecha.
 
-## Como é, de verdade, uma auditoria de footprint
+## Como auditar o seu próprio footprint
 
-Uma auditoria de footprint é um engajamento curto e focado. De duas a quatro semanas para uma instância de porte médio.
+Você não precisa contratar nada para fazer isso. Precisa de três listas e de uma tarde.
 
-A gente puxa dados reais de uso direto da sua instância Atlassian: quais apps estão instalados, quais features estão ativas, quem realmente usa cada uma, com que frequência. Conversamos com um grupo pequeno de power users em cada um dos apps que parecem fazer trabalho de verdade. Cruzamos tudo com a sua fatura do Marketplace.
+Comece pelo que você paga: cada app pago, sua faixa e o valor anual. A página de cobrança da sua administração Atlassian tem tudo isso. Depois levante o uso: quais apps são realmente abertos, por quem e com que frequência. Alguns apps informam isso sozinhos. Para os demais, pergunte às cinco pessoas com maior chance de serem usuárias avançadas, e observe o que elas dizem quando você propõe remover o app. Por fim, cruze os dados. Dois apps cujas descrições se sobrepõem merecem uma hora de escrutínio.
 
-No fim, você recebe um relatório escrito. Para cada app, quatro perguntas respondidas com evidência:
+Para cada app, responda quatro perguntas com evidência, não com intuição:
 
 - Ele é essencial, substituível ou está sem uso?
-- Ele se sobrepõe a outro app que você já paga?
-- Que fração das features o seu time realmente usa?
-- Se for candidato a substituição, qual seria o custo de reconstrução, qual seria o payback e quanto tempo levaria o build?
+- Ele se sobrepõe a algo que você já paga?
+- Que fração dos recursos dele o seu time realmente usa?
+- Se for substituível, quanto custaria substituir, e em quanto tempo isso se paga?
 
-Não tem ferramenta vendendo a auditoria. O relatório é a auditoria.
+As respostas desconfortáveis costumam se concentrar nas mesmas duas ou três linhas da fatura.
 
 ## Por que o Forge customizado ganha do app do Marketplace
 
@@ -80,20 +80,18 @@ O que dá para dizer é o seguinte. Para um time de médio porte substituindo um
 
 Os números reais que colocamos na sua frente saem da sua auditoria, não da nossa página de marketing. São baseados no seu número de seats, nos seus apps, nos seus contratos.
 
-## Os riscos, e como lidamos com eles
+## Os riscos que valem uma reflexão
 
-As duas perguntas que mais escutamos.
+**E se a Atlassian descontinuar uma API do Forge da qual o app depende?** A Atlassian anuncia mudanças incompatíveis com meses de antecedência, e o mesmo risco vale para o app do Marketplace que você estaria substituindo. A diferença está em quem decide se o trabalho será feito. Numa assinatura, quem decide é o fornecedor.
 
-**E se a Atlassian descontinuar uma API do Forge da qual o app customizado depende?** A Atlassian anuncia mudanças breaking com meses de antecedência. A gente desenha os apps customizados pensando nisso e oferece um retainer leve que cobre exatamente esse tipo de trabalho de migração. O mesmo risco vale para os apps do Marketplace que você está trocando, com a diferença de que lá você não controla se o vendor investe em manter o app dele atualizado.
+**Você está trocando um lock-in por outro?** Só se construir como uma caixa-preta. Código seu, rodando na mesma Atlassian Cloud em que você já confia, com um build documentado e uma pessoa responsável, é um tipo de dependência muito diferente de uma assinatura que você não pode bifurcar.
 
-**Quem é dono, e o que acontece se a gente parar de trabalhar junto?** Você. Código fonte, conta de developer da Atlassian, direito de modificar e redistribuir. A gente documenta o build e treina o seu time. Se um dia nossos caminhos se separarem, você fica com o app e as chaves.
-
-Tem uma terceira que escutamos menos, mas vale responder: estamos trocando um lock-in de vendor por outro? Não, porque o novo "vendor" é o seu próprio time. O código é seu, a plataforma é o mesmo Atlassian Cloud que você já confia, e a manutenção é pequena e bem escopada.
+**Um footprint menor é sempre melhor?** Não. Um app que quatrocentas pessoas usam todo dia não é um problema de custo, é uma parede estrutural. O objetivo da auditoria é distinguir um caso do outro, não baixar o número.
 
 ## Por onde começar
 
-Se você leu até aqui e está olhando para a sua fatura Atlassian achando que parte disso se aplica a você, manda o esboço. Quantidade de usuários, lista de apps pagos do Marketplace, quais custam mais. A gente volta em até um dia útil, honestamente, dizendo se faz sentido auditar a sua situação e como ficariam os números aproximados se fizer.
+Comece pelo inventário, não pela decisão.
 
-Os detalhes da auditoria estão na [página de redução de custo de apps Atlassian](/pt-BR/atlassian-app-cost-reduction/). A conversa começa na [nossa página de contato](/pt-BR/contact/).
+Dois dos nossos próprios apps existem porque acabávamos fazendo partes disso na mão. O [Field Scout](/pt-BR/apps/field-scout/) é gratuito e audita a proliferação de campos personalizados que costuma acompanhar um footprint de apps grande demais: o que está ativo, o que está obsoleto e o que ninguém tocou em um ano. O [OnBudget](/pt-BR/onbudget/) responde a outra metade da pergunta, transformando o trabalho já registrado no Jira em um número que você consegue colocar ao lado da linha de licença.
 
-Um app Forge customizado não é a resposta para toda linha do Marketplace na sua fatura. É a resposta para mais delas do que a maioria dos times imagina. A auditoria é como a gente descobre quais.
+Um app em Forge focado não é a resposta para toda linha de Marketplace na sua fatura. É a resposta para mais delas do que a maioria dos times imagina. Saber o que você realmente tem é como você descobre para quais.

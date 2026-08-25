@@ -1,0 +1,259 @@
+---
+/**
+ * The home page for all three locales.
+ *
+ * Apps first, OnBudget led. The old page opened with "Software, services, and
+ * 15 years of know-how" and put the apps fifth; the company now sells six
+ * Marketplace apps and the page has to say so above the fold.
+ */
+import { Image } from 'astro:assets';
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import AppCard from '../../components/AppCard.astro';
+import { localeStaticPaths, contentSlug, withLocale, type Locale } from '../../i18n';
+import { home } from '../../i18n/pages/home';
+import { appsIndex } from '../../i18n/pages/apps-index';
+
+export const getStaticPaths = localeStaticPaths;
+
+const { lang } = Astro.props as { lang: Locale };
+const t = home[lang];
+const nav = appsIndex[lang];
+
+const apps = (await getCollection('apps', ({ data }) => data.lang === lang)).sort(
+  (a, b) => a.data.order - b.data.order,
+);
+const flagship = apps.find((a) => a.data.flagship);
+const jira = apps.filter((a) => a.data.hostProducts.includes('jira'));
+const confluence = apps.filter((a) => a.data.hostProducts.includes('confluence'));
+
+const heroShot = flagship?.data.screenshots.find((s) => s.slot === 'hero');
+const problemShot = flagship?.data.screenshots.find((s) => s.slot === 'report-over-budget');
+
+const posts = (
+  await getCollection('blog', ({ data }) => data.lang === lang && !data.draft)
+)
+  .sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime())
+  .slice(0, 3);
+
+const dateFmt = new Intl.DateTimeFormat(lang === 'en' ? 'en-US' : lang, {
+  year: 'numeric',
+  month: 'short',
+  day: 'numeric',
+});
+
+const cardLabels = {
+  flagshipBadge: nav.flagshipBadge,
+  builtFor: nav.builtFor,
+  readMore: nav.readMore,
+};
+---
+
+<BaseLayout title={t.meta.title} description={t.meta.description} image={heroShot?.image}>
+  <!-- 1. HERO -->
+  <section class="border-b border-sand-200 bg-sand-50">
+    <div class="container-wide grid gap-12 py-16 sm:py-24 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:items-center lg:gap-16">
+      <div>
+        <p class="eyebrow">{t.hero.eyebrow}</p>
+        <h1 class="mt-4 font-display text-4xl font-bold leading-tight tracking-tight text-brand-900 sm:text-5xl md:text-6xl">
+          {t.hero.headline}
+        </h1>
+        <p class="mt-6 max-w-xl text-lg leading-relaxed text-slate-600">{t.hero.lede}</p>
+        <div class="mt-9 flex flex-wrap gap-3">
+          <a href={withLocale(lang, '/onbudget/')} class="btn-cta">
+            {t.hero.primary}
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7" /></svg>
+          </a>
+          <a href={withLocale(lang, '/apps/')} class="btn-secondary">{t.hero.secondary}</a>
+        </div>
+      </div>
+
+      {heroShot && (
+        <figure class="lg:-mr-10">
+          <Image
+            src={heroShot.image}
+            alt={heroShot.alt ?? heroShot.caption}
+            width={1280}
+            sizes="(min-width: 1024px) 660px, 100vw"
+            class="w-full rounded-2xl border border-sand-200 bg-paper"
+            priority
+          />
+        </figure>
+      )}
+    </div>
+  </section>
+
+  <!-- 2. PROOF STRIP: facts, not a row of greyscale customer logos -->
+  <section class="border-b border-sand-200 bg-paper py-6" aria-label={t.proof.label}>
+    <div class="container-wide">
+      <ul class="flex flex-wrap items-center justify-center gap-x-6 gap-y-3 text-xs font-semibold uppercase tracking-[0.14em] text-brand-700">
+        {t.proof.items.map((item) => (
+          <li class="flex items-center gap-2">
+            <svg class="text-water-600" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12" /></svg>
+            {item}
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <!-- 3. THE PROBLEM -->
+  <section class="py-16 sm:py-24">
+    <div class="container-wide grid gap-12 lg:grid-cols-[minmax(0,4fr)_minmax(0,6fr)] lg:items-center lg:gap-16">
+      <div>
+        <p class="eyebrow">{t.problem.eyebrow}</p>
+        <h2 class="mt-3 font-display text-3xl font-bold tracking-tight text-brand-900 sm:text-4xl">
+          {t.problem.headline}
+        </h2>
+        <p class="mt-5 text-base leading-relaxed text-slate-600">{t.problem.body}</p>
+        <p class="mt-7">
+          <a
+            href={withLocale(lang, '/onbudget/')}
+            class="inline-flex items-center gap-1.5 rounded-md text-sm font-semibold text-water-700 transition hover:text-water-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sun-500"
+          >
+            {t.problem.link}
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7" /></svg>
+          </a>
+        </p>
+      </div>
+      {problemShot && (
+        <figure>
+          <Image
+            src={problemShot.image}
+            alt={problemShot.alt ?? problemShot.caption}
+            width={1280}
+            sizes="(min-width: 1024px) 640px, 100vw"
+            class="w-full rounded-2xl border border-sand-200 bg-paper"
+            loading="lazy"
+          />
+        </figure>
+      )}
+    </div>
+  </section>
+
+  <!-- 4. THE PORTFOLIO: grouped by host, so half is skippable at a glance -->
+  <section class="border-y border-sand-200 bg-sand-50 py-16 sm:py-24">
+    <div class="container-wide">
+      <div class="max-w-2xl">
+        <p class="eyebrow">{t.portfolio.eyebrow}</p>
+        <h2 class="mt-3 font-display text-3xl font-bold tracking-tight text-brand-900 sm:text-4xl">
+          {t.portfolio.headline}
+        </h2>
+        <p class="mt-5 text-lg leading-relaxed text-slate-600">{t.portfolio.lede}</p>
+      </div>
+
+      <h3 class="eyebrow mt-12">{nav.groups.jira}</h3>
+      <div class="mt-6 grid gap-6 md:grid-cols-2">
+        {jira.map((app) => (
+          <AppCard app={app} lang={lang} labels={cardLabels} wide={app.data.flagship} />
+        ))}
+      </div>
+
+      <h3 class="eyebrow mt-14">{nav.groups.confluence}</h3>
+      <div class="mt-6 grid gap-6 md:grid-cols-2">
+        {confluence.map((app) => (
+          <AppCard app={app} lang={lang} labels={cardLabels} />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. HOW WE BUILD: prose, not cards -->
+  <section class="py-16 sm:py-24">
+    <div class="container-wide grid gap-12 lg:grid-cols-[minmax(0,4fr)_minmax(0,6fr)] lg:gap-16">
+      <div>
+        <p class="eyebrow">{t.how.eyebrow}</p>
+        <h2 class="mt-3 font-display text-3xl font-bold tracking-tight text-brand-900 sm:text-4xl">
+          {t.how.headline}
+        </h2>
+      </div>
+      <div>
+        {t.how.paragraphs.map((paragraph) => (
+          <p class="mb-5 text-base leading-relaxed text-slate-600 last:mb-0">{paragraph}</p>
+        ))}
+        <p class="mt-7">
+          <a
+            href={withLocale(lang, '/about/')}
+            class="inline-flex items-center gap-1.5 rounded-md text-sm font-semibold text-water-700 transition hover:text-water-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sun-500"
+          >
+            {t.how.link}
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7" /></svg>
+          </a>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. FROM THE BLOG: 2 + 1, not three identical cards -->
+  {posts.length > 0 && (
+    <section class="border-t border-sand-200 py-16 sm:py-24">
+      <div class="container-wide">
+        <div class="flex flex-wrap items-end justify-between gap-4">
+          <div>
+            <p class="eyebrow">{t.blog.eyebrow}</p>
+            <h2 class="mt-3 font-display text-3xl font-bold tracking-tight text-brand-900 sm:text-4xl">
+              {t.blog.headline}
+            </h2>
+          </div>
+          <a
+            href={withLocale(lang, '/blog/')}
+            class="inline-flex items-center gap-1.5 rounded-md text-sm font-semibold text-water-700 transition hover:text-water-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sun-500"
+          >
+            {t.blog.link}
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7" /></svg>
+          </a>
+        </div>
+
+        <div class="mt-10 grid gap-6 md:grid-cols-3">
+          {posts.map((post, i) => (
+            <a
+              href={withLocale(lang, `/blog/${contentSlug(post.id)}/`)}
+              class:list={[
+                'group flex flex-col overflow-hidden rounded-2xl border border-sand-200 bg-paper transition duration-150 hover:-translate-y-0.5 hover:border-water-400 hover:shadow-[var(--shadow-soft)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sun-500',
+                i === 0 && 'md:col-span-2 md:flex-row',
+              ]}
+            >
+              {post.data.heroImage && (
+                <Image
+                  src={post.data.heroImage}
+                  alt=""
+                  width={i === 0 ? 800 : 520}
+                  sizes={i === 0 ? '(min-width: 768px) 380px, 100vw' : '(min-width: 768px) 300px, 100vw'}
+                  class:list={['object-cover', i === 0 ? 'md:w-1/2' : 'h-44 w-full']}
+                  loading="lazy"
+                />
+              )}
+              <div class="flex flex-1 flex-col p-6">
+                <time class="text-xs font-medium uppercase tracking-[0.12em] text-slate-500" datetime={post.data.pubDate.toISOString()}>
+                  {dateFmt.format(post.data.pubDate)}
+                </time>
+                <h3 class="mt-2 font-display text-lg font-semibold leading-snug text-brand-900 transition group-hover:text-brand-700">
+                  {post.data.title}
+                </h3>
+                <p class="mt-3 text-sm leading-relaxed text-slate-600">{post.data.description}</p>
+              </div>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- 7. CTA -->
+  <section class="pb-16 sm:pb-24">
+    <div class="container-wide">
+      <div class="rounded-3xl bg-brand-900 p-10 sm:p-16">
+        <div class="max-w-2xl">
+          <h2 class="font-display text-3xl font-bold tracking-tight text-white sm:text-4xl">
+            {t.cta.headline}
+          </h2>
+          <p class="mt-4 text-lg leading-relaxed text-brand-100">{t.cta.body}</p>
+          <div class="mt-8 flex flex-wrap gap-3">
+            <a href={withLocale(lang, '/apps/')} class="btn-cta">{t.cta.primary}</a>
+            <a href={withLocale(lang, '/contact/')} class="btn-secondary !bg-white">{t.cta.secondary}</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
