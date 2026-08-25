@@ -22,7 +22,7 @@ const urls = localeUrls(Astro.url.pathname, alternates);
   <div class="relative" data-langswitcher>
     <button
       type="button"
-      class="inline-flex items-center gap-1.5 rounded-full border border-sand-200 bg-white/70 px-3 py-1.5 text-xs font-semibold text-brand-700 transition hover:border-brand-300 hover:bg-white"
+      class="inline-flex items-center gap-1.5 rounded-full border border-sand-200 bg-paper/70 px-3 py-1.5 text-xs font-semibold text-brand-700 transition hover:border-brand-300 hover:bg-paper"
       aria-haspopup="listbox"
       aria-expanded="false"
       aria-label={LOCALE_FULL_LABELS[currentLang]}
@@ -34,7 +34,7 @@ const urls = localeUrls(Astro.url.pathname, alternates);
     </button>
     <ul
       role="listbox"
-      class="absolute right-0 z-50 mt-2 hidden min-w-[160px] rounded-xl border border-sand-200 bg-white p-1 shadow-lg"
+      class="absolute right-0 z-50 mt-2 hidden min-w-[160px] rounded-xl border border-sand-200 bg-paper p-1 shadow-lg"
       data-langswitcher-menu
     >
       {LOCALES.map((l) => (
@@ -68,7 +68,7 @@ const urls = localeUrls(Astro.url.pathname, alternates);
           'rounded-full px-3 py-1.5 text-xs font-semibold transition',
           l === currentLang
             ? 'bg-brand-900 text-white'
-            : 'border border-sand-200 bg-white text-brand-700 hover:border-brand-300',
+            : 'border border-sand-200 bg-paper text-brand-700 hover:border-brand-300',
         ]}
         aria-current={l === currentLang ? 'true' : undefined}
       >

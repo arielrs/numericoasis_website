@@ -2,59 +2,59 @@
 
 @theme {
   /* Sand - soft warm background reminiscent of the logo's parchment field */
-  --color-sand-50: #FAF7EE;
-  --color-sand-100: #F5EFE0;
-  --color-sand-200: #ECE2C8;
-  --color-sand-300: #D9C9A0;
+  --color-sand-50: oklch(0.9760 0.0123 91.52);
+  --color-sand-100: oklch(0.9528 0.0209 88.72);
+  --color-sand-200: oklch(0.9139 0.0361 89.45);
+  --color-sand-300: oklch(0.8388 0.0573 89.24);
 
   /* Brand navy - primary text + dark surfaces (taken from the wordmark) */
-  --color-brand-50: #E8EFF6;
-  --color-brand-100: #C9D6E5;
-  --color-brand-200: #9DB4CC;
-  --color-brand-300: #6E8DAF;
-  --color-brand-400: #466A92;
-  --color-brand-500: #2C5683;
-  --color-brand-600: #1F4470;
-  --color-brand-700: #163359;
-  --color-brand-800: #0F2742;
-  --color-brand-900: #091C32;
-  --color-brand-950: #050F1E;
+  --color-brand-50: oklch(0.9489 0.0121 247.95);
+  --color-brand-100: oklch(0.8708 0.0251 251.92);
+  --color-brand-200: oklch(0.7604 0.0429 249.51);
+  --color-brand-300: oklch(0.6327 0.0623 251.14);
+  --color-brand-400: oklch(0.5145 0.0761 251.91);
+  --color-brand-500: oklch(0.4449 0.0881 251.84);
+  --color-brand-600: oklch(0.3829 0.0866 254.28);
+  --color-brand-700: oklch(0.3203 0.0765 256.12);
+  --color-brand-800: oklch(0.2691 0.0588 253.15);
+  --color-brand-900: oklch(0.2238 0.0498 253.72);
+  --color-brand-950: oklch(0.1675 0.0356 256.57);
 
   /* Sun - warm gold/orange CTAs (top of the logo's circle gradient) */
-  --color-sun-50: #FFF7E6;
-  --color-sun-100: #FFEAB8;
-  --color-sun-200: #FCD787;
-  --color-sun-300: #FAC25C;
-  --color-sun-400: #F6AB35;
-  --color-sun-500: #ED921A;
-  --color-sun-600: #D67708;
-  --color-sun-700: #A95A08;
-  --color-sun-800: #834510;
-  --color-sun-900: #5E3010;
+  --color-sun-50: oklch(0.9778 0.0239 85.79);
+  --color-sun-100: oklch(0.9419 0.0682 87.91);
+  --color-sun-200: oklch(0.8934 0.1071 85.49);
+  --color-sun-300: oklch(0.8455 0.1345 80.14);
+  --color-sun-400: oklch(0.7949 0.1523 73.52);
+  --color-sun-500: oklch(0.7382 0.1592 65.32);
+  --color-sun-600: oklch(0.6618 0.1547 59.14);
+  --color-sun-700: oklch(0.5504 0.1306 56.88);
+  --color-sun-800: oklch(0.4586 0.1049 54.99);
+  --color-sun-900: oklch(0.3633 0.0797 51.82);
 
   /* Water - teal/cyan secondary accent (the logo's wave) */
-  --color-water-50: #E6FAF5;
-  --color-water-100: #C0F1E5;
-  --color-water-200: #8AE3D0;
-  --color-water-300: #5CD3BB;
-  --color-water-400: #34BFA5;
-  --color-water-500: #1FA68B;
-  --color-water-600: #168670;
-  --color-water-700: #136B5B;
-  --color-water-800: #0F5448;
-  --color-water-900: #093C34;
+  --color-water-50: oklch(0.9690 0.0219 179.21);
+  --color-water-100: oklch(0.9207 0.0528 178.46);
+  --color-water-200: oklch(0.8544 0.0904 178.83);
+  --color-water-300: oklch(0.7922 0.1131 177.86);
+  --color-water-400: oklch(0.7258 0.1218 177.07);
+  --color-water-500: oklch(0.6505 0.1164 174.84);
+  --color-water-600: oklch(0.5561 0.0997 175.05);
+  --color-water-700: oklch(0.4746 0.0825 176.81);
+  --color-water-800: oklch(0.4018 0.0683 177.86);
+  --color-water-900: oklch(0.3216 0.0534 179.60);
 
   /* Deep - cool blue (lower wave of the logo) */
-  --color-deep-400: #4DA3DD;
-  --color-deep-500: #1F7FBE;
-  --color-deep-600: #14649A;
-  --color-deep-700: #0F4E78;
+  --color-deep-400: oklch(0.6870 0.1191 241.04);
+  --color-deep-500: oklch(0.5740 0.1285 243.58);
+  --color-deep-600: oklch(0.4856 0.1127 244.69);
+  --color-deep-700: oklch(0.4084 0.0925 244.05);
 
   /* Neutrals */
-  --color-ink: #091C32;
-  --color-ink-soft: #475569;
-  --color-paper: #ffffff;
-  --color-paper-soft: #FAF7EE;
+  --color-ink: oklch(0.2238 0.0498 253.72);
+  --color-ink-soft: oklch(0.4455 0.0374 257.28);
+  --color-paper: oklch(0.99 0 0);
+  --color-paper-soft: oklch(0.9760 0.0123 91.52);
 
   /* --font-inter is emitted by <Font> in BaseLayout, which resolves it to the
      hashed self-hosted family plus a metric-matched fallback. Both land in
@@ -95,13 +95,13 @@
 
 @layer components {
   .btn-primary {
-    @apply inline-flex items-center gap-2 rounded-full bg-brand-900 px-6 py-3 text-sm font-semibold text-white transition hover:bg-brand-800 hover:shadow-[var(--shadow-glow)] focus:outline-2 focus:outline-offset-2 focus:outline-sun-400;
+    @apply inline-flex items-center gap-2 rounded-full bg-brand-900 px-6 py-3 text-sm font-semibold text-white transition hover:bg-brand-800 hover:shadow-[var(--shadow-glow)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sun-400;
   }
   .btn-cta {
-    @apply inline-flex items-center gap-2 rounded-full bg-sun-500 px-6 py-3 text-sm font-semibold text-brand-900 transition hover:bg-sun-400 hover:shadow-[var(--shadow-glow)] focus:outline-2 focus:outline-offset-2 focus:outline-brand-700;
+    @apply inline-flex items-center gap-2 rounded-full bg-sun-500 px-6 py-3 text-sm font-semibold text-brand-900 transition hover:bg-sun-400 hover:shadow-[var(--shadow-glow)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-700;
   }
   .btn-secondary {
-    @apply inline-flex items-center gap-2 rounded-full border border-brand-200 bg-white px-6 py-3 text-sm font-semibold text-brand-900 transition hover:border-brand-300 hover:bg-sand-50;
+    @apply inline-flex items-center gap-2 rounded-full border border-brand-200 bg-paper px-6 py-3 text-sm font-semibold text-brand-900 transition hover:border-brand-300 hover:bg-sand-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sun-500;
   }
   .container-prose {
     @apply mx-auto max-w-3xl px-4 sm:px-6;
@@ -148,5 +148,20 @@
   @apply my-6 overflow-x-auto rounded-xl bg-brand-900 p-4 text-sm text-sand-50;
 }
 .prose-custom blockquote {
-  @apply my-6 border-l-4 border-sun-500 bg-sand-50 px-4 py-2 italic text-slate-700;
+  @apply my-6 rounded-lg bg-sand-100 px-5 py-3 text-slate-700;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

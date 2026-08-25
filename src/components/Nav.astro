@@ -20,7 +20,7 @@ const isActive = (href: string) =>
 const linkLabel = (key: (typeof NAV_LINKS)[number]['labelKey']) => t.nav[key];
 ---
 
-<header class="sticky top-0 z-50 border-b border-sand-200/60 bg-white/85 backdrop-blur-lg">
+<header class="sticky top-0 z-50 border-b border-sand-200/60 bg-paper/85 backdrop-blur-lg">
   <nav class="container-wide flex h-16 items-center justify-between" aria-label={t.nav.mainNavLabel}>
     <a href={withLocale(lang, '/')} class="group flex items-center gap-2.5" aria-label={t.nav.homeAriaLabel(SITE.name)}>
       <Image
@@ -28,7 +28,7 @@ const linkLabel = (key: (typeof NAV_LINKS)[number]['labelKey']) => t.nav[key];
         alt=""
         width={36}
         height={36}
-        class="h-9 w-9 rounded-xl shadow-[var(--shadow-soft)] ring-1 ring-sand-200/60"
+        class="h-9 w-9 rounded-xl ring-1 ring-sand-200/60"
         loading="eager"
       />
       <span class="font-display text-base font-semibold tracking-tight text-brand-900">
@@ -73,7 +73,7 @@ const linkLabel = (key: (typeof NAV_LINKS)[number]['labelKey']) => t.nav[key];
     </button>
   </nav>
 
-  <div id="mobile-menu" class="hidden border-t border-sand-200 bg-white md:hidden">
+  <div id="mobile-menu" class="hidden border-t border-sand-200 bg-paper md:hidden">
     <div class="container-wide flex flex-col py-3">
       {NAV_LINKS.map((link) => (
         <a
