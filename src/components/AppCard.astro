@@ -1,0 +1,108 @@
+---
+import { Image } from 'astro:assets';
+import type { CollectionEntry } from 'astro:content';
+import { PRODUCT_LABELS } from '../consts';
+import { contentSlug, withLocale, useTranslations, type Locale } from '../i18n';
+
+interface Props {
+  app: CollectionEntry<'apps'>;
+  lang: Locale;
+  labels: {
+    flagshipBadge: string;
+    builtFor: string;
+    readMore: string;
+  };
+  /** Flagship cards span the full width of their group to break the grid. */
+  wide?: boolean;
+}
+
+const { app, lang, labels, wide = false } = Astro.props;
+const t = useTranslations(lang);
+
+// The flagship lives at its own top-level URL, not under /apps/.
+const href = withLocale(lang, app.data.landingPath ?? `/apps/${contentSlug(app.id)}/`);
+---
+
+<a
+  href={href}
+  class:list={[
+    'group flex flex-col justify-between rounded-2xl border border-sand-200 bg-paper p-8',
+    'transition duration-150 hover:-translate-y-0.5 hover:border-water-400 hover:shadow-[var(--shadow-soft)]',
+    'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sun-500',
+    wide && 'md:col-span-2 md:flex-row md:items-start md:gap-10',
+  ]}
+>
+  <div class:list={[wide && 'md:flex-1']}>
+    <div class="flex items-center gap-4">
+      {app.data.icon ? (
+        <Image
+          src={app.data.icon}
+          alt=""
+          width={wide ? 80 : 64}
+          class:list={[
+            'shrink-0 rounded-2xl object-cover ring-1 ring-sand-200',
+            wide ? 'h-20 w-20' : 'h-16 w-16',
+          ]}
+        />
+      ) : (
+        <div class="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-brand-900 font-display text-lg font-bold text-white">
+          {app.data.name.charAt(0)}
+        </div>
+      )}
+      <div>
+        <div class="flex flex-wrap items-center gap-2">
+          <h3
+            class:list={[
+              'font-display font-semibold text-brand-900 transition group-hover:text-brand-700',
+              wide ? 'text-2xl' : 'text-xl',
+            ]}
+          >
+            {app.data.name}
+          </h3>
+          {app.data.flagship && (
+            <span class="rounded-full bg-sun-100 px-2.5 py-0.5 text-[0.7rem] font-semibold uppercase tracking-[0.12em] text-sun-800">
+              {labels.flagshipBadge}
+            </span>
+          )}
+        </div>
+        <p class="mt-1 text-sm font-medium text-slate-700">{app.data.tagline}</p>
+      </div>
+    </div>
+
+    <p class="mt-5 text-base leading-relaxed text-slate-600">{app.data.description}</p>
+
+    {app.data.audiences.length > 0 && (
+      <p class="mt-4 text-xs leading-relaxed text-slate-500">
+        <span class="font-semibold text-brand-800">{labels.builtFor}:</span>{' '}
+        {app.data.audiences.join(' · ')}
+      </p>
+    )}
+  </div>
+
+  <div
+    class:list={[
+      'mt-6 flex flex-wrap items-center gap-2 text-xs font-semibold',
+      wide && 'md:mt-0 md:w-56 md:shrink-0 md:flex-col md:items-start',
+    ]}
+  >
+    {app.data.products.map((p) => (
+      <span class="rounded-full bg-water-50 px-2.5 py-1 text-water-700">{PRODUCT_LABELS[p] ?? p}</span>
+    ))}
+    {app.data.priceModel === 'free' && (
+      <span class="rounded-full bg-sun-50 px-2.5 py-1 text-sun-700">{t.apps.priceFree}</span>
+    )}
+    <span
+      class:list={[
+        'text-slate-400 transition group-hover:text-water-600',
+        wide ? 'md:mt-2' : 'ml-auto',
+      ]}
+    >
+      {labels.readMore}
+      <svg
+        class="ml-1 inline-block align-[-0.1em] transition group-hover:translate-x-0.5"
+        width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+        stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"
+      ><path d="M5 12h14M13 5l7 7-7 7" /></svg>
+    </span>
+  </div>
+</a>

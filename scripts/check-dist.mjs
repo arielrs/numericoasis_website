@@ -77,6 +77,19 @@ for (const file of pages) {
   const url = toUrl(file);
   if (STANDALONE.has(url)) continue;
   const source = await readFile(file, 'utf8');
+
+  // Redirect stubs are meta-refresh pages carrying their own noindex and a
+  // canonical to the target. They are not indexable pages and have no hreflang.
+  if (source.includes('http-equiv="refresh"')) {
+    if (!source.includes('name="robots" content="noindex"')) {
+      errors.push(`${url}: redirect stub is missing its noindex`);
+    }
+    if (!source.includes('rel="canonical"')) {
+      errors.push(`${url}: redirect stub is missing its canonical`);
+    }
+    continue;
+  }
+
   const count = (re) => (source.match(re) ?? []).length;
 
   if (count(/rel="canonical"/g) !== 1) errors.push(`${url}: expected 1 canonical, got ${count(/rel="canonical"/g)}`);

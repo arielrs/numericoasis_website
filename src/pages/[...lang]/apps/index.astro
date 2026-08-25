@@ -1,0 +1,92 @@
+---
+/**
+ * One route file, three URLs: /apps/, /pt-BR/apps/ and /es/apps/.
+ */
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import AppCard from '../../../components/AppCard.astro';
+import { SITE } from '../../../consts';
+import { localeStaticPaths, contentSlug, withLocale, type Locale } from '../../../i18n';
+import { appsIndex } from '../../../i18n/pages/apps-index';
+import { WEBSITE_ID, type JsonLdNode } from '../../../lib/schema';
+
+export const getStaticPaths = localeStaticPaths;
+
+const { lang } = Astro.props as { lang: Locale };
+const t = appsIndex[lang];
+
+const apps = (await getCollection('apps', ({ data }) => data.lang === lang)).sort(
+  (a, b) => a.data.order - b.data.order,
+);
+
+const jira = apps.filter((a) => a.data.hostProducts.includes('jira'));
+const confluence = apps.filter((a) => a.data.hostProducts.includes('confluence'));
+
+const appUrl = (app: (typeof apps)[number]) =>
+  new URL(
+    withLocale(lang, app.data.landingPath ?? `/apps/${contentSlug(app.id)}/`),
+    SITE.url,
+  ).toString();
+
+const canonical = new URL(withLocale(lang, '/apps/'), SITE.url).toString();
+
+const itemList: JsonLdNode = {
+  '@type': 'ItemList',
+  '@id': `${canonical}#applist`,
+  name: t.headline,
+  itemListOrder: 'https://schema.org/ItemListOrderAscending',
+  numberOfItems: apps.length,
+  isPartOf: { '@id': WEBSITE_ID },
+  itemListElement: apps.map((app, i) => ({
+    '@type': 'ListItem',
+    position: i + 1,
+    name: app.data.name,
+    url: appUrl(app),
+  })),
+};
+
+const labels = {
+  flagshipBadge: t.flagshipBadge,
+  builtFor: t.builtFor,
+  readMore: t.readMore,
+};
+---
+
+<BaseLayout
+  title={t.meta.title}
+  description={t.meta.description}
+  graph={{
+    breadcrumbs: [{ name: t.meta.crumb, path: '/apps/' }],
+    extraNodes: [itemList],
+    primaryEntityId: `${canonical}#applist`,
+    pageType: 'CollectionPage',
+  }}
+>
+  <section class="border-b border-sand-200 bg-sand-50 py-20 sm:py-28">
+    <div class="container-wide">
+      <p class="eyebrow">{t.eyebrow}</p>
+      <h1 class="mt-3 max-w-4xl font-display text-4xl font-bold leading-tight tracking-tight text-brand-900 sm:text-5xl md:text-6xl">
+        {t.headline}
+      </h1>
+      <p class="mt-6 max-w-2xl text-lg leading-relaxed text-slate-600">{t.lede}</p>
+    </div>
+  </section>
+
+  <section class="py-14 sm:py-20">
+    <div class="container-wide">
+      <h2 class="eyebrow">{t.groups.jira}</h2>
+      <div class="mt-6 grid gap-6 md:grid-cols-2">
+        {jira.map((app) => (
+          <AppCard app={app} lang={lang} labels={labels} wide={app.data.flagship} />
+        ))}
+      </div>
+
+      <h2 class="eyebrow mt-16">{t.groups.confluence}</h2>
+      <div class="mt-6 grid gap-6 md:grid-cols-2">
+        {confluence.map((app) => (
+          <AppCard app={app} lang={lang} labels={labels} />
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>

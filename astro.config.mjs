@@ -74,6 +74,18 @@ export default defineConfig({
     },
   ],
 
+  // Static output emits a meta-refresh stub with a noindex meta and a canonical
+  // pointing at the target. It is not a 301, because GitHub Pages cannot serve
+  // one for a static file. Redirect routes are type 'redirect', which
+  // @astrojs/sitemap skips, so the stubs stay out of the sitemap.
+  redirects: {
+    // OnBudget is the flagship and lives at its own top-level URL. The
+    // predictable /apps/<slug>/ form redirects rather than 404s.
+    '/apps/onbudget': '/onbudget/',
+    '/es/apps/onbudget': '/es/onbudget/',
+    '/pt-BR/apps/onbudget': '/pt-BR/onbudget/',
+  },
+
   integrations: [
     mdx(),
     sitemap({

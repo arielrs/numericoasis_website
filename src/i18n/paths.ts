@@ -51,3 +51,22 @@ export function localeUrls(
     LOCALES.map((l) => [l, override?.[l] ?? withLocale(l, bare)]),
   ) as Record<Locale, string>;
 }
+
+/**
+ * getStaticPaths for any page under `src/pages/[...lang]/`.
+ *
+ * One route file emits all three locale URLs. `lang: undefined` yields the
+ * unprefixed English route, verified against Astro's own route generator:
+ * a missing spread parameter collapses to `''` and the generator returns `'/'`.
+ *
+ * Do not use this for `404.astro` (Astro only emits `dist/404.html`, which is
+ * what GitHub Pages needs, when the route's pathname is literally `/404`) or
+ * for endpoints such as `rss.xml.ts` (a null pathname makes the route resolve
+ * with a trailing slash, which 404s in dev while working in production).
+ */
+export function localeStaticPaths() {
+  return LOCALES.map((l) => ({
+    params: { lang: l === DEFAULT_LOCALE ? undefined : l },
+    props: { lang: l },
+  }));
+}
