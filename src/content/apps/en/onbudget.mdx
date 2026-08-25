@@ -75,7 +75,7 @@ steps:
       A total budget in any of 18 currencies, plus the two percentages that decide when a report turns
       amber and when it turns red. Number, decimal and date formats are set per report, so a Brazilian
       budget reads like one.
-    shot: builder-origin
+    shot: builder-budget
   - title: Pick the signal your team already has
     body: >-
       Five costing methods, and OnBudget samples your data first and tells you what share of your work
@@ -224,28 +224,31 @@ screenshots:
   - image: ../../../assets/screenshots/onbudget/04-report-over-budget.png
     slot: report-over-budget
     caption: "A report that has gone over: 106 percent of budget consumed, a negative remaining balance, and a forecast well past the line."
-  - image: ../../../assets/screenshots/onbudget/05-builder-origin-budget.png
+  - image: ../../../assets/screenshots/onbudget/05-builder-origin.png
     slot: builder-origin
-    caption: "Steps one and two of the builder: pick spaces, work items or JQL, then set the budget, the currency, and the thresholds that turn the report amber and red."
-  - image: ../../../assets/screenshots/onbudget/06-builder-method-forecast.png
+    caption: "Step one of the builder: point the report at spaces, at individual work items, or at a JQL query, and decide whether to pull in everything under an epic."
+  - image: ../../../assets/screenshots/onbudget/06-builder-budget.png
+    slot: builder-budget
+    caption: "Step two: a total budget in one of 18 currencies, the two thresholds that turn the report amber and red, and per-report number and date formats."
+  - image: ../../../assets/screenshots/onbudget/07-builder-method.png
     slot: builder-method
     caption: "Each costing method shows how much of your data actually carries it, 14 percent, 38 percent and 47 percent here, before you commit to one."
-  - image: ../../../assets/screenshots/onbudget/07-preview.png
+  - image: ../../../assets/screenshots/onbudget/08-preview.png
     slot: preview
     caption: "The preview step, before anything is saved. Regenerate until the numbers look right, then save the report."
   - image: ../../../assets/screenshots/onbudget/03-report-at-risk.png
     slot: report-at-risk
     caption: "A report at 83 percent of budget: summary, health gauge, planned versus actual, spend over time, and spend by status."
-  - image: ../../../assets/screenshots/onbudget/08-edit-layout.png
+  - image: ../../../assets/screenshots/onbudget/09-edit-layout.png
     slot: edit-layout
     caption: "Edit mode. Drag a gadget to a new slot, resize it from the corner, clone or remove it, switch its chart format, then save the layout."
-  - image: ../../../assets/screenshots/onbudget/09-table-shared.png
+  - image: ../../../assets/screenshots/onbudget/10-table-shared.png
     slot: table-shared
     caption: "Table view listing every budget with its method and origin, and below it the reports other people have shared with you."
-  - image: ../../../assets/screenshots/onbudget/10-bulk-actions.png
+  - image: ../../../assets/screenshots/onbudget/11-bulk-actions.png
     slot: bulk
     caption: "Select several reports and act on all of them at once: star, hide or delete."
-  - image: ../../../assets/screenshots/onbudget/11-search-filter.png
+  - image: ../../../assets/screenshots/onbudget/12-search-filter.png
     slot: search
     caption: "Searching the portfolio down to one team's budgets."
   - image: ../../../assets/screenshots/onbudget/02-list-home.png
