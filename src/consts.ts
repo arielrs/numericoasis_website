@@ -68,3 +68,10 @@ export const ORG_DETAILS = {
     'Atlassian Cloud governance',
   ],
 } as const;
+
+/**
+ * Cloudflare Web Analytics site token. Public by design: it identifies the site
+ * being measured, not an account. Cookieless, so no consent banner is required.
+ * Leave empty to ship no analytics at all.
+ */
+export const CLOUDFLARE_ANALYTICS_TOKEN = '';

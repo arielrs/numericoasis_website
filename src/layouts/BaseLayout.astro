@@ -1,12 +1,13 @@
 ---
 import '../styles/global.css';
 import { Font } from 'astro:assets';
-import { SITE } from '../consts';
+import { SITE, CLOUDFLARE_ANALYTICS_TOKEN } from '../consts';
 import { buildGraph, type Crumb, type JsonLdNode } from '../lib/schema';
 import { resolveOgImage } from '../lib/og';
 import SEO from '../components/SEO.astro';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
+import LocaleSuggestion from '../components/LocaleSuggestion.astro';
 import {
   detectLangFromPath,
   HTML_LANG_MAP,
@@ -84,43 +85,14 @@ const jsonLd = buildGraph({
       alternates={alternates}
     />
     <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
-    <script is:inline>
-      (function () {
-        try {
-          var p = location.pathname;
-          if (p !== '/' && p !== '/index.html') return;
-          if (sessionStorage.getItem('locale-redirect-done') === '1') return;
-          var stored = localStorage.getItem('preferred-locale');
-          if (stored === 'pt-BR' || stored === 'es') {
-            sessionStorage.setItem('locale-redirect-done', '1');
-            location.replace('/' + stored + '/');
-            return;
-          }
-          if (stored === 'en') {
-            sessionStorage.setItem('locale-redirect-done', '1');
-            return;
-          }
-          var langs = (navigator.languages && navigator.languages.length)
-            ? navigator.languages
-            : [navigator.language || ''];
-          for (var i = 0; i < langs.length; i++) {
-            var l = (langs[i] || '').toLowerCase();
-            if (l === 'pt-br' || l === 'pt' || l.indexOf('pt-') === 0) {
-              sessionStorage.setItem('locale-redirect-done', '1');
-              location.replace('/pt-BR/');
-              return;
-            }
-            if (l === 'es' || l.indexOf('es-') === 0) {
-              sessionStorage.setItem('locale-redirect-done', '1');
-              location.replace('/es/');
-              return;
-            }
-            if (l === 'en' || l.indexOf('en-') === 0) break;
-          }
-          sessionStorage.setItem('locale-redirect-done', '1');
-        } catch (e) { /* swallow */ }
-      })();
-    </script>
+    {import.meta.env.PROD && CLOUDFLARE_ANALYTICS_TOKEN && (
+      <script
+        is:inline
+        defer
+        src="https://static.cloudflareinsights.com/beacon.min.js"
+        data-cf-beacon={`{"token": "${CLOUDFLARE_ANALYTICS_TOKEN}"}`}
+      />
+    )}
   </head>
   <body class="flex min-h-screen flex-col bg-white text-slate-900">
     <a
@@ -132,5 +104,6 @@ const jsonLd = buildGraph({
       <slot />
     </main>
     <Footer lang={lang} />
+    <LocaleSuggestion currentLang={lang} alternates={alternates} />
   </body>
 </html>

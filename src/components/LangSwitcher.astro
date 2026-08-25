@@ -102,8 +102,9 @@ const urls = localeUrls(Astro.url.pathname, alternates);
       const locale = link.getAttribute('data-locale');
       if (locale) {
         try {
-          localStorage.setItem('preferred-locale', locale);
-          sessionStorage.setItem('locale-redirect-done', '1');
+          // Same key the locale suggestion banner reads, so choosing a language
+          // here stops it offering one.
+          localStorage.setItem('locale-preference', locale);
         } catch (e) {
           // swallow storage errors (private browsing, etc.)
         }

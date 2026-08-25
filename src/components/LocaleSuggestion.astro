@@ -1,0 +1,176 @@
+---
+/**
+ * Suggests a locale instead of redirecting to one.
+ *
+ * The page previously ran an inline script on `/` that read navigator.languages
+ * and called location.replace('/pt-BR/'). Google warns explicitly against
+ * automatically redirecting between language versions, and Googlebot crawls
+ * from US IPs with Accept-Language: en, so in practice it never reached the
+ * pt-BR or es homepages through the root at all.
+ *
+ * The banner is rendered hidden and position: fixed, so it never participates
+ * in layout. Its CLS contribution is structurally zero rather than merely small.
+ */
+import {
+  LOCALES,
+  LOCALE_FULL_LABELS,
+  localeUrls,
+  type Locale,
+  type LocaleAlternates,
+} from '../i18n';
+
+interface Props {
+  currentLang: Locale;
+  alternates?: LocaleAlternates;
+}
+
+const { currentLang, alternates } = Astro.props;
+const urls = localeUrls(Astro.url.pathname, alternates);
+
+const targets = LOCALES.filter((l) => l !== currentLang).map((l) => ({
+  locale: l,
+  href: urls[l],
+  label: LOCALE_FULL_LABELS[l],
+}));
+
+/** The offer is written in the language being offered. The refusal is not. */
+const COPY: Record<Locale, { message: string; go: string; stay: string; dismiss: string }> = {
+  en: {
+    message: 'This page is also available in English.',
+    go: 'Switch to',
+    stay: 'Stay in English',
+    dismiss: 'Dismiss language suggestion',
+  },
+  'pt-BR': {
+    message: 'Esta página também está disponível em português.',
+    go: 'Mudar para',
+    stay: 'Continuar em português',
+    dismiss: 'Dispensar sugestão de idioma',
+  },
+  es: {
+    message: 'Esta página también está disponible en español.',
+    go: 'Cambiar a',
+    stay: 'Seguir en español',
+    dismiss: 'Descartar sugerencia de idioma',
+  },
+};
+---
+
+<div
+  id="locale-suggestion"
+  hidden
+  role="region"
+  aria-live="polite"
+  data-copy={JSON.stringify(COPY)}
+  data-targets={JSON.stringify(targets)}
+  class="fixed inset-x-0 bottom-0 z-[70] hidden border-t border-sand-200 bg-paper/95 backdrop-blur-lg"
+>
+  <div class="container-wide flex flex-wrap items-center gap-3 py-3 text-sm">
+    <p id="locale-suggestion-msg" class="flex-1 text-brand-800"></p>
+    <a id="locale-suggestion-go" href="#" class="btn-cta !px-4 !py-1.5 !text-xs"></a>
+    <button
+      id="locale-suggestion-stay"
+      type="button"
+      class="rounded-full border border-sand-200 px-4 py-1.5 text-xs font-semibold text-brand-700 transition hover:bg-sand-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sun-500"
+    ></button>
+    <button
+      id="locale-suggestion-close"
+      type="button"
+      class="inline-flex h-8 w-8 items-center justify-center rounded-full text-brand-700 transition hover:bg-sand-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sun-500"
+    >
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12" /></svg>
+    </button>
+  </div>
+</div>
+
+<script>
+  const KEY = 'locale-preference';
+  const root = document.getElementById('locale-suggestion');
+
+  if (root) {
+    const copy = JSON.parse(root.dataset.copy ?? '{}');
+    const targets: { locale: string; href: string; label: string }[] = JSON.parse(
+      root.dataset.targets ?? '[]',
+    );
+    const current = document.documentElement.lang;
+
+    const choose = () => {
+      try {
+        if (localStorage.getItem(KEY)) return null; // already decided
+      } catch {
+        // Private browsing: fall through and suggest once per page view.
+      }
+
+      const preferred = navigator.languages?.length
+        ? navigator.languages
+        : [navigator.language || ''];
+
+      for (const raw of preferred) {
+        const pref = (raw || '').toLowerCase();
+        const currentLower = current.toLowerCase();
+        if (pref === currentLower || pref.startsWith(`${currentLower}-`)) return null;
+
+        const hit = targets.find((target) => {
+          const t = target.locale.toLowerCase();
+          const base = t.split('-')[0];
+          return pref === t || pref === base || pref.startsWith(`${base}-`);
+        });
+        if (hit) return hit;
+
+        // English is the default, so a stated preference for it ends the search.
+        if (pref.startsWith('en')) return null;
+      }
+      return null;
+    };
+
+    const remember = (value: string) => {
+      try {
+        localStorage.setItem(KEY, value);
+      } catch {
+        // Nothing to do: the banner simply reappears next time.
+      }
+    };
+
+    const hide = () => {
+      root.hidden = true;
+      root.classList.add('hidden');
+    };
+
+    const target = choose();
+    if (target) {
+      const c = copy[target.locale];
+      const go = document.getElementById('locale-suggestion-go') as HTMLAnchorElement;
+      const stay = document.getElementById('locale-suggestion-stay') as HTMLButtonElement;
+      const close = document.getElementById('locale-suggestion-close') as HTMLButtonElement;
+      const message = document.getElementById('locale-suggestion-msg') as HTMLParagraphElement;
+
+      message.textContent = c.message;
+      go.textContent = `${c.go} ${target.label}`;
+      go.href = target.href;
+      go.setAttribute('lang', target.locale);
+      go.setAttribute('hreflang', target.locale);
+      stay.textContent = copy[current]?.stay ?? copy.en.stay;
+      close.setAttribute('aria-label', c.dismiss);
+      root.setAttribute('aria-label', c.message);
+
+      go.addEventListener('click', () => remember(target.locale));
+      stay.addEventListener('click', () => {
+        remember(current);
+        hide();
+      });
+      close.addEventListener('click', () => {
+        remember(current);
+        hide();
+      });
+      document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape' && !root.hidden) {
+          remember(current);
+          hide();
+        }
+      });
+
+      root.hidden = false;
+      root.classList.remove('hidden');
+    }
+  }
+</script>

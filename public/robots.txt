@@ -1,5 +1,79 @@
+# https://numericoasis.com/robots.txt
+# Last reviewed: 2026-08
+
+# ---------------------------------------------------------------------------
+# Everything is crawlable.
+#
+# /poker/ is deliberately NOT disallowed. It carries a page-level
+# <meta name="robots" content="noindex,nofollow">, and a crawler has to be
+# allowed to FETCH the page in order to READ that tag. Disallowing it would
+# guarantee the opposite of what we want: an uncrawled but still-indexable URL,
+# listed with nothing but its title. GitHub Pages cannot serve X-Robots-Tag
+# headers, so the meta tag is the only lever available. The page is also
+# excluded from the sitemap and unlinked from the site.
+# ---------------------------------------------------------------------------
 User-agent: *
 Allow: /
-Disallow: /poker/
+
+# --- AI retrieval and citation crawlers: allow ------------------------------
+# These fetch a page to answer a live question and cite the source. Blocking
+# them removes us from the answer, not from anyone's training set.
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: Claude-SearchBot
+Allow: /
+
+User-agent: Claude-User
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Perplexity-User
+Allow: /
+
+User-agent: Applebot
+Allow: /
+
+# --- AI training crawlers: allow, deliberately ------------------------------
+# The training and retrieval opt-outs are separate, and the split exists so
+# publishers with monetisable archives can opt out of one without the other.
+# We have no archive to protect. For a six-app Marketplace vendor whose actual
+# problem is being unknown, being in the weights is a distribution channel.
+# Google-Extended and Applebot-Extended are opt-out tokens rather than
+# crawlers, and neither affects ordinary Search ranking either way.
+User-agent: GPTBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+# --- Bulk scrapers with no citation upside: disallow ------------------------
+# Stated as intent. Bytespider and meta-externalagent have a documented history
+# of ignoring robots.txt and rotating IP ranges, and GitHub Pages gives us no
+# WAF, no rate limiting and no access logs, so this is not enforceable and we
+# cannot even measure compliance. Putting Cloudflare in front is the only real
+# answer if it ever becomes a problem.
+User-agent: CCBot
+Disallow: /
+
+User-agent: Bytespider
+Disallow: /
+
+User-agent: meta-externalagent
+Disallow: /
+
+User-agent: Amazonbot
+Disallow: /
 
 Sitemap: https://numericoasis.com/sitemap-index.xml
