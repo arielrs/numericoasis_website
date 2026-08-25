@@ -56,8 +56,13 @@
   --color-paper: #ffffff;
   --color-paper-soft: #FAF7EE;
 
-  --font-display: "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
-  --font-body: "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
+  /* --font-inter is emitted by <Font> in BaseLayout, which resolves it to the
+     hashed self-hosted family plus a metric-matched fallback. Both land in
+     <head> and custom-property references resolve lazily, so order is
+     irrelevant. The literal stack is the last resort for any surface that
+     renders without <Font>. */
+  --font-display: var(--font-inter, "Segoe UI", system-ui, -apple-system, sans-serif);
+  --font-body: var(--font-inter, "Segoe UI", system-ui, -apple-system, sans-serif);
 
   --shadow-soft: 0 1px 2px 0 rgb(9 28 50 / 0.04), 0 8px 24px -8px rgb(9 28 50 / 0.10);
   --shadow-glow: 0 0 0 1px rgb(237 146 26 / 0.25), 0 8px 32px -8px rgb(237 146 26 / 0.45);
