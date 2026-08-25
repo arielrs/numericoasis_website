@@ -147,6 +147,34 @@
 .prose-custom pre {
   @apply my-6 overflow-x-auto rounded-xl bg-brand-900 p-4 text-sm text-sand-50;
 }
+.prose-custom strong {
+  @apply font-semibold text-brand-900;
+}
+/* Comparison tables are one of the most extractable content shapes there is,
+   for readers and for answer engines alike, so they need to be legible. The
+   wrapper scrolls rather than letting a wide table push the page sideways. */
+.prose-custom > table {
+  @apply block overflow-x-auto;
+}
+.prose-custom table {
+  @apply my-8 w-full min-w-[34rem] border-collapse text-left text-sm;
+}
+.prose-custom :where(table) {
+  display: table;
+}
+.prose-custom thead tr {
+  @apply border-b border-sand-300;
+}
+.prose-custom th {
+  @apply py-3 pr-4 align-top text-xs font-semibold uppercase tracking-[0.1em] text-brand-700;
+}
+.prose-custom tbody tr {
+  @apply border-b border-sand-200;
+}
+.prose-custom td {
+  @apply py-3 pr-4 align-top leading-relaxed text-slate-700;
+}
+
 .prose-custom blockquote {
   @apply my-6 rounded-lg bg-sand-100 px-5 py-3 text-slate-700;
 }

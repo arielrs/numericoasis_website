@@ -1,0 +1,87 @@
+---
+lang: es
+translationKey: what-does-your-jira-work-cost
+title: "¿Cuánto cuesta de verdad el trabajo en tu Jira?"
+description: "Jira registra lo que hicieron tus equipos. No registra cuánto costó. Estas son las cinco señales que la mayoría de los equipos ya produce, cómo convertir cada una en dinero, y cómo saber cuál de ellas soportan realmente tus datos."
+pubDate: 2026-08-25
+tags: ["jira-cost-management", "onbudget", "how-to"]
+author: team
+draft: false
+---
+
+*Jira registra lo que hicieron tus equipos. No registra cuánto costó.*
+
+Para costear trabajo en Jira, pon precio a una señal que tus equipos ya producen. Hay cinco: puntos de historia, tiempo registrado, un campo numérico, un recuento de elementos de trabajo completados y un recuento de elementos parados en un estado concreto. Multiplica la señal por una tarifa, compara el resultado con un presupuesto, y tienes un informe de costo sin pedirle a nadie que rellene nada nuevo.
+
+**Ideas clave**
+
+- Todo método de costeo es una señal multiplicada por una tarifa. La parte difícil es elegir la señal, no la aritmética.
+- Comprueba la cobertura antes de comprometerte. Un método que solo aplica al 14 por ciento de tus elementos de trabajo producirá un número seguro de sí mismo y equivocado.
+- Los equipos sin estimaciones y sin partes de horas no se quedan sin opciones. Contar elementos completados es un método legítimo, y a menudo el único honesto.
+- Una cifra de presupuesto sin alcance no se puede defender. Escribe qué entra y qué queda fuera antes de escribir el total.
+
+## ¿Por qué Jira no sabe decirte cuánto cuesta el trabajo?
+
+Porque el dinero nunca estuvo en su alcance. Jira modela trabajo: quién hace qué, en qué estado, enlazado con qué otra cosa. No tiene concepto de tarifa, de presupuesto ni de moneda, y no existe un campo donde se supone que vive el costo de un elemento de trabajo.
+
+La mayoría de los equipos tapa el hueco con una hoja de cálculo: alguien exporta un filtro el viernes, lo multiplica por algo y pega el resultado en una presentación. El lunes ya está mal, y está mal de una forma que nadie puede auditar, porque la exportación desapareció y la multiplicación vivía en una celda.
+
+## ¿Qué señales tienes ya?
+
+Más de las que crees. Casi todo espacio de Jira (Atlassian renombró los proyectos como espacios en 2025, así que "espacio" y "proyecto" significan el mismo contenedor) lleva al menos una de estas:
+
+| Señal | De dónde sale | Pone precio bien cuando | Falla cuando |
+|---|---|---|---|
+| Puntos de historia | El campo de estimación del elemento de trabajo | Los equipos estiman de forma consistente y rara vez reestiman a mitad de sprint | La mitad del backlog está sin puntos, o los puntos significan cosas distintas según el equipo |
+| Tiempo registrado | Registros de trabajo | La gente registra tiempo de verdad, y los roles difieren lo bastante en costo como para importar | El registro es irregular, o de todos modos todos se costean a la misma tarifa |
+| Un campo numérico | Cualquier campo numérico ya presente en el elemento | Alguien ya anota una cantidad: licencias, puestos, unidades, horas cotizadas | El campo es opcional y está medio vacío |
+| Elementos cerrados o resueltos | Resolución e historial de estados | Los elementos son de tamaño más o menos comparable | Un elemento es corregir una errata y el siguiente es una migración |
+| Elementos en un estado | Estado actual | Estás costeando una etapa y no una cosa terminada | Los elementos se quedan en ese estado durante periodos muy distintos |
+
+Fíjate en que solo dos de esas cinco exigen que alguien haya adoptado una práctica. Las otras tres funcionan sobre cosas que Jira registra colaboren tus equipos o no.
+
+## ¿Cómo se convierten los puntos de historia en dinero?
+
+Toma el costo total del equipo en un periodo, divídelo entre los puntos que completó en ese periodo, y tienes un costo por punto. Multiplica hacia adelante.
+
+El número es más tosco de lo que parece, y no pasa nada. Un costo por punto es un instrumento de planificación, no una factura. Es útil precisamente porque suaviza el hecho de que algunas historias fueron más difíciles que su estimación y otras más fáciles. Lo que no sobrevive es a un backlog donde un tercio de los elementos no tiene estimación alguna: esos elementos salen gratis, y el trabajo gratis hace que los presupuestos parezcan sanos justo hasta que dejan de parecerlo.
+
+## ¿Y si tu equipo no usa estimaciones ni partes de horas?
+
+Entonces cuenta cosas. Es el caso de la mayoría de los equipos de marketing, soporte y operaciones, y es el caso que se suele ignorar porque parece menos riguroso que un parte de horas.
+
+No es menos riguroso. Si un equipo de soporte cerró 340 tickets el trimestre pasado y costó 170.000 mantenerlo, cada ticket costó unos 500. Ese número es defendible, reproducible y derivado por completo de datos que el equipo ya estaba generando. Es bastante más honesto que un parte de horas que nadie rellena con precisión.
+
+El modo de fallo es la heterogeneidad. Si tus elementos van desde una corrección de cinco minutos hasta un proyecto de tres semanas, un costo fijo por elemento no significa nada. La solución es estrechar el alcance hasta que los elementos sean comparables: costea un solo tipo de trabajo, o un solo espacio, en lugar de todo a la vez.
+
+## ¿Cómo se pone precio al tiempo registrado de forma justa?
+
+Con un tarifario, no con una tarifa media única.
+
+Una tarifa media asume que todo el mundo cuesta lo mismo, lo que nunca es cierto y lo es menos según crece el equipo. Un tarifario guarda un valor por persona o por rol, de modo que la hora de alguien senior y la de alguien junior no se promedian en silencio. Mantén una tarifa de reserva para los autores que el tarifario no reconoce; si no, la persona externa que entró la semana pasada cuesta cero sin que nadie se dé cuenta.
+
+Decide también la base de tiempo de forma explícita. El tiempo registrado vuelve en segundos; ponerle precio por hora, por día o en bloques de quince minutos cambia el resultado más de lo que la mayoría espera cuando los registros originales vienen redondeados.
+
+## ¿Qué significa exactamente "en riesgo"?
+
+Lo que tú decidas que significa, y por eso hay que decidirlo antes de que el número importe.
+
+La convención que merece la pena adoptar es la de dos umbrales: uno donde el presupuesto se pone ámbar, otro donde se pone rojo. El ochenta por ciento y el cien por cien del presupuesto consumido es un valor por defecto razonable, pero lo útil no son las cifras concretas. Es que un umbral fijado de antemano es un compromiso, y un umbral fijado después de ver el número es una racionalización.
+
+## ¿Cómo se pronostica desde un trimestre a medias?
+
+Linealmente, y dilo.
+
+Toma el gasto registrado hasta ahora, divídelo entre la porción transcurrida del periodo y extiéndelo hasta el horizonte. Asume que el ritmo se mantiene, lo cual no ocurrirá exactamente, y esa suposición es justo el punto: un pronóstico lineal es una afirmación sobre lo que pasa si nada cambia. Cuando la proyección cae más allá de la línea del presupuesto, la conversación va sobre qué va a cambiar, no sobre el modelo.
+
+Elige el horizonte a propósito. Hasta la fecha final está bien para un proyecto de alcance cerrado. A treinta, sesenta o noventa días está bien para trabajo continuo sin fecha final, donde pronosticar hasta una meta arbitraria solo mueve el error de sitio.
+
+## Por dónde empezar
+
+Empieza por un presupuesto, no por veinte.
+
+Elige un espacio donde alguien haya preguntado de verdad cuánto cuesta, mira qué señal produce ya ese equipo, y costea eso. Escribe el alcance en una frase antes de escribir el total, porque un número sin alcance es justo lo que se cuestiona en la reunión y no se puede defender.
+
+Construimos [OnBudget](/es/onbudget/) para hacer exactamente esto dentro de Jira. Analiza tus datos primero y te muestra qué porcentaje de tus elementos de trabajo lleva cada una de las cinco señales antes de que elijas, y después sigue el presupuestado frente al real con los umbrales y el pronóstico que hayas definido. Si primero estás auditando el panorama general, [Field Scout](/es/apps/field-scout/) es gratis y te muestra para qué se usan realmente tus campos personalizados, que suele ser como se descubre que el campo numérico contra el que ibas a costear solo está relleno en un tercio de los elementos.
+
+Sea como sea: costea una cosa, con honestidad, antes de intentar costearlo todo.
