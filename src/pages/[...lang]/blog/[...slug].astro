@@ -1,0 +1,258 @@
+---
+/**
+ * Blog post detail, for all three locales.
+ */
+import { Image } from 'astro:assets';
+import { getCollection, render, type CollectionEntry } from 'astro:content';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import PostCard from '../../../components/PostCard.astro';
+import { SITE } from '../../../consts';
+import {
+  LOCALES,
+  DEFAULT_LOCALE,
+  BCP47_MAP,
+  contentSlug,
+  withLocale,
+  type Locale,
+} from '../../../i18n';
+import { blog } from '../../../i18n/pages/blog';
+import type { BlogTag } from '../../../content.config';
+import { ORG_ID, type JsonLdNode } from '../../../lib/schema';
+import { relatedPosts } from '../../../lib/blog';
+import { authorFor } from '../../../lib/authors';
+
+type PostProps = {
+  post: CollectionEntry<'blog'>;
+  lang: Locale;
+  newer?: CollectionEntry<'blog'>;
+  older?: CollectionEntry<'blog'>;
+};
+
+export async function getStaticPaths() {
+  const paths: Array<{
+    params: { lang: string | undefined; slug: string };
+    props: PostProps;
+  }> = [];
+  for (const lang of LOCALES) {
+    const posts = (
+      await getCollection('blog', ({ data }) => data.lang === lang && !data.draft)
+    ).sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime());
+
+    posts.forEach((post, i) => {
+      paths.push({
+        params: {
+          lang: lang === DEFAULT_LOCALE ? undefined : lang,
+          slug: contentSlug(post.id),
+        },
+        props: { post, lang, newer: posts[i - 1], older: posts[i + 1] },
+      });
+    });
+  }
+  return paths;
+}
+
+const { post, lang, newer, older } = Astro.props as PostProps;
+const t = blog[lang];
+const slug = contentSlug(post.id);
+const { Content, remarkPluginFrontmatter } = await render(post);
+
+const readingMinutes: number = remarkPluginFrontmatter.readingMinutes ?? 1;
+const wordCount: number = remarkPluginFrontmatter.wordCount ?? 0;
+
+const author = authorFor(post.data.author, lang);
+
+const allPosts = await getCollection('blog', ({ data }) => !data.draft);
+const related = relatedPosts(post, allPosts);
+
+const postUrl = new URL(withLocale(lang, `/blog/${slug}/`), SITE.url).toString();
+const blogUrl = new URL(withLocale(lang, '/blog/'), SITE.url).toString();
+
+const dateFmt = new Intl.DateTimeFormat(lang === 'en' ? 'en-US' : lang, {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+});
+
+const blogPosting: JsonLdNode = {
+  '@type': 'BlogPosting',
+  '@id': `${postUrl}#blogposting`,
+  headline: post.data.title.slice(0, 110),
+  description: post.data.description,
+  url: postUrl,
+  datePublished: post.data.pubDate.toISOString(),
+  dateModified: (post.data.updatedDate ?? post.data.pubDate).toISOString(),
+  author: author.ref,
+  publisher: { '@id': ORG_ID },
+  inLanguage: BCP47_MAP[lang],
+  isPartOf: { '@id': `${blogUrl}#blog` },
+  mainEntityOfPage: { '@id': `${postUrl}#webpage` },
+  wordCount,
+  keywords: [...post.data.tags],
+  timeRequired: `PT${readingMinutes}M`,
+  ...(post.data.heroImage && {
+    image: {
+      '@type': 'ImageObject',
+      url: new URL(post.data.heroImage.src, SITE.url).toString(),
+      width: post.data.heroImage.width,
+      height: post.data.heroImage.height,
+    },
+  }),
+};
+
+// Emitted alongside the post so the isPartOf reference above never dangles.
+const blogNode: JsonLdNode = {
+  '@type': 'Blog',
+  '@id': `${blogUrl}#blog`,
+  name: `${SITE.name} Blog`,
+  url: blogUrl,
+  publisher: { '@id': ORG_ID },
+  inLanguage: BCP47_MAP[lang],
+};
+
+const shareUrl = encodeURIComponent(postUrl);
+const shareText = encodeURIComponent(post.data.title);
+
+const navCardClass =
+  'rounded-2xl border border-sand-200 bg-paper p-5 transition duration-150 hover:-translate-y-0.5 hover:border-water-400 hover:shadow-[var(--shadow-soft)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sun-500';
+---
+
+<BaseLayout
+  title={post.data.title}
+  description={post.data.description}
+  image={post.data.heroImage}
+  article={{
+    publishedTime: post.data.pubDate.toISOString(),
+    modifiedTime: post.data.updatedDate?.toISOString(),
+    author: author.displayName,
+    tags: post.data.tags,
+  }}
+  graph={{
+    breadcrumbs: [
+      { name: t.meta.crumb, path: '/blog/' },
+      { name: post.data.title, path: `/blog/${slug}/` },
+    ],
+    extraNodes: [blogPosting, blogNode, ...author.nodes],
+    primaryEntityId: `${postUrl}#blogposting`,
+    pageType: 'ItemPage',
+  }}
+>
+  <article>
+    <header class="border-b border-sand-200 bg-sand-50 py-14 sm:py-20">
+      <div class="container-prose">
+        <a
+          href={withLocale(lang, '/blog/')}
+          class="inline-flex items-center gap-1.5 rounded-md text-sm font-medium text-slate-500 transition hover:text-brand-900 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sun-500"
+        >
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 19l-7-7 7-7" /></svg>
+          {t.post.backToBlog}
+        </a>
+
+        <h1 class="mt-7 font-display text-3xl font-bold leading-tight tracking-tight text-brand-900 sm:text-4xl md:text-5xl">
+          {post.data.title}
+        </h1>
+        <p class="mt-5 text-lg leading-relaxed text-slate-600">{post.data.description}</p>
+
+        <div class="mt-7 flex flex-wrap items-center gap-x-3 gap-y-2 text-sm text-slate-500">
+          <span>{t.post.by} {author.displayName}</span>
+          <span aria-hidden="true">·</span>
+          <time datetime={post.data.pubDate.toISOString()}>{dateFmt.format(post.data.pubDate)}</time>
+          {post.data.updatedDate && (
+            <>
+              <span aria-hidden="true">·</span>
+              <span>
+                {t.post.updated}{' '}
+                <time datetime={post.data.updatedDate.toISOString()}>
+                  {dateFmt.format(post.data.updatedDate)}
+                </time>
+              </span>
+            </>
+          )}
+          <span aria-hidden="true">·</span>
+          <span>{t.post.readingTime(readingMinutes)}</span>
+        </div>
+
+        <ul class="mt-5 flex flex-wrap gap-2">
+          {post.data.tags.map((tag: BlogTag) => (
+            <li>
+              <a
+                href={withLocale(lang, `/blog/tag/${tag}/`)}
+                class="inline-block rounded-full border border-sand-200 bg-paper px-3 py-1 text-xs font-semibold text-brand-800 transition hover:border-water-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sun-500"
+              >
+                {t.tags[tag]}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </header>
+
+    {post.data.heroImage && (
+      <div class="container-wide mt-10 sm:mt-14">
+        <Image
+          src={post.data.heroImage}
+          alt=""
+          width={1200}
+          sizes="(min-width: 1280px) 1200px, 100vw"
+          class="w-full rounded-3xl ring-1 ring-sand-200"
+          priority
+        />
+      </div>
+    )}
+
+    <div class="container-prose prose-custom py-14 sm:py-16">
+      <Content />
+    </div>
+
+    <div class="container-prose pb-14">
+      <div class="rounded-2xl bg-sand-100 p-6">
+        <p class="text-xs font-semibold uppercase tracking-[0.12em] text-brand-700">{t.post.share}</p>
+        <div class="mt-3 flex flex-wrap gap-4 text-sm font-medium">
+          <a
+            class="rounded-sm text-brand-800 transition hover:text-water-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sun-500"
+            href={`https://www.linkedin.com/sharing/share-offsite/?url=${shareUrl}`}
+            target="_blank"
+            rel="noopener"
+          >{t.post.shareOnLinkedIn}</a>
+          <a
+            class="rounded-sm text-brand-800 transition hover:text-water-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sun-500"
+            href={`mailto:?subject=${shareText}&body=${shareUrl}`}
+          >{t.post.shareByEmail}</a>
+        </div>
+      </div>
+    </div>
+
+    {related.length > 0 && (
+      <section class="border-t border-sand-200 py-14 sm:py-20">
+        <div class="container-wide">
+          <h2 class="font-display text-2xl font-bold tracking-tight text-brand-900">{t.post.related}</h2>
+          <div class="mt-8 grid gap-6 md:grid-cols-3">
+            {related.map((item) => (
+              <PostCard post={item} lang={lang} />
+            ))}
+          </div>
+        </div>
+      </section>
+    )}
+
+    {(newer || older) && (
+      <nav class="container-prose grid gap-4 pb-20 sm:grid-cols-2" aria-label={t.post.backToBlog}>
+        {newer ? (
+          <a href={withLocale(lang, `/blog/${contentSlug(newer.id)}/`)} class={navCardClass}>
+            <span class="text-xs font-semibold uppercase tracking-[0.12em] text-slate-500">
+              {t.post.previous}
+            </span>
+            <p class="mt-2 font-display text-base font-semibold text-brand-900">{newer.data.title}</p>
+          </a>
+        ) : <div></div>}
+        {older ? (
+          <a href={withLocale(lang, `/blog/${contentSlug(older.id)}/`)} class={`${navCardClass} text-right`}>
+            <span class="text-xs font-semibold uppercase tracking-[0.12em] text-slate-500">
+              {t.post.next}
+            </span>
+            <p class="mt-2 font-display text-base font-semibold text-brand-900">{older.data.title}</p>
+          </a>
+        ) : <div></div>}
+      </nav>
+    )}
+  </article>
+</BaseLayout>

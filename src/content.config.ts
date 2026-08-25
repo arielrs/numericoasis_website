@@ -3,6 +3,32 @@ import { glob } from 'astro/loaders';
 
 const langEnum = z.enum(['en', 'pt-BR', 'es']);
 
+/**
+ * A closed tag vocabulary, because tags are indexable URLs. With a free-form
+ * array one typo ships a one-post archive in three locales, which is exactly
+ * the thin-content pattern the tag pages exist to avoid.
+ *
+ * Slugs stay ASCII and locale-independent so /blog/tag/forge/ is the same path
+ * in every locale and the hreflang cluster stays mirrored. The display labels
+ * are localised in src/i18n.
+ */
+export const BLOG_TAGS = [
+  'onbudget',
+  'jira-cost-management',
+  'confluence-governance',
+  'jira-administration',
+  'forge',
+  'marketplace',
+  'atlassian-cloud',
+  'how-to',
+  'product-updates',
+] as const;
+
+export type BlogTag = (typeof BLOG_TAGS)[number];
+
+/** Authors are an enum so a byline cannot reference a person with no bio. */
+export const AUTHOR_IDS = ['team'] as const;
+
 const blog = defineCollection({
   loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/blog' }),
   schema: ({ image }) =>
@@ -11,8 +37,8 @@ const blog = defineCollection({
       description: z.string(),
       pubDate: z.coerce.date(),
       updatedDate: z.coerce.date().optional(),
-      tags: z.array(z.string()).default([]),
-      author: z.string().default('Numeric Oasis Team'),
+      tags: z.array(z.enum(BLOG_TAGS)).min(1).max(4),
+      author: z.enum(AUTHOR_IDS).default('team'),
       heroImage: image().optional(),
       draft: z.boolean().default(false),
       lang: langEnum,

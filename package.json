@@ -23,6 +23,8 @@
     "@fontsource/inter": "^5.2.8",
     "@tailwindcss/vite": "^4.2.4",
     "astro": "^6.1.10",
+    "mdast-util-to-string": "^4.0.0",
+    "reading-time": "^1.5.0",
     "tailwindcss": "^4.2.4"
   },
   "devDependencies": {

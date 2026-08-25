@@ -3,6 +3,7 @@ import { defineConfig, fontProviders } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 import mdx from '@astrojs/mdx';
 import tailwindcss from '@tailwindcss/vite';
+import { remarkReadingTime } from './src/lib/remark-reading-time.mjs';
 
 export default defineConfig({
   site: 'https://numericoasis.com',
@@ -101,6 +102,11 @@ export default defineConfig({
     '/apps/onbudget': '/onbudget/',
     '/es/apps/onbudget': '/es/onbudget/',
     '/pt-BR/apps/onbudget': '/pt-BR/onbudget/',
+  },
+
+  // extendMarkdownConfig defaults true, so MDX picks this up as well.
+  markdown: {
+    remarkPlugins: [remarkReadingTime],
   },
 
   integrations: [

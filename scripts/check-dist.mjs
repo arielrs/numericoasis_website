@@ -95,6 +95,15 @@ for (const file of pages) {
   if (count(/rel="canonical"/g) !== 1) errors.push(`${url}: expected 1 canonical, got ${count(/rel="canonical"/g)}`);
   if (count(/hreflang="/g) !== 4) errors.push(`${url}: expected 4 hreflang links, got ${count(/hreflang="/g)}`);
   if (!source.includes('hreflang="x-default"')) errors.push(`${url}: missing x-default`);
+
+  // One graph per page, not a pile of disconnected nodes.
+  const ldBlocks = count(/application\/ld\+json/g);
+  if (ldBlocks !== 1) errors.push(`${url}: expected exactly 1 JSON-LD block, got ${ldBlocks}`);
+  if (!source.includes('"@graph"')) errors.push(`${url}: JSON-LD is not a @graph`);
+
+  if (!/name="robots" content="index, follow, max-snippet:-1/.test(source)) {
+    errors.push(`${url}: missing the indexable robots meta`);
+  }
 }
 
 if (errors.length) {
