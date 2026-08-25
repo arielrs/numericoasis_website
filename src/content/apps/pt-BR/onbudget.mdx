@@ -1,0 +1,262 @@
+---
+lang: pt-BR
+translationKey: onbudget
+name: OnBudget
+listingName: "OnBudget - Cost Tracking & Budget Reports for Jira"
+version: "2.4.0"
+dateModified: 2026-08-19
+tagline: Controle de orçamento e relatórios de custo para o Jira. Orçado versus realizado, saúde e previsão, a partir do trabalho que seu time já registra.
+description: O OnBudget é um app para Jira Cloud que transforma em dinheiro o trabalho que já está registrado no Jira. Meça o gasto por pontos de história, por registros de trabalho precificados com tabelas de valores, por um campo numérico ou pela contagem de itens de trabalho, e acompanhe orçado versus realizado com limites de saúde, variação e previsão linear em um painel que você reorganiza e compartilha. Sem criar campos personalizados.
+marketplaceUrl: https://marketplace.atlassian.com/apps/2136850574/onbudget-cost-tracking-budget-reports-for-jira
+supportUrl: https://numericoasis.atlassian.net/servicedesk/customer/portal/39
+products: ["jira"]
+hostProducts: ["jira"]
+order: 1
+flagship: true
+landingPath: /onbudget/
+priceModel: paid
+icon: ../../../assets/logos/onbudget.png
+runsOnAtlassian: true
+storesPersonalData: false
+scopeSummary:
+  - "read:jira-work"
+  - "read:jira-user"
+  - "storage:app"
+dataStatement: >-
+  O OnBudget guarda as configurações dos seus relatórios e nada além disso. Ele nunca guarda o
+  conteúdo dos seus itens de trabalho, e nunca guarda o resultado de um relatório. Toda leitura é
+  feita com as suas próprias permissões do Jira, identificadores de conta e de grupo passam por hash
+  antes de virarem chaves de armazenamento, e desinstalar o app apaga tudo o que ele mantinha.
+
+answerFirst: >-
+  O OnBudget é um app para Jira Cloud de controle de orçamento e relatórios de custo. Ele transforma
+  em dinheiro o trabalho que você já registra no Jira. Escolha pontos de história, registros de
+  trabalho com tabelas de valores, um campo numérico ou a contagem de itens, defina um orçamento em
+  uma de 18 moedas e receba gasto, variação e previsão no seu painel. Feito em Forge. Somente leitura.
+
+audiences:
+  - PMO e gestores de portfólio
+  - Parceiros de finanças e FP&A
+  - Líderes de entrega e de programa
+  - Gestores de marketing e operações
+  - Administradores de projeto do Jira
+
+problem:
+  heading: O Jira sabe o que aconteceu. Ele não sabe quanto custou.
+  body: >-
+    O trabalho já está no Jira. O dinheiro está em uma planilha que alguém exporta na sexta e que já
+    está desatualizada na segunda. Times que não usam pontos de história nem apontamento de horas, ou
+    seja, a maior parte de marketing, suporte e operações, sequer aparecem nessa planilha.
+  questions:
+    - Estamos acima do orçamento neste épico, agora?
+    - Quanto aquela entrega custou de verdade?
+    - Nesse ritmo de consumo, quando o orçamento acaba?
+
+valueProps:
+  - title: Todos os orçamentos em uma tela
+    body: Orçamentos de entrega, produto e marketing lado a lado, cada um com seu gasto, sua previsão e sua saúde, na moeda em que foi definido.
+    icon: "📊"
+  - title: Precifica o sinal que você tem
+    body: Pontos de história, horas apontadas, um campo numérico ou a simples contagem de itens. Times sem estimativa e sem apontamento não ficam de fora.
+    icon: "🎯"
+  - title: Nenhum número é uma caixa-preta
+    body: A linha de parâmetros de cada relatório mostra o escopo, o método e a moeda por trás dele, e qualquer trecho de gráfico abre os itens correspondentes no Jira.
+    icon: "🔍"
+
+steps:
+  - title: Escolha de onde vêm os números
+    body: >-
+      Aponte um relatório para espaços inteiros, para itens de trabalho escolhidos por chave, prefixo
+      ou texto do resumo, ou para uma consulta JQL validada enquanto você digita. Uma opção inclui
+      subtarefas e tudo o que estiver sob um épico.
+    shot: builder-origin
+  - title: Defina o orçamento, a moeda e os dois limites
+    body: >-
+      Um orçamento total em qualquer uma das 18 moedas, mais as duas porcentagens que decidem quando o
+      relatório fica amarelo e quando fica vermelho. Formatos de número, decimal e data são definidos
+      por relatório, então um orçamento em reais é lido como tal.
+    shot: builder-origin
+  - title: Escolha o sinal que seu time já produz
+    body: >-
+      Cinco métodos de custeio, e o OnBudget analisa seus dados antes e informa qual porcentagem dos
+      seus itens de trabalho realmente carrega cada um deles antes de você se comprometer.
+    shot: builder-method
+  - title: Adicione um período e um horizonte de previsão
+    body: >-
+      Limite o relatório a um intervalo de datas e depois projete até a data final, para 30, 60 ou 90
+      dias à frente, ou não projete. Visualize tudo antes de salvar.
+    shot: preview
+
+featureGroups:
+  - name: Cinco formas de transformar trabalho em dinheiro
+    blurb: Cada método mostra sua cobertura nos seus dados antes de você escolher.
+    items:
+      - Pontos de história, com preço por ponto
+      - Um campo numérico, com preço por unidade
+      - Registros de trabalho, por tabela de valores ou taxa única
+      - Itens de trabalho concluídos ou resolvidos, com preço por item
+      - Itens de trabalho em status escolhidos, com preço por item
+  - name: Tabelas de valores para horas apontadas
+    blurb: Para times que faturam ou custeiam o tempo em vez de estimá-lo.
+    items:
+      - Valores por pessoa ou por papel no projeto
+      - Uma taxa horária padrão quando nenhum registro corresponde ao autor
+      - Integrantes de papéis resolvidos por usuário, grupo ou papel de projeto
+      - Predefinições de papéis reutilizáveis, criadas pelos administradores do projeto
+      - Base de tempo de hora, dia, trinta minutos ou quinze minutos
+  - name: Nove gadgets de painel
+    blurb: Arraste para reorganizar, redimensione pelo canto, clone, remova ou troque o formato do gráfico, e depois salve o layout.
+    items:
+      - Insights
+      - Resumo do orçamento
+      - Medidor de saúde do orçamento
+      - Planejado versus realizado
+      - Gasto ao longo do tempo
+      - Previsão versus data final
+      - Variação
+      - Detalhamento por status, responsável, espaço ou tipo
+      - Comparação de relatórios
+  - name: Feito para o centésimo relatório
+    blurb: Como o app se comporta depois que o portfólio cresce.
+    items:
+      - Visualização em cartões, lista e tabela
+      - Busca e ordenação por risco, orçamento usado, variação da previsão ou recência
+      - Filtros por saúde e por moeda
+      - Favoritos, ocultar, e ações em massa para favoritar, ocultar ou excluir
+      - Compartilhamento com pessoas ou grupos, recalculado com as permissões de quem vê
+      - Exportação CSV, gerada no seu navegador
+
+keyFeatures:
+  - Orçado versus realizado
+  - Limites de saúde definidos por você
+  - Previsão linear
+  - 18 moedas
+  - Tabelas de valores
+  - Descoberta de cobertura
+  - Painéis com arrastar e soltar
+  - Relatórios compartilhados
+  - Exportação CSV
+  - Inglês, português e espanhol
+
+trustSignals:
+  - Runs on Atlassian
+  - Feito em Forge
+  - Acesso somente leitura
+  - Guarda apenas as configurações do relatório
+  - Sem campos personalizados novos
+
+useCases:
+  - persona: Líder de PMO
+    job: Manter vinte orçamentos de entrega visíveis sem perseguir vinte planilhas.
+    outcome: Uma tela mostrando quais orçamentos estão no rumo, em risco e estourados, ordenados por risco.
+  - persona: Parceiro de finanças
+    job: Entender quanto um trimestre de engenharia custou de fato.
+    outcome: Registros de trabalho precificados por tabela de valores, exportados em CSV e conciliáveis linha a linha.
+  - persona: Gestor de marketing
+    job: Acompanhar o orçamento de uma campanha em um time que nunca usou pontos de história.
+    outcome: Custo por item de trabalho concluído, com cobertura confirmada antes de montar o relatório.
+
+faq:
+  - q: O OnBudget exige que eu crie campos personalizados no Jira?
+    a: >-
+      Não. O OnBudget lê o que já existe: pontos de história, registros de trabalho, campos numéricos
+      existentes, status e resoluções. Não há nada para acrescentar a um esquema de telas nem nada para
+      preencher retroativamente, e é por isso que o primeiro relatório leva minutos em vez de uma
+      solicitação de mudança.
+  - q: O que o OnBudget pode usar para calcular custo?
+    a: >-
+      Cinco sinais. Pontos de história com preço por ponto, qualquer campo numérico com preço por
+      unidade, registros de trabalho precificados por tabela de valores ou taxa única, itens de trabalho
+      concluídos ou resolvidos com preço por item, e itens em status escolhidos com preço por item. Você
+      também pode deixar o custo unitário em branco e deixar o OnBudget dividir o orçamento total pela
+      quantidade total.
+  - q: Como o OnBudget sabe quanto custa uma hora de trabalho?
+    a: >-
+      Por tabelas de valores. Uma tabela guarda valores por pessoa ou por papel no projeto, além de uma
+      taxa horária padrão para autores que ela não reconhece. Administradores de projeto podem criar
+      predefinições de papéis reutilizáveis nas configurações do projeto, para que os mesmos papéis não
+      precisem ser refeitos a cada relatório.
+  - q: E se meu time não usa pontos de história nem apontamento de horas?
+    a: >-
+      Então conte itens de trabalho. O OnBudget pode precificar itens concluídos ou resolvidos, ou itens
+      parados em status que você escolher. Esse é o caso comum em marketing, suporte e operações, e o
+      assistente informa qual porcentagem dos seus dados carrega cada sinal antes de você escolher um.
+  - q: Quais moedas são suportadas e o OnBudget converte entre elas?
+    a: >-
+      Dezoito moedas ISO, incluindo USD, EUR, GBP e BRL. Cada relatório é denominado em uma moeda e o
+      OnBudget não converte entre elas, porque uma taxa de câmbio inventada é pior do que nenhuma taxa
+      de câmbio. Formatos de número, decimal e data são definidos por relatório, ao lado da moeda.
+  - q: Posso compartilhar um relatório com alguém que tem acesso limitado ao Jira?
+    a: >-
+      Sim, com pessoas ou com grupos. Um relatório compartilhado não é uma fotografia da sua visão. Ele é
+      recalculado com as permissões do próprio leitor no Jira, então ninguém vê itens de trabalho que já
+      não pudesse ver no Jira, e o relatório avisa quando quem está lendo não tem acesso a parte do escopo.
+  - q: Onde meus dados ficam?
+    a: >-
+      Dentro da Atlassian. O OnBudget roda inteiramente em Forge, tem o selo Runs on Atlassian e possui
+      três escopos somente leitura. Ele guarda as configurações do relatório e nunca o conteúdo dos seus
+      itens de trabalho nem o resultado de um relatório. Identificadores de conta e de grupo passam por
+      hash antes de virarem chaves de armazenamento, e desinstalar apaga tudo.
+  - q: Consigo exportar os números?
+    a: >-
+      Sim, em CSV, com o detalhamento por item de trabalho que está por trás dos totais. O arquivo é
+      gerado no seu navegador, então os dados não saem da Atlassian para isso.
+  - q: Qual a diferença entre em risco e acima do orçamento?
+    a: >-
+      Duas porcentagens que você define por relatório. Em risco começa em 80 por cento do orçamento
+      consumido e acima do orçamento em 100 por cento. Elas controlam o rótulo de saúde, a cor do medidor
+      e a ordenação na tela inicial, de modo que os relatórios que precisam de atenção sobem para o topo.
+  - q: Até onde vai a previsão?
+    a: >-
+      Até onde você quiser: a data final do relatório, ou 30, 60 ou 90 dias a partir de hoje. Você também
+      pode desligar a previsão. A projeção é um ritmo linear a partir do gasto registrado até aqui,
+      mostrada contra o orçamento para que o estouro ou a folga fiquem visíveis.
+  - q: Consigo ver o trabalho por trás de um número?
+    a: >-
+      Sim. Todo relatório traz uma linha de parâmetros detalhando o escopo, o método e a moeda que ele
+      usou, e clicar em uma barra ou fatia de um detalhamento abre os itens de trabalho correspondentes
+      no Jira.
+  - q: Existe uma versão gratuita?
+    a: >-
+      O OnBudget é um app pago com período de teste gratuito, vendido pelo Atlassian Marketplace. Consulte
+      o anúncio para os preços atuais, que é onde eles se mantêm corretos.
+
+screenshots:
+  - image: ../../../assets/screenshots/onbudget/01-cards-home.png
+    slot: hero
+    caption: "Nove orçamentos de entrega, produto e marketing, cada um mostrando gasto contra orçamento, previsão, e se está no rumo, em risco ou estourado."
+  - image: ../../../assets/screenshots/onbudget/04-report-over-budget.png
+    slot: report-over-budget
+    caption: "Um relatório estourado: 106 por cento do orçamento consumido, saldo restante negativo e uma previsão bem acima da linha."
+  - image: ../../../assets/screenshots/onbudget/05-builder-origin-budget.png
+    slot: builder-origin
+    caption: "Passos um e dois do assistente: escolha espaços, itens de trabalho ou JQL, e depois defina o orçamento, a moeda e os limites que deixam o relatório amarelo e vermelho."
+  - image: ../../../assets/screenshots/onbudget/06-builder-method-forecast.png
+    slot: builder-method
+    caption: "Cada método de custeio mostra quanto dos seus dados realmente o carrega, aqui 14 por cento, 38 por cento e 47 por cento, antes de você escolher um."
+  - image: ../../../assets/screenshots/onbudget/07-preview.png
+    slot: preview
+    caption: "O passo de visualização, antes de salvar qualquer coisa. Recalcule até os números ficarem certos e então salve o relatório."
+  - image: ../../../assets/screenshots/onbudget/03-report-at-risk.png
+    slot: report-at-risk
+    caption: "Um relatório em 83 por cento do orçamento: resumo, medidor de saúde, planejado versus realizado, gasto ao longo do tempo e gasto por status."
+  - image: ../../../assets/screenshots/onbudget/08-edit-layout.png
+    slot: edit-layout
+    caption: "Modo de edição. Arraste um gadget para outra posição, redimensione pelo canto, clone ou remova, troque o formato do gráfico e salve o layout."
+  - image: ../../../assets/screenshots/onbudget/09-table-shared.png
+    slot: table-shared
+    caption: "Visualização em tabela listando cada orçamento com seu método e sua origem, e abaixo dela os relatórios que outras pessoas compartilharam com você."
+  - image: ../../../assets/screenshots/onbudget/10-bulk-actions.png
+    slot: bulk
+    caption: "Selecione vários relatórios e aja sobre todos de uma vez: favoritar, ocultar ou excluir."
+  - image: ../../../assets/screenshots/onbudget/11-search-filter.png
+    slot: search
+    caption: "Buscando no portfólio até chegar aos orçamentos de um único time."
+  - image: ../../../assets/screenshots/onbudget/02-list-home.png
+    slot: list
+    caption: "Visualização em lista, para ler um portfólio inteiro de uma vez."
+
+relatedApps:
+  - field-scout
+  - configuration-monitor
+---

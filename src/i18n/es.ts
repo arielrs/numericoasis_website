@@ -32,6 +32,12 @@ export const es = {
     copyright: (year: number, siteName: string, location: string) =>
       `© ${year} ${siteName}. ${location}.`,
   },
+  apps: {
+    priceFree: 'Gratis',
+    pricePaid: 'De pago, ver en el Marketplace',
+    installOnMarketplace: 'Instalar desde el Atlassian Marketplace',
+    builtFor: 'Pensado para:',
+  },
   common: {
     skipToContent: 'Saltar al contenido',
     languagePicker: 'Idioma',

@@ -4,6 +4,9 @@ import { getCollection } from 'astro:content';
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import { PRODUCT_LABELS } from '../../../consts';
 import { contentSlug } from '../../../i18n/paths';
+import { useTranslations } from '../../../i18n';
+
+const t = useTranslations('pt-BR');
 
 const apps = (
   await getCollection('apps', ({ data }) => data.lang === 'pt-BR')
@@ -69,8 +72,8 @@ const apps = (
             {app.data.products.map((p) => (
               <span class="rounded-full bg-water-50 px-2.5 py-1 text-water-700">{PRODUCT_LABELS[p] ?? p}</span>
             ))}
-            {app.data.pricing && /^(free|grátis|gratis|gratuito)$/i.test(app.data.pricing) && (
-              <span class="rounded-full bg-sun-50 px-2.5 py-1 text-sun-700">Grátis</span>
+            {app.data.priceModel === 'free' && (
+              <span class="rounded-full bg-sun-50 px-2.5 py-1 text-sun-700">{t.apps.priceFree}</span>
             )}
             <span class="ml-auto text-slate-400 transition group-hover:text-water-600">Saiba mais →</span>
           </div>

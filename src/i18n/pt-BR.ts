@@ -32,6 +32,12 @@ export const ptBR = {
     copyright: (year: number, siteName: string, location: string) =>
       `© ${year} ${siteName}. ${location}.`,
   },
+  apps: {
+    priceFree: 'Gratuito',
+    pricePaid: 'Pago, veja no Marketplace',
+    installOnMarketplace: 'Instalar pelo Atlassian Marketplace',
+    builtFor: 'Feito para:',
+  },
   common: {
     skipToContent: 'Ir para o conteúdo',
     languagePicker: 'Idioma',

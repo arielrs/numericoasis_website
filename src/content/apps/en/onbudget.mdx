@@ -1,0 +1,258 @@
+---
+lang: en
+translationKey: onbudget
+name: OnBudget
+listingName: "OnBudget - Cost Tracking & Budget Reports for Jira"
+version: "2.4.0"
+dateModified: 2026-08-19
+tagline: Budget tracking and cost reporting for Jira. Budget versus actual, health, and forecast, from work your team already tracks.
+description: OnBudget is a Jira Cloud app that turns work already tracked in Jira into money. Measure spend from story points, worklogs priced by rate cards, a numeric field, or counts of work items, then follow budget versus actual with health thresholds, variance, and a linear forecast on a dashboard you can rearrange and share. No new custom fields.
+marketplaceUrl: https://marketplace.atlassian.com/apps/2136850574/onbudget-cost-tracking-budget-reports-for-jira
+supportUrl: https://numericoasis.atlassian.net/servicedesk/customer/portal/39
+products: ["jira"]
+hostProducts: ["jira"]
+order: 1
+flagship: true
+landingPath: /onbudget/
+priceModel: paid
+icon: ../../../assets/logos/onbudget.png
+runsOnAtlassian: true
+storesPersonalData: false
+scopeSummary:
+  - "read:jira-work"
+  - "read:jira-user"
+  - "storage:app"
+dataStatement: >-
+  OnBudget stores your report settings and nothing else. It never stores the content of your
+  work items, and it never stores the results of a report. Every read is made with your own Jira
+  permissions, account and group identifiers are hashed before they are used as storage keys, and
+  uninstalling the app purges everything it held.
+
+answerFirst: >-
+  OnBudget is a Jira Cloud app for budget tracking and cost reporting. It turns work you already
+  track in Jira into money. Pick story points, worklogs with rate cards, a numeric field, or counts
+  of work items, set a budget in one of 18 currencies, and get spend, variance, and a forecast on
+  your dashboard. Built on Forge. Read only.
+
+audiences:
+  - PMO and portfolio managers
+  - Finance and FP&A partners
+  - Delivery and programme leads
+  - Marketing and operations managers
+  - Jira project admins
+
+problem:
+  heading: Jira knows what happened. It does not know what it cost.
+  body: >-
+    The work is already in Jira. The money is in a spreadsheet somebody exports on Fridays, and by
+    Monday it is wrong. Teams that do not use story points or timesheets, which is most of marketing,
+    support and operations, do not appear in that spreadsheet at all.
+  questions:
+    - Are we over budget on this epic, right now?
+    - What did that release actually cost us?
+    - At this burn rate, when do we run out?
+
+valueProps:
+  - title: Every budget on one screen
+    body: Delivery, product and marketing budgets side by side, each with its spend, its forecast and its health, in whichever currency it was set.
+    icon: "📊"
+  - title: Prices whatever signal you have
+    body: Story points, logged time, a numeric field, or a simple count of work items. Teams with no estimates and no timesheets are not left out.
+    icon: "🎯"
+  - title: No number is a black box
+    body: The parameters row on every report shows the exact scope, method and currency behind it, and any chart segment opens the matching work items in Jira.
+    icon: "🔍"
+
+steps:
+  - title: Choose where the numbers come from
+    body: >-
+      Point a report at whole spaces, at individual work items picked by key, prefix or summary text,
+      or at a JQL query that is validated as you type. One toggle pulls in sub-tasks and everything
+      under an epic.
+    shot: builder-origin
+  - title: Set the budget, the currency and the two thresholds
+    body: >-
+      A total budget in any of 18 currencies, plus the two percentages that decide when a report turns
+      amber and when it turns red. Number, decimal and date formats are set per report, so a Brazilian
+      budget reads like one.
+    shot: builder-origin
+  - title: Pick the signal your team already has
+    body: >-
+      Five costing methods, and OnBudget samples your data first and tells you what share of your work
+      items actually carries each one before you commit to it.
+    shot: builder-method
+  - title: Add a time frame and a forecast horizon
+    body: >-
+      Limit the report to a date range, then forecast to the end date, to 30, 60 or 90 days out, or not
+      at all. Preview the whole thing before you save it.
+    shot: preview
+
+featureGroups:
+  - name: Five ways to turn work into money
+    blurb: Each method shows its coverage across your data before you commit to it.
+    items:
+      - Story points, priced per point
+      - A numeric field, priced per unit
+      - Worklogs, priced by rate card or a flat rate
+      - Work items closed or resolved, priced per item
+      - Work items sitting in chosen statuses, priced per item
+  - name: Rate cards for logged time
+    blurb: For teams that bill or cost time rather than estimate it.
+    items:
+      - Rates per user or per project role
+      - A fallback hourly rate when no entry matches the author
+      - Role members resolved by user, group or project role
+      - Reusable worklog role presets, defined by project admins
+      - Hour, day, thirty minute or fifteen minute time basis
+  - name: Nine dashboard gadgets
+    blurb: Drag to rearrange, resize from the corner, clone, remove, or switch the chart format, then save the layout.
+    items:
+      - Insights
+      - Budget summary
+      - Budget health gauge
+      - Planned versus actual
+      - Spend over time
+      - Forecast versus end date
+      - Variance
+      - Breakdown by status, assignee, space or type
+      - Compare reports
+  - name: Built for the hundredth report
+    blurb: What the app looks like once a portfolio has grown.
+    items:
+      - Cards, list and table views
+      - Search, and sorting by risk, budget used, forecast variance or recency
+      - Filters by health and by currency
+      - Favourites, hiding, and bulk star, hide or delete
+      - Sharing with users or groups, regenerated under each viewer's permissions
+      - CSV export, generated in your browser
+
+keyFeatures:
+  - Budget versus actual
+  - Health thresholds you set
+  - Linear forecast
+  - 18 currencies
+  - Rate cards
+  - Coverage discovery
+  - Drag and drop dashboards
+  - Shared reports
+  - CSV export
+  - English, Portuguese and Spanish
+
+trustSignals:
+  - Runs on Atlassian
+  - Built on Forge
+  - Read only access
+  - Stores only report settings
+  - No new custom fields
+
+useCases:
+  - persona: PMO lead
+    job: Keep twenty delivery budgets visible without chasing twenty spreadsheets.
+    outcome: One screen showing which budgets are on track, at risk and over, sorted by risk.
+  - persona: Finance partner
+    job: Understand what a quarter of engineering work actually cost.
+    outcome: Worklogs priced by rate card, exported to CSV, reconcilable line by line.
+  - persona: Marketing manager
+    job: Track a campaign budget for a team that has never used story points.
+    outcome: Cost per completed work item, with coverage confirmed before the report is built.
+
+faq:
+  - q: Does OnBudget need me to create custom fields in Jira?
+    a: >-
+      No. OnBudget reads what is already there: story points, worklogs, existing numeric fields,
+      statuses and resolutions. There is nothing to add to a screen scheme and nothing to backfill,
+      which is why a first report takes minutes rather than a change request.
+  - q: What can OnBudget use to calculate cost?
+    a: >-
+      Five signals. Story points priced per point, any numeric field priced per unit, worklogs priced
+      by a rate card or a flat rate, work items closed or resolved priced per item, and work items
+      sitting in chosen statuses priced per item. You can also leave the unit cost blank and let
+      OnBudget divide the total budget across the total quantity.
+  - q: How does OnBudget know what an hour of work costs?
+    a: >-
+      Through rate cards. A card holds rates per user or per project role, plus a fallback hourly rate
+      for authors it does not recognise. Project admins can define reusable worklog role presets from
+      the project settings, so the same roles do not have to be rebuilt for every report.
+  - q: What if my team does not use story points or worklogs?
+    a: >-
+      Then count work items instead. OnBudget can price items closed or resolved, or items sitting in
+      statuses you choose. This is the common case for marketing, support and operations, and the
+      builder tells you what share of your data carries each signal before you pick one.
+  - q: Which currencies are supported, and does OnBudget convert between them?
+    a: >-
+      Eighteen ISO currencies, including USD, EUR, GBP and BRL. Each report is denominated in one
+      currency and OnBudget does not convert between them, because an invented exchange rate is worse
+      than no exchange rate. Number, decimal and date formats are set per report alongside it.
+  - q: Can I share a report with someone who has limited Jira access?
+    a: >-
+      Yes, with users or with groups. A shared report is not a snapshot of your view. It regenerates
+      under the viewer's own Jira permissions, so nobody sees work items they could not already see in
+      Jira, and the report warns when a viewer lacks access to part of its scope.
+  - q: Where does my data live?
+    a: >-
+      Inside Atlassian. OnBudget runs entirely on Forge, is Runs on Atlassian, and holds three
+      read-only scopes. It stores your report settings and never the content of your work items or the
+      results of a report. Account and group identifiers are hashed before use as storage keys, and
+      uninstalling purges everything.
+  - q: Can I export the numbers?
+    a: >-
+      Yes, as CSV with the per work item breakdown behind the totals. The file is generated in your
+      browser, so the data does not leave Atlassian to produce it.
+  - q: What is the difference between at risk and over budget?
+    a: >-
+      Two percentages you set per report. At risk defaults to 80 percent of budget consumed and over
+      budget to 100 percent. They drive the health lozenge, the colour of the gauge, and the sort order
+      on the home screen, so the reports that need attention rise to the top.
+  - q: How far ahead does the forecast go?
+    a: >-
+      As far as you choose: to the report's end date, or 30, 60 or 90 days from today. You can also turn
+      the forecast off. The projection is a linear run rate from the spend recorded so far, shown against
+      the budget so any overrun or headroom is visible.
+  - q: Can I see the work behind a number?
+    a: >-
+      Yes. Every report carries a parameters row spelling out the exact scope, method and currency it
+      used, and clicking a bar or slice in a breakdown opens the matching work items in Jira.
+  - q: Is there a free version?
+    a: >-
+      OnBudget is a paid app with a free trial, sold through the Atlassian Marketplace. See the listing
+      for current pricing, which is where it stays accurate.
+
+screenshots:
+  - image: ../../../assets/screenshots/onbudget/01-cards-home.png
+    slot: hero
+    caption: "Nine budgets across delivery, product and marketing, each showing spend against budget, forecast, and whether it is on track, at risk or over."
+  - image: ../../../assets/screenshots/onbudget/04-report-over-budget.png
+    slot: report-over-budget
+    caption: "A report that has gone over: 106 percent of budget consumed, a negative remaining balance, and a forecast well past the line."
+  - image: ../../../assets/screenshots/onbudget/05-builder-origin-budget.png
+    slot: builder-origin
+    caption: "Steps one and two of the builder: pick spaces, work items or JQL, then set the budget, the currency, and the thresholds that turn the report amber and red."
+  - image: ../../../assets/screenshots/onbudget/06-builder-method-forecast.png
+    slot: builder-method
+    caption: "Each costing method shows how much of your data actually carries it, 14 percent, 38 percent and 47 percent here, before you commit to one."
+  - image: ../../../assets/screenshots/onbudget/07-preview.png
+    slot: preview
+    caption: "The preview step, before anything is saved. Regenerate until the numbers look right, then save the report."
+  - image: ../../../assets/screenshots/onbudget/03-report-at-risk.png
+    slot: report-at-risk
+    caption: "A report at 83 percent of budget: summary, health gauge, planned versus actual, spend over time, and spend by status."
+  - image: ../../../assets/screenshots/onbudget/08-edit-layout.png
+    slot: edit-layout
+    caption: "Edit mode. Drag a gadget to a new slot, resize it from the corner, clone or remove it, switch its chart format, then save the layout."
+  - image: ../../../assets/screenshots/onbudget/09-table-shared.png
+    slot: table-shared
+    caption: "Table view listing every budget with its method and origin, and below it the reports other people have shared with you."
+  - image: ../../../assets/screenshots/onbudget/10-bulk-actions.png
+    slot: bulk
+    caption: "Select several reports and act on all of them at once: star, hide or delete."
+  - image: ../../../assets/screenshots/onbudget/11-search-filter.png
+    slot: search
+    caption: "Searching the portfolio down to one team's budgets."
+  - image: ../../../assets/screenshots/onbudget/02-list-home.png
+    slot: list
+    caption: "List view, for reading a whole portfolio in one pass."
+
+relatedApps:
+  - field-scout
+  - configuration-monitor
+---
