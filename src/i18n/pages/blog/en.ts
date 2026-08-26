@@ -3,7 +3,7 @@ export const en = {
     crumb: 'Blog',
     title: 'Blog',
     description:
-      'Notes on Atlassian cost visibility, Confluence governance and Jira configuration health, from the team that builds six Marketplace apps.',
+      'Notes on Atlassian cost visibility, Confluence governance and Jira configuration health, from the team that builds Atlassian Marketplace apps.',
   },
   index: {
     eyebrow: 'From the workshop',

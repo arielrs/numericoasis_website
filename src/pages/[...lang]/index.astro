@@ -2,9 +2,12 @@
 /**
  * The home page for all three locales.
  *
- * Apps first, OnBudget led. The old page opened with "Software, services, and
- * 15 years of know-how" and put the apps fifth; the company now sells six
- * Marketplace apps and the page has to say so above the fold.
+ * The company leads, then the app we are currently pushing, then the range.
+ * An earlier version opened with an OnBudget headline and an OnBudget
+ * screenshot, which read as a product landing page with a company footer. The
+ * hero is now about Numeric Oasis, and OnBudget owns the section immediately
+ * below it, framed as where attention is right now rather than as a permanent
+ * ranking, since more apps are coming.
  */
 import { Image } from 'astro:assets';
 import { getCollection } from 'astro:content';
@@ -23,12 +26,11 @@ const nav = appsIndex[lang];
 const apps = (await getCollection('apps', ({ data }) => data.lang === lang)).sort(
   (a, b) => a.data.order - b.data.order,
 );
-const flagship = apps.find((a) => a.data.flagship);
+const focusApp = apps.find((a) => a.data.flagship);
 const jira = apps.filter((a) => a.data.hostProducts.includes('jira'));
 const confluence = apps.filter((a) => a.data.hostProducts.includes('confluence'));
 
-const heroShot = flagship?.data.screenshots.find((s) => s.slot === 'hero');
-const problemShot = flagship?.data.screenshots.find((s) => s.slot === 'report-over-budget');
+const focusShot = focusApp?.data.screenshots.find((s) => s.slot === 'hero');
 
 const posts = (
   await getCollection('blog', ({ data }) => data.lang === lang && !data.draft)
@@ -42,48 +44,62 @@ const dateFmt = new Intl.DateTimeFormat(lang === 'en' ? 'en-US' : lang, {
   day: 'numeric',
 });
 
-const cardLabels = {
-  flagshipBadge: nav.flagshipBadge,
-  builtFor: nav.builtFor,
-  readMore: nav.readMore,
-};
+const cardLabels = { builtFor: nav.builtFor, readMore: nav.readMore };
+
+const appHref = (app: (typeof apps)[number]) =>
+  withLocale(lang, app.data.landingPath ?? `/apps/${contentSlug(app.id)}/`);
+
+const arrow =
+  '<path d="M5 12h14M13 5l7 7-7 7" />';
 ---
 
-<BaseLayout title={t.meta.title} description={t.meta.description} image={heroShot?.image}>
-  <!-- 1. HERO -->
+<BaseLayout title={t.meta.title} description={t.meta.description}>
+  <!-- 1. HERO: the company, not a product -->
   <section class="border-b border-sand-200 bg-sand-50">
-    <div class="container-wide grid gap-12 py-16 sm:py-24 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:items-center lg:gap-16">
+    <div class="container-wide grid gap-14 py-16 sm:py-24 lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)] lg:items-center lg:gap-20">
       <div>
         <p class="eyebrow">{t.hero.eyebrow}</p>
-        <h1 class="mt-4 font-display text-4xl font-bold leading-tight tracking-tight text-brand-900 sm:text-5xl md:text-6xl">
+        <h1 class="mt-4 max-w-3xl font-display text-4xl font-bold leading-[1.08] tracking-tight text-brand-900 sm:text-5xl md:text-6xl">
           {t.hero.headline}
         </h1>
-        <p class="mt-6 max-w-xl text-lg leading-relaxed text-slate-600">{t.hero.lede}</p>
+        <p class="mt-6 max-w-2xl text-lg leading-relaxed text-slate-600">{t.hero.lede}</p>
         <div class="mt-9 flex flex-wrap gap-3">
-          <a href={withLocale(lang, '/onbudget/')} class="btn-cta">
+          <a href={withLocale(lang, '/apps/')} class="btn-cta">
             {t.hero.primary}
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7" /></svg>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" set:html={arrow} />
           </a>
-          <a href={withLocale(lang, '/apps/')} class="btn-secondary">{t.hero.secondary}</a>
+          <a href={withLocale(lang, '/about/')} class="btn-secondary">{t.hero.secondary}</a>
         </div>
       </div>
 
-      {heroShot && (
-        <figure class="lg:-mr-10">
-          <Image
-            src={heroShot.image}
-            alt={heroShot.alt ?? heroShot.caption}
-            width={1280}
-            sizes="(min-width: 1024px) 660px, 100vw"
-            class="w-full rounded-2xl border border-sand-200 bg-paper"
-            priority
-          />
-        </figure>
-      )}
+      <!-- The range at a glance. Our own products, so this is not a borrowed
+           trust signal, and it says "app vendor" rather than "one app". -->
+      <nav aria-label={t.hero.iconsLabel}>
+        <ul class="grid grid-cols-3 gap-3 sm:gap-4">
+          {apps.map((app) => (
+            <li>
+              <a
+                href={appHref(app)}
+                class="group flex aspect-square items-center justify-center rounded-2xl border border-sand-200 bg-paper p-4 transition duration-150 hover:-translate-y-0.5 hover:border-water-400 hover:shadow-[var(--shadow-soft)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sun-500"
+              >
+                {app.data.icon && (
+                  <Image
+                    src={app.data.icon}
+                    alt={app.data.name}
+                    width={96}
+                    class="h-full w-full rounded-xl object-cover"
+                    loading="eager"
+                  />
+                )}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
     </div>
   </section>
 
-  <!-- 2. PROOF STRIP: facts, not a row of greyscale customer logos -->
+  <!-- 2. PROOF STRIP: facts, not a row of borrowed logos -->
   <section class="border-b border-sand-200 bg-paper py-6" aria-label={t.proof.label}>
     <div class="container-wide">
       <ul class="flex flex-wrap items-center justify-center gap-x-6 gap-y-3 text-xs font-semibold uppercase tracking-[0.14em] text-brand-700">
@@ -97,32 +113,33 @@ const cardLabels = {
     </div>
   </section>
 
-  <!-- 3. THE PROBLEM -->
+  <!-- 3. WHERE ATTENTION IS: OnBudget, framed as current focus -->
   <section class="py-16 sm:py-24">
-    <div class="container-wide grid gap-12 lg:grid-cols-[minmax(0,4fr)_minmax(0,6fr)] lg:items-center lg:gap-16">
+    <div class="container-wide grid gap-12 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:items-center lg:gap-16">
       <div>
-        <p class="eyebrow">{t.problem.eyebrow}</p>
+        <p class="eyebrow">{t.focus.eyebrow}</p>
         <h2 class="mt-3 font-display text-3xl font-bold tracking-tight text-brand-900 sm:text-4xl">
-          {t.problem.headline}
+          {t.focus.headline}
         </h2>
-        <p class="mt-5 text-base leading-relaxed text-slate-600">{t.problem.body}</p>
+        <p class="mt-5 text-base leading-relaxed text-slate-600">{t.focus.body}</p>
+        <p class="mt-4 text-base leading-relaxed text-slate-600">{t.focus.body2}</p>
         <p class="mt-7">
           <a
             href={withLocale(lang, '/onbudget/')}
             class="inline-flex items-center gap-1.5 rounded-md text-sm font-semibold text-water-700 transition hover:text-water-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sun-500"
           >
-            {t.problem.link}
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7" /></svg>
+            {t.focus.link}
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" set:html={arrow} />
           </a>
         </p>
       </div>
-      {problemShot && (
+      {focusShot && (
         <figure>
           <Image
-            src={problemShot.image}
-            alt={problemShot.alt ?? problemShot.caption}
+            src={focusShot.image}
+            alt={focusShot.alt ?? focusShot.caption}
             width={1280}
-            sizes="(min-width: 1024px) 640px, 100vw"
+            sizes="(min-width: 1024px) 660px, 100vw"
             class="w-full rounded-2xl border border-sand-200 bg-paper"
             loading="lazy"
           />
@@ -131,7 +148,7 @@ const cardLabels = {
     </div>
   </section>
 
-  <!-- 4. THE PORTFOLIO: grouped by host, so half is skippable at a glance -->
+  <!-- 4. THE RANGE: grouped by host, so half is skippable at a glance -->
   <section class="border-y border-sand-200 bg-sand-50 py-16 sm:py-24">
     <div class="container-wide">
       <div class="max-w-2xl">
@@ -158,7 +175,7 @@ const cardLabels = {
     </div>
   </section>
 
-  <!-- 5. HOW WE BUILD: prose, not cards -->
+  <!-- 5. HOW WE WORK: prose, not cards -->
   <section class="py-16 sm:py-24">
     <div class="container-wide grid gap-12 lg:grid-cols-[minmax(0,4fr)_minmax(0,6fr)] lg:gap-16">
       <div>
@@ -177,7 +194,7 @@ const cardLabels = {
             class="inline-flex items-center gap-1.5 rounded-md text-sm font-semibold text-water-700 transition hover:text-water-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sun-500"
           >
             {t.how.link}
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7" /></svg>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" set:html={arrow} />
           </a>
         </p>
       </div>
@@ -200,7 +217,7 @@ const cardLabels = {
             class="inline-flex items-center gap-1.5 rounded-md text-sm font-semibold text-water-700 transition hover:text-water-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sun-500"
           >
             {t.blog.link}
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7" /></svg>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" set:html={arrow} />
           </a>
         </div>
 

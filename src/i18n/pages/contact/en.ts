@@ -13,7 +13,7 @@ export const en = {
   support: {
     label: 'Already using one of our apps',
     headline: 'Support goes through the portal.',
-    body: 'Raise it in our Jira Service Management portal rather than by email. Requests there get a ticket, a queue and a history, which is what you want when something is broken. The portal covers all six apps.',
+    body: 'Raise it in our Jira Service Management portal rather than by email. Requests there get a ticket, a queue and a history, which is what you want when something is broken. The portal covers every app we publish.',
     cta: 'Open a support request',
     includeTitle: 'Include these and we can usually skip a round trip',
     include: [

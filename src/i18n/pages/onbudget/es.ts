@@ -57,7 +57,7 @@ export const es = {
   },
   alsoSee: {
     eyebrow: 'También nuestras',
-    headline: 'Cinco apps más para Jira y Confluence.',
-    link: 'Ver las seis apps',
+    headline: 'El resto de lo que hacemos.',
+    link: 'Ver todas nuestras apps',
   },
 } as const satisfies OnBudgetCopy;

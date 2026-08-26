@@ -7,14 +7,14 @@ export const en = {
   },
   hero: {
     eyebrow: 'About Numeric Oasis',
-    headline: 'The team behind six Atlassian apps.',
+    headline: 'The team behind the apps.',
     lede: 'We build and support Forge apps for Jira and Confluence Cloud. Small team, narrow focus, and a deliberate refusal to run anything outside Atlassian infrastructure.',
   },
   standing: {
     eyebrow: 'Where we stand',
     headline: 'A partner in the Atlassian Marketplace.',
     paragraphs: [
-      'Everything we publish goes through the Atlassian Marketplace, which means Atlassian handles licensing, billing and distribution, and you buy our apps the same way you buy any other. Our vendor page lists all six.',
+      'Everything we publish goes through the Atlassian Marketplace, which means Atlassian handles licensing, billing and distribution, and you buy our apps the same way you buy any other. Our vendor page lists everything we have published.',
       'We do not hold a partner tier, and we will not imply one. What we do hold is the Runs on Atlassian badge on every app we ship, which is a statement about where the code executes rather than a sales award.',
     ],
     link: 'Our Marketplace vendor page',

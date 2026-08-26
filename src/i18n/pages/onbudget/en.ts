@@ -55,8 +55,8 @@ export const en = {
   },
   alsoSee: {
     eyebrow: 'Also from us',
-    headline: 'Five more apps for Jira and Confluence.',
-    link: 'See all six apps',
+    headline: 'The rest of what we make.',
+    link: 'See all our apps',
   },
 } as const;
 

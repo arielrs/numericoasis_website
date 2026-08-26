@@ -8,18 +8,17 @@ interface Props {
   app: CollectionEntry<'apps'>;
   lang: Locale;
   labels: {
-    flagshipBadge: string;
     builtFor: string;
     readMore: string;
   };
-  /** Flagship cards span the full width of their group to break the grid. */
+  /** The app we are currently pushing spans its row. No label, just more room. */
   wide?: boolean;
 }
 
 const { app, lang, labels, wide = false } = Astro.props;
 const t = useTranslations(lang);
 
-// The flagship lives at its own top-level URL, not under /apps/.
+// An app with its own landing page links there, not to /apps/<slug>/.
 const href = withLocale(lang, app.data.landingPath ?? `/apps/${contentSlug(app.id)}/`);
 ---
 
@@ -50,21 +49,14 @@ const href = withLocale(lang, app.data.landingPath ?? `/apps/${contentSlug(app.i
         </div>
       )}
       <div>
-        <div class="flex flex-wrap items-center gap-2">
-          <h3
-            class:list={[
-              'font-display font-semibold text-brand-900 transition group-hover:text-brand-700',
-              wide ? 'text-2xl' : 'text-xl',
-            ]}
-          >
-            {app.data.name}
-          </h3>
-          {app.data.flagship && (
-            <span class="rounded-full bg-sun-100 px-2.5 py-0.5 text-xs font-semibold uppercase tracking-[0.12em] text-sun-800">
-              {labels.flagshipBadge}
-            </span>
-          )}
-        </div>
+        <h3
+          class:list={[
+            'font-display font-semibold text-brand-900 transition group-hover:text-brand-700',
+            wide ? 'text-2xl' : 'text-xl',
+          ]}
+        >
+          {app.data.name}
+        </h3>
         <p class="mt-1 text-sm font-medium text-slate-700">{app.data.tagline}</p>
       </div>
     </div>

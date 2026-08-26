@@ -5,7 +5,7 @@ export const es = {
     crumb: 'Blog',
     title: 'Blog',
     description:
-      'Apuntes sobre visibilidad de costos en Atlassian, gobernanza en Confluence y salud de la configuración de Jira, del equipo que construye seis apps del Marketplace.',
+      'Apuntes sobre visibilidad de costos en Atlassian, gobernanza en Confluence y salud de la configuración de Jira, del equipo que construye apps del Atlassian Marketplace.',
   },
   index: {
     eyebrow: 'Del taller',

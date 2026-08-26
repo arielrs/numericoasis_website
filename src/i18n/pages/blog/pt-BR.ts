@@ -5,7 +5,7 @@ export const ptBR = {
     crumb: 'Blog',
     title: 'Blog',
     description:
-      'Anotações sobre visibilidade de custos na Atlassian, governança no Confluence e saúde da configuração do Jira, do time que constrói seis apps no Marketplace.',
+      'Anotações sobre visibilidade de custos na Atlassian, governança no Confluence e saúde da configuração do Jira, do time que constrói apps no Atlassian Marketplace.',
   },
   index: {
     eyebrow: 'Da oficina',

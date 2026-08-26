@@ -15,7 +15,7 @@ export const es = {
   support: {
     label: 'Ya usas una de nuestras apps',
     headline: 'El soporte pasa por el portal.',
-    body: 'Abre la solicitud en nuestro portal de Jira Service Management, no por correo. Allí la petición se convierte en un ticket, entra en una cola y deja historial, que es justo lo que quieres cuando algo se rompe. El portal cubre las seis apps.',
+    body: 'Abre la solicitud en nuestro portal de Jira Service Management, no por correo. Allí la petición se convierte en un ticket, entra en una cola y deja historial, que es justo lo que quieres cuando algo se rompe. El portal cubre todas las apps que publicamos.',
     cta: 'Abrir una solicitud de soporte',
     includeTitle: 'Con estos datos solemos ahorrarnos una ida y vuelta',
     include: [
