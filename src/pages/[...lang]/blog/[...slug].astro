@@ -67,7 +67,12 @@ const related = relatedPosts(post, allPosts);
 const postUrl = new URL(withLocale(lang, `/blog/${slug}/`), SITE.url).toString();
 const blogUrl = new URL(withLocale(lang, '/blog/'), SITE.url).toString();
 
+// Frontmatter dates are date-only, so they parse as UTC midnight. Formatting
+// them in the build machine's zone shifts anything west of Greenwich back a day,
+// which would also disagree with the <time datetime> attribute and the
+// datePublished in the structured data. Pin the zone.
 const dateFmt = new Intl.DateTimeFormat(lang === 'en' ? 'en-US' : lang, {
+  timeZone: 'UTC',
   year: 'numeric',
   month: 'long',
   day: 'numeric',
