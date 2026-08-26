@@ -10,7 +10,7 @@ export const en = {
     blog: 'Blog',
     about: 'About',
     contact: 'Contact',
-    tryOnBudget: 'Try OnBudget',
+    tryApps: 'Try our apps',
     toggleMenu: 'Toggle menu',
     mainNavLabel: 'Main',
     homeAriaLabel: (siteName: string) => `${siteName} home`,

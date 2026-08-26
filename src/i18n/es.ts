@@ -10,7 +10,7 @@ export const es = {
     blog: 'Blog',
     about: 'Nosotros',
     contact: 'Contacto',
-    tryOnBudget: 'Descubre OnBudget',
+    tryApps: 'Prueba nuestras apps',
     toggleMenu: 'Abrir menú',
     mainNavLabel: 'Principal',
     homeAriaLabel: (siteName: string) => `Página de inicio de ${siteName}`,

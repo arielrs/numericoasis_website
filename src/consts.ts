@@ -24,11 +24,11 @@ export const NAV_LINKS = [
 ] as const;
 
 /**
- * The header call to action. It points at the flagship rather than at a contact
- * form: a bare product name in the nav list means nothing to a cold visitor and
- * competes with "Apps" for the same click, whereas here the verb carries it.
+ * The header call to action. It points at the range rather than at a single app
+ * or at a contact form: the verb carries the invitation, and it does not need
+ * rewriting every time the app we are pushing changes.
  */
-export const NAV_CTA = { href: '/onbudget/', labelKey: 'tryOnBudget' } as const;
+export const NAV_CTA = { href: '/apps/', labelKey: 'tryApps' } as const;
 
 export const PRODUCT_LABELS: Record<string, string> = {
   jira: 'Jira',

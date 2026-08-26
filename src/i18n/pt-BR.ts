@@ -10,7 +10,7 @@ export const ptBR = {
     blog: 'Blog',
     about: 'Sobre',
     contact: 'Contato',
-    tryOnBudget: 'Conheça o OnBudget',
+    tryApps: 'Experimente nossos apps',
     toggleMenu: 'Abrir menu',
     mainNavLabel: 'Principal',
     homeAriaLabel: (siteName: string) => `Página inicial de ${siteName}`,
