@@ -34,7 +34,7 @@ const dateFmt = new Intl.DateTimeFormat(lang === 'en' ? 'en-US' : lang, {
       alt=""
       width={wide ? 800 : 560}
       sizes={wide ? '(min-width: 768px) 400px, 100vw' : '(min-width: 768px) 320px, 100vw'}
-      class:list={['object-cover', wide ? 'md:w-1/2' : 'h-44 w-full']}
+      class:list={['object-cover', wide ? 'md:w-1/2' : 'aspect-video w-full']}
       loading="lazy"
     />
   )}
