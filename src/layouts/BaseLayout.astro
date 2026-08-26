@@ -88,7 +88,7 @@ const jsonLd = buildGraph({
     {import.meta.env.PROD && CLOUDFLARE_ANALYTICS_TOKEN && (
       <script
         is:inline
-        defer
+        type="module"
         src="https://static.cloudflareinsights.com/beacon.min.js"
         data-cf-beacon={`{"token": "${CLOUDFLARE_ANALYTICS_TOKEN}"}`}
       />

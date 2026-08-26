@@ -74,4 +74,4 @@ export const ORG_DETAILS = {
  * being measured, not an account. Cookieless, so no consent banner is required.
  * Leave empty to ship no analytics at all.
  */
-export const CLOUDFLARE_ANALYTICS_TOKEN = '';
+export const CLOUDFLARE_ANALYTICS_TOKEN = '09bc00fc0b37489693bcfd821bde013c';
