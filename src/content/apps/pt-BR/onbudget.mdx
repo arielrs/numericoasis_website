@@ -34,7 +34,7 @@ answerFirst: >-
   O OnBudget é um app para Jira Cloud de controle de orçamento e relatórios de custo. Ele transforma
   em dinheiro o trabalho que você já registra no Jira. Escolha pontos de história, registros de
   trabalho com tabelas de valores, um campo numérico ou a contagem de itens, defina um orçamento em
-  uma de 18 moedas e receba gasto, variação e previsão no seu painel. Feito em Forge. Somente leitura.
+  uma de 18 moedas e receba gasto, variação e previsão no seu painel. Ele lê o seu Jira e não muda nada nele.
 
 audiences:
   - PMO e gestores de portfólio
@@ -59,7 +59,7 @@ valueProps:
     body: Orçamentos de entrega, produto e marketing lado a lado, cada um com seu gasto, sua previsão e sua saúde, na moeda em que foi definido.
     icon: "📊"
   - title: Precifica o sinal que você tem
-    body: Pontos de história, horas apontadas, um campo numérico ou a simples contagem de itens. Times sem estimativa e sem apontamento não ficam de fora.
+    body: Pontos de história, horas apontadas, um campo numérico ou a simples contagem de itens. Todo time com orçamento cabe aqui, com o que já registra.
     icon: "🎯"
   - title: Nenhum número é uma caixa-preta
     body: A linha de parâmetros de cada relatório mostra o escopo, o método e a moeda por trás dele, e qualquer trecho de gráfico abre os itens correspondentes no Jira.
@@ -141,10 +141,10 @@ keyFeatures:
   - Inglês, português e espanhol
 
 trustSignals:
-  - Construído em Atlassian Forge
-  - Acesso somente leitura
-  - Guarda apenas as configurações do relatório
+  - Não muda nada no Jira
   - Sem campos personalizados novos
+  - Guarda apenas as configurações do relatório
+  - Construído em Atlassian Forge
 
 useCases:
   - persona: Líder de PMO

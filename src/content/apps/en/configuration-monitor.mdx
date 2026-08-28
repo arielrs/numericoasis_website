@@ -18,6 +18,12 @@ order: 4
 icon: ../../../assets/logos/configuration-monitor.jpg
 priceModel: paid
 storesPersonalData: true
+dataStatement: >-
+  An audit log that does not name who made the change is not an audit log, so Configuration Monitor
+  records the account behind each configuration change alongside the before and after values. That
+  attribution is the personal data it holds. It is kept for one year and then purged automatically,
+  and site admins get a GDPR panel for export and anonymisation requests. Everything runs inside
+  Atlassian, and nothing is sent anywhere else.
 audiences:
   - Project Administrators
   - Jira Site Administrators
@@ -43,9 +49,10 @@ keyFeatures:
   - 1 year retention with auto purge
   - GDPR Admin Panel for site admins
 trustSignals:
-  - Built on Atlassian Forge
+  - Audit ready in one export
   - GDPR ready
-  - Clean uninstall
+  - Uninstall removes everything
+  - Built on Atlassian Forge
 screenshots:
   - image: ../../../assets/screenshots/configuration-monitor/01-change-log.png
     caption: "Project change log with user attribution, date filters, and section grouping."

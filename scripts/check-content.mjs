@@ -96,6 +96,47 @@ for (const collection of ['apps', 'blog']) {
   }
 }
 
+// 2b. Defensive copy.
+//
+// A review of every English string found the site was selling its hosting
+// choice instead of the buyer's outcome, and volunteering what it would not do:
+// "Forge only, and that is a deliberate constraint", "Read-only where we can
+// be", "we do not hold a partner tier", "or tell you that none of ours do".
+// Four instances of one habit, which means it needs a guard or it comes back
+// one string at a time.
+//
+// Deliberately short, and deliberately literal. It bans the exact phrasings
+// that were removed, not the words in general: "No new custom fields" is a
+// benefit a Jira admin wants to read, and stays.
+{
+  const BANNED = [
+    'deliberate constraint',
+    'forge only',
+    'rather than beside it',
+    'we do not hold',
+    'narrow focus',
+    'where we can be',
+    'none of ours do',
+    'not the pitch',
+  ];
+  const COPY_DIRS = [join('src', 'i18n'), join('src', 'content'), join('src', 'consts.ts')];
+  const files = (await walk(join(ROOT, 'src'))).filter((f) => /\.(ts|mdx?|md)$/.test(f));
+
+  for (const file of files) {
+    const shown = relative(ROOT, file);
+    if (!COPY_DIRS.some((dir) => shown.startsWith(dir))) continue;
+    const lines = (await readFile(file, 'utf8')).split('\n');
+    lines.forEach((line, i) => {
+      const lower = line.toLowerCase();
+      for (const phrase of BANNED) {
+        if (lower.includes(phrase)) {
+          errors.push(`${shown}:${i + 1}: defensive copy, "${phrase}"`);
+        }
+      }
+    });
+  }
+}
+
 // 3. GitHub workflow files must parse, and must define jobs.
 //
 // An invalid workflow does not fail loudly. GitHub creates a run with zero jobs

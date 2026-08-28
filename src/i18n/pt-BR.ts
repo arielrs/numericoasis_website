@@ -38,7 +38,7 @@ export const ptBR = {
   },
   apps: {
     priceFree: 'Gratuito',
-    pricePaid: 'Pago, veja no Marketplace',
+    pricePaid: 'Teste gratuito no Marketplace',
     installOnMarketplace: 'Instalar pelo Atlassian Marketplace',
     viewOnMarketplace: 'Ver no Marketplace',
     builtFor: 'Feito para:',

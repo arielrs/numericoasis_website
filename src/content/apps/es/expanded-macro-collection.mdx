@@ -9,7 +9,7 @@ metaDescription: "Trece macros de Confluence para gobernanza, descubrimiento de 
 version: "2.0.0"
 dateModified: 2026-06-30
 tagline: Trece macros prácticas para Confluence, orientadas a gobernanza, descubrimiento de contenido e informes para administradores. Una app, una suscripción.
-description: Expanded Macro Collection convierte Confluence en una base de conocimiento gobernada, navegable y auditable, sin salir de tus páginas. Registra la aceptación de políticas por versión con exportación de auditoría en un clic, clasifica páginas sensibles con un aviso que sobrevive a la exportación a PDF y Word, saca a la luz los enlaces entrantes que Confluence no puede mostrar, y da a los administradores resúmenes de estado, contenido obsoleto y salud del contenido que respetan los permisos.
+description: Expanded Macro Collection convierte Confluence en una base de conocimiento gobernada, navegable y auditable, sin salir de tus páginas. Registra la aceptación de políticas por versión con exportación de auditoría en un clic, clasifica páginas sensibles con un aviso que sobrevive a la exportación a PDF y Word, muestra todas las páginas que enlazan a la que estás leyendo, y da a los administradores resúmenes de estado, contenido obsoleto y salud del contenido que respetan los permisos.
 marketplaceUrl: https://marketplace.atlassian.com/apps/1276117246/expanded-macro-collection
 supportUrl: https://numericoasis.atlassian.net/servicedesk/customer/portal/39
 products: ["confluence"]
@@ -20,9 +20,9 @@ icon: ../../../assets/logos/expanded-macro-collection.png
 runsOnAtlassian: true
 storesPersonalData: true
 dataStatement: >-
-  Esta es la única app de nuestra gama que guarda datos personales, y lo hace a propósito. Un registro
-  de aceptación solo sirve si dice quién confirmó qué versión y cuándo, así que la macro de Aceptación
-  y Confirmación guarda exactamente eso. El estado y la clasificación de página se guardan como
+  Un registro de aceptación solo sirve si dice quién confirmó qué versión y cuándo, así que la macro
+  Sign-off and Acknowledgement guarda exactamente eso. Por eso esta app guarda datos personales donde
+  el resto de nuestra gama no guarda ninguno. El estado y la clasificación de página se guardan como
   propiedades de contenido de Confluence, lo que significa que es Confluence quien aplica los permisos
   y quien las borra junto con la página. Todo funciona dentro de Atlassian, y nada se envía fuera.
 
@@ -37,8 +37,8 @@ valueProps:
   - title: Demuestra que tus políticas se leyeron
     body: Aceptaciones por versión, con una lista visible solo para editores y exportación CSV en un clic para auditoría. Publica una versión nueva y el contador vuelve a empezar.
     icon: "✍️"
-  - title: Responde lo que Confluence no responde
-    body: La búsqueda de Confluence no indexa los destinos de los enlaces, así que no sabe decirte qué apunta a una página. Esta app mantiene su propio índice de enlaces y sí lo sabe.
+  - title: Encuentra cada página que enlaza a esta
+    body: La app mantiene su propio índice de enlaces entre páginas, respetando permisos, para que veas qué apunta a una página antes de moverla, renombrarla o archivarla.
     icon: "🔗"
   - title: Una colección, una suscripción
     body: Trece macros hoy, y las nuevas se añaden sin costo adicional en lugar de venderse como una segunda app.
@@ -79,9 +79,9 @@ keyFeatures:
   - Nuevas macros sin costo adicional
 
 trustSignals:
-  - Construido en Atlassian Forge
-  - Respeta permisos de principio a fin
+  - Respeta los permisos de Confluence de principio a fin
   - Guarda registros de aceptación por diseño
+  - Construido en Atlassian Forge
 
 useCases:
   - persona: Responsable de cumplimiento
@@ -89,7 +89,7 @@ useCases:
     outcome: Una lista de firmantes por versión y una exportación CSV, sin necesidad de una herramienta de cumplimiento aparte.
   - persona: Gestor del conocimiento
     job: Averiguar qué sigue apuntando a una página antes de archivarla.
-    outcome: Una lista de enlaces entrantes que respeta permisos y que la búsqueda de Confluence no puede producir.
+    outcome: Una lista de enlaces entrantes que respeta permisos, lista antes de que alguien mueva la página.
   - persona: Administrador de espacio
     job: Ver qué páginas de un espacio se han quedado obsoletas o nunca se revisaron.
     outcome: Resúmenes de estado y de obsolescencia sobre un árbol entero, en una sola macro.
@@ -100,7 +100,7 @@ screenshots:
   - image: ../../../assets/screenshots/expanded-macro-collection/02-classification-and-signoff.jpg
     caption: "Una página de política con las dos macros de gobernanza: un aviso de clasificación Confidencial que sobrevive a la exportación a PDF y Word, y una aceptación por versión que registra quién la ha leído."
   - image: ../../../assets/screenshots/expanded-macro-collection/03-referenced-by.jpg
-    caption: "Referenced By mostrando las ocho páginas que enlazan a este manual. La búsqueda de Confluence no indexa los destinos de los enlaces, así que es una pregunta que el propio producto no puede responder."
+    caption: "Referenced By mostrando las ocho páginas que enlazan a este manual, a partir del índice de enlaces de la propia app, que respeta permisos."
 
 relatedApps:
   - atelier

@@ -38,7 +38,7 @@ export const es = {
   },
   apps: {
     priceFree: 'Gratis',
-    pricePaid: 'De pago, ver en el Marketplace',
+    pricePaid: 'Prueba gratuita en el Marketplace',
     installOnMarketplace: 'Instalar desde el Atlassian Marketplace',
     viewOnMarketplace: 'Ver en el Marketplace',
     builtFor: 'Pensado para:',

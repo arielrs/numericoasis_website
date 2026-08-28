@@ -6,10 +6,10 @@ export const en = {
   hero: {
     eyebrow: 'Atlassian Marketplace app for Jira Cloud',
     headline: 'Budget and cost reporting for Jira, built for finance and PMO.',
-    lede: 'OnBudget turns the work your team already tracks in Jira into money. It samples your data first and tells you what share of your work items carries each costing signal, so you find out your worklog coverage is thin before you build a budget on top of it.',
+    lede: 'OnBudget turns the work your team already tracks in Jira into money. It samples your data first and tells you what share of your work items carries each costing signal, so you know what your data can actually support before you build a budget on top of it.',
     ctaSecondary: 'See how a report is built',
   },
-  problem: { eyebrow: 'The gap' },
+  problem: { eyebrow: 'The problem' },
   steps: {
     eyebrow: 'How it works',
     headline: 'Four steps from a Jira space to a budget you can defend.',
@@ -27,7 +27,7 @@ export const en = {
   sharing: {
     eyebrow: 'Sharing',
     headline: 'A shared report respects the reader, not the author.',
-    body: 'Most reporting tools hand out a snapshot of what the author could see. OnBudget does not. When someone opens a report you shared with them, it is regenerated under their own Jira permissions, so nobody sees work items they could not already open in Jira. If a viewer lacks access to part of the scope, the report says so rather than quietly showing a smaller number.',
+    body: 'When someone opens a report you shared with them, it is regenerated under their own Jira permissions, so nobody sees work items they could not already open in Jira. Most reporting tools hand out a snapshot of what the author could see instead. And if a viewer lacks access to part of the scope, the report says so on the page rather than showing a smaller number without explaining why.',
   },
   scale: {
     eyebrow: 'At scale',
@@ -36,7 +36,7 @@ export const en = {
   },
   security: {
     eyebrow: 'Security and data',
-    headline: 'Read only, and it stays inside Atlassian.',
+    headline: 'Your Jira data stays in your Jira.',
     scopes: 'Requested permissions',
   },
   languages: {
@@ -50,7 +50,7 @@ export const en = {
   },
   cta: {
     headline: 'Install it, or ask a question first.',
-    body: 'It is on the Atlassian Marketplace with a free trial, and the current pricing lives there. If you would rather talk it through, we answer in English, Portuguese and Spanish.',
+    body: 'It is on the Atlassian Marketplace with a free trial, so you can point it at a real project and see your own numbers before you decide. If you would rather talk it through first, we answer in English, Portuguese and Spanish.',
     primary: 'Install from the Atlassian Marketplace',
     secondary: 'Ask us a question',
   },

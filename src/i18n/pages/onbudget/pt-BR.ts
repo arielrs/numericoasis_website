@@ -8,10 +8,10 @@ export const ptBR = {
   hero: {
     eyebrow: 'App do Atlassian Marketplace para Jira Cloud',
     headline: 'Orçamento e relatórios de custo no Jira, para finanças e PMO.',
-    lede: 'O OnBudget transforma em dinheiro o trabalho que seu time já registra no Jira. Antes de qualquer coisa ele analisa uma amostra dos seus dados e mostra que parcela dos work items carrega cada sinal de custo, para você descobrir que a cobertura de apontamentos é baixa antes de montar um orçamento em cima dela.',
+    lede: 'O OnBudget transforma em dinheiro o trabalho que seu time já registra no Jira. Antes de qualquer coisa ele analisa uma amostra dos seus dados e mostra que parcela dos work items carrega cada sinal de custo, para você saber o que os seus dados sustentam antes de montar um orçamento em cima deles.',
     ctaSecondary: 'Veja como um relatório é montado',
   },
-  problem: { eyebrow: 'A lacuna' },
+  problem: { eyebrow: 'O problema' },
   steps: {
     eyebrow: 'Como funciona',
     headline: 'Quatro passos de um espaço do Jira até um orçamento que você consegue defender.',
@@ -29,7 +29,7 @@ export const ptBR = {
   sharing: {
     eyebrow: 'Compartilhamento',
     headline: 'Um relatório compartilhado respeita quem lê, não quem criou.',
-    body: 'A maioria das ferramentas de relatório entrega uma fotografia do que o autor conseguia ver. O OnBudget não faz isso. Quando alguém abre um relatório que você compartilhou, ele é recalculado com as permissões do Jira dessa pessoa, então ninguém vê itens de trabalho que já não pudesse abrir no Jira. Se quem está lendo não tem acesso a parte do escopo, o relatório avisa em vez de simplesmente mostrar um número menor.',
+    body: 'Quando alguém abre um relatório que você compartilhou, ele é recalculado com as permissões do Jira dessa pessoa, então ninguém vê itens de trabalho que já não pudesse abrir no Jira. A maioria das ferramentas de relatório entrega uma fotografia do que o autor conseguia ver. E se quem está lendo não tem acesso a parte do escopo, o relatório avisa na própria página, em vez de mostrar um número menor sem explicar por quê.',
   },
   scale: {
     eyebrow: 'Em escala',
@@ -38,7 +38,7 @@ export const ptBR = {
   },
   security: {
     eyebrow: 'Segurança e dados',
-    headline: 'Somente leitura, e tudo permanece dentro da Atlassian.',
+    headline: 'Os dados do seu Jira ficam no seu Jira.',
     scopes: 'Permissões solicitadas',
   },
   languages: {
@@ -52,7 +52,7 @@ export const ptBR = {
   },
   cta: {
     headline: 'Instale, ou tire uma dúvida antes.',
-    body: 'Ele está no Atlassian Marketplace com período de teste gratuito, e é lá que ficam os preços atuais. Se preferir conversar, atendemos em inglês, português e espanhol.',
+    body: 'Ele está no Atlassian Marketplace com período de teste gratuito, então dá para apontar para um projeto real e ver os seus próprios números antes de decidir. Se preferir conversar antes, atendemos em inglês, português e espanhol.',
     primary: 'Instalar pelo Atlassian Marketplace',
     secondary: 'Tirar uma dúvida',
   },

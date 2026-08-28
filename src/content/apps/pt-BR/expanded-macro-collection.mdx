@@ -9,7 +9,7 @@ metaDescription: "Treze macros do Confluence para governança, descoberta de con
 version: "2.0.0"
 dateModified: 2026-06-30
 tagline: Treze macros práticas para o Confluence, voltadas a governança, descoberta de conteúdo e relatórios administrativos. Um app, uma assinatura.
-description: O Expanded Macro Collection transforma o Confluence em uma base de conhecimento governada, navegável e auditável, sem sair das suas páginas. Registre aceites de política por versão com exportação de auditoria em um clique, classifique páginas sensíveis com um aviso que sobrevive à exportação para PDF e Word, revele os backlinks que o Confluence não consegue mostrar, e dê aos administradores consolidações de status, conteúdo desatualizado e saúde do conteúdo que respeitam permissões.
+description: O Expanded Macro Collection transforma o Confluence em uma base de conhecimento governada, navegável e auditável, sem sair das suas páginas. Registre aceites de política por versão com exportação de auditoria em um clique, classifique páginas sensíveis com um aviso que sobrevive à exportação para PDF e Word, revele todas as páginas que apontam para a que você está lendo, e dê aos administradores consolidações de status, conteúdo desatualizado e saúde do conteúdo que respeitam permissões.
 marketplaceUrl: https://marketplace.atlassian.com/apps/1276117246/expanded-macro-collection
 supportUrl: https://numericoasis.atlassian.net/servicedesk/customer/portal/39
 products: ["confluence"]
@@ -20,11 +20,11 @@ icon: ../../../assets/logos/expanded-macro-collection.png
 runsOnAtlassian: true
 storesPersonalData: true
 dataStatement: >-
-  Este é o único app da nossa linha que guarda dados pessoais, e faz isso de propósito. Um registro de
-  aceite só tem valor se disser quem confirmou qual versão e quando, então a macro de Aceite e
-  Confirmação guarda exatamente isso. Status e classificação de página são guardados como propriedades
-  de conteúdo do Confluence, o que significa que o próprio Confluence aplica as permissões e apaga tudo
-  junto com a página. Tudo roda dentro da Atlassian, e nada é enviado para fora.
+  Um registro de aceite só tem valor se disser quem confirmou qual versão e quando, então a macro
+  Sign-off and Acknowledgement guarda exatamente isso. É por isso que este app guarda dados pessoais
+  onde o resto da nossa linha não guarda nenhum. Status e classificação de página são guardados como
+  propriedades de conteúdo do Confluence, o que significa que o próprio Confluence aplica as permissões
+  e apaga tudo junto com a página. Tudo roda dentro da Atlassian, e nada é enviado para fora.
 
 audiences:
   - Administradores de espaço do Confluence
@@ -37,8 +37,8 @@ valueProps:
   - title: Comprove que suas políticas foram lidas
     body: Aceites por versão, com uma lista visível apenas para editores e exportação CSV em um clique para auditoria. Publique uma nova versão e a contagem recomeça.
     icon: "✍️"
-  - title: Responda o que o Confluence não responde
-    body: A busca do Confluence não indexa destinos de link, então ela não sabe dizer o que aponta para uma página. Este app mantém seu próprio índice de links e sabe.
+  - title: Encontre toda página que aponta para esta
+    body: O app mantém seu próprio índice de links entre páginas, respeitando permissões, para você ver o que aponta para uma página antes de mover, renomear ou arquivar.
     icon: "🔗"
   - title: Uma coleção, uma assinatura
     body: Treze macros hoje, e as novas entram sem custo adicional em vez de virarem um segundo app.
@@ -79,9 +79,9 @@ keyFeatures:
   - Novas macros sem custo adicional
 
 trustSignals:
-  - Construído em Atlassian Forge
-  - Respeita permissões do início ao fim
+  - Respeita as permissões do Confluence do início ao fim
   - Guarda registros de aceite por design
+  - Construído em Atlassian Forge
 
 useCases:
   - persona: Responsável por conformidade
@@ -89,7 +89,7 @@ useCases:
     outcome: Uma lista de confirmações por versão e uma exportação CSV, sem precisar de uma ferramenta de conformidade separada.
   - persona: Gestor de conhecimento
     job: Descobrir o que ainda aponta para uma página antes de arquivá-la.
-    outcome: Uma lista de backlinks que respeita permissões e que a busca do Confluence não consegue produzir.
+    outcome: Uma lista de backlinks que respeita permissões, pronta antes de alguém mover a página.
   - persona: Administrador de espaço
     job: Ver quais páginas de um espaço ficaram desatualizadas ou nunca foram revisadas.
     outcome: Consolidações de status e de desatualização em uma árvore inteira, em uma única macro.
@@ -100,7 +100,7 @@ screenshots:
   - image: ../../../assets/screenshots/expanded-macro-collection/02-classification-and-signoff.jpg
     caption: "Uma página de política com as duas macros de governança: um aviso de classificação Confidencial que sobrevive à exportação para PDF e Word, e um aceite por versão que registra quem leu."
   - image: ../../../assets/screenshots/expanded-macro-collection/03-referenced-by.jpg
-    caption: "O Referenced By listando as oito páginas que apontam para este manual. A busca do Confluence não indexa destinos de link, então essa é uma pergunta que o próprio produto não responde."
+    caption: "O Referenced By listando as oito páginas que apontam para este manual, a partir do índice de links do próprio app, que respeita permissões."
 
 relatedApps:
   - atelier

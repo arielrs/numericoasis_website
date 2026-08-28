@@ -34,7 +34,7 @@ answerFirst: >-
   OnBudget is a Jira Cloud app for budget tracking and cost reporting. It turns work you already
   track in Jira into money. Pick story points, worklogs with rate cards, a numeric field, or counts
   of work items, set a budget in one of 18 currencies, and get spend, variance, and a forecast on
-  your dashboard. Built on Forge. Read only.
+  your dashboard. It reads your Jira and changes nothing in it.
 
 audiences:
   - PMO and portfolio managers
@@ -59,7 +59,7 @@ valueProps:
     body: Delivery, product and marketing budgets side by side, each with its spend, its forecast and its health, in whichever currency it was set.
     icon: "📊"
   - title: Prices whatever signal you have
-    body: Story points, logged time, a numeric field, or a simple count of work items. Teams with no estimates and no timesheets are not left out.
+    body: Story points, logged time, a numeric field, or a simple count of work items. Any team with a budget belongs here, whatever they already record.
     icon: "🎯"
   - title: No number is a black box
     body: The parameters row on every report shows the exact scope, method and currency behind it, and any chart segment opens the matching work items in Jira.
@@ -141,10 +141,10 @@ keyFeatures:
   - English, Portuguese and Spanish
 
 trustSignals:
-  - Built on Atlassian Forge
-  - Read only access
-  - Stores only report settings
+  - Changes nothing in Jira
   - No new custom fields
+  - Stores only your report settings
+  - Built on Atlassian Forge
 
 useCases:
   - persona: PMO lead

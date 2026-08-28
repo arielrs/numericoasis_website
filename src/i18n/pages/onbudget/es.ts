@@ -8,10 +8,10 @@ export const es = {
   hero: {
     eyebrow: 'App del Atlassian Marketplace para Jira Cloud',
     headline: 'Presupuesto e informes de costo en Jira, para finanzas y PMO.',
-    lede: 'OnBudget convierte en dinero el trabajo que tu equipo ya registra en Jira. Antes que nada analiza una muestra de tus datos y te dice qué parte de tus elementos de trabajo lleva cada señal de costo, para que descubras que la cobertura de registros es baja antes de armar un presupuesto sobre ella.',
+    lede: 'OnBudget convierte en dinero el trabajo que tu equipo ya registra en Jira. Antes que nada analiza una muestra de tus datos y te dice qué parte de tus elementos de trabajo lleva cada señal de costo, para que sepas qué sostienen realmente tus datos antes de armar un presupuesto sobre ellos.',
     ctaSecondary: 'Mira cómo se construye un informe',
   },
-  problem: { eyebrow: 'El hueco' },
+  problem: { eyebrow: 'El problema' },
   steps: {
     eyebrow: 'Cómo funciona',
     headline: 'Cuatro pasos desde un espacio de Jira hasta un presupuesto que puedes defender.',
@@ -29,7 +29,7 @@ export const es = {
   sharing: {
     eyebrow: 'Compartir',
     headline: 'Un informe compartido respeta a quien lo lee, no a quien lo creó.',
-    body: 'La mayoría de las herramientas de informes entrega una fotografía de lo que veía el autor. OnBudget no. Cuando alguien abre un informe que compartiste, se recalcula con sus propios permisos de Jira, así que nadie ve elementos de trabajo que no pudiera abrir ya en Jira. Si quien lo lee no tiene acceso a parte del alcance, el informe lo dice en lugar de mostrar en silencio una cifra más pequeña.',
+    body: 'Cuando alguien abre un informe que compartiste, se recalcula con sus propios permisos de Jira, así que nadie ve elementos de trabajo que no pudiera abrir ya en Jira. La mayoría de las herramientas de informes entrega una fotografía de lo que veía el autor. Y si quien lo lee no tiene acceso a parte del alcance, el informe lo dice en la propia página, en lugar de mostrar una cifra más pequeña sin explicar por qué.',
   },
   scale: {
     eyebrow: 'A escala',
@@ -38,7 +38,7 @@ export const es = {
   },
   security: {
     eyebrow: 'Seguridad y datos',
-    headline: 'Solo lectura, y todo se queda dentro de Atlassian.',
+    headline: 'Los datos de tu Jira se quedan en tu Jira.',
     scopes: 'Permisos solicitados',
   },
   languages: {
@@ -52,7 +52,7 @@ export const es = {
   },
   cta: {
     headline: 'Instálala, o pregúntanos antes.',
-    body: 'Está en el Atlassian Marketplace con periodo de prueba gratuito, y ahí es donde vive el precio actual. Si prefieres hablarlo, atendemos en inglés, portugués y español.',
+    body: 'Está en el Atlassian Marketplace con prueba gratuita, así que puedes apuntarla a un proyecto real y ver tus propios números antes de decidir. Si prefieres hablarlo antes, atendemos en inglés, portugués y español.',
     primary: 'Instalar desde el Atlassian Marketplace',
     secondary: 'Hacernos una pregunta',
   },

@@ -39,13 +39,13 @@ export const ptBR = {
     cta: {
       onbudget: {
         headline: 'Quer isso sem a planilha?',
-        body: 'O OnBudget transforma o trabalho que seu time já registra no Jira em orçamentos, previsões e relatórios de custo. Sem campos personalizados novos, e ele lê em vez de escrever.',
+        body: 'O OnBudget transforma o trabalho que seu time já registra no Jira em orçamentos, previsões e relatórios de custo. Sem campos personalizados novos, e nada muda no seu Jira.',
         primary: 'Veja o que o OnBudget faz',
         secondary: 'Fale com a gente',
       },
       general: {
         headline: 'A gente constrói apps do Atlassian Marketplace.',
-        body: 'Apps em Forge para Jira e Confluence Cloud, rodando dentro da Atlassian em vez de ao lado dela. Seus dados ficam na sua tenancy e não há terceiro para avaliar.',
+        body: 'Apps em Forge para Jira e Confluence Cloud que rodam dentro do seu próprio site Atlassian. Seus dados ficam onde já estão, e não há servidor de fornecedor para a segurança aprovar.',
         primary: 'Veja nossos apps',
         secondary: 'Fale com a gente',
       },

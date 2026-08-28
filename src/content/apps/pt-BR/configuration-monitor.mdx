@@ -18,6 +18,12 @@ order: 4
 icon: ../../../assets/logos/configuration-monitor.jpg
 priceModel: paid
 storesPersonalData: true
+dataStatement: >-
+  Uma trilha de auditoria que não diz quem fez a mudança não é uma trilha de auditoria, então o
+  Configuration Monitor registra a conta por trás de cada mudança de configuração, junto com os
+  valores antes e depois. Essa atribuição é o dado pessoal que ele guarda. Fica retida por um ano e
+  depois é apagada automaticamente, e os administradores do site têm um painel de GDPR para pedidos
+  de exportação e anonimização. Tudo roda dentro da Atlassian, e nada é enviado para fora.
 audiences:
   - Administradores de Projeto
   - Site Administrators do Jira
@@ -43,9 +49,10 @@ keyFeatures:
   - 1 ano de retenção com expurgo automático
   - Painel GDPR Admin para site admins
 trustSignals:
-  - Construído em Atlassian Forge
+  - Pronto para auditoria em uma exportação
   - Pronto para GDPR
-  - Desinstalação limpa
+  - Desinstalar remove tudo
+  - Construído em Atlassian Forge
 screenshots:
   - image: ../../../assets/screenshots/configuration-monitor/01-change-log.png
     caption: "Change log do projeto com atribuição de usuário, filtros de data e agrupamento por seção."

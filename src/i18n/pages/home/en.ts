@@ -2,47 +2,52 @@ export const en = {
   meta: {
     title: 'Forge apps for Jira and Confluence Cloud',
     metaDescription:
-      'Atlassian Marketplace partner building Forge apps for Jira and Confluence Cloud, with most of our attention on OnBudget: budgets, forecasts, cost reports.',
+      'Atlassian Marketplace partner building apps for Jira and Confluence Cloud. Track every Jira budget on one screen with OnBudget, our cost reporting app.',
     description:
-      'Numeric Oasis is a partner in the Atlassian Marketplace, building Forge apps for Jira and Confluence Cloud. Right now most of our attention goes to OnBudget, which turns work already tracked in Jira into budgets, forecasts and cost reports.',
+      'Numeric Oasis is a partner in the Atlassian Marketplace, building Forge apps for Jira and Confluence Cloud. OnBudget turns work already tracked in Jira into budgets, forecasts and cost reports, and every app we ship runs inside your own Atlassian site.',
   },
   hero: {
     eyebrow: 'Partner in the Atlassian Marketplace',
     headline: 'The Atlassian apps we kept wishing existed.',
-    lede: 'Fifteen years inside Jira and Confluence taught us where the gaps are, mostly by watching teams work around the same ones over and over. Now we build the apps that close them, and every one runs inside Atlassian rather than beside it.',
-    primary: 'See what we make',
-    secondary: 'How we work',
+    lede: 'Fifteen years inside Jira and Confluence taught us what teams keep having to work around. Now we build the apps that do that work for them, and every one runs inside your own Atlassian site.',
+    primary: 'See our apps',
+    secondary: 'How we build',
     iconsLabel: 'Our apps',
   },
+  /**
+   * Six reasons to trust us, not six facts about our stack. The heading is
+   * borrowed from our own Marketplace listings, which head the same facts with
+   * "Built for trust" rather than "how this was built".
+   */
   proof: {
-    label: 'How our apps are built',
+    label: 'Built for trust',
     items: [
       'Runs on Atlassian',
-      'Built on Forge',
-      'Cloud only',
-      'Read-only where we can be',
-      'Jira and Confluence',
-      'Support in three languages',
+      'Your data never leaves Atlassian',
+      'No third-party server to review',
+      'For Jira and Confluence Cloud',
+      'A free trial on every paid app',
+      'Support in English, Portuguese and Spanish',
     ],
   },
   focus: {
-    eyebrow: 'Where our attention is right now',
-    headline: 'Jira knows what happened. It does not know what it cost.',
-    body: 'Delivery data lives in Jira. Money lives in a spreadsheet someone exports on Friday and that is wrong by Monday. Worse, the teams that never adopted story points or timesheets do not show up in that spreadsheet at all.',
-    body2: 'OnBudget is the app we are pushing hardest at the moment, because it is the one we think solves the biggest problem. It turns work your team already tracks into budgets, forecasts and cost reports, without asking anyone to fill in a new field.',
-    link: 'See what OnBudget does',
+    eyebrow: 'OnBudget, for Jira Cloud',
+    headline: 'Track every Jira budget on one screen.',
+    lede: 'Budget versus actual, health and forecast, built from the work your team already tracks in Jira. Delivery, product and marketing budgets side by side, each in its own currency, and no new custom fields for anyone to fill in.',
+    ctaPrimary: 'See what OnBudget does',
+    ctaSecondary: 'View on the Marketplace',
   },
   portfolio: {
     eyebrow: 'The apps',
     headline: 'Apps for Jira and Confluence Cloud.',
-    lede: 'Each one closes a gap the host product leaves open. More are on the way.',
+    lede: 'Know what your work costs. Keep Confluence governable. Keep Jira clean. Each app does one of those jobs end to end, and more are on the way.',
   },
   how: {
-    eyebrow: 'How we work',
-    headline: 'Forge only, and that is a deliberate constraint.',
+    eyebrow: 'Inside Atlassian',
+    headline: 'Everything we build runs inside your own Atlassian.',
     paragraphs: [
-      'Every app we publish runs on Atlassian Forge, which means it executes inside Atlassian infrastructure rather than on a server of ours. There is no third party for your security team to review, no data egress to document, and no separate uptime to worry about.',
-      'It also means we ask for the narrowest permissions that will do the job. Most of our apps only ever read. The ones that write say exactly what they write and why, on their own pages, because a blanket privacy claim that is false for one app is worse than no claim at all.',
+      'Every app we publish runs on Atlassian Forge, so the code executes inside Atlassian infrastructure and your data stays in your own Atlassian site. That answers most of a security review before it starts: there is no third-party host to assess, nothing leaving Atlassian to document, and no separate uptime to depend on.',
+      'Each app asks for the permissions it needs to do its job, and each one publishes exactly what it stores on its own page. Our about page lists all of them in one table, so you can check before you install rather than after.',
       'We are a partner in the Atlassian Marketplace, working from Canoas in southern Brazil, and we answer support in English, Portuguese and Spanish.',
     ],
     link: 'More about the team',
@@ -54,8 +59,8 @@ export const en = {
   },
   cta: {
     headline: 'Install from the Marketplace, or ask a question first.',
-    body: 'Every paid app has a free trial, and the free one has no trial to bother with. If you would rather talk to a person before installing anything, that works too.',
-    primary: 'See what we make',
+    body: 'Every paid app comes with a free trial, and the free one starts working the moment you install it. If you would rather talk it through with a person first, we answer in three languages.',
+    primary: 'See our apps',
     secondary: 'Ask us a question',
   },
 } as const;
