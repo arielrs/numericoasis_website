@@ -97,6 +97,27 @@
   }
 }
 
+@keyframes enter {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Movement without a fade. See the note on headings in @layer components. */
+@keyframes enter-shift {
+  from {
+    transform: translateY(20px);
+  }
+  to {
+    transform: none;
+  }
+}
+
 @keyframes sheen {
   from {
     background-position: -150% 0;
@@ -178,16 +199,68 @@
   .js-motion .reveal,
   .js-motion [data-reveal-group] > * {
     opacity: 0;
-    transform: translateY(24px);
+    transform: translateY(30px);
     transition:
-      opacity 700ms var(--ease-out-soft) var(--reveal-delay, 0ms),
-      transform 700ms var(--ease-out-soft) var(--reveal-delay, 0ms);
+      opacity 900ms var(--ease-out-soft) var(--reveal-delay, 0ms),
+      transform 900ms var(--ease-out-soft) var(--reveal-delay, 0ms);
   }
 
   .js-motion .reveal.is-visible,
   .js-motion [data-reveal-group] > .is-visible {
     opacity: 1;
     transform: none;
+  }
+
+  /*
+   * Entrance, on load.
+   *
+   * The scroll reveal only covers what is below the fold, so the first screen
+   * used to be simply present: the hero never arrived, it was just there. This
+   * is the same movement, played once on load, driven by a plain CSS animation
+   * rather than an observer so it starts on the first frame and needs no
+   * JavaScript.
+   *
+   * `both` fill is what makes it work. Before the delay elapses the element
+   * holds the `from` frame, which is what produces the stagger; after it ends,
+   * it holds the `to` frame. Under reduced motion the blanket rule below
+   * collapses duration and delay to nothing, so the end frame is what paints,
+   * and the content is simply there. No JavaScript is involved in any of it, so
+   * there is no failure mode where the hero stays blank.
+   */
+  .enter,
+  [data-enter] > * {
+    animation: enter 900ms var(--ease-out-soft) var(--enter-delay, 0ms) both;
+  }
+
+  /*
+   * Headings move but do not fade.
+   *
+   * The h1 is the largest contentful paint on most pages here, and Chrome does
+   * not treat a fading element as painted until the fade is well advanced.
+   * Fading the heading in took the home page from a 104ms LCP to 1424ms, which
+   * is a self-inflicted 14x regression for an effect nobody would miss.
+   * Transform does not affect LCP, so the heading rises into place while its
+   * neighbours fade, and the difference is invisible at this distance.
+   */
+  [data-enter] > h1,
+  h1.enter {
+    animation-name: enter-shift;
+  }
+
+  [data-enter] > *:nth-child(1) {
+    --enter-delay: 60ms;
+  }
+  [data-enter] > *:nth-child(2) {
+    --enter-delay: 190ms;
+  }
+  [data-enter] > *:nth-child(3) {
+    --enter-delay: 320ms;
+  }
+  [data-enter] > *:nth-child(4) {
+    --enter-delay: 450ms;
+  }
+  [data-enter] > *:nth-child(n + 5) {
+    --enter-delay: 580ms;
   }
 
   /* A one-pass highlight that crosses the button on hover. The gradient is
