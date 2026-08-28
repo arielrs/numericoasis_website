@@ -64,9 +64,9 @@ function organizationNode(): JsonLdNode {
     logo: {
       '@type': 'ImageObject',
       '@id': LOGO_ID,
-      url: `${SITE.url}/png_logo_main.png`,
-      width: 442,
-      height: 468,
+      url: `${SITE.url}/logo-512.png`,
+      width: 512,
+      height: 512,
       caption: SITE.name,
     },
     image: { '@id': LOGO_ID },

@@ -95,8 +95,13 @@ const apps = defineCollection({
 
         // --- Trust ----------------------------------------------------------
         runsOnAtlassian: z.boolean().default(true),
-        /** True only for Expanded Macro Collection, whose privacy copy differs. */
-        storesPersonalData: z.boolean().default(false),
+        /**
+         * Required, deliberately. This drives a published privacy claim in the
+         * per-app table on /about/. With a default, four apps asserted "No"
+         * because nobody had set the field, and one of those assertions was
+         * false. A missing value must fail the build, not publish an answer.
+         */
+        storesPersonalData: z.boolean(),
         scopeSummary: z.array(z.string()).default([]),
         dataStatement: z.string().optional(),
         trustSignals: z.array(z.string()).default([]),

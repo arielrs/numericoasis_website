@@ -66,8 +66,11 @@ const jsonLd = buildGraph({
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="generator" content={Astro.generator} />
-    <link rel="icon" type="image/png" href="/png_logo_main.png" />
-    <link rel="apple-touch-icon" href="/png_logo_main.png" />
+    <!-- The favicon used to point at a 442x468, 208KB PNG, which was 51 to 76
+         percent of every cold page load and, being non-square, would have been
+         squashed as an iOS home-screen icon. -->
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     <Font cssVariable="--font-inter" preload />
     <link
       rel="alternate"

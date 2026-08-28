@@ -32,7 +32,7 @@ export const es = {
   dataTable: {
     eyebrow: 'Qué guarda cada app',
     headline: 'App por app, en lenguaje claro.',
-    lede: 'Cinco de nuestras apps no guardan nada sobre tu contenido. Una guarda registros de aceptación a propósito, porque una aceptación que no dice quién aceptó no es una aceptación.',
+    lede: 'La mayoría de nuestras apps no guardan nada sobre tu contenido. Las excepciones están en la tabla, y cada una es deliberada: una aceptación que no dice quién aceptó no es una aceptación, y un registro de auditoría que no dice quién hizo el cambio no es un registro de auditoría.',
     columns: {
       app: 'App',
       host: 'Producto',

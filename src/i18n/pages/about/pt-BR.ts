@@ -32,7 +32,7 @@ export const ptBR = {
   dataTable: {
     eyebrow: 'O que cada app guarda',
     headline: 'App por app, em linguagem simples.',
-    lede: 'Cinco dos nossos apps não guardam nada sobre o seu conteúdo. Um guarda registros de aceite de propósito, porque um aceite que não diz quem aceitou não é um aceite.',
+    lede: 'A maioria dos nossos apps não guarda nada sobre o seu conteúdo. As exceções estão na tabela, e cada uma é deliberada: um aceite que não diz quem aceitou não é um aceite, e uma trilha de auditoria que não diz quem fez a mudança não é uma trilha de auditoria.',
     columns: {
       app: 'App',
       host: 'Produto',

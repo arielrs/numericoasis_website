@@ -146,7 +146,7 @@ const navCardClass =
       <div class="container-prose">
         <a
           href={withLocale(lang, '/blog/')}
-          class="inline-flex items-center gap-1.5 rounded-md text-sm font-medium text-slate-500 transition hover:text-brand-900 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sun-500"
+          class="inline-flex items-center gap-1.5 rounded-md text-sm font-medium text-slate-600 transition hover:text-brand-900 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sun-500"
         >
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 19l-7-7 7-7" /></svg>
           {t.post.backToBlog}
@@ -157,7 +157,7 @@ const navCardClass =
         </h1>
         <p class="mt-5 text-lg leading-relaxed text-slate-600">{post.data.description}</p>
 
-        <div class="mt-7 flex flex-wrap items-center gap-x-3 gap-y-2 text-sm text-slate-500">
+        <div class="mt-7 flex flex-wrap items-center gap-x-3 gap-y-2 text-sm text-slate-600">
           <span>{t.post.by} {author.displayName}</span>
           <span aria-hidden="true">·</span>
           <time datetime={post.data.pubDate.toISOString()}>{dateFmt.format(post.data.pubDate)}</time>
@@ -243,7 +243,7 @@ const navCardClass =
       <nav class="container-prose grid gap-4 pb-20 sm:grid-cols-2" aria-label={t.post.backToBlog}>
         {newer ? (
           <a href={withLocale(lang, `/blog/${contentSlug(newer.id)}/`)} class={navCardClass}>
-            <span class="text-xs font-semibold uppercase tracking-[0.12em] text-slate-500">
+            <span class="text-xs font-semibold uppercase tracking-[0.12em] text-slate-600">
               {t.post.previous}
             </span>
             <p class="mt-2 font-display text-base font-semibold text-brand-900">{newer.data.title}</p>
@@ -251,7 +251,7 @@ const navCardClass =
         ) : <div></div>}
         {older ? (
           <a href={withLocale(lang, `/blog/${contentSlug(older.id)}/`)} class={`${navCardClass} text-right`}>
-            <span class="text-xs font-semibold uppercase tracking-[0.12em] text-slate-500">
+            <span class="text-xs font-semibold uppercase tracking-[0.12em] text-slate-600">
               {t.post.next}
             </span>
             <p class="mt-2 font-display text-base font-semibold text-brand-900">{older.data.title}</p>

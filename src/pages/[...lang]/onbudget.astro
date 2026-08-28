@@ -428,19 +428,19 @@ const otherApps = (
       <h2 class="mt-3 font-display text-3xl font-bold tracking-tight text-brand-900 sm:text-4xl">
         {t.faq.headline}
       </h2>
-      <dl class="mt-10 divide-y divide-sand-200 border-y border-sand-200">
+      <div class="mt-10 divide-y divide-sand-200 border-y border-sand-200">
         {d.faq.map((item) => (
           <div class="py-1">
             <details class="group">
               <summary class="flex cursor-pointer list-none items-start justify-between gap-4 rounded-md py-4 text-left font-display text-lg font-semibold text-brand-900 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sun-500">
-                <dt>{item.q}</dt>
+                <h3>{item.q}</h3>
                 <svg class="mt-1.5 shrink-0 text-water-600 transition group-open:rotate-45" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14" /></svg>
               </summary>
-              <dd class="pb-5 pr-8 text-base leading-relaxed text-slate-600">{item.a}</dd>
+              <p class="pb-5 pr-8 text-base leading-relaxed text-slate-600">{item.a}</p>
             </details>
           </div>
         ))}
-      </dl>
+      </div>
     </div>
   </section>
 

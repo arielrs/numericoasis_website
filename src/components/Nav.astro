@@ -21,7 +21,8 @@ const linkLabel = (key: (typeof NAV_LINKS)[number]['labelKey']) => t.nav[key];
 ---
 
 <header class="sticky top-0 z-50 border-b border-sand-200/60 bg-paper/85 backdrop-blur-lg">
-  <nav class="container-wide flex h-16 items-center justify-between" aria-label={t.nav.mainNavLabel}>
+  <nav aria-label={t.nav.mainNavLabel}>
+    <div class="container-wide flex h-16 items-center justify-between">
     <a href={withLocale(lang, '/')} class="group flex items-center gap-2.5" aria-label={t.nav.homeAriaLabel(SITE.name)}>
       <Image
         src={logoRound}
@@ -71,9 +72,9 @@ const linkLabel = (key: (typeof NAV_LINKS)[number]['labelKey']) => t.nav[key];
     >
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
     </button>
-  </nav>
+    </div>
 
-  <div id="mobile-menu" class="hidden border-t border-sand-200 bg-paper md:hidden">
+    <div id="mobile-menu" class="hidden border-t border-sand-200 bg-paper md:hidden">
     <div class="container-wide flex flex-col py-3">
       {NAV_LINKS.map((link) => (
         <a
@@ -84,6 +85,7 @@ const linkLabel = (key: (typeof NAV_LINKS)[number]['labelKey']) => t.nav[key];
               ? 'bg-sand-100 text-brand-900'
               : 'text-brand-700 hover:bg-sand-50',
           ]}
+          aria-current={isActive(link.href) ? 'page' : undefined}
         >
           {linkLabel(link.labelKey)}
         </a>
@@ -95,7 +97,8 @@ const linkLabel = (key: (typeof NAV_LINKS)[number]['labelKey']) => t.nav[key];
         {t.nav[NAV_CTA.labelKey]}
       </a>
     </div>
-  </div>
+    </div>
+  </nav>
 </header>
 
 <script>

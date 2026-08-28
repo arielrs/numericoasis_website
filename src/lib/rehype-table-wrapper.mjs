@@ -18,7 +18,10 @@ export function rehypeTableWrapper() {
           return {
             type: 'element',
             tagName: 'div',
-            properties: { className: ['table-scroll'] },
+            // tabIndex makes the scroll container keyboard-reachable. Without
+            // it the overflow is mouse-only, which is a WCAG 2.1.1 Level A
+            // failure: 37% of the comparison table could not be reached.
+            properties: { className: ['table-scroll'], tabIndex: 0 },
             children: [child],
           };
         }

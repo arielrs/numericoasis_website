@@ -30,7 +30,7 @@ export const en = {
   dataTable: {
     eyebrow: 'What each app stores',
     headline: 'Per app, in plain terms.',
-    lede: 'Five of our apps hold nothing about your content. One holds sign-off records on purpose, because an acknowledgement that does not name who acknowledged it is not an acknowledgement.',
+    lede: 'Most of our apps hold nothing about your content. The exceptions are in the table, and each one is deliberate: an acknowledgement that does not name who acknowledged it is not an acknowledgement, and an audit log that does not name who made the change is not an audit log.',
     columns: {
       app: 'App',
       host: 'Host',
