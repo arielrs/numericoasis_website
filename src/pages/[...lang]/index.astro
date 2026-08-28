@@ -39,9 +39,30 @@ const focusShots = (['hero', 'report-at-risk'] as const)
   .map((slot) => focusApp?.data.screenshots.find((s) => s.slot === slot))
   .filter((s): s is NonNullable<typeof s> => Boolean(s));
 
+// The two shots are 922x795 and 940x858, so at equal width the second rendered
+// 29px taller and the captions did not line up. They now share the taller of
+// the two ratios and letterbox rather than crop, because cropping 6 percent off
+// a screenshot takes a chart axis with it. Both screenshots sit on white, so
+// the padding is invisible against bg-paper.
+//
+// Inline, not a Tailwind class, on purpose. Astro injects
+// :where([data-astro-image]){height:auto} and [data-astro-image-fit=...] after
+// every cascade layer closes, so a layered utility loses to them whatever its
+// specificity. See the note in src/styles/global.css. An inline style outranks
+// both, and with width:100% the height follows from the ratio.
+const shotAspect = focusShots.length
+  ? Math.min(...focusShots.map((s) => s.image.width / s.image.height))
+  : undefined;
+const shotStyle = shotAspect
+  ? `aspect-ratio: ${shotAspect}; object-fit: contain;`
+  : undefined;
+
 // Written and translated in the app's own frontmatter, and rendered nowhere:
 // the flagship is excluded from the /apps/<slug>/ route that would show them.
 const focusProps = focusApp?.data.valueProps ?? [];
+
+// Edit mode, for the customisation block.
+const editShot = focusApp?.data.screenshots.find((s) => s.slot === 'edit-layout');
 
 const posts = (
   await getCollection('blog', ({ data }) => data.lang === lang && !data.draft)
@@ -149,6 +170,7 @@ const arrow =
                 width={960}
                 sizes="(min-width: 1024px) 620px, 100vw"
                 class="w-full rounded-2xl border border-sand-200 bg-paper"
+                style={shotStyle}
                 loading="lazy"
               />
               <figcaption class="mt-3 px-1 text-sm leading-relaxed text-slate-600">
@@ -173,7 +195,32 @@ const arrow =
         </ul>
       )}
 
-      <div class="mt-11 flex flex-wrap gap-3">
+      {editShot && (
+        <div class="mt-14 grid gap-10 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:items-center lg:gap-14">
+          <div>
+            <h3 class="font-display text-2xl font-bold tracking-tight text-brand-900 sm:text-3xl">
+              {t.focus.custom.title}
+            </h3>
+            <p class="mt-5 text-base leading-relaxed text-slate-700">{t.focus.custom.report}</p>
+            <p class="mt-4 text-base leading-relaxed text-slate-700">{t.focus.custom.dashboard}</p>
+          </div>
+          <figure>
+            <Image
+              src={editShot.image}
+              alt={editShot.alt ?? editShot.caption}
+              width={1007}
+              sizes="(min-width: 1024px) 700px, 100vw"
+              class="w-full rounded-2xl border border-sand-200 bg-paper"
+              loading="lazy"
+            />
+            <figcaption class="mt-3 px-1 text-sm leading-relaxed text-slate-600">
+              {editShot.caption}
+            </figcaption>
+          </figure>
+        </div>
+      )}
+
+      <div class="mt-14 flex flex-wrap gap-3">
         <a href={withLocale(lang, '/onbudget/')} class="btn-cta">
           {t.focus.ctaPrimary}
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" set:html={arrow} />

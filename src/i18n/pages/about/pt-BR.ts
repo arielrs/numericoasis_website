@@ -12,7 +12,7 @@ export const ptBR = {
   hero: {
     eyebrow: 'Sobre a Numeric Oasis',
     headline: 'O time por trás dos apps.',
-    lede: 'Construímos e damos suporte a apps em Forge para Jira e Confluence Cloud. Todos rodam dentro do seu próprio site Atlassian, levam o selo Runs on Atlassian e têm suporte de quem escreveu o código.',
+    lede: 'Construímos e damos suporte a apps em Forge para Jira e Confluence Cloud. Todos rodam dentro do seu próprio ambiente Atlassian, levam o selo Runs on Atlassian e têm suporte de quem escreveu o código.',
   },
   standing: {
     eyebrow: 'Onde estamos',

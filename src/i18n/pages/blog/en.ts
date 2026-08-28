@@ -43,7 +43,7 @@ export const en = {
       },
       general: {
         headline: 'We build Atlassian Marketplace apps.',
-        body: 'Forge apps for Jira and Confluence Cloud that run inside your own Atlassian site. Your data stays where it already is, and there is no vendor server for security to sign off.',
+        body: 'Forge apps for Jira and Confluence Cloud that run inside your own Atlassian environment. Your data stays where it already is, and there is no vendor server for security to sign off.',
         primary: 'See our apps',
         secondary: 'Ask us a question',
       },

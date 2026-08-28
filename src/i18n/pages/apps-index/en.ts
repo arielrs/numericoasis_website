@@ -9,7 +9,7 @@ export const en = {
   },
   eyebrow: 'Atlassian Marketplace',
   headline: 'Apps for Jira and Confluence Cloud.',
-  lede: 'Every one runs on Forge inside your own Atlassian site, so your data stays where it already is, there is no vendor server for security to sign off, and updates arrive without a maintenance window.',
+  lede: 'Every one runs on Forge inside your own Atlassian environment, so your data stays where it already is, there is no vendor server for security to sign off, and updates arrive without a maintenance window.',
   groups: {
     jira: 'For Jira',
     confluence: 'For Confluence',

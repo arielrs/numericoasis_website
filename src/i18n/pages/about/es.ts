@@ -12,7 +12,7 @@ export const es = {
   hero: {
     eyebrow: 'Sobre Numeric Oasis',
     headline: 'El equipo detrás de las apps.',
-    lede: 'Construimos y damos soporte a apps en Forge para Jira y Confluence Cloud. Todas funcionan dentro de tu propio sitio de Atlassian, llevan el distintivo Runs on Atlassian y las soporta quien escribió el código.',
+    lede: 'Construimos y damos soporte a apps en Forge para Jira y Confluence Cloud. Todas funcionan dentro de tu propio entorno de Atlassian, llevan el distintivo Runs on Atlassian y las soporta quien escribió el código.',
   },
   standing: {
     eyebrow: 'Dónde estamos',

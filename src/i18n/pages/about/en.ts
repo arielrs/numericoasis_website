@@ -10,7 +10,7 @@ export const en = {
   hero: {
     eyebrow: 'About Numeric Oasis',
     headline: 'The team behind the apps.',
-    lede: 'We build and support Forge apps for Jira and Confluence Cloud. Every one runs inside your own Atlassian site, carries the Runs on Atlassian badge, and is supported by the people who wrote it.',
+    lede: 'We build and support Forge apps for Jira and Confluence Cloud. Every one runs inside your own Atlassian environment, carries the Runs on Atlassian badge, and is supported by the people who wrote it.',
   },
   standing: {
     eyebrow: 'Where we stand',
