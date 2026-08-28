@@ -1,7 +1,9 @@
 export const en = {
   meta: {
     crumb: 'Blog',
-    title: 'Blog',
+    title: 'Jira cost, admin and governance notes',
+    metaDescription:
+      'Notes on Atlassian cost visibility, Confluence governance and Jira configuration health, from the team that builds Atlassian Marketplace apps.',
     description:
       'Notes on Atlassian cost visibility, Confluence governance and Jira configuration health, from the team that builds Atlassian Marketplace apps.',
   },
@@ -16,6 +18,8 @@ export const en = {
   tagPage: {
     eyebrow: 'Topic',
     headlinePrefix: 'Posts tagged',
+    metaDescription: (label: string) =>
+      `Every post tagged ${label}. Notes from the team that builds Atlassian Marketplace apps for Jira and Confluence Cloud.`,
     backToBlog: 'All posts',
     empty: 'Nothing published on this topic yet.',
   },
@@ -30,6 +34,20 @@ export const en = {
     previous: 'Previous',
     next: 'Next',
     related: 'Related reading',
+    cta: {
+      onbudget: {
+        headline: 'Want this without the spreadsheet?',
+        body: 'OnBudget turns the work your team already tracks in Jira into budgets, forecasts and cost reports. No new custom fields, and it reads rather than writes.',
+        primary: 'See what OnBudget does',
+        secondary: 'Ask us a question',
+      },
+      general: {
+        headline: 'We build Atlassian Marketplace apps.',
+        body: 'Forge apps for Jira and Confluence Cloud, running inside Atlassian rather than beside it. Your data stays in your tenancy and there is no third party to vet.',
+        primary: 'See our apps',
+        secondary: 'Ask us a question',
+      },
+    },
   },
   pagination: {
     label: 'Pagination',

@@ -1,4 +1,19 @@
 ---
+/**
+ * One app, as a card.
+ *
+ * The card used to be a single wrapping <a>, which meant it could hold exactly
+ * one link, and neither the home page nor /apps/ linked to a single Marketplace
+ * listing as a result. Three of the four prominent calls to action on the site
+ * point at pages made of these cards, so that was the conversion path ending in
+ * a dead end.
+ *
+ * It is now an <article> with two real links and a stretched overlay: the
+ * "Read more" anchor carries `after:absolute after:inset-0`, so the whole card
+ * stays clickable, and the Marketplace anchor sits above it on `relative z-10`.
+ * Nesting one <a> inside another would have been invalid markup and a
+ * nested-interactive violation, which is why the wrapper had to go.
+ */
 import { Image } from 'astro:assets';
 import type { CollectionEntry } from 'astro:content';
 import { PRODUCT_LABELS } from '../consts';
@@ -20,14 +35,15 @@ const t = useTranslations(lang);
 
 // An app with its own landing page links there, not to /apps/<slug>/.
 const href = withLocale(lang, app.data.landingPath ?? `/apps/${contentSlug(app.id)}/`);
+
+const focusRing =
+  'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sun-500';
 ---
 
-<a
-  href={href}
+<article
   class:list={[
-    'group flex flex-col justify-between rounded-2xl border border-sand-200 bg-paper p-8',
+    'group relative flex flex-col justify-between rounded-2xl border border-sand-200 bg-paper p-8',
     'transition duration-150 hover:-translate-y-0.5 hover:border-water-400 hover:shadow-[var(--shadow-soft)]',
-    'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sun-500',
     wide && 'md:col-span-2',
   ]}
 >
@@ -66,7 +82,7 @@ const href = withLocale(lang, app.data.landingPath ?? `/apps/${contentSlug(app.i
     </p>
 
     {app.data.audiences.length > 0 && (
-      <p class:list={['mt-4 text-xs leading-relaxed text-slate-500', wide && 'max-w-3xl']}>
+      <p class:list={['mt-4 text-xs leading-relaxed text-slate-600', wide && 'max-w-3xl']}>
         <span class="font-semibold text-brand-800">{labels.builtFor}:</span>{' '}
         {app.data.audiences.join(' · ')}
       </p>
@@ -80,13 +96,37 @@ const href = withLocale(lang, app.data.landingPath ?? `/apps/${contentSlug(app.i
     {app.data.priceModel === 'free' && (
       <span class="rounded-full bg-sun-50 px-2.5 py-1 text-sun-700">{t.apps.priceFree}</span>
     )}
-    <span class="ml-auto text-slate-500 transition group-hover:text-water-700">
+    <a
+      href={href}
+      class:list={['ml-auto rounded-sm text-slate-500 transition after:absolute after:inset-0 group-hover:text-water-700', focusRing]}
+      aria-label={`${labels.readMore}: ${app.data.name}`}
+    >
       {labels.readMore}
       <svg
         class="ml-1 inline-block align-[-0.1em] transition group-hover:translate-x-0.5"
         width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"
         stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"
       ><path d="M5 12h14M13 5l7 7-7 7" /></svg>
-    </span>
+    </a>
   </div>
-</a>
+
+  {app.data.marketplaceUrl && (
+    <a
+      href={app.data.marketplaceUrl}
+      class:list={[
+        'relative z-10 mt-5 inline-flex items-center gap-1.5 self-start rounded-md border border-sand-200 px-3 py-1.5',
+        'text-xs font-semibold text-brand-800 transition hover:border-water-400 hover:text-water-700',
+        focusRing,
+      ]}
+      rel="noopener"
+      target="_blank"
+      aria-label={`${t.apps.viewOnMarketplace}: ${app.data.name}`}
+    >
+      {t.apps.viewOnMarketplace}
+      <svg
+        width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+        stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"
+      ><path d="M7 17L17 7M7 7h10v10" /></svg>
+    </a>
+  )}
+</article>

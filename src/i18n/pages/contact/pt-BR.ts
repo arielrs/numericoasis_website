@@ -3,7 +3,9 @@ import type { ContactCopy } from './en';
 export const ptBR = {
   meta: {
     crumb: 'Contato',
-    title: 'Contato',
+    title: 'Fale conosco e obtenha suporte',
+    metaDescription:
+      'O suporte de todos os apps passa pelo nosso portal de Jira Service Management. Pré-venda, avaliação e parcerias vão para contact@numericoasis.com.',
     description:
       'O suporte de todos os apps da Numeric Oasis passa pelo nosso portal de Jira Service Management. Dúvidas de pré-venda, avaliação e parcerias vão para contact@numericoasis.com. Atendemos em inglês, português e espanhol.',
   },

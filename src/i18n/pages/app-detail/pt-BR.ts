@@ -5,7 +5,6 @@ export const ptBR = {
   eyebrow: 'App do Atlassian Marketplace',
   install: 'Instalar pelo Atlassian Marketplace',
   installShort: 'Instalar pelo Marketplace',
-  support: 'Obter suporte',
   docs: 'Documentação',
   talkToUs: 'Tirar uma dúvida',
   valueProps: {
@@ -14,7 +13,7 @@ export const ptBR = {
   },
   features: {
     eyebrow: 'Principais recursos',
-    headline: 'Tudo o que você precisa, nada que você não precise.',
+    headline: 'O que vem no app.',
   },
   audiences: {
     eyebrow: 'Feito para',

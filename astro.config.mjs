@@ -5,6 +5,9 @@ import mdx from '@astrojs/mdx';
 import tailwindcss from '@tailwindcss/vite';
 import { remarkReadingTime } from './src/lib/remark-reading-time.mjs';
 import { rehypeTableWrapper } from './src/lib/rehype-table-wrapper.mjs';
+import { buildLastmodMap } from './src/lib/sitemap-lastmod.mjs';
+
+const LASTMOD = buildLastmodMap(process.cwd());
 
 export default defineConfig({
   site: 'https://numericoasis.com',
@@ -116,6 +119,12 @@ export default defineConfig({
     sitemap({
       // Keep the hidden /poker/ timer out of the sitemap.
       filter: (page) => !page.includes('/poker'),
+      // Real dates from frontmatter, and only where one exists. See
+      // src/lib/sitemap-lastmod.mjs for why the static pages get none.
+      serialize(item) {
+        const stamp = LASTMOD.get(new URL(item.url).pathname);
+        return stamp ? { ...item, lastmod: stamp } : item;
+      },
       // No i18n block here on purpose. SEO.astro already emits a complete,
       // reciprocal, self-referencing hreflang cluster with x-default. The
       // sitemap integration would emit a second, conflicting one using

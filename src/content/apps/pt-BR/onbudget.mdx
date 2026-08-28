@@ -3,6 +3,8 @@ lang: pt-BR
 translationKey: onbudget
 name: OnBudget
 listingName: "OnBudget - Cost Tracking & Budget Reports for Jira"
+descriptor: "Controle de orçamento e relatórios de custo para o Jira"
+metaDescription: "Transforme o trabalho já registrado no Jira em orçamentos, previsões e relatórios de custo. Orçado versus realizado por projeto, epic ou time."
 version: "2.4.0"
 dateModified: 2026-08-19
 tagline: Controle de orçamento e relatórios de custo para o Jira. Orçado versus realizado, saúde e previsão, a partir do trabalho que seu time já registra.
@@ -139,8 +141,7 @@ keyFeatures:
   - Inglês, português e espanhol
 
 trustSignals:
-  - Runs on Atlassian
-  - Feito em Forge
+  - Construído em Atlassian Forge
   - Acesso somente leitura
   - Guarda apenas as configurações do relatório
   - Sem campos personalizados novos
@@ -181,6 +182,13 @@ faq:
       Então conte itens de trabalho. O OnBudget pode precificar itens concluídos ou resolvidos, ou itens
       parados em status que você escolher. Esse é o caso comum em marketing, suporte e operações, e o
       assistente informa qual porcentagem dos seus dados carrega cada sinal antes de você escolher um.
+  - q: A gente já aponta horas em outro app. O OnBudget substitui ele?
+    a: >-
+      Não, e nem é a proposta. Um app de apontamento decide como as horas são registradas. O OnBudget
+      lê o que foi parar nos worklogs do Jira e coloca preço nisso, então, se o seu time aponta horas
+      por outro app que grava no Jira, o OnBudget precifica esses worklogs como quaisquer outros. E
+      ele também não depende deles: pontos de história, um campo numérico ou a contagem de work items
+      funcionam igual quando ninguém aponta hora nenhuma.
   - q: Quais moedas são suportadas e o OnBudget converte entre elas?
     a: >-
       Dezoito moedas ISO, incluindo USD, EUR, GBP e BRL. Cada relatório é denominado em uma moeda e o
@@ -194,7 +202,7 @@ faq:
   - q: Onde meus dados ficam?
     a: >-
       Dentro da Atlassian. O OnBudget roda inteiramente em Forge, tem o selo Runs on Atlassian e possui
-      três escopos somente leitura. Ele guarda as configurações do relatório e nunca o conteúdo dos seus
+      dois escopos de leitura no Jira mais o próprio armazenamento do app. Ele guarda as configurações do relatório e nunca o conteúdo dos seus
       itens de trabalho nem o resultado de um relatório. Identificadores de conta e de grupo passam por
       hash antes de virarem chaves de armazenamento, e desinstalar apaga tudo.
   - q: Consigo exportar os números?

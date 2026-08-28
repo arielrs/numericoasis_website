@@ -27,5 +27,11 @@ export function relatedPosts(
         b.shared - a.shared || b.post.data.pubDate.getTime() - a.post.data.pubDate.getTime(),
     );
 
-  return scored.slice(0, limit).map((s) => s.post);
+  // Only pad with unrelated posts when nothing shares a tag at all. The
+  // cornerstone cost post has one real match and two consultancy-era posts
+  // behind it, and "Related reading" was showing all three.
+  const matched = scored.filter((s) => s.shared > 0);
+  const chosen = matched.length > 0 ? matched : scored;
+
+  return chosen.slice(0, limit).map((s) => s.post);
 }

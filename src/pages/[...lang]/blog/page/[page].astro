@@ -48,6 +48,7 @@ const prevHref = page === 2 ? '/blog/' : `/blog/page/${page - 1}/`;
 <BaseLayout
   title={`${t.meta.title} ${t.pagination.page(page, totalPages)}`}
   description={t.meta.description}
+  metaDescription={t.meta.metaDescription}
   graph={{
     breadcrumbs: [
       { name: t.meta.crumb, path: '/blog/' },

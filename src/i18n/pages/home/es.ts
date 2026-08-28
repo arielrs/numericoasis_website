@@ -2,7 +2,9 @@ import type { HomeCopy } from './en';
 
 export const es = {
   meta: {
-    title: 'Numeric Oasis Technologies',
+    title: 'Apps Forge para Jira y Confluence Cloud',
+    metaDescription:
+      'Socia del Atlassian Marketplace, creando apps Forge para Jira y Confluence Cloud, con la atención puesta en OnBudget: presupuestos, pronósticos y costos.',
     description:
       'Numeric Oasis es socia en el Atlassian Marketplace y construye apps en Forge para Jira y Confluence Cloud. Ahora mismo la mayor parte de nuestra atención está en OnBudget, que convierte el trabajo ya registrado en Jira en presupuestos, pronósticos e informes de costo.',
   },
@@ -28,7 +30,7 @@ export const es = {
   focus: {
     eyebrow: 'Dónde está nuestra atención ahora',
     headline: 'Jira sabe qué pasó. No sabe cuánto costó.',
-    body: 'Los datos de entrega viven en Jira. El dinero vive en una hoja de cálculo que alguien exporta el viernes y que el lunes ya está mal. Peor todavía: los equipos que nunca adoptaron puntos de historia ni partes de horas ni siquiera aparecen en esa hoja.',
+    body: 'Los datos de entrega viven en Jira. El dinero vive en una hoja de cálculo que alguien exporta el viernes y que el lunes ya está mal. Peor todavía: los equipos que nunca adoptaron puntos de historia ni registros de horas ni siquiera aparecen en esa hoja.',
     body2: 'OnBudget es la app que más estamos empujando en este momento, porque creemos que es la que resuelve el problema más grande. Convierte el trabajo que tu equipo ya registra en presupuestos, pronósticos e informes de costo, sin pedirle a nadie que rellene un campo nuevo.',
     link: 'Mira lo que hace OnBudget',
   },

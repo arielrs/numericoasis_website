@@ -1,6 +1,8 @@
 export const en = {
   meta: {
-    title: 'Numeric Oasis Technologies',
+    title: 'Forge apps for Jira and Confluence Cloud',
+    metaDescription:
+      'Atlassian Marketplace partner building Forge apps for Jira and Confluence Cloud, with most of our attention on OnBudget: budgets, forecasts, cost reports.',
     description:
       'Numeric Oasis is a partner in the Atlassian Marketplace, building Forge apps for Jira and Confluence Cloud. Right now most of our attention goes to OnBudget, which turns work already tracked in Jira into budgets, forecasts and cost reports.',
   },

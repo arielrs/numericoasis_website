@@ -51,6 +51,7 @@ const labels = { builtFor: t.builtFor, readMore: t.readMore };
 <BaseLayout
   title={t.meta.title}
   description={t.meta.description}
+  metaDescription={t.meta.metaDescription}
   graph={{
     breadcrumbs: [{ name: t.meta.crumb, path: '/apps/' }],
     extraNodes: [itemList],
@@ -82,6 +83,29 @@ const labels = { builtFor: t.builtFor, readMore: t.readMore };
         {confluence.map((app) => (
           <AppCard app={app} lang={lang} labels={labels} />
         ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- CLOSING CTA -->
+  <section class="pb-16 sm:pb-24">
+    <div class="container-wide">
+      <div class="rounded-3xl bg-brand-900 p-10 sm:p-16">
+        <div class="max-w-2xl">
+          <h2 class="font-display text-3xl font-bold tracking-tight text-white sm:text-4xl">
+            {t.cta.headline}
+          </h2>
+          <p class="mt-4 text-lg leading-relaxed text-brand-100">{t.cta.body}</p>
+          <div class="mt-8 flex flex-wrap gap-3">
+            <a href={withLocale(lang, '/contact/')} class="btn-cta">{t.cta.primary}</a>
+            <a
+              href={SITE.marketplaceUrl}
+              class="btn-secondary !bg-paper"
+              rel="noopener"
+              target="_blank"
+            >{t.cta.secondary}</a>
+          </div>
+        </div>
       </div>
     </div>
   </section>

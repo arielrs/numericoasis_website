@@ -11,7 +11,7 @@
  */
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { SITE } from '../../consts';
-import { localeStaticPaths, type Locale } from '../../i18n';
+import { localeStaticPaths, useTranslations, type Locale } from '../../i18n';
 import { contact } from '../../i18n/pages/contact';
 import { ORG_ID } from '../../lib/schema';
 
@@ -19,6 +19,7 @@ export const getStaticPaths = localeStaticPaths;
 
 const { lang } = Astro.props as { lang: Locale };
 const t = contact[lang];
+const chrome = useTranslations(lang);
 
 const mailto = `mailto:${SITE.email}?subject=${encodeURIComponent(t.sales.subject)}`;
 
@@ -29,6 +30,7 @@ const linkClass =
 <BaseLayout
   title={t.meta.title}
   description={t.meta.description}
+  metaDescription={t.meta.metaDescription}
   graph={{
     breadcrumbs: [{ name: t.meta.crumb, path: '/contact/' }],
     primaryEntityId: ORG_ID,
@@ -122,7 +124,7 @@ const linkClass =
           </li>
         )}
         <li class="text-slate-600">
-          <span class="font-semibold text-brand-900">{t.elsewhere.location}:</span> {SITE.location}
+          <span class="font-semibold text-brand-900">{t.elsewhere.location}:</span> {chrome.site.location}
         </li>
       </ul>
     </div>

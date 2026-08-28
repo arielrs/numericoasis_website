@@ -31,10 +31,45 @@ jobs:
         with:
           node-version: 22
 
+  # The accessibility gate, blocking. It is its own job because
+  # withastro/action offers no hook after the build, and because the gate needs
+  # a browser and a running server. It blocks the deploy on purpose: a check
+  # that cannot fail the pipeline is exactly what we already had with pa11y,
+  # which reported WCAG2AA clean while evaluating zero contrast pairs.
+  a11y:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+
+      - name: Build
+        run: npm run build
+
+      - name: Serve the build and run axe-core
+        run: |
+          npx astro preview --port 4321 &
+          for _ in $(seq 1 60); do
+            curl -sf http://localhost:4321/ > /dev/null && break
+            sleep 1
+          done
+          npm run a11y
+
   deploy:
     # Pull requests build and run the checks but must not deploy.
     if: github.event_name != 'pull_request'
-    needs: build
+    needs: [build, a11y]
     runs-on: ubuntu-latest
     environment:
       name: github-pages

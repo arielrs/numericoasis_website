@@ -1,11 +1,12 @@
 export const en = {
   meta: {
     crumb: 'OnBudget',
-    title: 'OnBudget: budget tracking and cost reports for Jira',
+    title: 'OnBudget: budget and cost reports for Jira',
   },
   hero: {
     eyebrow: 'Atlassian Marketplace app for Jira Cloud',
-    headline: 'Budget tracking and cost reports for Jira.',
+    headline: 'Budget and cost reporting for Jira, built for finance and PMO.',
+    lede: 'OnBudget turns the work your team already tracks in Jira into money. It samples your data first and tells you what share of your work items carries each costing signal, so you find out your worklog coverage is thin before you build a budget on top of it.',
     ctaSecondary: 'See how a report is built',
   },
   problem: { eyebrow: 'The gap' },
@@ -54,7 +55,7 @@ export const en = {
     secondary: 'Ask us a question',
   },
   alsoSee: {
-    eyebrow: 'Also from us',
+    eyebrow: 'Our other apps',
     headline: 'The rest of what we make.',
     link: 'See all our apps',
   },

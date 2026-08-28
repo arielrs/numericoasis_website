@@ -3,11 +3,12 @@ import type { OnBudgetCopy } from './en';
 export const ptBR = {
   meta: {
     crumb: 'OnBudget',
-    title: 'OnBudget: controle de orçamento e relatórios de custo para o Jira',
+    title: 'OnBudget: orçamento e relatórios de custo no Jira',
   },
   hero: {
     eyebrow: 'App do Atlassian Marketplace para Jira Cloud',
-    headline: 'Controle de orçamento e relatórios de custo para o Jira.',
+    headline: 'Orçamento e relatórios de custo no Jira, para finanças e PMO.',
+    lede: 'O OnBudget transforma em dinheiro o trabalho que seu time já registra no Jira. Antes de qualquer coisa ele analisa uma amostra dos seus dados e mostra que parcela dos work items carrega cada sinal de custo, para você descobrir que a cobertura de apontamentos é baixa antes de montar um orçamento em cima dela.',
     ctaSecondary: 'Veja como um relatório é montado',
   },
   problem: { eyebrow: 'A lacuna' },
@@ -56,7 +57,7 @@ export const ptBR = {
     secondary: 'Tirar uma dúvida',
   },
   alsoSee: {
-    eyebrow: 'Também nossos',
+    eyebrow: 'Nossos outros apps',
     headline: 'O resto do que fazemos.',
     link: 'Ver todos os nossos apps',
   },

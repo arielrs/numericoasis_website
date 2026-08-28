@@ -11,6 +11,12 @@ import {
 
 interface Props {
   title: string;
+  /**
+   * The SERP snippet. Capped at roughly 160 characters by the content schemas.
+   * The long-form `description` that feeds the structured data stays in the
+   * layout: 59 of 60 pages had a meta description over 160 characters because
+   * one field was serving both jobs.
+   */
   description?: string;
   /** Resolved by the layout, so width and height are the image's real ones. */
   ogImage: { url: string; width: number; height: number };
@@ -38,7 +44,7 @@ const {
 
 const urls = localeUrls(Astro.url.pathname, alternateOverride);
 const canonical = new URL(urls[lang], Astro.site).toString();
-const fullTitle = title === SITE.name ? title : `${title} · ${SITE.name}`;
+const fullTitle = title === SITE.shortName ? title : `${title} · ${SITE.shortName}`;
 
 const alternates = LOCALES.map((l) => ({
   hreflang: l,

@@ -10,7 +10,7 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
 import { SITE, PRODUCT_LABELS } from '../../consts';
-import { localeStaticPaths, contentSlug, withLocale, type Locale } from '../../i18n';
+import { localeStaticPaths, contentSlug, withLocale, useTranslations, type Locale } from '../../i18n';
 import { about } from '../../i18n/pages/about';
 import { ORG_ID } from '../../lib/schema';
 
@@ -18,6 +18,7 @@ export const getStaticPaths = localeStaticPaths;
 
 const { lang } = Astro.props as { lang: Locale };
 const t = about[lang];
+const chrome = useTranslations(lang);
 
 const apps = (await getCollection('apps', ({ data }) => data.lang === lang)).sort(
   (a, b) => a.data.order - b.data.order,
@@ -30,6 +31,7 @@ const linkClass =
 <BaseLayout
   title={t.meta.title}
   description={t.meta.description}
+  metaDescription={t.meta.metaDescription}
   graph={{
     breadcrumbs: [{ name: t.meta.crumb, path: '/about/' }],
     primaryEntityId: ORG_ID,
@@ -173,7 +175,7 @@ const linkClass =
       <div>
         <p class="eyebrow">{t.where.eyebrow}</p>
         <h2 class="mt-3 font-display text-3xl font-bold tracking-tight text-brand-900 sm:text-4xl">
-          {t.where.headlinePrefix} {SITE.location}.
+          {t.where.headlinePrefix} {chrome.site.location}.
         </h2>
       </div>
       <div class="space-y-4 text-base leading-relaxed text-slate-600">

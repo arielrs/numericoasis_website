@@ -1,5 +1,12 @@
 export const SITE = {
   name: 'Numeric Oasis Technologies',
+  /**
+   * The brand token used in <title>. The legal name is 26 characters, and with
+   * the separator it left 30 of a 60 character budget for the part that
+   * actually describes the page. The full name stays on the Organization node,
+   * the footer and the copyright line.
+   */
+  shortName: 'Numeric Oasis',
   url: 'https://numericoasis.com',
   tagline: 'Atlassian Marketplace Partner. Forge apps for Jira and Confluence Cloud.',
   /**
@@ -9,7 +16,6 @@ export const SITE = {
   description:
     'Numeric Oasis is a partner in the Atlassian Marketplace. We build Forge apps for Jira and Confluence Cloud: budget and cost reporting, Confluence governance and compliance, work item dependency mapping, project configuration auditing, and custom field cleanup.',
   email: 'contact@numericoasis.com',
-  location: 'Canoas, RS, Brasil',
   supportUrl: 'https://numericoasis.atlassian.net/servicedesk/customer/portal/39',
   marketplaceUrl: 'https://marketplace.atlassian.com/vendors/1064627585/numeric-oasis',
   twitter: '',

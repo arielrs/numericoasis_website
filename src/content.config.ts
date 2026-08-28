@@ -34,15 +34,40 @@ const blog = defineCollection({
   schema: ({ image }) =>
     z.object({
       title: z.string(),
+      /**
+       * The SERP title, capped. Two post headlines are 91 and 102 characters,
+       * which is a good headline and a truncated search result.
+       */
+      metaTitle: z.string().max(50).optional(),
       description: z.string(),
+      /**
+       * The SERP snippet, capped. `description` also feeds
+       * BlogPosting.description and the card blurb, where length is an asset,
+       * so truncating that one field to fit a SERP would degrade the others.
+       */
+      metaDescription: z.string().max(160).optional(),
       pubDate: z.coerce.date(),
       updatedDate: z.coerce.date().optional(),
       tags: z.array(z.enum(BLOG_TAGS)).min(1).max(4),
       author: z.enum(AUTHOR_IDS).default('team'),
       heroImage: image().optional(),
+      /** Required whenever heroImage is set. See the refinement below. */
+      heroImageAlt: z.string().optional(),
       draft: z.boolean().default(false),
       lang: langEnum,
       translationKey: z.string(),
+    })
+    .superRefine((data, ctx) => {
+      // The hero is the largest image on the article and the Open Graph card
+      // image. It was hardcoded alt="" on every post, which is the correct
+      // value for the decorative copy on the *cards* but wrong here.
+      if (data.heroImage && !data.heroImageAlt) {
+        ctx.addIssue({
+          code: 'custom',
+          path: ['heroImageAlt'],
+          message: 'posts with a heroImage must set heroImageAlt',
+        });
+      }
     }),
 });
 
@@ -55,8 +80,28 @@ const apps = defineCollection({
         name: z.string(),
         tagline: z.string(),
         description: z.string(),
-        /** Full Marketplace listing title. Used in <title> and structured data. */
+        /** Full Marketplace listing title. Verbatim, so it stays English. */
         listingName: z.string().optional(),
+        /**
+         * Localised noun phrase naming the category, e.g. "Custom field audit
+         * for Jira". Carries the keyword in the <title> and the H1, both of
+         * which were the bare product name on five of six apps: nobody searches
+         * "Atelier". Localised, unlike listingName, which is the English
+         * Marketplace title and is identical in every locale.
+         */
+        descriptor: z.string().optional(),
+        /**
+         * The SERP title, capped so it survives with the brand token appended.
+         * Explicit rather than composed from name plus descriptor: "Expanded
+         * Macro Collection" is 25 characters on its own, so one formula cannot
+         * serve every app.
+         */
+        metaTitle: z.string().max(50).optional(),
+        /**
+         * The SERP snippet, capped. `description` also feeds
+         * SoftwareApplication.description, where length is an asset.
+         */
+        metaDescription: z.string().max(160).optional(),
         version: z.string().optional(),
         datePublished: z.coerce.date().optional(),
         dateModified: z.coerce.date().optional(),

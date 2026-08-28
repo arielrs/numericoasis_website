@@ -48,7 +48,11 @@ const arrow =
   '<path d="M5 12h14M13 5l7 7-7 7" />';
 ---
 
-<BaseLayout title={t.meta.title} description={t.meta.description}>
+<BaseLayout
+  title={t.meta.title}
+  description={t.meta.description}
+  metaDescription={t.meta.metaDescription}
+>
   <!-- 1. HERO: the company, not a product -->
   <section class="border-b border-sand-200 bg-sand-50">
     <div class="container-wide grid gap-14 py-16 sm:py-24 lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)] lg:items-center lg:gap-20">

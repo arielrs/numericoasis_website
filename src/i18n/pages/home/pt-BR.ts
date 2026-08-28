@@ -2,7 +2,9 @@ import type { HomeCopy } from './en';
 
 export const ptBR = {
   meta: {
-    title: 'Numeric Oasis Technologies',
+    title: 'Apps Forge para Jira e Confluence Cloud',
+    metaDescription:
+      'Parceira do Atlassian Marketplace, criando apps Forge para Jira e Confluence Cloud, com a atenção principal no OnBudget: orçamentos, previsões e custos.',
     description:
       'A Numeric Oasis é parceira no Atlassian Marketplace e constrói apps em Forge para Jira e Confluence Cloud. No momento, a maior parte da nossa atenção está no OnBudget, que transforma o trabalho já registrado no Jira em orçamentos, previsões e relatórios de custo.',
   },

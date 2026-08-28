@@ -3,6 +3,8 @@ lang: es
 translationKey: onbudget
 name: OnBudget
 listingName: "OnBudget - Cost Tracking & Budget Reports for Jira"
+descriptor: "Control de presupuesto e informes de costo para Jira"
+metaDescription: "Convierte el trabajo ya registrado en Jira en presupuestos, pronósticos e informes de costo. Presupuestado frente a real por proyecto, epic o equipo."
 version: "2.4.0"
 dateModified: 2026-08-19
 tagline: Control de presupuesto e informes de costo para Jira. Presupuestado frente a real, salud y pronóstico, a partir del trabajo que tu equipo ya registra.
@@ -45,7 +47,7 @@ problem:
   heading: Jira sabe qué pasó. No sabe cuánto costó.
   body: >-
     El trabajo ya está en Jira. El dinero está en una hoja de cálculo que alguien exporta el viernes y
-    que el lunes ya está desactualizada. Los equipos que no usan puntos de historia ni partes de horas,
+    que el lunes ya está desactualizada. Los equipos que no usan puntos de historia ni registros de horas,
     es decir la mayor parte de marketing, soporte y operaciones, ni siquiera aparecen en esa hoja.
   questions:
     - ¿Estamos por encima del presupuesto en esta épica, ahora mismo?
@@ -57,7 +59,7 @@ valueProps:
     body: Presupuestos de entrega, producto y marketing uno junto a otro, cada uno con su gasto, su pronóstico y su salud, en la moneda en que se definió.
     icon: "📊"
   - title: Valora la señal que tengas
-    body: Puntos de historia, horas registradas, un campo numérico o el simple recuento de elementos. Los equipos sin estimación y sin partes de horas no se quedan fuera.
+    body: Puntos de historia, horas registradas, un campo numérico o el simple recuento de elementos. Los equipos sin estimación y sin registros de horas no se quedan fuera.
     icon: "🎯"
   - title: Ningún número es una caja negra
     body: La fila de parámetros de cada informe muestra el alcance, el método y la moneda que hay detrás, y cualquier tramo de un gráfico abre los elementos correspondientes en Jira.
@@ -139,8 +141,7 @@ keyFeatures:
   - Inglés, portugués y español
 
 trustSignals:
-  - Runs on Atlassian
-  - Hecho en Forge
+  - Construido en Atlassian Forge
   - Acceso de solo lectura
   - Guarda solo la configuración del informe
   - Sin campos personalizados nuevos
@@ -182,6 +183,13 @@ faq:
       elementos que estén en los estados que elijas. Este es el caso habitual en marketing, soporte y
       operaciones, y el asistente te dice qué porcentaje de tus datos lleva cada señal antes de que elijas
       una.
+  - q: Ya registramos horas en otra app. ¿OnBudget la reemplaza?
+    a: >-
+      No, y tampoco lo intenta. Una app de registro de horas decide cómo se anotan las horas. OnBudget
+      lee lo que quedó en los worklogs de Jira y le pone precio, así que si tu equipo registra horas
+      con otra app que escribe en Jira, OnBudget cobra esos worklogs igual que cualquier otro. Y
+      tampoco los necesita: los puntos de historia, un campo numérico o el recuento de elementos de
+      trabajo sirven igual cuando nadie registra horas.
   - q: ¿Qué monedas admite, y OnBudget convierte entre ellas?
     a: >-
       Dieciocho monedas ISO, entre ellas USD, EUR, GBP y BRL. Cada informe se denomina en una sola moneda
@@ -195,7 +203,7 @@ faq:
   - q: ¿Dónde vive mi información?
     a: >-
       Dentro de Atlassian. OnBudget funciona por completo en Forge, tiene el distintivo Runs on Atlassian
-      y declara tres permisos de solo lectura. Guarda la configuración del informe y nunca el contenido de
+      y declara dos permisos de lectura sobre Jira más su propio almacenamiento. Guarda la configuración del informe y nunca el contenido de
       tus elementos de trabajo ni el resultado de un informe. Los identificadores de cuenta y de grupo
       pasan por hash antes de usarse como claves de almacenamiento, y desinstalar lo borra todo.
   - q: ¿Puedo exportar los números?

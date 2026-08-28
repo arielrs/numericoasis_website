@@ -2,8 +2,10 @@ import type { AppsIndexCopy } from './en';
 
 export const ptBR = {
   meta: {
-    title: 'Apps',
+    title: 'Todos os nossos apps para Jira e Confluence',
     crumb: 'Apps',
+    metaDescription:
+      'Nossos apps no Atlassian Marketplace, feitos em Forge para Jira e Confluence Cloud: relatórios de custo e orçamento, governança e administração diária.',
     description:
       'Apps da Numeric Oasis no Atlassian Marketplace, construídos em Forge para Jira e Confluence Cloud. Controle de orçamento, governança no Confluence, mapa de dependências, auditoria de configuração e limpeza de campos personalizados.',
   },
@@ -13,6 +15,12 @@ export const ptBR = {
   groups: {
     jira: 'Para o Jira',
     confluence: 'Para o Confluence',
+  },
+  cta: {
+    headline: 'Não sabe qual deles você precisa?',
+    body: 'Todo app pago tem período de teste gratuito no Atlassian Marketplace, e o gratuito não exige cadastro nenhum. Se preferir descrever o problema antes, conte pra gente: apontamos o app que resolve, ou dizemos que nenhum dos nossos resolve.',
+    primary: 'Fale com a gente',
+    secondary: 'Ver todos os nossos apps no Marketplace',
   },
   builtFor: 'Feito para',
   readMore: 'Saiba mais',

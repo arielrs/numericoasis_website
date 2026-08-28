@@ -3,7 +3,9 @@ import type { BlogCopy } from './en';
 export const es = {
   meta: {
     crumb: 'Blog',
-    title: 'Blog',
+    title: 'Costo, administración y gobernanza en Jira',
+    metaDescription:
+      'Apuntes sobre visibilidad de costos, gobernanza en Confluence y salud de la configuración de Jira, del equipo que construye apps del Marketplace.',
     description:
       'Apuntes sobre visibilidad de costos en Atlassian, gobernanza en Confluence y salud de la configuración de Jira, del equipo que construye apps del Atlassian Marketplace.',
   },
@@ -18,6 +20,8 @@ export const es = {
   tagPage: {
     eyebrow: 'Tema',
     headlinePrefix: 'Artículos etiquetados',
+    metaDescription: (label: string) =>
+      `Todos los posts con la etiqueta ${label}. Apuntes del equipo que construye apps del Atlassian Marketplace para Jira y Confluence Cloud.`,
     backToBlog: 'Todos los artículos',
     empty: 'Todavía no hay nada publicado sobre este tema.',
   },
@@ -32,6 +36,20 @@ export const es = {
     previous: 'Anterior',
     next: 'Siguiente',
     related: 'Lectura relacionada',
+    cta: {
+      onbudget: {
+        headline: '¿Quieres esto sin la hoja de cálculo?',
+        body: 'OnBudget convierte el trabajo que tu equipo ya registra en Jira en presupuestos, pronósticos e informes de costo. Sin campos personalizados nuevos, y lee en lugar de escribir.',
+        primary: 'Mira qué hace OnBudget',
+        secondary: 'Escríbenos',
+      },
+      general: {
+        headline: 'Construimos apps del Atlassian Marketplace.',
+        body: 'Apps en Forge para Jira y Confluence Cloud, que corren dentro de Atlassian y no al lado. Tus datos se quedan en tu tenancy y no hay un tercero al que evaluar.',
+        primary: 'Mira nuestras apps',
+        secondary: 'Escríbenos',
+      },
+    },
   },
   pagination: {
     label: 'Paginación',

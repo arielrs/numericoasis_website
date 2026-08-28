@@ -124,66 +124,73 @@
   }
 }
 
-.prose-custom {
-  --tw-prose-body: var(--color-ink-soft);
-  --tw-prose-headings: var(--color-ink);
-  --tw-prose-links: var(--color-water-700);
-}
+/*
+ * Everything below sits inside a cascade layer on purpose.
+ *
+ * Astro injects :where([data-astro-image]) { height: auto } at the very end of
+ * the bundle, outside every layer, and an unlayered declaration beats a layered
+ * one whatever the specificity. That made Tailwind height utilities inert on
+ * every <Image>, which is why one 96x93 app icon rendered short of its square
+ * neighbours without anyone spotting the cause. Size images with aspect-ratio,
+ * or with a width and let the height follow, rather than with a height utility,
+ * and keep new global rules inside a layer.
+ */
+@layer components {
+  .prose-custom h2 {
+    @apply mt-12 mb-4 text-2xl font-bold tracking-tight;
+  }
+  .prose-custom h3 {
+    @apply mt-8 mb-3 text-xl font-semibold tracking-tight;
+  }
+  .prose-custom p {
+    @apply my-4 leading-relaxed text-slate-700;
+  }
+  .prose-custom a {
+    @apply text-water-700 underline underline-offset-4 hover:text-water-600;
+  }
+  .prose-custom ul {
+    @apply my-4 list-disc pl-6 text-slate-700;
+  }
+  .prose-custom ol {
+    @apply my-4 list-decimal pl-6 text-slate-700;
+  }
+  .prose-custom li {
+    @apply my-1.5;
+  }
+  .prose-custom code {
+    @apply rounded bg-sand-100 px-1.5 py-0.5 text-sm text-brand-900;
+  }
+  .prose-custom pre {
+    @apply my-6 overflow-x-auto rounded-xl bg-brand-900 p-4 text-sm text-sand-50;
+  }
+  .prose-custom strong {
+    @apply font-semibold text-brand-900;
+  }
+  /* Comparison tables are one of the most extractable content shapes there is,
+     for readers and for answer engines alike, so they need to be legible. The
+     wrapper scrolls rather than letting a wide table push the page sideways. */
+  .prose-custom .table-scroll {
+    @apply my-8 overflow-x-auto;
+  }
+  .prose-custom table {
+    @apply w-full min-w-[34rem] border-collapse text-left text-sm;
+  }
+  .prose-custom thead tr {
+    @apply border-b border-sand-300;
+  }
+  .prose-custom th {
+    @apply py-3 pr-4 align-top text-xs font-semibold uppercase tracking-[0.1em] text-brand-700;
+  }
+  .prose-custom tbody tr {
+    @apply border-b border-sand-200;
+  }
+  .prose-custom td {
+    @apply py-3 pr-4 align-top leading-relaxed text-slate-700;
+  }
 
-.prose-custom h2 {
-  @apply mt-12 mb-4 text-2xl font-bold tracking-tight;
-}
-.prose-custom h3 {
-  @apply mt-8 mb-3 text-xl font-semibold tracking-tight;
-}
-.prose-custom p {
-  @apply my-4 leading-relaxed text-slate-700;
-}
-.prose-custom a {
-  @apply text-water-700 underline underline-offset-4 hover:text-water-600;
-}
-.prose-custom ul {
-  @apply my-4 list-disc pl-6 text-slate-700;
-}
-.prose-custom ol {
-  @apply my-4 list-decimal pl-6 text-slate-700;
-}
-.prose-custom li {
-  @apply my-1.5;
-}
-.prose-custom code {
-  @apply rounded bg-sand-100 px-1.5 py-0.5 text-sm text-brand-900;
-}
-.prose-custom pre {
-  @apply my-6 overflow-x-auto rounded-xl bg-brand-900 p-4 text-sm text-sand-50;
-}
-.prose-custom strong {
-  @apply font-semibold text-brand-900;
-}
-/* Comparison tables are one of the most extractable content shapes there is,
-   for readers and for answer engines alike, so they need to be legible. The
-   wrapper scrolls rather than letting a wide table push the page sideways. */
-.prose-custom .table-scroll {
-  @apply my-8 overflow-x-auto;
-}
-.prose-custom table {
-  @apply w-full min-w-[34rem] border-collapse text-left text-sm;
-}
-.prose-custom thead tr {
-  @apply border-b border-sand-300;
-}
-.prose-custom th {
-  @apply py-3 pr-4 align-top text-xs font-semibold uppercase tracking-[0.1em] text-brand-700;
-}
-.prose-custom tbody tr {
-  @apply border-b border-sand-200;
-}
-.prose-custom td {
-  @apply py-3 pr-4 align-top leading-relaxed text-slate-700;
-}
-
-.prose-custom blockquote {
-  @apply my-6 rounded-lg bg-sand-100 px-5 py-3 text-slate-700;
+  .prose-custom blockquote {
+    @apply my-6 rounded-lg bg-sand-100 px-5 py-3 text-slate-700;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

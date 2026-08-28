@@ -3,7 +3,9 @@ import type { ContactCopy } from './en';
 export const es = {
   meta: {
     crumb: 'Contacto',
-    title: 'Contacto',
+    title: 'Contáctanos y obtén soporte',
+    metaDescription:
+      'El soporte de todas las apps pasa por nuestro portal de Jira Service Management. Preventa, evaluación y alianzas van a contact@numericoasis.com.',
     description:
       'El soporte de todas las apps de Numeric Oasis pasa por nuestro portal de Jira Service Management. Las consultas de preventa, evaluación y alianzas van a contact@numericoasis.com. Atendemos en inglés, portugués y español.',
   },
@@ -26,11 +28,11 @@ export const es = {
     ],
   },
   sales: {
-    label: 'Evaluando, o dándole vueltas',
+    label: 'Evaluando, o todavía decidiendo',
     headline: 'La preventa la atiende una persona.',
     body: 'Dudas sobre si una app encaja, qué puede medir, cómo maneja los permisos, licenciamiento por volumen o alianzas: escríbenos. Respondemos en un día hábil.',
     cta: 'Escríbenos',
-    subject: 'Consulta sobre vuestras apps de Atlassian',
+    subject: 'Consulta sobre las apps de Numeric Oasis',
     includeTitle: 'Conviene mencionar',
     include: [
       'Qué app o qué problema quieres resolver',

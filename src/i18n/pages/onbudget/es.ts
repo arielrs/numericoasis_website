@@ -3,11 +3,12 @@ import type { OnBudgetCopy } from './en';
 export const es = {
   meta: {
     crumb: 'OnBudget',
-    title: 'OnBudget: control de presupuesto e informes de costo para Jira',
+    title: 'OnBudget: presupuesto e informes de costo en Jira',
   },
   hero: {
     eyebrow: 'App del Atlassian Marketplace para Jira Cloud',
-    headline: 'Control de presupuesto e informes de costo para Jira.',
+    headline: 'Presupuesto e informes de costo en Jira, para finanzas y PMO.',
+    lede: 'OnBudget convierte en dinero el trabajo que tu equipo ya registra en Jira. Antes que nada analiza una muestra de tus datos y te dice qué parte de tus elementos de trabajo lleva cada señal de costo, para que descubras que la cobertura de registros es baja antes de armar un presupuesto sobre ella.',
     ctaSecondary: 'Mira cómo se construye un informe',
   },
   problem: { eyebrow: 'El hueco' },
@@ -23,7 +24,7 @@ export const es = {
   dashboard: {
     eyebrow: 'Paneles',
     headline: 'El panel es tuyo para reorganizarlo.',
-    lede: 'Nueve tipos de gadget, cada uno con sus formatos de gráfico. Arrastra uno a otro hueco, redimensiónalo desde la esquina, clónalo, elimínalo, o cámbialo entre barra, línea, área, tarta, dona, tabla y número simple. Guarda el diseño cuando se lea como tú piensas.',
+    lede: 'Nueve tipos de gadget, cada uno con sus formatos de gráfico. Arrastra uno a otro hueco, redimensiónalo desde la esquina, clónalo, elimínalo, o cámbialo entre barra, línea, área, circular, de anillo, tabla y número simple. Guarda el diseño cuando se lea como tú piensas.',
   },
   sharing: {
     eyebrow: 'Compartir',
@@ -56,7 +57,7 @@ export const es = {
     secondary: 'Hacernos una pregunta',
   },
   alsoSee: {
-    eyebrow: 'También nuestras',
+    eyebrow: 'Nuestras otras apps',
     headline: 'El resto de lo que hacemos.',
     link: 'Ver todas nuestras apps',
   },

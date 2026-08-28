@@ -64,6 +64,14 @@ const author = authorFor(post.data.author, lang);
 const allPosts = await getCollection('blog', ({ data }) => !data.draft);
 const related = relatedPosts(post, allPosts);
 
+// A post about what Jira work costs has an obvious next step. A post about a
+// conference does not, and pointing one at OnBudget would be a non sequitur.
+const wantsOnBudget = post.data.tags.some(
+  (tag: BlogTag) => tag === 'onbudget' || tag === 'jira-cost-management',
+);
+const cta = wantsOnBudget ? t.post.cta.onbudget : t.post.cta.general;
+const ctaHref = withLocale(lang, wantsOnBudget ? '/onbudget/' : '/apps/');
+
 const postUrl = new URL(withLocale(lang, `/blog/${slug}/`), SITE.url).toString();
 const blogUrl = new URL(withLocale(lang, '/blog/'), SITE.url).toString();
 
@@ -122,8 +130,9 @@ const navCardClass =
 ---
 
 <BaseLayout
-  title={post.data.title}
+  title={post.data.metaTitle ?? post.data.title}
   description={post.data.description}
+  metaDescription={post.data.metaDescription}
   image={post.data.heroImage}
   article={{
     publishedTime: post.data.pubDate.toISOString(),
@@ -195,7 +204,7 @@ const navCardClass =
       <div class="container-wide mt-10 sm:mt-14">
         <Image
           src={post.data.heroImage}
-          alt=""
+          alt={post.data.heroImageAlt ?? ''}
           width={1200}
           sizes="(min-width: 1280px) 1200px, 100vw"
           class="w-full rounded-3xl ring-1 ring-sand-200"
@@ -206,6 +215,19 @@ const navCardClass =
 
     <div class="container-prose prose-custom py-14 sm:py-16">
       <Content />
+    </div>
+
+    <div class="container-prose pb-14">
+      <div class="rounded-3xl bg-brand-900 p-8 sm:p-10">
+        <h2 class="font-display text-2xl font-bold tracking-tight text-white sm:text-3xl">
+          {cta.headline}
+        </h2>
+        <p class="mt-3 max-w-2xl text-base leading-relaxed text-brand-100">{cta.body}</p>
+        <div class="mt-6 flex flex-wrap gap-3">
+          <a href={ctaHref} class="btn-cta">{cta.primary}</a>
+          <a href={withLocale(lang, '/contact/')} class="btn-secondary !bg-paper">{cta.secondary}</a>
+        </div>
+      </div>
     </div>
 
     <div class="container-prose pb-14">
@@ -230,7 +252,12 @@ const navCardClass =
       <section class="border-t border-sand-200 py-14 sm:py-20">
         <div class="container-wide">
           <h2 class="font-display text-2xl font-bold tracking-tight text-brand-900">{t.post.related}</h2>
-          <div class="mt-8 grid gap-6 md:grid-cols-3">
+          <div
+            class:list={[
+              'mt-8 grid gap-6',
+              related.length === 1 ? 'sm:max-w-md' : related.length === 2 ? 'md:grid-cols-2' : 'md:grid-cols-3',
+            ]}
+          >
             {related.map((item) => (
               <PostCard post={item} lang={lang} />
             ))}

@@ -19,7 +19,10 @@ import {
 
 interface Props {
   title: string;
+  /** Long form. Feeds the structured data, where length is an asset. */
   description?: string;
+  /** Capped at ~160 characters, for the SERP snippet. Falls back to the above. */
+  metaDescription?: string;
   /** An imported asset (preferred, so real dimensions are used) or a path into public/. */
   image?: ImageMetadata | string;
   article?: {
@@ -40,7 +43,7 @@ interface Props {
   };
 }
 
-const { title, description, image, article, noindex, alternates, graph = {} } = Astro.props;
+const { title, description, metaDescription, image, article, noindex, alternates, graph = {} } = Astro.props;
 const lang = detectLangFromPath(Astro.url.pathname);
 const t = useTranslations(lang);
 
@@ -80,7 +83,7 @@ const jsonLd = buildGraph({
     />
     <SEO
       title={title}
-      description={description}
+      description={metaDescription ?? description}
       ogImage={ogImage}
       article={article}
       noindex={noindex}

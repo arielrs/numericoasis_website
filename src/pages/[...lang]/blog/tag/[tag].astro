@@ -67,6 +67,7 @@ const itemList: JsonLdNode = {
 <BaseLayout
   title={`${t.tagPage.headlinePrefix} ${label}`}
   description={`${t.tagPage.headlinePrefix} ${label}. ${t.meta.description}`}
+  metaDescription={t.tagPage.metaDescription(label)}
   graph={{
     breadcrumbs: [
       { name: t.meta.crumb, path: '/blog/' },

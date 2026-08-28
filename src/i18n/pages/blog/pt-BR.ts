@@ -3,7 +3,9 @@ import type { BlogCopy } from './en';
 export const ptBR = {
   meta: {
     crumb: 'Blog',
-    title: 'Blog',
+    title: 'Custo, administração e governança no Jira',
+    metaDescription:
+      'Anotações sobre visibilidade de custos, governança no Confluence e saúde da configuração do Jira, do time que constrói apps no Atlassian Marketplace.',
     description:
       'Anotações sobre visibilidade de custos na Atlassian, governança no Confluence e saúde da configuração do Jira, do time que constrói apps no Atlassian Marketplace.',
   },
@@ -18,6 +20,8 @@ export const ptBR = {
   tagPage: {
     eyebrow: 'Tema',
     headlinePrefix: 'Posts marcados com',
+    metaDescription: (label: string) =>
+      `Todos os posts com a tag ${label}. Anotações do time que constrói apps do Atlassian Marketplace para Jira e Confluence Cloud.`,
     backToBlog: 'Todos os posts',
     empty: 'Nada publicado sobre este tema ainda.',
   },
@@ -32,6 +36,20 @@ export const ptBR = {
     previous: 'Anterior',
     next: 'Próximo',
     related: 'Leitura relacionada',
+    cta: {
+      onbudget: {
+        headline: 'Quer isso sem a planilha?',
+        body: 'O OnBudget transforma o trabalho que seu time já registra no Jira em orçamentos, previsões e relatórios de custo. Sem campos personalizados novos, e ele lê em vez de escrever.',
+        primary: 'Veja o que o OnBudget faz',
+        secondary: 'Fale com a gente',
+      },
+      general: {
+        headline: 'A gente constrói apps do Atlassian Marketplace.',
+        body: 'Apps em Forge para Jira e Confluence Cloud, rodando dentro da Atlassian em vez de ao lado dela. Seus dados ficam na sua tenancy e não há terceiro para avaliar.',
+        primary: 'Veja nossos apps',
+        secondary: 'Fale com a gente',
+      },
+    },
   },
   pagination: {
     label: 'Paginação',

@@ -3,7 +3,9 @@ import type { AboutCopy } from './en';
 export const ptBR = {
   meta: {
     crumb: 'Sobre',
-    title: 'Sobre',
+    title: 'Sobre nós, e o que cada app guarda',
+    metaDescription:
+      'Quem constrói nossos apps do Atlassian Marketplace, como eles são feitos em Forge e o que exatamente cada app guarda. Escrito para a revisão de segurança.',
     description:
       'A Numeric Oasis é parceira no Atlassian Marketplace e constrói apps em Forge para Jira e Confluence Cloud, de Canoas, no Brasil. Como construímos, o que cada app guarda e como falar com a gente.',
   },

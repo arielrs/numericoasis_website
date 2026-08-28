@@ -1,7 +1,9 @@
 export const en = {
   meta: {
     crumb: 'About',
-    title: 'About',
+    title: 'About us, and what each app stores',
+    metaDescription:
+      'Who builds our Atlassian Marketplace apps, how they are built on Forge, and exactly what each app stores. Written for the security review, not the pitch.',
     description:
       'Numeric Oasis is a partner in the Atlassian Marketplace, building Forge apps for Jira and Confluence Cloud from Canoas, Brazil. How we build, what each app stores, and how to reach us.',
   },

@@ -3,7 +3,6 @@ export const en = {
   eyebrow: 'Atlassian Marketplace app',
   install: 'Install on the Atlassian Marketplace',
   installShort: 'Install from the Marketplace',
-  support: 'Get support',
   docs: 'Documentation',
   talkToUs: 'Ask us a question',
   valueProps: {
@@ -12,7 +11,7 @@ export const en = {
   },
   features: {
     eyebrow: 'Key features',
-    headline: "Everything you need, nothing you don't.",
+    headline: 'What is in the app.',
   },
   audiences: {
     eyebrow: 'Built for',

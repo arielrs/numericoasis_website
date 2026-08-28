@@ -1,7 +1,9 @@
 export const en = {
   meta: {
     crumb: 'Contact',
-    title: 'Contact',
+    title: 'Contact us and get support',
+    metaDescription:
+      'Support for every Numeric Oasis app goes through our Jira Service Management portal. Pre-sales and partnership enquiries go to contact@numericoasis.com.',
     description:
       'Support for every Numeric Oasis app goes through our Jira Service Management portal. Pre-sales, evaluation and partnership enquiries go to contact@numericoasis.com. Answered in English, Portuguese and Spanish.',
   },

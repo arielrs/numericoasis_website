@@ -3,7 +3,8 @@ import type { Shape } from './shape';
 export const en = {
   site: {
     description:
-      'Numeric Oasis is a partner in the Atlassian Marketplace. We build Forge apps for Jira and Confluence Cloud: budget and cost reporting, Confluence governance, dependency mapping, configuration auditing and custom field cleanup.',
+      'Numeric Oasis is a partner in the Atlassian Marketplace. We build Forge apps for Jira and Confluence Cloud: cost and budget reporting, governance and compliance, and the administration work of keeping a growing site clean.',
+    location: 'Canoas, RS, Brazil',
   },
   nav: {
     apps: 'Apps',
@@ -39,7 +40,9 @@ export const en = {
     priceFree: 'Free',
     pricePaid: 'Paid, see the Marketplace',
     installOnMarketplace: 'Install on the Atlassian Marketplace',
+    viewOnMarketplace: 'View on the Marketplace',
     builtFor: 'Built for:',
+    runsOnAtlassian: 'Runs on Atlassian',
   },
   common: {
     home: 'Home',
