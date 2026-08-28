@@ -16,9 +16,11 @@ import { contentSlug, withLocale, type Locale } from '../i18n';
 interface Props {
   post: CollectionEntry<'blog'>;
   lang: Locale;
+  /** Opt in to the scroll reveal. Off by default. */
+  reveal?: boolean;
 }
 
-const { post, lang } = Astro.props;
+const { post, lang, reveal = false } = Astro.props;
 
 // Frontmatter dates are date-only, so they parse as UTC midnight. Formatting
 // them in the build machine's zone shifts anything west of Greenwich back a day,
@@ -34,7 +36,12 @@ const dateFmt = new Intl.DateTimeFormat(lang === 'en' ? 'en-US' : lang, {
 
 <a
   href={withLocale(lang, `/blog/${contentSlug(post.id)}/`)}
-  class="group flex flex-col overflow-hidden rounded-2xl border border-sand-200 bg-paper transition duration-150 hover:-translate-y-0.5 hover:border-water-400 hover:shadow-[var(--shadow-soft)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sun-500"
+  class:list={[
+    'group flex flex-col overflow-hidden rounded-2xl border border-sand-200 bg-paper',
+    'transition duration-200 ease-out-soft hover:-translate-y-1 hover:border-water-400 hover:shadow-[var(--shadow-soft)]',
+    'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sun-500',
+    reveal && 'reveal',
+  ]}
 >
   {post.data.heroImage && (
     <Image

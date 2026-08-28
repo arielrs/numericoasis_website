@@ -65,7 +65,7 @@ const linkLabel = (key: (typeof NAV_LINKS)[number]['labelKey']) => t.nav[key];
     <button
       type="button"
       id="nav-toggle"
-      class="inline-flex h-10 w-10 items-center justify-center rounded-lg text-brand-700 hover:bg-sand-100 md:hidden"
+      class="inline-flex h-10 w-10 items-center justify-center rounded-lg text-brand-700 transition duration-200 ease-out-soft hover:bg-sand-100 md:hidden"
       aria-label={t.nav.toggleMenu}
       aria-expanded="false"
       aria-controls="mobile-menu"

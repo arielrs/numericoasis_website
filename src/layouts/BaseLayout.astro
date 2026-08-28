@@ -69,6 +69,13 @@ const jsonLd = buildGraph({
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="generator" content={Astro.generator} />
+    <!-- Scroll reveals hide their content, so the rule that hides it is gated
+         behind this class. It is set here, inline and before any paint, so
+         there is no flash of already-visible content; and it is set by script,
+         so a reader with JavaScript off never gets the hidden state at all. -->
+    <script is:inline>
+      document.documentElement.classList.add('js-motion');
+    </script>
     <!-- The favicon used to point at a 442x468, 208KB PNG, which was 51 to 76
          percent of every cold page load and, being non-square, would have been
          squashed as an iOS home-screen icon. -->
@@ -111,5 +118,65 @@ const jsonLd = buildGraph({
     </main>
     <Footer lang={lang} />
     <LocaleSuggestion currentLang={lang} alternates={alternates} />
+
+    <script>
+      /**
+       * One observer for every reveal on every page.
+       *
+       * Elements marked `.reveal` gain `.is-visible` when they come within
+       * 10% of the viewport bottom, and are then unobserved: a reveal is a
+       * one-way trip, so nothing re-hides on the way back up.
+       *
+       * Siblings inside a `[data-reveal-group]` stagger 70ms apart, capped at
+       * six steps so a long list does not end with a half-second wait. The
+       * delay is a custom property rather than a class, so the reduced-motion
+       * block can zero every one of them with a single rule.
+       *
+       * Failure is safe by construction. If IntersectionObserver is missing,
+       * or this script throws, everything is revealed immediately.
+       */
+      const groups = Array.from(document.querySelectorAll<HTMLElement>('[data-reveal-group]'));
+
+      // Two ways in, matching the two CSS selectors: an element marked
+      // `.reveal` itself, or any direct child of a marked group. The group form
+      // means a section only has to tag its wrapper, and the children still
+      // arrive one after another.
+      const nodes = Array.from(
+        new Set([
+          ...document.querySelectorAll<HTMLElement>('.reveal'),
+          ...groups.flatMap((g) => Array.from(g.children) as HTMLElement[]),
+        ]),
+      );
+
+      const showAll = () => nodes.forEach((el) => el.classList.add('is-visible'));
+
+      if (!('IntersectionObserver' in window)) {
+        showAll();
+      } else {
+        for (const group of groups) {
+          Array.from(group.children).forEach((el, i) => {
+            (el as HTMLElement).style.setProperty('--reveal-delay', `${Math.min(i, 5) * 70}ms`);
+          });
+        }
+
+        const observer = new IntersectionObserver(
+          (entries) => {
+            for (const entry of entries) {
+              if (!entry.isIntersecting) continue;
+              entry.target.classList.add('is-visible');
+              observer.unobserve(entry.target);
+            }
+          },
+          { rootMargin: '0px 0px -10% 0px', threshold: 0 },
+        );
+
+        nodes.forEach((el) => observer.observe(el));
+
+        // A backstop for anything the observer never reports on, which can
+        // happen if a container is display:none at load or the page is
+        // restored from bfcache mid-scroll.
+        window.setTimeout(showAll, 4000);
+      }
+    </script>
   </body>
 </html>

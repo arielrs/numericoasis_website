@@ -28,9 +28,11 @@ interface Props {
   };
   /** The app we are currently pushing spans its row. No label, just more room. */
   wide?: boolean;
+  /** Opt in to the scroll reveal. Off by default so a card can render statically. */
+  reveal?: boolean;
 }
 
-const { app, lang, labels, wide = false } = Astro.props;
+const { app, lang, labels, wide = false, reveal = false } = Astro.props;
 const t = useTranslations(lang);
 
 // An app with its own landing page links there, not to /apps/<slug>/.
@@ -43,7 +45,8 @@ const focusRing =
 <article
   class:list={[
     'group relative flex flex-col justify-between rounded-2xl border border-sand-200 bg-paper p-8',
-    'transition duration-150 hover:-translate-y-0.5 hover:border-water-400 hover:shadow-[var(--shadow-soft)]',
+    'transition duration-200 ease-out-soft hover:-translate-y-1 hover:border-water-400 hover:shadow-[var(--shadow-soft)]',
+    reveal && 'reveal',
     wide && 'md:col-span-2',
   ]}
 >
@@ -98,7 +101,7 @@ const focusRing =
     )}
     <a
       href={href}
-      class:list={['ml-auto rounded-sm text-slate-500 transition after:absolute after:inset-0 group-hover:text-water-700', focusRing]}
+      class:list={['ml-auto rounded-sm text-slate-500 transition duration-200 ease-out-soft after:absolute after:inset-0 group-hover:text-water-700', focusRing]}
       aria-label={`${labels.readMore}: ${app.data.name}`}
     >
       {labels.readMore}

@@ -99,9 +99,9 @@ const itemList: JsonLdNode = {
       {posts.length === 0 ? (
         <p class="text-base text-slate-600">{t.tagPage.empty}</p>
       ) : (
-        <div class="grid gap-6 md:grid-cols-3">
+        <div class="grid gap-6 md:grid-cols-3" data-reveal-group>
           {posts.map((post) => (
-            <PostCard post={post} lang={lang} />
+            <PostCard post={post} lang={lang} reveal />
           ))}
         </div>
       )}

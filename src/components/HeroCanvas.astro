@@ -1,0 +1,167 @@
+---
+/**
+ * The hero background: water and light.
+ *
+ * Layered sine waves drifting horizontally at different speeds, under a soft
+ * radial glow. The motif comes from the logo, which is a rising sun over water,
+ * and the colours are the tokens named after it: water, deep and sun. It is
+ * deliberately not a particle network. The nearest competitor uses one, our
+ * names already collide, and an oasis is not a neural net.
+ *
+ * Decorative only. It is aria-hidden, it takes no pointer events, and every
+ * word in the hero is readable with the canvas absent, blocked or unpainted.
+ *
+ * Three behaviours matter more than the drawing:
+ *   - the loop stops when the hero leaves the viewport
+ *   - the loop stops when the tab is hidden
+ *   - reduced motion damps amplitude and speed rather than stopping it, which
+ *     is the setting chosen for this site
+ */
+---
+
+<canvas
+  data-hero-canvas
+  aria-hidden="true"
+  class="pointer-events-none absolute inset-0 h-full w-full"
+></canvas>
+
+<script>
+  const canvas = document.querySelector<HTMLCanvasElement>('[data-hero-canvas]');
+  const context = canvas?.getContext('2d');
+
+  if (canvas && context) {
+    const ctx = context;
+    const host = canvas.parentElement ?? canvas;
+
+    /**
+     * Each band is one wave: vertical position, amplitude, speed, wavelength,
+     * colour and alpha.
+     *
+     * Every band fills from its own crest down to the bottom edge, so the
+     * alphas compound where they overlap. Three at 0.3 stack to nearly 0.6,
+     * which paints a slab rather than water. These are tuned so the deepest
+     * overlap lands near 0.3, and they sit low enough that no crest reaches
+     * the lede on a short desktop hero.
+     */
+    const BANDS = [
+      { y: 0.76, amp: 18, speed: 0.00022, len: 0.0042, color: [114, 200, 190], alpha: 0.14 },
+      { y: 0.85, amp: 14, speed: -0.00031, len: 0.0060, color: [72, 152, 190], alpha: 0.12 },
+      { y: 0.94, amp: 22, speed: 0.00016, len: 0.0031, color: [40, 96, 140], alpha: 0.1 },
+    ];
+
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+    // Damped, not stopped. Amplitude and speed both fall; the motion stays.
+    let calm = reduced.matches ? 0.45 : 1;
+    let speedScale = reduced.matches ? 0.4 : 1;
+
+    let width = 0;
+    let height = 0;
+    let frame = 0;
+    let onScreen = true;
+
+    const resize = () => {
+      const rect = host.getBoundingClientRect();
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      width = Math.max(1, Math.round(rect.width));
+      height = Math.max(1, Math.round(rect.height));
+      canvas.width = Math.round(width * dpr);
+      canvas.height = Math.round(height * dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    };
+
+    const draw = (time: number) => {
+      ctx.clearRect(0, 0, width, height);
+
+      // The sun: a soft glow in the upper right, well away from the headline.
+      const glow = ctx.createRadialGradient(
+        width * 0.78,
+        height * 0.12,
+        0,
+        width * 0.78,
+        height * 0.12,
+        Math.max(width, height) * 0.7,
+      );
+      glow.addColorStop(0, 'rgba(240, 170, 55, 0.22)');
+      glow.addColorStop(0.55, 'rgba(240, 170, 55, 0.06)');
+      glow.addColorStop(1, 'rgba(240, 170, 55, 0)');
+      ctx.fillStyle = glow;
+      ctx.fillRect(0, 0, width, height);
+
+      for (const band of BANDS) {
+        const baseline = height * band.y;
+        const amp = band.amp * calm;
+        const phase = time * band.speed * speedScale;
+
+        ctx.beginPath();
+        ctx.moveTo(0, height);
+        ctx.lineTo(0, baseline + Math.sin(phase) * amp);
+
+        // 12px steps: finer than the eye resolves at this amplitude, and cheap.
+        for (let x = 0; x <= width; x += 12) {
+          const y = baseline + Math.sin(x * band.len + phase) * amp;
+          ctx.lineTo(x, y);
+        }
+
+        ctx.lineTo(width, height);
+        ctx.closePath();
+
+        const [r, g, b] = band.color;
+        ctx.fillStyle = `rgba(${r}, ${g}, ${b}, ${band.alpha})`;
+        ctx.fill();
+      }
+    };
+
+    const loop = (time: number) => {
+      draw(time);
+      frame = window.requestAnimationFrame(loop);
+    };
+
+    const start = () => {
+      if (frame) return;
+      frame = window.requestAnimationFrame(loop);
+    };
+
+    const stop = () => {
+      if (!frame) return;
+      window.cancelAnimationFrame(frame);
+      frame = 0;
+    };
+
+    const sync = () => {
+      if (onScreen && document.visibilityState === 'visible') start();
+      else stop();
+    };
+
+    resize();
+    draw(0);
+
+    // Off-screen and hidden tabs cost nothing. A decorative background has no
+    // business burning a phone battery behind a page nobody is looking at.
+    new IntersectionObserver(
+      ([entry]) => {
+        onScreen = entry.isIntersecting;
+        sync();
+      },
+      { threshold: 0 },
+    ).observe(host);
+
+    document.addEventListener('visibilitychange', sync);
+
+    let resizeTimer = 0;
+    window.addEventListener('resize', () => {
+      window.clearTimeout(resizeTimer);
+      resizeTimer = window.setTimeout(() => {
+        resize();
+        if (!frame) draw(0);
+      }, 150);
+    });
+
+    reduced.addEventListener('change', (event) => {
+      calm = event.matches ? 0.45 : 1;
+      speedScale = event.matches ? 0.4 : 1;
+    });
+
+    sync();
+  }
+</script>

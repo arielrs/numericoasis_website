@@ -70,6 +70,24 @@ for (const viewport of VIEWPORTS) {
       continue;
     }
 
+    // Settle the scroll reveals before scanning.
+    //
+    // axe reads computed style, so an element still at opacity 0 waiting for
+    // an IntersectionObserver would be judged as invisible text and fail
+    // colour contrast. Scrolling to the bottom and back triggers every
+    // observer, which also makes this a truer audit: it measures the page a
+    // reader actually ends up looking at, not just its first screen.
+    await page.evaluate(async () => {
+      const step = window.innerHeight * 0.8;
+      for (let y = 0; y < document.body.scrollHeight; y += step) {
+        window.scrollTo(0, y);
+        await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
+      }
+      window.scrollTo(0, 0);
+    });
+    // Long enough for the 700ms reveal transition to finish everywhere.
+    await page.waitForTimeout(1200);
+
     // On mobile, open the menu so its contents are actually in the tree.
     if (viewport.name === 'mobile') {
       const toggle = page.locator('[aria-controls="mobile-menu"], button[aria-expanded]').first();

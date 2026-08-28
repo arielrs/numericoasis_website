@@ -218,7 +218,7 @@ const softwareNode: JsonLdNode = {
             {t.valueProps.headline}
           </h2>
         </div>
-        <div class="mt-12 grid gap-6 md:grid-cols-2">
+        <div class="mt-12 grid gap-6 md:grid-cols-2" data-reveal-group>
           {d.valueProps.map((vp, i) => (
             <article
               class:list={[
@@ -306,7 +306,7 @@ const softwareNode: JsonLdNode = {
             {d.name} {t.gallery.headlineSuffix}
           </h2>
         </div>
-        <ul class="mt-12 grid gap-6 md:grid-cols-2">
+        <ul class="mt-12 grid gap-6 md:grid-cols-2" data-reveal-group>
           {d.screenshots.map((shot, i) => (
             <li class:list={[i === 0 && d.screenshots.length > 1 ? 'md:col-span-2' : '']}>
               <button
@@ -371,7 +371,7 @@ const softwareNode: JsonLdNode = {
   <!-- FINAL CTA -->
   <section class="pb-16 sm:pb-24">
     <div class="container-wide">
-      <div class="rounded-3xl bg-brand-900 p-10 sm:p-16">
+      <div class="reveal rounded-3xl bg-brand-900 p-10 sm:p-16">
         <div class="max-w-2xl">
           <h2 class="font-display text-3xl font-bold tracking-tight text-white sm:text-4xl">
             {t.cta.headlinePrefix} {d.name}?

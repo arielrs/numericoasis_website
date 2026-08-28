@@ -66,6 +66,44 @@
 
   --shadow-soft: 0 1px 2px 0 rgb(9 28 50 / 0.04), 0 8px 24px -8px rgb(9 28 50 / 0.10);
   --shadow-glow: 0 0 0 1px rgb(237 146 26 / 0.25), 0 8px 32px -8px rgb(237 146 26 / 0.45);
+
+  /* Motion.
+     Tailwind 4 generates utilities from these, so `ease-out-soft`,
+     `animate-float` and `animate-sheen` are real classes once declared here.
+     Before this block the whole site had one duration (150ms) and one easing,
+     which is why everything snapped rather than moved.
+
+     out-soft is a strong ease-out: most of the distance is covered early, so a
+     reveal reads as arriving rather than sliding. in-out-soft is symmetric and
+     only used by the looping float. */
+  --ease-out-soft: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out-soft: cubic-bezier(0.65, 0, 0.35, 1);
+
+  --animate-float: float 7s var(--ease-in-out-soft) infinite;
+  --animate-sheen: sheen 900ms var(--ease-out-soft) 1;
+
+  /* Read by the float keyframe so reduced motion can shorten the travel
+     without needing a second set of keyframes. */
+  --float-travel: -8px;
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(var(--float-travel));
+  }
+}
+
+@keyframes sheen {
+  from {
+    background-position: -150% 0;
+  }
+  to {
+    background-position: 250% 0;
+  }
 }
 
 /* Astro's image `responsiveStyles` injects `:where([data-astro-image]){height:auto}`
@@ -121,6 +159,55 @@
   }
   .eyebrow {
     @apply text-xs font-semibold uppercase tracking-[0.18em] text-water-700;
+  }
+
+  /*
+   * Scroll reveal.
+   *
+   * The hidden state is gated behind .js-motion, which BaseLayout sets on
+   * <html> from an inline script in <head>. With JavaScript off, blocked, or
+   * simply broken, none of these rules match and every page renders exactly as
+   * it did before this file gained a reveal at all. That matters more than the
+   * animation does: a reveal that fails closed is a blank page, and axe reads
+   * computed style, so text left at opacity 0 fails colour contrast and blocks
+   * the deploy.
+   *
+   * Only transform and opacity are animated. Neither triggers layout, so CLS
+   * stays at zero.
+   */
+  .js-motion .reveal,
+  .js-motion [data-reveal-group] > * {
+    opacity: 0;
+    transform: translateY(24px);
+    transition:
+      opacity 700ms var(--ease-out-soft) var(--reveal-delay, 0ms),
+      transform 700ms var(--ease-out-soft) var(--reveal-delay, 0ms);
+  }
+
+  .js-motion .reveal.is-visible,
+  .js-motion [data-reveal-group] > .is-visible {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* A one-pass highlight that crosses the button on hover. The gradient is
+     painted over the existing background rather than replacing it, so the
+     button keeps its colour and its contrast ratio throughout. */
+  .btn-cta {
+    background-image: linear-gradient(
+      110deg,
+      transparent 25%,
+      rgb(255 255 255 / 0.45) 48%,
+      rgb(255 255 255 / 0.45) 52%,
+      transparent 75%
+    );
+    background-size: 250% 100%;
+    background-position: -150% 0;
+    background-repeat: no-repeat;
+  }
+
+  .btn-cta:hover {
+    animation: var(--animate-sheen);
   }
 }
 
@@ -204,6 +291,39 @@
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+    animation-delay: 0ms !important;
+    transition-delay: 0ms !important;
     scroll-behavior: auto !important;
+  }
+
+  /*
+   * Damped, not stopped.
+   *
+   * The blanket rule above is the safety net and stays. These three are the
+   * only carve-outs, all decorative, all small amplitude, and all still
+   * running so the site keeps some character for people who asked their
+   * operating system to calm it down.
+   *
+   * The reveal is deliberately NOT in this list. A damped reveal is still an
+   * element sitting at opacity 0 waiting on a scroll event, and if the event
+   * never arrives the words are gone. The blanket rule above collapses it to
+   * effectively instant, which is the behaviour we want: content appears, it
+   * just does not travel to get there.
+   */
+  .js-motion .animate-float {
+    --float-travel: -3px;
+    animation-duration: 14s !important;
+    animation-iteration-count: infinite !important;
+  }
+
+  .js-motion .btn-cta:hover {
+    animation-duration: 1600ms !important;
+  }
+
+  .js-motion a,
+  .js-motion button,
+  .js-motion .group,
+  .js-motion [class*='hover:'] {
+    transition-duration: 120ms !important;
   }
 }

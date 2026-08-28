@@ -218,7 +218,7 @@ const navCardClass =
     </div>
 
     <div class="container-prose pb-14">
-      <div class="rounded-3xl bg-brand-900 p-8 sm:p-10">
+      <div class="reveal rounded-3xl bg-brand-900 p-8 sm:p-10">
         <h2 class="font-display text-2xl font-bold tracking-tight text-white sm:text-3xl">
           {cta.headline}
         </h2>
@@ -259,7 +259,7 @@ const navCardClass =
             ]}
           >
             {related.map((item) => (
-              <PostCard post={item} lang={lang} />
+              <PostCard post={item} lang={lang} reveal />
             ))}
           </div>
         </div>
