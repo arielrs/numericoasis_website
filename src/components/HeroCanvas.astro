@@ -16,6 +16,11 @@
  *   - the loop stops when the tab is hidden
  *   - reduced motion damps amplitude and speed rather than stopping it, which
  *     is the setting chosen for this site
+ *
+ * The pointer lights the water rather than pushing it around. Glints and waves
+ * near the cursor brighten, and the surface swells slightly beneath it. Nothing
+ * is attracted to the cursor and nothing chases it, which is the difference
+ * between an effect that feels like light and one that feels like a toy.
  */
 ---
 
@@ -49,6 +54,48 @@
       { y: 0.94, amp: 22, speed: 0.00016, len: 0.0031, color: [40, 96, 140], alpha: 0.1 },
     ];
 
+    /**
+     * Light on the surface. Weighted low so they read as glints on water rather
+     * than stars in a warm daytime sky, with a few above the waterline for the
+     * haze over it.
+     *
+     * Seeded from a plain counter, not Math.random at module scope, so the
+     * layout is identical on every load and a screenshot diff stays meaningful.
+     */
+    const GLINTS = Array.from({ length: 34 }, (_, i) => {
+      const n = (i * 2654435761) % 4294967296;
+      const a = (n % 1000) / 1000;
+      const b = ((n >> 10) % 1000) / 1000;
+      const c = ((n >> 20) % 1000) / 1000;
+      return {
+        x: a,
+        // Two thirds sit below 0.6 of the height, where the water is.
+        y: c < 0.66 ? 0.6 + b * 0.38 : b * 0.55,
+        size: 1.1 + c * 2.4,
+        drift: 6 + b * 14,
+        speed: 0.00006 + a * 0.00009,
+        phase: a * Math.PI * 2,
+        twinkle: 0.7 + b * 1.6,
+        base: 0.3 + c * 0.42,
+      };
+    });
+
+    /** One sprite, blitted 34 times a frame. Building 34 radial gradients per
+     *  frame instead is the usual way a canvas like this gets expensive. */
+    const sprite = document.createElement('canvas');
+    const SPRITE_R = 16;
+    sprite.width = SPRITE_R * 2;
+    sprite.height = SPRITE_R * 2;
+    const spriteCtx = sprite.getContext('2d');
+    if (spriteCtx) {
+      const g = spriteCtx.createRadialGradient(SPRITE_R, SPRITE_R, 0, SPRITE_R, SPRITE_R, SPRITE_R);
+      g.addColorStop(0, 'rgba(226, 152, 44, 1)');
+      g.addColorStop(0.3, 'rgba(232, 170, 70, 0.5)');
+      g.addColorStop(1, 'rgba(236, 186, 110, 0)');
+      spriteCtx.fillStyle = g;
+      spriteCtx.fillRect(0, 0, sprite.width, sprite.height);
+    }
+
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
 
     // Damped, not stopped. Amplitude and speed both fall; the motion stays.
@@ -59,6 +106,14 @@
     let height = 0;
     let frame = 0;
     let onScreen = true;
+
+    // Where the pointer is, and where the light has caught up to. The light
+    // lerps toward the pointer each frame so it trails a little; snapping it to
+    // the exact cursor position is what makes this kind of effect feel cheap.
+    const pointer = { x: -9999, y: -9999, live: false };
+    const light = { x: -9999, y: -9999, amount: 0 };
+
+    const clamp01 = (v: number) => (v < 0 ? 0 : v > 1 ? 1 : v);
 
     const resize = () => {
       const rect = host.getBoundingClientRect();
@@ -88,6 +143,21 @@
       ctx.fillStyle = glow;
       ctx.fillRect(0, 0, width, height);
 
+      // The light trails the pointer. `amount` fades the whole interaction in
+      // and out, so leaving the hero dims it rather than cutting it.
+      const target = pointer.live ? 1 : 0;
+      light.amount += (target - light.amount) * 0.06;
+      if (pointer.live) {
+        if (light.x < -9000) {
+          light.x = pointer.x;
+          light.y = pointer.y;
+        } else {
+          light.x += (pointer.x - light.x) * 0.08;
+          light.y += (pointer.y - light.y) * 0.08;
+        }
+      }
+      const lit = light.amount * calm;
+
       for (const band of BANDS) {
         const baseline = height * band.y;
         const amp = band.amp * calm;
@@ -95,11 +165,14 @@
 
         ctx.beginPath();
         ctx.moveTo(0, height);
-        ctx.lineTo(0, baseline + Math.sin(phase) * amp);
 
         // 12px steps: finer than the eye resolves at this amplitude, and cheap.
         for (let x = 0; x <= width; x += 12) {
-          const y = baseline + Math.sin(x * band.len + phase) * amp;
+          // The swell. Squared so the bump is a smooth rise rather than a tent,
+          // and subtracted because up the screen is negative.
+          const near = lit > 0.001 ? clamp01(1 - Math.abs(x - light.x) / 180) : 0;
+          const swell = near * near * 7 * lit;
+          const y = baseline + Math.sin(x * band.len + phase) * amp - swell;
           ctx.lineTo(x, y);
         }
 
@@ -109,6 +182,41 @@
         const [r, g, b] = band.color;
         ctx.fillStyle = `rgba(${r}, ${g}, ${b}, ${band.alpha})`;
         ctx.fill();
+      }
+
+      // Glints.
+      //
+      // Drawn normally, in warm gold, NOT additively. Additive blending is the
+      // obvious choice and it is wrong here: the reference site adds light over
+      // a dark blue background, where it reads beautifully, but this hero is
+      // near-white sand and adding light to it does nothing at all. Warm motes
+      // painted over the top are what actually show on a pale ground.
+      for (const glint of GLINTS) {
+        const t = time * glint.speed * speedScale;
+        const x = glint.x * width + Math.sin(t + glint.phase) * glint.drift;
+        const y = glint.y * height + Math.cos(t * 0.8 + glint.phase) * glint.drift * 0.4;
+
+        // Its own slow pulse, plus a lift from the cursor on the same falloff
+        // the reference site uses.
+        const pulse = 0.55 + 0.45 * Math.sin(t * glint.twinkle * 24 + glint.phase);
+        const near = lit > 0.001 ? clamp01(1 - Math.hypot(x - light.x, y - light.y) / 200) : 0;
+        const alpha = clamp01(glint.base * pulse + near * 0.5 * lit);
+        if (alpha < 0.01) continue;
+
+        const r = glint.size * (2.4 + near * 1.6);
+        ctx.globalAlpha = alpha;
+        ctx.drawImage(sprite, x - r, y - r, r * 2, r * 2);
+      }
+      ctx.globalAlpha = 1;
+
+      // The pool: a soft warm highlight where the light has settled.
+      if (lit > 0.001) {
+        const pool = ctx.createRadialGradient(light.x, light.y, 0, light.x, light.y, 220);
+        pool.addColorStop(0, `rgba(233, 165, 60, ${0.17 * lit})`);
+        pool.addColorStop(0.45, `rgba(236, 180, 90, ${0.07 * lit})`);
+        pool.addColorStop(1, 'rgba(240, 196, 120, 0)');
+        ctx.fillStyle = pool;
+        ctx.fillRect(light.x - 220, light.y - 220, 440, 440);
       }
     };
 
@@ -147,6 +255,22 @@
     ).observe(host);
 
     document.addEventListener('visibilitychange', sync);
+
+    // On `host`, not the canvas: the canvas is pointer-events-none, so it never
+    // sees an event. Mouse only, because a touch would set the light down where
+    // the reader last tapped and leave it stranded there.
+    host.addEventListener('pointermove', (event) => {
+      const pointerEvent = event as PointerEvent;
+      if (pointerEvent.pointerType !== 'mouse') return;
+      const rect = host.getBoundingClientRect();
+      pointer.x = pointerEvent.clientX - rect.left;
+      pointer.y = pointerEvent.clientY - rect.top;
+      pointer.live = true;
+    });
+
+    host.addEventListener('pointerleave', () => {
+      pointer.live = false;
+    });
 
     let resizeTimer = 0;
     window.addEventListener('resize', () => {

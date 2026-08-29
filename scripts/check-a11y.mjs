@@ -85,8 +85,16 @@ for (const viewport of VIEWPORTS) {
       }
       window.scrollTo(0, 0);
     });
-    // Long enough for the 700ms reveal transition to finish everywhere.
-    await page.waitForTimeout(1200);
+    // Long enough for the slowest choreography on the site to finish.
+    //
+    // Get this wrong and the gate fails intermittently on colour contrast,
+    // because axe judges a half-revealed element as invisible text. The two
+    // things it has to outlast:
+    //   scroll reveal   900ms transition + up to 5 x 70ms group stagger = 1250ms
+    //   hero entrance   1650ms delay + 600ms on the last element        = 2250ms
+    // It used to wait 1200ms against a comment claiming a 700ms reveal, which
+    // was already 50ms short of the real worst case and passing on luck.
+    await page.waitForTimeout(2600);
 
     // On mobile, open the menu so its contents are actually in the tree.
     if (viewport.name === 'mobile') {

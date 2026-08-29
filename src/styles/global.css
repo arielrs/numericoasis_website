@@ -97,23 +97,51 @@
   }
 }
 
+/*
+ * The blur is the point.
+ *
+ * Text that arrives out of focus reads as soft; a plain fade reads as a fade.
+ * It is the single largest difference between this and the reference site, and
+ * it costs four declarations. It is confined to the hero on purpose: blurring a
+ * grid of six cards at once is real GPU work on a mid-range phone, and the
+ * scroll reveals below deliberately do not use it.
+ */
 @keyframes enter {
   from {
     opacity: 0;
+    filter: blur(10px);
     transform: translateY(20px);
   }
   to {
     opacity: 1;
+    filter: blur(0);
     transform: none;
   }
 }
 
-/* Movement without a fade. See the note on headings in @layer components. */
+/* Movement and focus, but no fade. See the note on headings in @layer components. */
 @keyframes enter-shift {
   from {
+    filter: blur(10px);
     transform: translateY(20px);
   }
   to {
+    filter: blur(0);
+    transform: none;
+  }
+}
+
+/* Per word. The travel is a percentage so it scales with the type size rather
+   than looking heavy-handed at 3rem and invisible at 1rem. */
+@keyframes enter-word {
+  from {
+    opacity: 0;
+    filter: blur(10px);
+    transform: translateY(22%);
+  }
+  to {
+    opacity: 1;
+    filter: blur(0);
     transform: none;
   }
 }
@@ -229,7 +257,29 @@
    */
   .enter,
   [data-enter] > * {
-    animation: enter 900ms var(--ease-out-soft) var(--enter-delay, 0ms) both;
+    animation: enter 600ms var(--ease-out-soft) var(--enter-delay, 0ms) both;
+  }
+
+  /*
+   * Word by word, on the home headline only.
+   *
+   * The split happens in the template, so the spans ship in the HTML and no
+   * script is involved: nothing to fail, nothing to flash. Each word carries its
+   * own --word-delay inline.
+   *
+   * inline-block is required for transform to apply to a run of text at all.
+   * Each span ends with a real space so the heading still reads as a sentence,
+   * to a screen reader and to anyone selecting and copying it.
+   */
+  .hero-word {
+    display: inline-block;
+    animation: enter-word 600ms var(--ease-out-soft) var(--word-delay, 0ms) both;
+  }
+
+  /* The words animate themselves, so the heading must not animate as well or
+     the two transforms compound. */
+  [data-enter] > h1[data-words] {
+    animation: none;
   }
 
   /*
@@ -247,20 +297,43 @@
     animation-name: enter-shift;
   }
 
+  /*
+   * The pacing.
+   *
+   * These were 60 to 580ms, so the whole hero was done inside a second and read
+   * as quick rather than composed. The reference site spreads the same movement
+   * across roughly 2.2 seconds, and that pacing is most of why it feels better.
+   */
   [data-enter] > *:nth-child(1) {
-    --enter-delay: 60ms;
+    --enter-delay: 150ms;
   }
   [data-enter] > *:nth-child(2) {
-    --enter-delay: 190ms;
+    --enter-delay: 300ms;
   }
   [data-enter] > *:nth-child(3) {
-    --enter-delay: 320ms;
-  }
-  [data-enter] > *:nth-child(4) {
     --enter-delay: 450ms;
   }
+  [data-enter] > *:nth-child(4) {
+    --enter-delay: 600ms;
+  }
   [data-enter] > *:nth-child(n + 5) {
-    --enter-delay: 580ms;
+    --enter-delay: 750ms;
+  }
+
+  /*
+   * The home hero runs wider, because its headline is filled by seven words
+   * arriving 130ms apart. The lede has to wait for them or it lands mid
+   * sentence. Everywhere else the heading is one block, so the tighter ladder
+   * above is right and a gap this size would just read as a stall.
+   */
+  [data-enter='words'] > *:nth-child(2) {
+    --enter-delay: 350ms;
+  }
+  [data-enter='words'] > *:nth-child(3) {
+    --enter-delay: 1150ms;
+  }
+  [data-enter='words'] > *:nth-child(4) {
+    --enter-delay: 1400ms;
   }
 
   /* A one-pass highlight that crosses the button on hover. The gradient is

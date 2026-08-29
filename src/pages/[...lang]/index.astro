@@ -17,6 +17,7 @@ import HeroCanvas from '../../components/HeroCanvas.astro';
 import PostCard from '../../components/PostCard.astro';
 import { localeStaticPaths, contentSlug, withLocale, type Locale } from '../../i18n';
 import { home } from '../../i18n/pages/home';
+import { words, wordDelay } from '../../lib/words';
 import { appsIndex } from '../../i18n/pages/apps-index';
 
 export const getStaticPaths = localeStaticPaths;
@@ -92,10 +93,26 @@ const arrow =
   <section class="relative overflow-hidden border-b border-sand-200 bg-sand-50">
     <HeroCanvas />
     <div class="container-wide relative grid gap-14 py-16 sm:py-24 lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)] lg:items-center lg:gap-20">
-      <div data-enter>
+      <div data-enter="words">
         <p class="eyebrow">{t.hero.eyebrow}</p>
-        <h1 class="mt-4 max-w-3xl font-display text-4xl font-bold leading-[1.08] tracking-tight text-brand-900 sm:text-5xl md:text-6xl">
-          {t.hero.headline}
+        <!-- Split per word so the headline assembles itself rather than
+             appearing. The split is done here, at build time, so the spans are
+             in the HTML and no script is involved.
+
+             The space sits BETWEEN the spans, not inside them. A trailing space
+             inside an inline-block is collapsed away, which left innerText as
+             "TheAtlassianappswekeptwishingexisted" and broke copy and paste
+             entirely. The reference site papers over the visual half of that
+             with margin-right; a real text node fixes both halves. -->
+        <h1
+          data-words
+          class="mt-4 max-w-3xl font-display text-4xl font-bold leading-[1.08] tracking-tight text-brand-900 sm:text-5xl md:text-6xl"
+        >
+          {words(t.hero.headline).map((word, i) => (
+            <>
+              <span class="hero-word" style={`--word-delay: ${wordDelay(i)}ms`}>{word}</span>{' '}
+            </>
+          ))}
         </h1>
         <p class="mt-6 max-w-2xl text-lg leading-relaxed text-slate-600">{t.hero.lede}</p>
         <div class="mt-9 flex flex-wrap gap-3">
@@ -109,7 +126,7 @@ const arrow =
 
       <!-- The range at a glance. Our own products, so this is not a borrowed
            trust signal, and it says "app vendor" rather than "one app". -->
-      <nav class="enter" style="--enter-delay: 580ms" aria-label={t.hero.iconsLabel}>
+      <nav class="enter" style="--enter-delay: 1650ms" aria-label={t.hero.iconsLabel}>
         <ul class="grid grid-cols-3 gap-3 sm:gap-4">
           {apps.map((app, i) => (
             <li class="animate-float" style={`animation-delay: ${i * 620}ms`}>
