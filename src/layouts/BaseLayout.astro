@@ -150,7 +150,18 @@ const jsonLd = buildGraph({
 
       const showAll = () => nodes.forEach((el) => el.classList.add('is-visible'));
 
-      if (!('IntersectionObserver' in window)) {
+      // Reduced motion resolves every reveal at once, deliberately.
+      //
+      // global.css already says this in words: decorative motion is damped
+      // rather than stopped, but a reveal is not decorative, it is the content.
+      // Leaving the observer in charge meant anything sitting in the bottom
+      // tenth of the viewport stayed at opacity 0 until the reader scrolled,
+      // and forever if they never did. Measured at 11 of 35 on-screen elements,
+      // unchanged from 100ms through 1200ms. The script and the CSS intent now
+      // agree.
+      const calm = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+      if (!('IntersectionObserver' in window) || calm.matches) {
         showAll();
       } else {
         for (const group of groups) {
@@ -159,13 +170,48 @@ const jsonLd = buildGraph({
           });
         }
 
+        /**
+         * The hero plays a fixed choreography on load, ending around 2s.
+         * Anything already in the viewport at that moment would otherwise
+         * reveal at 0ms and land in the middle of it, so the reader sees the
+         * second section arrive before the headline has finished saying itself.
+         * On a laptop that is exactly what happened to the proof strip.
+         *
+         * Reveals that fire while the hero is still running queue behind it,
+         * and a batch arriving together is sorted into document order first, so
+         * the page introduces itself top to bottom however tall the screen is.
+         */
+        const HERO_END = 2000;
+        const started = performance.now();
+
         const observer = new IntersectionObserver(
           (entries) => {
-            for (const entry of entries) {
-              if (!entry.isIntersecting) continue;
-              entry.target.classList.add('is-visible');
-              observer.unobserve(entry.target);
-            }
+            const arriving = entries.filter((entry) => entry.isIntersecting);
+            if (!arriving.length) return;
+
+            arriving.sort((a, b) =>
+              a.target.compareDocumentPosition(b.target) & Node.DOCUMENT_POSITION_FOLLOWING
+                ? -1
+                : 1,
+            );
+
+            const elapsed = performance.now() - started;
+            const queueBehindHero = elapsed < HERO_END ? HERO_END - elapsed : 0;
+
+            arriving.forEach((entry, i) => {
+              const el = entry.target as HTMLElement;
+              if (queueBehindHero) {
+                // Whatever stagger the element already carries from its group
+                // is kept; the queue offset is added on top of it.
+                const own = parseFloat(el.style.getPropertyValue('--reveal-delay')) || 0;
+                el.style.setProperty(
+                  '--reveal-delay',
+                  `${own + queueBehindHero + Math.min(i, 8) * 80}ms`,
+                );
+              }
+              el.classList.add('is-visible');
+              observer.unobserve(el);
+            });
           },
           { rootMargin: '0px 0px -10% 0px', threshold: 0 },
         );

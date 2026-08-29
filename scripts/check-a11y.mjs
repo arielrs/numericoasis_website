@@ -92,9 +92,11 @@ for (const viewport of VIEWPORTS) {
     // things it has to outlast:
     //   scroll reveal   900ms transition + up to 5 x 70ms group stagger = 1250ms
     //   hero entrance   1650ms delay + 600ms on the last element        = 2250ms
+    //   queued reveal   2000ms hero window + 8 x 80ms batch order
+    //                   + 350ms group stagger + 7 x 110ms words + 600ms = 4360ms
     // It used to wait 1200ms against a comment claiming a 700ms reveal, which
     // was already 50ms short of the real worst case and passing on luck.
-    await page.waitForTimeout(2600);
+    await page.waitForTimeout(4600);
 
     // On mobile, open the menu so its contents are actually in the tree.
     if (viewport.name === 'mobile') {

@@ -273,7 +273,49 @@
    */
   .hero-word {
     display: inline-block;
+  }
+
+  /* Inside a hero: plays once on load, no JavaScript. */
+  [data-enter] .hero-word {
     animation: enter-word 600ms var(--ease-out-soft) var(--word-delay, 0ms) both;
+  }
+
+  /*
+   * Below the fold: the same effect, triggered by scroll instead of by load.
+   *
+   * A transition rather than an animation, keyed off the `.is-visible` class
+   * the existing IntersectionObserver already sets. No new observer, no new
+   * script, and it inherits the failure behaviour that was already reasoned
+   * through: gated behind .js-motion, so with JavaScript off none of it
+   * matches and the words are simply there.
+   */
+  .js-motion [data-reveal-words] .hero-word {
+    opacity: 0;
+    filter: blur(10px);
+    transform: translateY(22%);
+    /* Both delays, added. --word-delay is the position in the sentence;
+       --reveal-delay is set by the observer to queue a whole element behind
+       whatever is still animating above it. Without the sum, an element pushed
+       back in the running order would still fire its words on time. */
+    transition:
+      opacity 600ms var(--ease-out-soft) calc(var(--reveal-delay, 0ms) + var(--word-delay, 0ms)),
+      filter 600ms var(--ease-out-soft) calc(var(--reveal-delay, 0ms) + var(--word-delay, 0ms)),
+      transform 600ms var(--ease-out-soft) calc(var(--reveal-delay, 0ms) + var(--word-delay, 0ms));
+  }
+
+  .js-motion [data-reveal-words].is-visible .hero-word {
+    opacity: 1;
+    filter: blur(0);
+    transform: none;
+  }
+
+  /* The container must not fade as well. Two opacity curves multiplied together
+     give a slow, muddy start that looks like a rendering fault rather than an
+     effect. The words carry the whole reveal for these elements. */
+  .js-motion .reveal[data-reveal-words],
+  .js-motion [data-reveal-group] > [data-reveal-words] {
+    opacity: 1;
+    transform: none;
   }
 
   /* The words animate themselves, so the heading must not animate as well or
