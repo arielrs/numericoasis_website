@@ -89,11 +89,9 @@ No use of `asApp()` or other privilege escalation, and no external network egres
 
 The data Astrolink stores is limited and per-user. Each user can:
 
-**Right to access:** Request a copy of your stored presets, saved positions, and saved Maps via your Atlassian site administrator.
-
-**Right to deletion:** Delete individual presets and saved Maps from within the app, or remove all data by uninstalling Astrolink.
-
-**Right to portability:** Saved presets and Maps are stored as JSON and can be exported on request.
+- **Right to access:** Request a copy of your stored presets, saved positions, and saved Maps via your Atlassian site administrator.
+- **Right to deletion:** Delete individual presets and saved Maps from within the app, or remove all data by uninstalling Astrolink.
+- **Right to portability:** Saved presets and Maps are stored as JSON and can be exported on request.
 
 Atlassian account IDs used in KVS keys are the same opaque identifiers Atlassian assigns and contain no personal information.
 

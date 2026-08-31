@@ -16,19 +16,15 @@ Initial public release of Expanded Macro Collection for Confluence Cloud: 13 mac
 
 ### Governance and compliance
 
-**Sign-off and Acknowledgement:** per-version acknowledgement with an editor-only roster and a space-wide audit CSV.
-
-**Page Classification Banner:** per-page data classification shown as a banner, stamped into PDF and Word exports, with a space-wide rollup and bulk re-classify.
-
-**Content Visibility:** restrict who can see a block of content (creator, specific users, and space roles).
+- **Sign-off and Acknowledgement:** per-version acknowledgement with an editor-only roster and a space-wide audit CSV.
+- **Page Classification Banner:** per-page data classification shown as a banner, stamped into PDF and Word exports, with a space-wide rollup and bulk re-classify.
+- **Content Visibility:** restrict who can see a block of content (creator, specific users, and space roles).
 
 ### Navigation and discovery
 
-**Referenced By:** permission-aware, cross-space backlinks.
-
-**Related Pages:** related content via link co-citation and direct inbound links.
-
-**Numbered Headings:** auto-numbered headings on view and in export, plus a page-action to number a page's real headings.
+- **Referenced By:** permission-aware, cross-space backlinks.
+- **Related Pages:** related content via link co-citation and direct inbound links.
+- **Numbered Headings:** auto-numbered headings on view and in export, plus a page-action to number a page's real headings.
 
 ### Admin reporting
 

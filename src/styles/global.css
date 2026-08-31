@@ -436,6 +436,16 @@
   .prose-custom li {
     @apply my-1.5;
   }
+  /* 357 paragraphs became list items in the migration, and most of them open
+     with a bold label. Give the label the heading colour so it reads as the
+     term it is, and tighten a nested list so it does not float. */
+  .prose-custom li > strong:first-child {
+    @apply text-brand-900;
+  }
+  .prose-custom ul ul,
+  .prose-custom ol ol {
+    @apply my-2;
+  }
   .prose-custom code {
     @apply rounded bg-sand-100 px-1.5 py-0.5 text-sm text-brand-900;
   }

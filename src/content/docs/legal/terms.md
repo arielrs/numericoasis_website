@@ -18,15 +18,11 @@ If you do not agree to these Terms, do not install or use the App.
 
 ## 2. Definitions
 
-**App**: Any software application developed by Numeric Oasis and distributed through the Atlassian Marketplace.
-
-**Atlassian Platform**: The Atlassian Cloud products (Jira, Confluence, etc.) on which the App operates.
-
-**Customer Data**: Any data processed by the App on behalf of the Customer within the Atlassian Platform.
-
-**Subscription**: The paid license granting the Customer access to the App for a defined period.
-
-**Authorized Users**: Individuals within the Customer's organization permitted to use the App under the active Subscription.
+- **App**: Any software application developed by Numeric Oasis and distributed through the Atlassian Marketplace.
+- **Atlassian Platform**: The Atlassian Cloud products (Jira, Confluence, etc.) on which the App operates.
+- **Customer Data**: Any data processed by the App on behalf of the Customer within the Atlassian Platform.
+- **Subscription**: The paid license granting the Customer access to the App for a defined period.
+- **Authorized Users**: Individuals within the Customer's organization permitted to use the App under the active Subscription.
 
 ## 3. License Grant
 
@@ -58,25 +54,18 @@ Billing, invoicing, and payment processing for Subscriptions are handled by Atla
 
 ## 6. Subscription, Payment, and Renewal
 
-**6.1 Subscription Terms.** Access to the App requires an active paid Subscription purchased through the Atlassian Marketplace. Subscription terms, pricing, and tiers are as listed on the App's Marketplace page at the time of purchase.
-
-**6.2 Free Evaluation.** Where available, a free evaluation period may be offered. At the end of the evaluation period, continued use requires a paid Subscription.
-
-**6.3 Renewal.** Subscriptions renew automatically in accordance with the Atlassian Marketplace billing cycle unless cancelled before the renewal date.
-
-**6.4 Refunds.** Refund requests are handled in accordance with the [Atlassian Marketplace Refund Policy](https://www.atlassian.com/licensing/marketplace/refund-policy). Numeric Oasis does not process refunds directly.
-
-**6.5 Price Changes.** Numeric Oasis reserves the right to modify pricing. Price changes will take effect at the next renewal cycle. Active Subscriptions will not be affected mid-term.
+- **6.1 Subscription Terms.** Access to the App requires an active paid Subscription purchased through the Atlassian Marketplace. Subscription terms, pricing, and tiers are as listed on the App's Marketplace page at the time of purchase.
+- **6.2 Free Evaluation.** Where available, a free evaluation period may be offered. At the end of the evaluation period, continued use requires a paid Subscription.
+- **6.3 Renewal.** Subscriptions renew automatically in accordance with the Atlassian Marketplace billing cycle unless cancelled before the renewal date.
+- **6.4 Refunds.** Refund requests are handled in accordance with the [Atlassian Marketplace Refund Policy](https://www.atlassian.com/licensing/marketplace/refund-policy). Numeric Oasis does not process refunds directly.
+- **6.5 Price Changes.** Numeric Oasis reserves the right to modify pricing. Price changes will take effect at the next renewal cycle. Active Subscriptions will not be affected mid-term.
 
 ## 7. Data Processing and Privacy
 
-**7.1 Data Residency.** Apps that qualify as "Runs on Atlassian" process and store all Customer Data exclusively within Atlassian's infrastructure. No Customer Data is transmitted to or stored on external servers controlled by Numeric Oasis.
-
-**7.2 Data Access.** The App accesses only the data necessary to provide its stated functionality, as described in the App's documentation and Marketplace listing. The specific permissions (scopes) required are disclosed on the App's Marketplace page.
-
-**7.3 Data Retention.** Customer Data processed by the App is stored within the Atlassian Platform using Forge storage. Upon uninstallation of the App, all stored data is automatically deleted.
-
-**7.4 Compliance.** Numeric Oasis is committed to compliance with applicable data protection laws, including but not limited to:
+- **7.1 Data Residency.** Apps that qualify as "Runs on Atlassian" process and store all Customer Data exclusively within Atlassian's infrastructure. No Customer Data is transmitted to or stored on external servers controlled by Numeric Oasis.
+- **7.2 Data Access.** The App accesses only the data necessary to provide its stated functionality, as described in the App's documentation and Marketplace listing. The specific permissions (scopes) required are disclosed on the App's Marketplace page.
+- **7.3 Data Retention.** Customer Data processed by the App is stored within the Atlassian Platform using Forge storage. Upon uninstallation of the App, all stored data is automatically deleted.
+- **7.4 Compliance.** Numeric Oasis is committed to compliance with applicable data protection laws, including but not limited to:
 
 Lei Geral de Proteção de Dados (LGPD), Brazil;
 
@@ -120,13 +109,10 @@ Any third-party claim resulting from your use of the App.
 
 ## 12. Term and Termination
 
-**12.1 Term.** These Terms are effective from the date you first install or use the App and remain in effect for the duration of your Subscription.
-
-**12.2 Termination by Customer.** You may terminate these Terms at any time by uninstalling the App from your Atlassian instance and cancelling your Subscription through the Atlassian Marketplace.
-
-**12.3 Termination by Numeric Oasis.** Numeric Oasis may suspend or terminate your access to the App immediately, without prior notice, if you breach any provision of these Terms or if continued provision of the App becomes commercially impracticable.
-
-**12.4 Effect of Termination.** Upon termination, your license to use the App ceases immediately. All stored data associated with the App will be deleted in accordance with Section 7.3. Sections 4, 8, 9, 10, 11, and 13 shall survive termination.
+- **12.1 Term.** These Terms are effective from the date you first install or use the App and remain in effect for the duration of your Subscription.
+- **12.2 Termination by Customer.** You may terminate these Terms at any time by uninstalling the App from your Atlassian instance and cancelling your Subscription through the Atlassian Marketplace.
+- **12.3 Termination by Numeric Oasis.** Numeric Oasis may suspend or terminate your access to the App immediately, without prior notice, if you breach any provision of these Terms or if continued provision of the App becomes commercially impracticable.
+- **12.4 Effect of Termination.** Upon termination, your license to use the App ceases immediately. All stored data associated with the App will be deleted in accordance with Section 7.3. Sections 4, 8, 9, 10, 11, and 13 shall survive termination.
 
 ## 13. Governing Law and Dispute Resolution
 
@@ -158,12 +144,8 @@ For questions, concerns, or notices regarding these Terms, please contact:
 
 **Key things covered:**
 
-**Section 5**: Explicitly defers billing/refunds to Atlassian, you never touch payment info
-
-**Section 7**: Strong data privacy section referencing LGPD, GDPR, CCPA + "Runs on Atlassian" data residency + auto-delete on uninstall
-
-**Section 10.2**: Liability cap at 12 months of fees paid, standard and enforceable
-
-**Section 13**: Brazilian law + consumer protection carve-out for EU/other jurisdictions
-
-**Section 7.6**: No sub-processors (Forge-only), simplifies GDPR compliance
+- **Section 5**: Explicitly defers billing/refunds to Atlassian, you never touch payment info
+- **Section 7**: Strong data privacy section referencing LGPD, GDPR, CCPA + "Runs on Atlassian" data residency + auto-delete on uninstall
+- **Section 10.2**: Liability cap at 12 months of fees paid, standard and enforceable
+- **Section 13**: Brazilian law + consumer protection carve-out for EU/other jurisdictions
+- **Section 7.6**: No sub-processors (Forge-only), simplifies GDPR compliance

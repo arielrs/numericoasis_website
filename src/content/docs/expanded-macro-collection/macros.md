@@ -74,10 +74,7 @@ Flags a page as due for review when it has not been updated within a configurabl
 
 A multi-tab page under Space Settings, then Integrations, then Expanded Macro Collection:
 
-**Page Status**: manage the workflow status set (names, colours, order); deleting an in-use status warns and migrates affected pages.
-
-**Classification**: manage the classification set (name, colour, banner text); rollup and bulk re-classify.
-
-**Acknowledgements**: a read-only audit of Sign-off acknowledgements with a CSV export.
-
-**PDF Page Divider Setup**: the one-time CSS snippet and instructions for PDF page breaks.
+- **Page Status**: manage the workflow status set (names, colours, order); deleting an in-use status warns and migrates affected pages.
+- **Classification**: manage the classification set (name, colour, banner text); rollup and bulk re-classify.
+- **Acknowledgements**: a read-only audit of Sign-off acknowledgements with a CSV export.
+- **PDF Page Divider Setup**: the one-time CSS snippet and instructions for PDF page breaks.

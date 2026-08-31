@@ -36,23 +36,15 @@ OnBudget lives on a global page in the Jira Apps menu, where you build reports, 
 
 ## Key Features
 
-**Flexible report origins**: build a report from Spaces (projects), Work items (issues), or a JQL query.
-
-**Five reporting methods**: measure spend by Story points, a Number field (cost per unit of a numeric field), Worklogs / time tracking, Items closed or resolved, or Items in a status.
-
-**Worklog rate cards**: price logged time per hour, day, 30 minutes, or 15 minutes, using a flat rate or a rate card that sets rates per user or per project role.
-
-**Budget health and forecast**: configurable "At risk" and "Over budget" thresholds, plus a forecast that projects spend to a chosen end date or horizon.
-
-**Dashboard gadgets**: Insights, Budget summary, Budget health gauge, Planned vs actual, Spend over time, Forecast, Variance, Breakdown, and Compare reports, which can be dragged, resized, and retitled.
-
-**Home views and organization**: Cards, List, and Table views with text search, filters, an ordered multi-key sort, favorites, hide, and duplicate.
-
-**Sharing**: share a report with specific users or groups, with a "Shared with me" section and per-viewer star and hide.
-
-**Formatting and languages**: configurable currency, number format, decimal places, and date format, with the interface in English, Portuguese, and Spanish.
-
-**CSV export**: export report data to CSV for use elsewhere.
+- **Flexible report origins**: build a report from Spaces (projects), Work items (issues), or a JQL query.
+- **Five reporting methods**: measure spend by Story points, a Number field (cost per unit of a numeric field), Worklogs / time tracking, Items closed or resolved, or Items in a status.
+- **Worklog rate cards**: price logged time per hour, day, 30 minutes, or 15 minutes, using a flat rate or a rate card that sets rates per user or per project role.
+- **Budget health and forecast**: configurable "At risk" and "Over budget" thresholds, plus a forecast that projects spend to a chosen end date or horizon.
+- **Dashboard gadgets**: Insights, Budget summary, Budget health gauge, Planned vs actual, Spend over time, Forecast, Variance, Breakdown, and Compare reports, which can be dragged, resized, and retitled.
+- **Home views and organization**: Cards, List, and Table views with text search, filters, an ordered multi-key sort, favorites, hide, and duplicate.
+- **Sharing**: share a report with specific users or groups, with a "Shared with me" section and per-viewer star and hide.
+- **Formatting and languages**: configurable currency, number format, decimal places, and date format, with the interface in English, Portuguese, and Spanish.
+- **CSV export**: export report data to CSV for use elsewhere.
 
 ## Reporting Methods
 
@@ -78,49 +70,32 @@ Each report has configurable "At risk" and "Over budget" thresholds that drive a
 
 Every report has a dashboard of gadgets that you can drag, resize, and retitle to fit how you want to read the numbers. The Insights gadget produces rule-based highlights with no AI and no external calls.
 
-**Insights**: rule-based highlights.
-
-**Budget summary**: the headline budget and spend figures.
-
-**Budget health gauge**: the current health status.
-
-**Planned vs actual**: planned budget against actual spend.
-
-**Spend over time**: a burndown of spend.
-
-**Forecast**: projected spend to your chosen end date or horizon.
-
-**Variance**: the gap between budget and actual.
-
-**Breakdown**: spend by status, assignee, project, or issue type.
-
-**Compare reports**: multiple reports side by side.
+- **Insights**: rule-based highlights.
+- **Budget summary**: the headline budget and spend figures.
+- **Budget health gauge**: the current health status.
+- **Planned vs actual**: planned budget against actual spend.
+- **Spend over time**: a burndown of spend.
+- **Forecast**: projected spend to your chosen end date or horizon.
+- **Variance**: the gap between budget and actual.
+- **Breakdown**: spend by status, assignee, project, or issue type.
+- **Compare reports**: multiple reports side by side.
 
 ## Home, Sharing & Organization
 
-**Views**: browse reports in Cards, List, or Table views.
-
-**Search and filters**: use text search and filter by health, currency, and hidden reports.
-
-**Sort**: an ordered multi-key sort whose priority follows the order you pick, saved in your browser.
-
-**Favorites, hide, and duplicate**: star reports as favorites, hide them, or duplicate an existing report.
-
-**Sharing**: share a report with specific users or groups. Shared reports appear in a "Shared with me" section, and each viewer can star or hide them for themselves without affecting others.
+- **Views**: browse reports in Cards, List, or Table views.
+- **Search and filters**: use text search and filter by health, currency, and hidden reports.
+- **Sort**: an ordered multi-key sort whose priority follows the order you pick, saved in your browser.
+- **Favorites, hide, and duplicate**: star reports as favorites, hide them, or duplicate an existing report.
+- **Sharing**: share a report with specific users or groups. Shared reports appear in a "Shared with me" section, and each viewer can star or hide them for themselves without affecting others.
 
 ## Security & Privacy
 
-**Read-only scopes**: the app requests only `read:jira-work`, `read:jira-user`, and `storage:app`. It has no write or manage scopes and cannot change any issue or Jira configuration.
-
-**Runs on Atlassian with no egress**: OnBudget runs entirely on Forge and makes no outbound network calls to external services.
-
-**Permission-aware**: Jira reads run as the signed-in user, so the app never exposes data you cannot already see. An app-level read is used only to load field and status metadata catalogs.
-
-**Results never stored**: only report definitions and settings are stored. Every report is recalculated from live Jira data each time it is opened.
-
-**Hashed identifiers**: Atlassian account IDs and group IDs are stored only as one-way hashes, never in plain text.
-
-**Deleted on uninstall**: all stored data is deleted automatically when the app is uninstalled.
+- **Read-only scopes**: the app requests only `read:jira-work`, `read:jira-user`, and `storage:app`. It has no write or manage scopes and cannot change any issue or Jira configuration.
+- **Runs on Atlassian with no egress**: OnBudget runs entirely on Forge and makes no outbound network calls to external services.
+- **Permission-aware**: Jira reads run as the signed-in user, so the app never exposes data you cannot already see. An app-level read is used only to load field and status metadata catalogs.
+- **Results never stored**: only report definitions and settings are stored. Every report is recalculated from live Jira data each time it is opened.
+- **Hashed identifiers**: Atlassian account IDs and group IDs are stored only as one-way hashes, never in plain text.
+- **Deleted on uninstall**: all stored data is deleted automatically when the app is uninstalled.
 
 For full detail, see the child **Privacy Policy** and **Security** pages listed at the top of this page.
 

@@ -37,13 +37,10 @@ We do **not** collect or store email addresses, IP addresses, passwords, authent
 
 ## 3. Data Storage and Retention
 
-**Where:** All app-stored data resides on Atlassian's Forge infrastructure within your tenant. No data leaves the Atlassian environment.
-
-**Per-Issue Rollover History:** Retained for the lifetime of the install. Capped at the most recent 100 sprint entries per issue.
-
-**Per-Sprint Aggregates:** Retained for the lifetime of the install.
-
-**Issue Metadata Reads:** Not persisted. Re-fetched on each report render.
+- **Where:** All app-stored data resides on Atlassian's Forge infrastructure within your tenant. No data leaves the Atlassian environment.
+- **Per-Issue Rollover History:** Retained for the lifetime of the install. Capped at the most recent 100 sprint entries per issue.
+- **Per-Sprint Aggregates:** Retained for the lifetime of the install.
+- **Issue Metadata Reads:** Not persisted. Re-fetched on each report render.
 
 ## 4. Data Sharing
 

@@ -9,11 +9,9 @@ sourcePageId: "600080385"
 sourceTitle: "Millrace - Privacy Policy"
 ---
 
-**Last Updated:** July 14, 2026
-
-**App:** Millrace
-
-**Vendor:** Numeric Oasis
+- **Last Updated:** July 14, 2026
+- **App:** Millrace
+- **Vendor:** Numeric Oasis
 
 This Privacy Policy explains what data the Millrace app for Jira Cloud collects, how it is processed and stored, and the choices available to you. Millrace is a Critical Chain Project Management app built on Atlassian Forge. It runs entirely on Atlassian infrastructure and makes no outbound network calls to external services.
 
@@ -23,15 +21,11 @@ Millrace collects only the data required to build, compute, and display your CCP
 
 ### App Storage (persisted within your Atlassian tenant)
 
-**Report definitions:** the parameters and metadata that describe a report (scope, buffer method and factors, dependency link type, section layout, plus metadata such as name and timestamps).
-
-**Computed results (cached):** the output of the scheduling engine for a report, including work item keys and summaries used as task labels, computed schedule values (leveled start and finish, buffer sizes and consumption, fever-chart data, and the Monte Carlo forecast), and resource identifiers. Results are cached and recomputed from live Jira data when the underlying issues change and on a nightly schedule.
-
-**Fever-chart history:** a capped series of buffer-consumption snapshots per report, used to draw the trajectory over time.
-
-**User preferences:** your favorites and Home view choice.
-
-**Share grants:** records of which users or groups a report has been shared with, stored as one-way hashes of the account ID or group name plus the display label so the sharing dialog can show it.
+- **Report definitions:** the parameters and metadata that describe a report (scope, buffer method and factors, dependency link type, section layout, plus metadata such as name and timestamps).
+- **Computed results (cached):** the output of the scheduling engine for a report, including work item keys and summaries used as task labels, computed schedule values (leveled start and finish, buffer sizes and consumption, fever-chart data, and the Monte Carlo forecast), and resource identifiers. Results are cached and recomputed from live Jira data when the underlying issues change and on a nightly schedule.
+- **Fever-chart history:** a capped series of buffer-consumption snapshots per report, used to draw the trajectory over time.
+- **User preferences:** your favorites and Home view choice.
+- **Share grants:** records of which users or groups a report has been shared with, stored as one-way hashes of the account ID or group name plus the display label so the sharing dialog can show it.
 
 ### Transient Data (read and processed to compute a report)
 
@@ -93,15 +87,11 @@ For manual data requests, contact us at [contact@numericoasis.com](mailto:contac
 
 Millrace is built with privacy by default.
 
-**Data minimization:** only report definitions, cached results, fever-chart history, preferences, and share grants are stored; issue descriptions, comments, and attachments are never read or stored.
-
-**Pseudonymization:** account IDs and group names are stored only as one-way hashes.
-
-**Purpose limitation:** data is used solely to build, compute, and display your CCPM reports, and is never sold or transferred to third parties.
-
-**Data residency:** all persisted data remains within your Atlassian tenant on Forge storage, with no outbound calls to external services.
-
-**Right to erasure:** all stored data is deleted automatically and permanently on uninstall, and manual requests can be made by contacting us.
+- **Data minimization:** only report definitions, cached results, fever-chart history, preferences, and share grants are stored; issue descriptions, comments, and attachments are never read or stored.
+- **Pseudonymization:** account IDs and group names are stored only as one-way hashes.
+- **Purpose limitation:** data is used solely to build, compute, and display your CCPM reports, and is never sold or transferred to third parties.
+- **Data residency:** all persisted data remains within your Atlassian tenant on Forge storage, with no outbound calls to external services.
+- **Right to erasure:** all stored data is deleted automatically and permanently on uninstall, and manual requests can be made by contacting us.
 
 ## 8. Contact
 

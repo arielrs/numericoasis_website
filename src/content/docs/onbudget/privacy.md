@@ -8,11 +8,9 @@ sourcePageId: "589758465"
 sourceTitle: "OnBudget - Privacy Policy"
 ---
 
-**Last Updated:** July 2, 2026
-
-**App:** OnBudget
-
-**Vendor:** Numeric Oasis
+- **Last Updated:** July 2, 2026
+- **App:** OnBudget
+- **Vendor:** Numeric Oasis
 
 This Privacy Policy explains what data the OnBudget app for Jira Cloud (and Jira Service Management) collects, how it is processed and stored, and the choices available to you. OnBudget is a budget and expense reporting app built on Atlassian Forge. It runs entirely on Atlassian infrastructure and makes no outbound network calls to external services.
 
@@ -22,15 +20,11 @@ OnBudget collects only the data required to build and display your budget report
 
 ### App Storage (persisted within your Atlassian tenant)
 
-**Report definitions:** the parameters and metadata that describe a report (origin, budget, currency, method, time frame, thresholds, and gadget layout, plus metadata such as name and timestamps). Report **results** are never stored.
-
-**User preferences:** your display and organization settings, such as view choices, filters, and sort order.
-
-**Share grants:** records of which users or groups a report has been shared with.
-
-**Per-user star and hide records:** your personal favorites (stars) and hidden-report choices, which affect only your own view.
-
-**Project-role rate cards:** the per-project worklog rate-card roles defined for pricing time-tracking data.
+- **Report definitions:** the parameters and metadata that describe a report (origin, budget, currency, method, time frame, thresholds, and gadget layout, plus metadata such as name and timestamps). Report **results** are never stored.
+- **User preferences:** your display and organization settings, such as view choices, filters, and sort order.
+- **Share grants:** records of which users or groups a report has been shared with.
+- **Per-user star and hide records:** your personal favorites (stars) and hidden-report choices, which affect only your own view.
+- **Project-role rate cards:** the per-project worklog rate-card roles defined for pricing time-tracking data.
 
 ### Transient Data (read and processed in memory only, never persisted)
 
@@ -92,15 +86,11 @@ For manual data requests, contact us at [contact@numericoasis.com](mailto:contac
 
 OnBudget is built with privacy by default.
 
-**Data minimization:** only report configuration data is stored; report results and Jira content are processed in memory and never persisted.
-
-**Pseudonymization:** account IDs and group IDs are stored only as one-way hashes, and display names are resolved at render time rather than stored.
-
-**Purpose limitation:** data is used solely to build and display your budget reports, and is never sold or transferred to third parties.
-
-**Data residency:** all persisted data remains within your Atlassian tenant on Forge infrastructure, with no outbound calls to external services.
-
-**Right to erasure:** all stored data is deleted automatically and permanently on uninstall, and manual requests can be made by contacting us.
+- **Data minimization:** only report configuration data is stored; report results and Jira content are processed in memory and never persisted.
+- **Pseudonymization:** account IDs and group IDs are stored only as one-way hashes, and display names are resolved at render time rather than stored.
+- **Purpose limitation:** data is used solely to build and display your budget reports, and is never sold or transferred to third parties.
+- **Data residency:** all persisted data remains within your Atlassian tenant on Forge infrastructure, with no outbound calls to external services.
+- **Right to erasure:** all stored data is deleted automatically and permanently on uninstall, and manual requests can be made by contacting us.
 
 ## 8. Contact
 

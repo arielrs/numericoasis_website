@@ -219,6 +219,57 @@ function convert(html) {
   return out.join('\n\n').replace(/\n{3,}/g, '\n\n').trim();
 }
 
+/**
+ * Runs of label paragraphs become the lists they always were.
+ *
+ * Confluence authored these as definition items, "**Path Finder:** right-click
+ * any work item...", but the storage format has them as plain <p>. Migrated
+ * straight across, 357 paragraphs in 67 runs rendered as identical flat blocks
+ * with no bullet, no indent and the same left edge as body prose: fourteen
+ * consecutive near-identical two-line slabs filling a viewport on
+ * configuration-monitor/overview.
+ *
+ * Only runs of three or more convert. A lone "**Support Portal:**" is a
+ * paragraph and stays one, and the metadata line at the top of a policy page is
+ * excluded by name. No words change, only the markup.
+ */
+const LABEL = /^\*\*[^*]{1,60}[:.]\*\*\s+\S|^\*\*[^*]{1,60}\*\*[:.]\s+\S/;
+const META = /^\*\*(Last Updated|Release Date|Effective|App|Vendor|Version)/i;
+
+function listify(md) {
+  const blocks = md.split('\n\n');
+  const out = [];
+  let run = [];
+
+  const flush = () => {
+    if (run.length >= 3) out.push(run.map((b) => `- ${b.replace(/\n/g, ' ')}`).join('\n'));
+    else out.push(...run);
+    run = [];
+  };
+
+  for (const block of blocks) {
+    const b = block.trim();
+    if (LABEL.test(b) && !META.test(b)) {
+      run.push(b);
+      continue;
+    }
+    flush();
+    out.push(block);
+  }
+  flush();
+  return out.join('\n\n');
+}
+
+/**
+ * A page with h3 and no h2 skips a level from the h1 the layout prints, and the
+ * on-this-page rail keeps depth 2 only, so the longest page in the section had
+ * no in-page navigation at all. Promote the whole page a level.
+ */
+function normaliseHeadings(md) {
+  if (/^## /m.test(md) || !/^### /m.test(md)) return md;
+  return md.replace(/^(#{3,6}) /gm, (_, hashes) => `${hashes.slice(1)} `);
+}
+
 /** Markdown still renders raw HTML, so a stray angle bracket has to be tamed. */
 const safe = (md) => md.replace(/<(?![a-zA-Z/!])/g, '&lt;');
 
@@ -271,7 +322,7 @@ async function main() {
     if (!r.ok) throw new Error(`page ${page.id} failed: ${r.status}`);
     const doc = await r.json();
 
-    let body = relink(safe(convert(doc.body?.storage?.value ?? '')), unresolved);
+    let body = normaliseHeadings(listify(relink(safe(convert(doc.body?.storage?.value ?? '')), unresolved)));
 
     // The layout already renders the page title as the h1. Several Confluence
     // pages open with an h2 that repeats it, most often a bare "Overview",
@@ -292,6 +343,19 @@ async function main() {
     const first = body.split('\n').find((l) => l && !l.startsWith('#') && !l.startsWith('|'));
     const derived = (first ?? '').replace(/[*`[\]]/g, '').slice(0, 155).trim();
 
+    const file = join(OUT, target.app, `${target.slug}.md`);
+
+    // A description written by hand outclasses one derived from the first line
+    // of body text, every time. Re-running the export must not throw it away.
+    let description = derived;
+    try {
+      const existing = await readFile(file, 'utf8');
+      const kept = existing.match(/^description:\s*"(.*)"\s*$/m);
+      if (kept) description = kept[1];
+    } catch {
+      // No file yet. The derived description is the starting point.
+    }
+
     const front = [
       '---',
       `title: ${yaml(target.title)}`,
@@ -305,19 +369,6 @@ async function main() {
       '---',
       '',
     ].filter((l) => l !== null);
-
-    const file = join(OUT, target.app, `${target.slug}.md`);
-
-    // A description written by hand outclasses one derived from the first line
-    // of body text, every time. Re-running the export must not throw it away.
-    let description = derived;
-    try {
-      const existing = await readFile(file, 'utf8');
-      const kept = existing.match(/^description:\s*"(.*)"\s*$/m);
-      if (kept) description = kept[1];
-    } catch {
-      // No file yet. The derived description is the starting point.
-    }
     if (!DRY) {
       await mkdir(dirname(file), { recursive: true });
       await writeFile(file, `${front.join('\n')}\n${body}\n`, 'utf8');

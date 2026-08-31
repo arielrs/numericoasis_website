@@ -16,11 +16,9 @@ Major upgrade promoting a year of feature work to all Marketplace customers. Ast
 
 ### Dependency analysis
 
-**Path Finder:** right-click any work item > *Find Path To...* to highlight the shortest chain of links between two items.
-
-**Impact Analysis:** right-click > *Show Impact* runs a heat-map showing every downstream item affected.
-
-**Dependency Health:** at-risk edges (e.g. a "blocked by" item still in To Do while the source is Done) are flagged automatically with red borders.
+- **Path Finder:** right-click any work item > *Find Path To...* to highlight the shortest chain of links between two items.
+- **Impact Analysis:** right-click > *Show Impact* runs a heat-map showing every downstream item affected.
+- **Dependency Health:** at-risk edges (e.g. a "blocked by" item still in To Do while the source is Done) are flagged automatically with red borders.
 
 ### Issue side panel
 
@@ -28,17 +26,12 @@ Click any node to open a side panel with the work item's description, comments, 
 
 ### Visualization
 
-**10 node colour modes:** Type, Status, Priority, Assignee, Project, Component, Fix Version, Hierarchy Level, Sprint, Resolution.
-
-**11 glow ring modes:** Status, Priority, Assignee, Project, Component, Fix Version, Hierarchy Level, Sprint, Resolution, Type, plus None.
-
-**Cluster hulls:** group nodes by project, epic, assignee, sprint, or status with labelled convex hulls and tunable cluster density.
-
-**Stale highlighting:** dim work items not updated in 7, 14, 30, or 90 days.
-
-**Node Size slider:** dial nodes between 50 % and 150 %.
-
-**Show Keys toggle:** overlay the work item key on each node.
+- **10 node colour modes:** Type, Status, Priority, Assignee, Project, Component, Fix Version, Hierarchy Level, Sprint, Resolution.
+- **11 glow ring modes:** Status, Priority, Assignee, Project, Component, Fix Version, Hierarchy Level, Sprint, Resolution, Type, plus None.
+- **Cluster hulls:** group nodes by project, epic, assignee, sprint, or status with labelled convex hulls and tunable cluster density.
+- **Stale highlighting:** dim work items not updated in 7, 14, 30, or 90 days.
+- **Node Size slider:** dial nodes between 50 % and 150 %.
+- **Show Keys toggle:** overlay the work item key on each node.
 
 ### Saved views
 
@@ -106,45 +99,32 @@ Initial public release of Astrolink for Jira Cloud.
 
 ### Interactive Star Map
 
-**Force-Directed Graph:** Beautiful interactive visualization rendered directly in the Jira issue panel with zoom, pan, and drag.
-
-**Deep Traversal:** Follows issue links, hierarchies, epics, and subtasks up to 5 levels deep across projects.
-
-**Cross-Project Navigation:** Click any node to navigate directly to that work item, regardless of which project it belongs to.
-
-**Remote Links:** Linked Confluence pages and external URLs displayed as distinct node types.
+- **Force-Directed Graph:** Beautiful interactive visualization rendered directly in the Jira issue panel with zoom, pan, and drag.
+- **Deep Traversal:** Follows issue links, hierarchies, epics, and subtasks up to 5 levels deep across projects.
+- **Cross-Project Navigation:** Click any node to navigate directly to that work item, regardless of which project it belongs to.
+- **Remote Links:** Linked Confluence pages and external URLs displayed as distinct node types.
 
 ### Visualization
 
-**5 Themes:** Dark, Light, Sky, High Contrast (accessibility/projectors), and Sunset.
-
-**5 Node Styles:** Icons, Circles, Avatars, Cards, and Compact.
-
-**Subtask Shrinking:** Toggle to render subtasks at 50% size for cleaner hierarchies.
-
-**Color-Coded Links:** Distinct colors for each link type, instantly identify blockers, hierarchies, and relationships.
-
-**Link Labels:** Toggle to display link type names on edges.
-
-**Fullscreen Mode:** Expand the map for presentations or detailed exploration.
-
-**Zoom to Fit:** One-click to center and fit the entire graph in view.
+- **5 Themes:** Dark, Light, Sky, High Contrast (accessibility/projectors), and Sunset.
+- **5 Node Styles:** Icons, Circles, Avatars, Cards, and Compact.
+- **Subtask Shrinking:** Toggle to render subtasks at 50% size for cleaner hierarchies.
+- **Color-Coded Links:** Distinct colors for each link type, instantly identify blockers, hierarchies, and relationships.
+- **Link Labels:** Toggle to display link type names on edges.
+- **Fullscreen Mode:** Expand the map for presentations or detailed exploration.
+- **Zoom to Fit:** One-click to center and fit the entire graph in view.
 
 ### Filtering and Search
 
-**Comprehensive Filters:** Filter by issue type, status, assignee, label, project, or link type. All combinable.
-
-**Real-Time Search:** Highlight matching nodes as you type.
-
-**Remote Link Toggles:** Show or hide Confluence pages and external links independently.
+- **Comprehensive Filters:** Filter by issue type, status, assignee, label, project, or link type. All combinable.
+- **Real-Time Search:** Highlight matching nodes as you type.
+- **Remote Link Toggles:** Show or hide Confluence pages and external links independently.
 
 ### Timeline
 
-**Timeline Playback:** Replay how your work item network grew over time.
-
-**Adjustable Speed:** 1x, 2x, and 4x playback speeds.
-
-**Date Scrubbing:** Drag the slider to any point in time.
+- **Timeline Playback:** Replay how your work item network grew over time.
+- **Adjustable Speed:** 1x, 2x, and 4x playback speeds.
+- **Date Scrubbing:** Drag the slider to any point in time.
 
 ### Tooltips
 
@@ -160,8 +140,6 @@ Initial public release of Astrolink for Jira Cloud.
 
 ### Security & Privacy
 
-**Read-Only:** Astrolink cannot modify any of your data.
-
-**Permission-Aware:** Restricted work items appear as locked nodes, no data exposed.
-
-**Runs on Atlassian:** Fully hosted on Atlassian infrastructure. No external data transfers.
+- **Read-Only:** Astrolink cannot modify any of your data.
+- **Permission-Aware:** Restricted work items appear as locked nodes, no data exposed.
+- **Runs on Atlassian:** Fully hosted on Atlassian infrastructure. No external data transfers.

@@ -8,7 +8,7 @@ export const ptBR = {
   },
   nav: {
     apps: 'Apps',
-    docs: 'Docs',
+    docs: 'Wiki',
     blog: 'Blog',
     about: 'Sobre',
     contact: 'Contato',
@@ -27,7 +27,7 @@ export const ptBR = {
       about: 'Sobre',
       apps: 'Apps',
       blog: 'Blog',
-      docs: 'Docs',
+      docs: 'Wiki',
       contact: 'Contato',
       support: 'Portal de suporte',
       marketplace: 'Atlassian Marketplace',

@@ -40,27 +40,17 @@ Classic critical path finds the longest chain of dependent tasks assuming unlimi
 
 ## Key Features
 
-**Reports on any scope**: build a CCPM report from a project, an epic, or any JQL query, and save, share, and organize it.
-
-**Automatic resource leveling**: computes the true critical chain by resolving dependencies and resource contention, deterministically.
-
-**Documented buffer sizing**: choose 50% cut-and-paste, RSSM (root-sum-of-squares), or adaptive (RSSM scaled by resource tightness). Every buffer shows its formula.
-
-**Automatic feeding buffers**: sized and placed where feeding paths merge into the chain, each with its own fever status.
-
-**Fever chart with projected path**: percent buffer consumed against percent chain complete, with diagonal zones, the actual trajectory, and a projected finish.
-
-**Monte Carlo delivery forecast**: P50, P80, and P95 completion, on-time confidence, and the tasks that drive the risk.
-
-**Relay-race "up next"**: the single next task per resource, with a multitasking flag when single-tasking is broken.
-
-**Bad-multitasking / resource-load detection**: peak parallel tasks and contention time per resource.
-
-**Data-readiness diagnostics**: a schedulability score that flags cycles, missing estimates, unassigned or disconnected tasks.
-
-**Explainability**: every at-risk buffer gets a plain-language reason.
-
-**Home, views & sharing**: Cards, List, and Table views, favorites, a "Shared with me" section, and reorderable, collapsible report sections.
+- **Reports on any scope**: build a CCPM report from a project, an epic, or any JQL query, and save, share, and organize it.
+- **Automatic resource leveling**: computes the true critical chain by resolving dependencies and resource contention, deterministically.
+- **Documented buffer sizing**: choose 50% cut-and-paste, RSSM (root-sum-of-squares), or adaptive (RSSM scaled by resource tightness). Every buffer shows its formula.
+- **Automatic feeding buffers**: sized and placed where feeding paths merge into the chain, each with its own fever status.
+- **Fever chart with projected path**: percent buffer consumed against percent chain complete, with diagonal zones, the actual trajectory, and a projected finish.
+- **Monte Carlo delivery forecast**: P50, P80, and P95 completion, on-time confidence, and the tasks that drive the risk.
+- **Relay-race "up next"**: the single next task per resource, with a multitasking flag when single-tasking is broken.
+- **Bad-multitasking / resource-load detection**: peak parallel tasks and contention time per resource.
+- **Data-readiness diagnostics**: a schedulability score that flags cycles, missing estimates, unassigned or disconnected tasks.
+- **Explainability**: every at-risk buffer gets a plain-language reason.
+- **Home, views & sharing**: Cards, List, and Table views, favorites, a "Shared with me" section, and reorderable, collapsible report sections.
 
 ## Buffer Sizing Methods
 
@@ -72,13 +62,10 @@ Classic critical path finds the longest chain of dependent tasks assuming unlimi
 
 ## Delivery Forecast & Health
 
-**Monte Carlo forecast**: each task's duration is sampled from a lognormal fitted to its aggressive and safe estimates and propagated through the leveled network to a completion distribution, reported as P50, P80, and P95 with on-time confidence and a sensitivity ranking.
-
-**Fever chart**: buffer consumption against chain progress in green, yellow, and red zones, with a projected finish line based on the current burn rate.
-
-**Feeding-buffer fever**: each feeding buffer has its own consumption and status.
-
-**Data readiness**: a 0 to 100 score with blocking and warning findings, so you know whether the plan is trustworthy.
+- **Monte Carlo forecast**: each task's duration is sampled from a lognormal fitted to its aggressive and safe estimates and propagated through the leveled network to a completion distribution, reported as P50, P80, and P95 with on-time confidence and a sensitivity ranking.
+- **Fever chart**: buffer consumption against chain progress in green, yellow, and red zones, with a projected finish line based on the current burn rate.
+- **Feeding-buffer fever**: each feeding buffer has its own consumption and status.
+- **Data readiness**: a 0 to 100 score with blocking and warning findings, so you know whether the plan is trustworthy.
 
 ## Two-Point Estimates & Resources
 
@@ -86,17 +73,12 @@ Millrace uses an aggressive (roughly 50% confidence) and a safe (roughly 90% con
 
 ## Security & Privacy
 
-**Read-only scopes**: the app requests only `read:jira-work`, `read:jira-user`, and `storage:app`. It has no write or manage scopes and cannot change any work item or Jira configuration.
-
-**Runs on Atlassian with no egress**: Millrace runs entirely on Forge and makes no outbound network calls to external services.
-
-**Access by ownership and sharing**: a report is visible to its owner and to the users and groups it is explicitly shared with.
-
-**Hashed identifiers**: Atlassian account IDs and group names are stored only as one-way hashes, never in plain text.
-
-**Minimal, in-tenant storage**: only report definitions, computed results (cached and refreshed from live Jira), fever-chart history, preferences, and share grants are stored, all within your Atlassian tenant.
-
-**Deleted on uninstall**: all stored data is deleted automatically when the app is uninstalled.
+- **Read-only scopes**: the app requests only `read:jira-work`, `read:jira-user`, and `storage:app`. It has no write or manage scopes and cannot change any work item or Jira configuration.
+- **Runs on Atlassian with no egress**: Millrace runs entirely on Forge and makes no outbound network calls to external services.
+- **Access by ownership and sharing**: a report is visible to its owner and to the users and groups it is explicitly shared with.
+- **Hashed identifiers**: Atlassian account IDs and group names are stored only as one-way hashes, never in plain text.
+- **Minimal, in-tenant storage**: only report definitions, computed results (cached and refreshed from live Jira), fever-chart history, preferences, and share grants are stored, all within your Atlassian tenant.
+- **Deleted on uninstall**: all stored data is deleted automatically when the app is uninstalled.
 
 For full detail, see the child **Privacy Policy** and **Security Policy** pages listed at the top of this page.
 

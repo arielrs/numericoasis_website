@@ -8,7 +8,7 @@ export const es = {
   },
   nav: {
     apps: 'Apps',
-    docs: 'Docs',
+    docs: 'Wiki',
     blog: 'Blog',
     about: 'Nosotros',
     contact: 'Contacto',
@@ -27,7 +27,7 @@ export const es = {
       about: 'Nosotros',
       apps: 'Apps',
       blog: 'Blog',
-      docs: 'Docs',
+      docs: 'Wiki',
       contact: 'Contacto',
       support: 'Portal de soporte',
       marketplace: 'Atlassian Marketplace',

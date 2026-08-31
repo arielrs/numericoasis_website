@@ -41,35 +41,21 @@ The app lives in two places where your team already works: a compact widget in e
 
 ## Key Features
 
-**Auto-visible issue widget.** A compact rollover badge appears in every work item's right sidebar. No screen configuration, no admin step. Click to open the full per-sprint history modal.
-
-**Project-sidebar report.** A dedicated entry alongside Board, Backlog, and Reports. One click from anywhere in the project.
-
-**Active sprint forecast.** A live forecast widget at the top of the report predicts how many work items will carry over from the currently-active sprint, with low/medium/high confidence based on pace and historical velocity.
-
-**KPI strip.** Tracked work items, average rollovers, worst offender (with multi-key support when multiple items tie), sprints closed with avg completion %, carryover %, predictability score, velocity (auto-shown for story-point teams; in hours for time-tracking teams), avg scope creep %, stuck-without-estimate count, and total work items completed in window.
-
-**Sprint Health view.** A stacked Done + Rolled-over bar chart per sprint (= total committed work), a Commitment vs Delivery two-line trend chart (when sprint snapshots are available), a Completion-rate trend, and a sortable per-sprint table including goal text, scope changes (Added / Removed mid-sprint), and a Goal-changes counter showing how many times the goal was edited.
-
-**Sprint Details modal.** Click "Details" on any sprint to see its burndown chart (work items remaining over each day, story points remaining when in use), plus per-sprint Completed / Rolled-over work-item lists with summaries and status lozenges.
-
-**Stuck Work Items view.** Distribution pie chart, status-aware table with assignee, days stuck, and per-row history. Bulk JQL link opens all currently-shown stuck items in Jira at once. Color-coded warning tags above three rollovers.
-
-**Team Pulse view.** Per-assignee breakdown showing where work is piling up, with deep-link JQL for each assignee's scope.
-
-**Compare Sprints view.** A clean three-column table (Sprint A | Sprint B | Difference) showing every metric side-by-side, with green/red colour coding for improvement or regression. Drop the &Delta; symbols, drop the goal misalignment, just an honest comparison.
-
-**Data Export tab.** Four CSV exports for retros, board reports, and audits: stuck work items (respects current filter), full sprint history (one row per sprint with dates/totals/scope/goal changes), per-work-item rollover history (one row per item x sprint it rolled through), and a one-row KPI snapshot for pasting into standup notes.
-
-**Goal-change tracking.** A daily trigger captures sprint-goal edits made after a sprint starts. The closed-sprint view shows a Goal-changes counter so retros can flag sprints that lost focus mid-flight.
-
-**Daily burndown snapshots.** A scheduled trigger records totals + done counts each day for every active sprint. Burndown charts render in the Sprint Details modal once snapshots accumulate.
-
-**Live filters.** Min rollovers, time window, status. The time-window filter applies to every tab; min-rollovers and status filter only the Stuck Work Items + Team Pulse tabs, clearly indicated by a help tooltip.
-
-**JQL deep-links.** Every sprint, assignee, and issue row links to a Jira work-item search filtered to that exact scope. Bulk JQL links beneath each chart open the items in the chart's aggregate.
-
-**Chart-format toggle.** Every chart on the report offers a Bar / Line / Pie / Stacked / Table toggle so users can switch to a tabular view to see exact values without hovering.
+- **Auto-visible issue widget.** A compact rollover badge appears in every work item's right sidebar. No screen configuration, no admin step. Click to open the full per-sprint history modal.
+- **Project-sidebar report.** A dedicated entry alongside Board, Backlog, and Reports. One click from anywhere in the project.
+- **Active sprint forecast.** A live forecast widget at the top of the report predicts how many work items will carry over from the currently-active sprint, with low/medium/high confidence based on pace and historical velocity.
+- **KPI strip.** Tracked work items, average rollovers, worst offender (with multi-key support when multiple items tie), sprints closed with avg completion %, carryover %, predictability score, velocity (auto-shown for story-point teams; in hours for time-tracking teams), avg scope creep %, stuck-without-estimate count, and total work items completed in window.
+- **Sprint Health view.** A stacked Done + Rolled-over bar chart per sprint (= total committed work), a Commitment vs Delivery two-line trend chart (when sprint snapshots are available), a Completion-rate trend, and a sortable per-sprint table including goal text, scope changes (Added / Removed mid-sprint), and a Goal-changes counter showing how many times the goal was edited.
+- **Sprint Details modal.** Click "Details" on any sprint to see its burndown chart (work items remaining over each day, story points remaining when in use), plus per-sprint Completed / Rolled-over work-item lists with summaries and status lozenges.
+- **Stuck Work Items view.** Distribution pie chart, status-aware table with assignee, days stuck, and per-row history. Bulk JQL link opens all currently-shown stuck items in Jira at once. Color-coded warning tags above three rollovers.
+- **Team Pulse view.** Per-assignee breakdown showing where work is piling up, with deep-link JQL for each assignee's scope.
+- **Compare Sprints view.** A clean three-column table (Sprint A | Sprint B | Difference) showing every metric side-by-side, with green/red colour coding for improvement or regression. Drop the &Delta; symbols, drop the goal misalignment, just an honest comparison.
+- **Data Export tab.** Four CSV exports for retros, board reports, and audits: stuck work items (respects current filter), full sprint history (one row per sprint with dates/totals/scope/goal changes), per-work-item rollover history (one row per item x sprint it rolled through), and a one-row KPI snapshot for pasting into standup notes.
+- **Goal-change tracking.** A daily trigger captures sprint-goal edits made after a sprint starts. The closed-sprint view shows a Goal-changes counter so retros can flag sprints that lost focus mid-flight.
+- **Daily burndown snapshots.** A scheduled trigger records totals + done counts each day for every active sprint. Burndown charts render in the Sprint Details modal once snapshots accumulate.
+- **Live filters.** Min rollovers, time window, status. The time-window filter applies to every tab; min-rollovers and status filter only the Stuck Work Items + Team Pulse tabs, clearly indicated by a help tooltip.
+- **JQL deep-links.** Every sprint, assignee, and issue row links to a Jira work-item search filtered to that exact scope. Bulk JQL links beneath each chart open the items in the chart's aggregate.
+- **Chart-format toggle.** Every chart on the report offers a Bar / Line / Pie / Stacked / Table toggle so users can switch to a tabular view to see exact values without hovering.
 
 **Story Points and time tracking** appear automatically when your team uses them, stay hidden when they don't. Velocity adapts to whichever estimate type the project actually uses (SP or hours).
 

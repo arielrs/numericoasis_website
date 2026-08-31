@@ -119,43 +119,32 @@ Initial public release of Sprint Rollover Tracker for Jira Cloud.
 
 ### Issue Visibility
 
-**Right-Sidebar Rollover Widget:** Every issue automatically shows its rollover count. No admin configuration, no screen wiring.
-
-**Per-Issue History Modal:** One click opens a full per-sprint history: sprint name, dates, who closed each sprint, and how many other issues rolled with it.
-
-**Visual Severity:** Color-coded badges (blue for low rollover counts, warning colour for three or more) make stuck work obvious at a glance.
+- **Right-Sidebar Rollover Widget:** Every issue automatically shows its rollover count. No admin configuration, no screen wiring.
+- **Per-Issue History Modal:** One click opens a full per-sprint history: sprint name, dates, who closed each sprint, and how many other issues rolled with it.
+- **Visual Severity:** Color-coded badges (blue for low rollover counts, warning colour for three or more) make stuck work obvious at a glance.
 
 ### Project-Sidebar Report
 
 **Dedicated Project Page** alongside Board, Backlog, and Reports.
 
-**KPI Strip:** Tracked issues, average rollovers, worst offender, sprints closed, carryover %, predictability score, stuck-issue count, and (when applicable) velocity.
-
-**Sprint Health Tab:** Grouped completion-vs-carryover bar chart, completion-rate trend line, and a sortable per-sprint table including sprint goal and closer.
-
-**Stuck Issues Tab:** Rollover-count distribution chart and an actionable table with status, assignee, days stuck, and per-row history modal.
-
-**Team Pulse Tab:** Per-assignee breakdown showing rollover totals, stuck issues, and worst-stuck issue.
-
-**Compare Sprints Tab:** Side-by-side delta of any two closed sprints with green/red trend tags.
+- **KPI Strip:** Tracked issues, average rollovers, worst offender, sprints closed, carryover %, predictability score, stuck-issue count, and (when applicable) velocity.
+- **Sprint Health Tab:** Grouped completion-vs-carryover bar chart, completion-rate trend line, and a sortable per-sprint table including sprint goal and closer.
+- **Stuck Issues Tab:** Rollover-count distribution chart and an actionable table with status, assignee, days stuck, and per-row history modal.
+- **Team Pulse Tab:** Per-assignee breakdown showing rollover totals, stuck issues, and worst-stuck issue.
+- **Compare Sprints Tab:** Side-by-side delta of any two closed sprints with green/red trend tags.
 
 ### Filters & Navigation
 
-**Live Filters:** Minimum rollover count, time window (7/30/90 days or all), status. Instant client-side response.
-
-**JQL Deep-Links:** Every sprint, assignee, and issue row links to a Jira issue search filtered to that exact scope.
-
-**CSV Export:** One-click export of the currently filtered view.
+- **Live Filters:** Minimum rollover count, time window (7/30/90 days or all), status. Instant client-side response.
+- **JQL Deep-Links:** Every sprint, assignee, and issue row links to a Jira issue search filtered to that exact scope.
+- **CSV Export:** One-click export of the currently filtered view.
 
 ### Story Points & Time Tracking
 
-**Velocity KPI:** Average story points completed per sprint, appears only when your team sets Story Points on issues.
-
-**Story-Point Aggregates:** Done-SP and Rolled-SP columns appear in the Sprint Health table when in use.
-
-**Time Tracking Aggregates:** Time logged and time remaining on rolled-over work appear when your team uses Jira's time tracking.
-
-**Hidden When Not Used:** Teams that don't use these Jira fields see no extra columns or KPIs.
+- **Velocity KPI:** Average story points completed per sprint, appears only when your team sets Story Points on issues.
+- **Story-Point Aggregates:** Done-SP and Rolled-SP columns appear in the Sprint Health table when in use.
+- **Time Tracking Aggregates:** Time logged and time remaining on rolled-over work appear when your team uses Jira's time tracking.
+- **Hidden When Not Used:** Teams that don't use these Jira fields see no extra columns or KPIs.
 
 ### Built for the Atlassian Cloud
 

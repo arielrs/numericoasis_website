@@ -29,25 +29,18 @@ Configuration Monitor puts change visibility directly in the hands of Project Ad
 
 ### For Jira Site Administrators
 
-**Site-wide oversight:** Works across every project. Each project maintains its own independent change history.
-
-**GDPR compliance:** The Admin Panel lets you export or anonymize user data across all tracked projects, satisfying Right of Access and Right to Erasure.
-
-**Reduced support burden:** Project Admins can self-serve on configuration change inquiries, freeing Site Admins to focus on strategic work instead of answering "who changed this?" questions.
-
-**Zero maintenance:** Syncs automatically every hour, retains data for up to 1 year, purges old records, and fully cleans up on uninstall.
+- **Site-wide oversight:** Works across every project. Each project maintains its own independent change history.
+- **GDPR compliance:** The Admin Panel lets you export or anonymize user data across all tracked projects, satisfying Right of Access and Right to Erasure.
+- **Reduced support burden:** Project Admins can self-serve on configuration change inquiries, freeing Site Admins to focus on strategic work instead of answering "who changed this?" questions.
+- **Zero maintenance:** Syncs automatically every hour, retains data for up to 1 year, purges old records, and fully cleans up on uninstall.
 
 ### For Teams and Organizations
 
-**Onboarding:** New project admins can review the change history to understand the current configuration.
-
-**Incident response:** Quickly identify the root cause when workflows break, notifications stop, or permissions change.
-
-**Audit readiness:** Continuous audit trail of who changed what and when, exportable at any time.
-
-**Decentralized accountability:** Project Admins own their configuration visibility, reducing bottlenecks and dependency on centralized Jira administration.
-
-**Change management:** Passive record of all modifications, bringing accountability to configuration management.
+- **Onboarding:** New project admins can review the change history to understand the current configuration.
+- **Incident response:** Quickly identify the root cause when workflows break, notifications stop, or permissions change.
+- **Audit readiness:** Continuous audit trail of who changed what and when, exportable at any time.
+- **Decentralized accountability:** Project Admins own their configuration visibility, reducing bottlenecks and dependency on centralized Jira administration.
+- **Change management:** Passive record of all modifications, bringing accountability to configuration management.
 
 ## Who Is This For?
 
@@ -66,61 +59,34 @@ Configuration Monitor puts change visibility directly in the hands of Project Ad
 
 ## Features
 
-**Automatic Syncing:** Configuration snapshots every hour and on install. Manual sync available. Large instances (100+ projects) use Forge Queue for batched processing.
-
-**Change Detection:** Compares snapshots to detect additions, removals, and modifications across all tracked sections.
-
-**Change Attribution:** Identifies which administrator made each change via audit log correlation (see *Change Attribution Details* below).
-
-**Section Filtering:** Filter changes by any of the 13 tracked sections.
-
-**Date Range Filtering:** Filter changes by start and end date.
-
-**Configurable Pagination:** Choose 25, 50, or 100 changes per page.
-
-**Change Type Filtering:** Instantly filter your change log by Added, Removed, or Modified changes.
-
-**Clickable Stats Dashboard:** Click the Total, Added, Removed, or Modified stat boxes to quickly filter your view.
-
-**Full Dataset Filtering:** Filters and stats always reflect your complete change history, not just the current page.
-
-**Open in New Tab:** All links to Jira configuration pages, user profiles, and schemes open in a new browser tab so you never lose your place.
-
-**Project Context Header:** See your project name, key, type, and management style at a glance.
-
-**Clear Empty States:** Helpful guidance messages when no changes exist yet or when your filters return no results.
-
-**Multiple Author Visibility:** When multiple administrators modify the same configuration in the same period, all contributors are shown.
-
-**CSV Export:** Generate CSV of all filtered changes in-app. Copy and paste into Excel or Google Sheets. Includes date, time, section, type, entity, details, changed by (name + account ID), and before/after values. Also available in the GDPR Admin Panel for site-wide user data export with project context.
-
-**Sync Log:** View sync history, zero-change syncs are automatically hidden for a clean view. All information displayed on a single line.
-
-**Project Type Detection:** Displays project type (Software/Service Management/Business) and management style (Team-managed/Company-managed).
-
-**Smart Team-Managed Handling:** Automatically hides irrelevant sections (Components, Versions) for team-managed projects and shows contextual disclaimers.
-
-**Sprint Tracking:** For Jira Software projects using Scrum boards, tracks sprint creation, start, close, reopen, name changes, date changes, and goal updates. Kanban projects are automatically detected and skipped.
-
-**JSM Support:** For Jira Service Management projects, additionally tracks Queues and Request Types.
-
-**Issue Security Tracking:** Monitors security scheme assignments, levels, and membership changes.
-
-**GDPR Admin Panel:** Site administrators can export or anonymize user data.
-
-**Action Filtering:** Filter the audit trail by Export or Anonymize actions to quickly find what you need.
-
-**Linked User Profiles:** User names in the audit trail are clickable links to their Jira profile.
-
-**Smart Anonymization:** After anonymizing a user, only their historical activity is anonymized. If the same user remains active and makes new changes, those are tracked normally, ensuring ongoing accountability while respecting their right to erasure for past data.
-
-**Admin CSV Export:** Export a specific user's change data as CSV directly from the Admin Panel.
-
-**Data Retention:** Changes older than 1 year are automatically purged. Maximum 1000 changes per project.
-
-**Clean Uninstall:** All stored data is removed when the app is uninstalled.
-
-**Runs on Atlassian:** Fully eligible for the Runs on Atlassian program. No data egress.
+- **Automatic Syncing:** Configuration snapshots every hour and on install. Manual sync available. Large instances (100+ projects) use Forge Queue for batched processing.
+- **Change Detection:** Compares snapshots to detect additions, removals, and modifications across all tracked sections.
+- **Change Attribution:** Identifies which administrator made each change via audit log correlation (see *Change Attribution Details* below).
+- **Section Filtering:** Filter changes by any of the 13 tracked sections.
+- **Date Range Filtering:** Filter changes by start and end date.
+- **Configurable Pagination:** Choose 25, 50, or 100 changes per page.
+- **Change Type Filtering:** Instantly filter your change log by Added, Removed, or Modified changes.
+- **Clickable Stats Dashboard:** Click the Total, Added, Removed, or Modified stat boxes to quickly filter your view.
+- **Full Dataset Filtering:** Filters and stats always reflect your complete change history, not just the current page.
+- **Open in New Tab:** All links to Jira configuration pages, user profiles, and schemes open in a new browser tab so you never lose your place.
+- **Project Context Header:** See your project name, key, type, and management style at a glance.
+- **Clear Empty States:** Helpful guidance messages when no changes exist yet or when your filters return no results.
+- **Multiple Author Visibility:** When multiple administrators modify the same configuration in the same period, all contributors are shown.
+- **CSV Export:** Generate CSV of all filtered changes in-app. Copy and paste into Excel or Google Sheets. Includes date, time, section, type, entity, details, changed by (name + account ID), and before/after values. Also available in the GDPR Admin Panel for site-wide user data export with project context.
+- **Sync Log:** View sync history, zero-change syncs are automatically hidden for a clean view. All information displayed on a single line.
+- **Project Type Detection:** Displays project type (Software/Service Management/Business) and management style (Team-managed/Company-managed).
+- **Smart Team-Managed Handling:** Automatically hides irrelevant sections (Components, Versions) for team-managed projects and shows contextual disclaimers.
+- **Sprint Tracking:** For Jira Software projects using Scrum boards, tracks sprint creation, start, close, reopen, name changes, date changes, and goal updates. Kanban projects are automatically detected and skipped.
+- **JSM Support:** For Jira Service Management projects, additionally tracks Queues and Request Types.
+- **Issue Security Tracking:** Monitors security scheme assignments, levels, and membership changes.
+- **GDPR Admin Panel:** Site administrators can export or anonymize user data.
+- **Action Filtering:** Filter the audit trail by Export or Anonymize actions to quickly find what you need.
+- **Linked User Profiles:** User names in the audit trail are clickable links to their Jira profile.
+- **Smart Anonymization:** After anonymizing a user, only their historical activity is anonymized. If the same user remains active and makes new changes, those are tracked normally, ensuring ongoing accountability while respecting their right to erasure for past data.
+- **Admin CSV Export:** Export a specific user's change data as CSV directly from the Admin Panel.
+- **Data Retention:** Changes older than 1 year are automatically purged. Maximum 1000 changes per project.
+- **Clean Uninstall:** All stored data is removed when the app is uninstalled.
+- **Runs on Atlassian:** Fully eligible for the Runs on Atlassian program. No data egress.
 
 ## Tracked Configuration Sections
 
@@ -144,13 +110,10 @@ Configuration Monitor puts change visibility directly in the hands of Project Ad
 
 Team-managed (next-gen) projects use a simplified configuration model that differs from company-managed (classic) projects. The following limitations apply:
 
-**Components and Versions:** Automatically skipped for team-managed projects, as these do not use traditional components or versions.
-
-**Screens and Field Configurations:** Team-managed projects configure fields directly on work types rather than through screen schemes. Due to Jira REST API constraints, field configuration changes on work type screens are not currently trackable.
-
-**Permissions:** Team-managed projects use simplified permission models. Some scheme-based permission details may show limited data.
-
-**Issue Security:** Not applicable to team-managed projects.
+- **Components and Versions:** Automatically skipped for team-managed projects, as these do not use traditional components or versions.
+- **Screens and Field Configurations:** Team-managed projects configure fields directly on work types rather than through screen schemes. Due to Jira REST API constraints, field configuration changes on work type screens are not currently trackable.
+- **Permissions:** Team-managed projects use simplified permission models. Some scheme-based permission details may show limited data.
+- **Issue Security:** Not applicable to team-managed projects.
 
 ## Change Attribution Details
 
@@ -175,8 +138,6 @@ Configuration Monitor identifies which administrator made each change through au
 
 ## Technical Details
 
-**Platform:** Atlassian Forge
-
-**Sync interval:** Automatic hourly syncing with manual refresh available
-
-**Runs on Atlassian:** Fully eligible. All data stays within Atlassian infrastructure.
+- **Platform:** Atlassian Forge
+- **Sync interval:** Automatic hourly syncing with manual refresh available
+- **Runs on Atlassian:** Fully eligible. All data stays within Atlassian infrastructure.

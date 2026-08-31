@@ -16,15 +16,11 @@ sourceTitle: "EMC - Privacy Policy"
 
 Expanded Macro Collection collects and processes only the minimum data necessary to provide its macros:
 
-**Page workflow state (Confluence content properties):** Page Status and Page Classification are stored as content properties on the page itself. Each records the status or classification value, a timestamp, and the Atlassian account ID of the user who last set it.
-
-**Link index (app storage):** page-to-page link relationships (page identifiers and titles) used by Referenced By and Related Pages.
-
-**Acknowledgement records (app storage):** when a user acknowledges a page via the Sign-off macro, the app records the page, the version acknowledged, the timestamp, and the acknowledging user's Atlassian account ID and display name (captured at the time of signing).
-
-**Per-space configuration and crawl bookkeeping (app storage):** the space's workflow status and classification sets, and internal crawl timestamps and a schema version.
-
-**Transient reads (not stored):** to render the macros, the app reads page bodies, metadata, labels, space roles, and group membership from Confluence via the standard REST API. This data is processed in memory and is not stored, except as the indexes described above.
+- **Page workflow state (Confluence content properties):** Page Status and Page Classification are stored as content properties on the page itself. Each records the status or classification value, a timestamp, and the Atlassian account ID of the user who last set it.
+- **Link index (app storage):** page-to-page link relationships (page identifiers and titles) used by Referenced By and Related Pages.
+- **Acknowledgement records (app storage):** when a user acknowledges a page via the Sign-off macro, the app records the page, the version acknowledged, the timestamp, and the acknowledging user's Atlassian account ID and display name (captured at the time of signing).
+- **Per-space configuration and crawl bookkeeping (app storage):** the space's workflow status and classification sets, and internal crawl timestamps and a schema version.
+- **Transient reads (not stored):** to render the macros, the app reads page bodies, metadata, labels, space roles, and group membership from Confluence via the standard REST API. This data is processed in memory and is not stored, except as the indexes described above.
 
 ## 2. Personal Data Processing
 
