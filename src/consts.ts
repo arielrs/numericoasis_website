@@ -24,6 +24,7 @@ export const SITE = {
 
 export const NAV_LINKS = [
   { href: '/apps/', labelKey: 'apps' },
+  { href: '/documentation/', labelKey: 'docs', absolute: true },
   { href: '/blog/', labelKey: 'blog' },
   { href: '/about/', labelKey: 'about' },
   { href: '/contact/', labelKey: 'contact' },

@@ -18,6 +18,11 @@ const isActive = (href: string) =>
   href === '/' ? path === '/' || path === withLocale(lang, '/') : path.startsWith(withLocale(lang, href));
 
 const linkLabel = (key: (typeof NAV_LINKS)[number]['labelKey']) => t.nav[key];
+
+// The documentation is published in English only, at one URL. Passing it
+// through withLocale would produce /pt-BR/documentation/, which does not exist.
+const navHref = (link: (typeof NAV_LINKS)[number]) =>
+  'absolute' in link && link.absolute ? link.href : withLocale(lang, link.href);
 ---
 
 <header class="sticky top-0 z-50 border-b border-sand-200/60 bg-paper/85 backdrop-blur-lg">
@@ -40,7 +45,7 @@ const linkLabel = (key: (typeof NAV_LINKS)[number]['labelKey']) => t.nav[key];
     <div class="hidden items-center gap-1 md:flex">
       {NAV_LINKS.map((link) => (
         <a
-          href={withLocale(lang, link.href)}
+          href={navHref(link)}
           class:list={[
             'rounded-full px-3 py-2 text-sm font-medium transition',
             isActive(link.href)
@@ -78,7 +83,7 @@ const linkLabel = (key: (typeof NAV_LINKS)[number]['labelKey']) => t.nav[key];
     <div class="container-wide flex flex-col py-3">
       {NAV_LINKS.map((link) => (
         <a
-          href={withLocale(lang, link.href)}
+          href={navHref(link)}
           class:list={[
             'rounded-lg px-3 py-2.5 text-sm font-medium transition',
             isActive(link.href)

@@ -1,0 +1,84 @@
+---
+/**
+ * One documentation page.
+ *
+ * Outside the [...lang] tree on purpose: this section is English only, so it
+ * has no locale prefix and no hreflang cluster. check-dist.mjs exempts the
+ * whole /documentation/ prefix from route parity for the same reason.
+ */
+import { render } from 'astro:content';
+import DocsLayout from '../../layouts/DocsLayout.astro';
+import { SITE } from '../../consts';
+import { docGroups, docOrder, docSlug, groupLabel, tocFrom, type DocEntry } from '../../lib/docs';
+import { ORG_ID, WEBSITE_ID, type JsonLdNode } from '../../lib/schema';
+
+export async function getStaticPaths() {
+  const groups = await docGroups();
+  const order = docOrder(groups);
+
+  return order.map((entry, i) => ({
+    params: { slug: docSlug(entry) },
+    props: { entry, groups, prev: order[i - 1], next: order[i + 1] },
+  }));
+}
+
+const { entry, groups, prev, next } = Astro.props as {
+  entry: DocEntry;
+  groups: Awaited<ReturnType<typeof docGroups>>;
+  prev?: DocEntry;
+  next?: DocEntry;
+};
+
+const { Content, headings } = await render(entry);
+const toc = tocFrom(headings);
+
+const pageUrl = new URL(`/documentation/${docSlug(entry)}/`, SITE.url).toString();
+const label = groupLabel(entry.data.app);
+
+// TechArticle rather than WebPage: these are product documentation, and the
+// distinction is one answer engines actually use when deciding what a page is.
+const article: JsonLdNode = {
+  '@type': 'TechArticle',
+  '@id': `${pageUrl}#techarticle`,
+  headline: `${label}: ${entry.data.title}`,
+  name: entry.data.title,
+  description: entry.data.description,
+  url: pageUrl,
+  inLanguage: 'en',
+  isPartOf: { '@id': WEBSITE_ID },
+  mainEntityOfPage: { '@id': `${pageUrl}#webpage` },
+  publisher: { '@id': ORG_ID },
+  author: { '@id': ORG_ID },
+  about: label,
+};
+---
+
+<DocsLayout
+  title={`${entry.data.title}: ${label}`}
+  description={entry.data.description}
+  groups={groups}
+  current={entry}
+  headings={toc}
+  prev={prev}
+  next={next}
+  graph={{
+    breadcrumbs: [
+      { name: 'Docs', path: '/documentation/' },
+      { name: entry.data.title, path: `/documentation/${docSlug(entry)}/` },
+    ],
+    extraNodes: [article],
+    primaryEntityId: `${pageUrl}#techarticle`,
+    pageType: 'TechArticle',
+  }}
+>
+  <header>
+    <p class="eyebrow">{label}</p>
+    <h1 class="mt-3 font-display text-3xl font-bold leading-tight tracking-tight text-brand-900 sm:text-4xl">
+      {entry.data.title}
+    </h1>
+  </header>
+
+  <div class="prose-custom mt-8">
+    <Content />
+  </div>
+</DocsLayout>

@@ -40,6 +40,11 @@ const PAGES = [
   '/blog/',
   '/blog/what-does-your-jira-work-actually-cost/',
   '/blog/tag/onbudget/',
+  // The documentation is a page shape of its own: a sidebar, a breadcrumb
+  // trail, an on-this-page rail, and 22,000 words of migrated tables.
+  '/documentation/',
+  '/documentation/onbudget/overview/',
+  '/documentation/legal/terms/',
   '/pt-BR/onbudget/',
   '/es/apps/atelier/',
   '/404.html',

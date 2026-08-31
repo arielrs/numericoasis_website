@@ -1,0 +1,140 @@
+---
+/**
+ * The documentation hub.
+ *
+ * One card per app, each listing its own pages, so a reader who arrives from a
+ * Marketplace listing can see the whole shape of what is documented without
+ * opening anything.
+ */
+import { Image } from 'astro:assets';
+import { getCollection } from 'astro:content';
+import DocsLayout from '../../layouts/DocsLayout.astro';
+import { SITE } from '../../consts';
+import { docGroups, docHref } from '../../lib/docs';
+import { WEBSITE_ID, type JsonLdNode } from '../../lib/schema';
+
+const groups = await docGroups();
+
+// Icons come from the apps collection, joined on translationKey. "legal" has no
+// app behind it, and neither does an app that has not shipped yet.
+const apps = await getCollection('apps', ({ data }) => data.lang === 'en');
+const iconFor = (key: string) => apps.find((a) => a.data.translationKey === key)?.data.icon;
+const marketplaceFor = (key: string) =>
+  apps.find((a) => a.data.translationKey === key)?.data.marketplaceUrl;
+
+const canonical = new URL('/documentation/', SITE.url).toString();
+
+const itemList: JsonLdNode = {
+  '@type': 'ItemList',
+  '@id': `${canonical}#doclist`,
+  name: 'Numeric Oasis documentation',
+  itemListOrder: 'https://schema.org/ItemListOrderAscending',
+  numberOfItems: groups.reduce((n, g) => n + g.pages.length, 0),
+  isPartOf: { '@id': WEBSITE_ID },
+  itemListElement: groups.flatMap((group, gi) =>
+    group.pages.map((page, pi) => ({
+      '@type': 'ListItem',
+      position: gi * 100 + pi + 1,
+      name: `${group.label}: ${page.data.title}`,
+      url: new URL(docHref(page), SITE.url).toString(),
+    })),
+  ),
+};
+---
+
+<DocsLayout
+  title="Documentation for every app we publish"
+  description="Setup, features and policies for the Numeric Oasis apps for Jira and Confluence Cloud. Written for the administrator who has to install and defend them."
+  groups={groups}
+  graph={{
+    breadcrumbs: [{ name: 'Docs', path: '/documentation/' }],
+    extraNodes: [itemList],
+    primaryEntityId: `${canonical}#doclist`,
+    pageType: 'CollectionPage',
+  }}
+>
+  <header class="max-w-3xl">
+    <p class="eyebrow">Documentation</p>
+    <h1 class="mt-3 font-display text-3xl font-bold leading-tight tracking-tight text-brand-900 sm:text-4xl">
+      How every Numeric Oasis app works.
+    </h1>
+    <p class="mt-5 text-lg leading-relaxed text-slate-700">
+      Setup, features, release history and the policies your security review will
+      ask for. Every app we publish on the Atlassian Marketplace is here.
+    </p>
+  </header>
+
+  <div class="mt-12 grid gap-6 md:grid-cols-2">
+    {groups.map((group) => {
+      const icon = iconFor(group.app);
+      const marketplace = marketplaceFor(group.app);
+      return (
+        <article class="flex flex-col rounded-2xl border border-sand-200 bg-paper p-7 transition duration-200 ease-out-soft hover:border-water-400 hover:shadow-[var(--shadow-soft)]">
+          <div class="flex items-center gap-4">
+            {icon ? (
+              <Image src={icon} alt="" width={48} class="h-12 w-12 shrink-0 rounded-xl object-cover ring-1 ring-sand-200" />
+            ) : (
+              <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-brand-900 font-display text-base font-bold text-white" aria-hidden="true">
+                {group.label.charAt(0)}
+              </div>
+            )}
+            <div>
+              <h2 class="font-display text-xl font-semibold text-brand-900">{group.label}</h2>
+              <p class="mt-0.5 text-sm text-slate-600">{group.blurb}</p>
+            </div>
+          </div>
+
+          <ul class="mt-6 flex-1 space-y-1.5">
+            {group.pages.map((page) => (
+              <li>
+                <a
+                  href={docHref(page)}
+                  class="group/link inline-flex items-center gap-1.5 rounded-sm text-sm text-water-700 transition duration-200 ease-out-soft hover:text-water-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sun-500"
+                >
+                  {page.data.title}
+                  <svg
+                    class="transition duration-200 ease-out-soft group-hover/link:translate-x-0.5"
+                    width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"
+                  ><path d="M5 12h14M13 5l7 7-7 7" /></svg>
+                </a>
+              </li>
+            ))}
+          </ul>
+
+          {marketplace && (
+            <a
+              href={marketplace}
+              class="mt-6 inline-flex items-center gap-1.5 self-start rounded-md border border-sand-200 px-3 py-1.5 text-xs font-semibold text-brand-800 transition duration-200 ease-out-soft hover:border-water-400 hover:text-water-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sun-500"
+              rel="noopener"
+              target="_blank"
+            >
+              View on the Marketplace
+              <svg
+                width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"
+              ><path d="M7 17L17 7M7 7h10v10" /></svg>
+            </a>
+          )}
+        </article>
+      );
+    })}
+  </div>
+
+  <section class="mt-14 rounded-3xl bg-brand-900 p-8 sm:p-12">
+    <div class="max-w-2xl">
+      <h2 class="font-display text-2xl font-bold tracking-tight text-white sm:text-3xl">
+        Not answered here?
+      </h2>
+      <p class="mt-3 text-base leading-relaxed text-brand-100">
+        Support for every app goes through our Jira Service Management portal, so
+        requests land in a queue rather than an inbox. We answer in English,
+        Portuguese and Spanish.
+      </p>
+      <div class="mt-7 flex flex-wrap gap-3">
+        <a href={SITE.supportUrl} class="btn-cta" rel="noopener" target="_blank">Open a support request</a>
+        <a href="/contact/" class="btn-secondary !bg-paper">Ask us a question</a>
+      </div>
+    </div>
+  </section>
+</DocsLayout>

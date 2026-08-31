@@ -14,6 +14,16 @@ const LOCALES = ['pt-BR', 'es'];
 /** Deliberately monolingual, and deliberately excluded from the head invariants. */
 const STANDALONE = new Set(['/poker/', '/404.html']);
 
+/**
+ * Whole sections that are monolingual. The documentation was migrated out of a
+ * public Confluence space in English and is not translated, so route parity and
+ * the hreflang count do not apply to it.
+ */
+const STANDALONE_PREFIXES = ['/documentation/'];
+
+const isStandalone = (url) =>
+  STANDALONE.has(url) || STANDALONE_PREFIXES.some((prefix) => url.startsWith(prefix));
+
 const errors = [];
 
 async function walk(dir, out = []) {
@@ -40,7 +50,7 @@ const byLocale = { en: new Set(), 'pt-BR': new Set(), es: new Set() };
 
 for (const file of pages) {
   const url = toUrl(file);
-  if (STANDALONE.has(url)) continue;
+  if (isStandalone(url)) continue;
   const match = url.match(/^\/(pt-BR|es)(?=\/|$)/);
   byLocale[match ? match[1] : 'en'].add(bare(url));
 }
@@ -75,7 +85,7 @@ for (const file of pages) {
 // 3. Head invariants on every indexable page.
 for (const file of pages) {
   const url = toUrl(file);
-  if (STANDALONE.has(url)) continue;
+  if (isStandalone(url)) continue;
   const source = await readFile(file, 'utf8');
 
   // Redirect stubs are meta-refresh pages carrying their own noindex and a

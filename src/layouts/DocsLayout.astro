@@ -1,0 +1,172 @@
+---
+/**
+ * The documentation shell: sidebar, breadcrumbs, on-this-page rail, prev/next.
+ *
+ * Wraps BaseLayout rather than replacing it, so the nav, footer, skip link,
+ * structured data and locale suggestion all still work exactly as they do
+ * everywhere else.
+ *
+ * `standalone` is passed through to the head. This section is English only, so
+ * emitting a three-locale hreflang cluster would advertise two URLs that do not
+ * exist.
+ */
+import BaseLayout from './BaseLayout.astro';
+import { LOCALES, DEFAULT_LOCALE } from '../i18n';
+import type { Crumb, JsonLdNode } from '../lib/schema';
+import { docHref, groupLabel, type DocEntry, type DocGroup, type Heading } from '../lib/docs';
+
+interface Props {
+  title: string;
+  description: string;
+  groups: DocGroup[];
+  /** Omitted on the hub, which is the one docs page with no current entry. */
+  current?: DocEntry;
+  headings?: Heading[];
+  prev?: DocEntry;
+  next?: DocEntry;
+  /** Merged into the single per-page graph, as everywhere else on the site. */
+  graph?: {
+    breadcrumbs?: Crumb[];
+    extraNodes?: JsonLdNode[];
+    primaryEntityId?: string;
+    pageType?: string;
+  };
+}
+
+const { title, description, groups, current, headings = [], prev, next, graph } = Astro.props;
+
+/**
+ * Where the language switcher points from a docs page.
+ *
+ * This section exists in English only, so the switcher would otherwise offer
+ * /pt-BR/documentation/... and /es/documentation/..., which are 404s. Sending a
+ * reader to that locale's home page instead is the same thing 404.astro does,
+ * and it is the difference between changing language and hitting a dead end.
+ */
+const alternates = Object.fromEntries(
+  LOCALES.map((l) => [l, l === DEFAULT_LOCALE ? Astro.url.pathname : `/${l}/`]),
+) as Record<(typeof LOCALES)[number], string>;
+
+const linkBase =
+  'block rounded-md px-3 py-1.5 text-sm transition duration-200 ease-out-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sun-500';
+---
+
+<BaseLayout title={title} description={description} standalone alternates={alternates} graph={graph}>
+  <div class="container-wide py-10 lg:py-14">
+    <div class="lg:grid lg:grid-cols-[minmax(0,16rem)_minmax(0,1fr)] lg:gap-12 xl:gap-16">
+      <!-- SIDEBAR. A <details> on narrow screens so it does not push the page
+           down by a screen and a half before the reader reaches any content. -->
+      <details class="group mb-8 lg:mb-0" open={Boolean(current)}>
+        <summary
+          class="flex cursor-pointer list-none items-center justify-between rounded-lg border border-sand-200 bg-sand-50 px-4 py-3 text-sm font-semibold text-brand-900 lg:hidden"
+        >
+          Documentation
+          <svg
+            class="transition duration-200 ease-out-soft group-open:rotate-45"
+            width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="2.5" stroke-linecap="round" aria-hidden="true"
+          ><path d="M12 5v14M5 12h14" /></svg>
+        </summary>
+
+        <nav class="mt-4 lg:sticky lg:top-24 lg:mt-0 lg:max-h-[calc(100vh-8rem)] lg:overflow-y-auto lg:pr-2" aria-label="Documentation">
+          <a
+            href="/documentation/"
+            class:list={[linkBase, 'font-semibold', current ? 'text-brand-800 hover:bg-sand-50' : 'bg-sand-100 text-brand-900']}
+            aria-current={current ? undefined : 'page'}
+          >All documentation</a>
+
+          {groups.map((group) => (
+            <div class="mt-5">
+              <p class="px-3 text-xs font-semibold uppercase tracking-[0.14em] text-water-700">
+                {group.label}
+              </p>
+              <ul class="mt-1.5 space-y-0.5">
+                {group.pages.map((page) => {
+                  const active = current?.id === page.id;
+                  return (
+                    <li>
+                      <a
+                        href={docHref(page)}
+                        class:list={[
+                          linkBase,
+                          active
+                            ? 'bg-sand-100 font-semibold text-brand-900'
+                            : 'text-slate-600 hover:bg-sand-50 hover:text-brand-900',
+                        ]}
+                        aria-current={active ? 'page' : undefined}
+                      >{page.data.title}</a>
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
+          ))}
+        </nav>
+      </details>
+
+      <div class="min-w-0">
+        {current && (
+          <nav class="mb-6 flex flex-wrap items-center gap-1.5 text-sm text-slate-600" aria-label="Breadcrumb">
+            <a
+              href="/documentation/"
+              class="rounded-sm transition duration-200 ease-out-soft hover:text-brand-900 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sun-500"
+            >Docs</a>
+            <span aria-hidden="true">/</span>
+            <span>{groupLabel(current.data.app)}</span>
+            <span aria-hidden="true">/</span>
+            <span class="font-medium text-brand-900">{current.data.title}</span>
+          </nav>
+        )}
+
+        <div class="xl:grid xl:grid-cols-[minmax(0,1fr)_minmax(0,13rem)] xl:gap-12">
+          <div class="min-w-0">
+            <slot />
+
+            {(prev || next) && (
+              <nav class="mt-16 grid gap-4 border-t border-sand-200 pt-8 sm:grid-cols-2" aria-label="Documentation pages">
+                {prev ? (
+                  <a
+                    href={docHref(prev)}
+                    class="rounded-2xl border border-sand-200 bg-paper p-5 transition duration-200 ease-out-soft hover:-translate-y-1 hover:border-water-400 hover:shadow-[var(--shadow-soft)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sun-500"
+                  >
+                    <span class="text-xs font-semibold uppercase tracking-[0.12em] text-slate-600">Previous</span>
+                    <p class="mt-2 font-display text-base font-semibold text-brand-900">{prev.data.title}</p>
+                    <p class="mt-0.5 text-sm text-slate-600">{groupLabel(prev.data.app)}</p>
+                  </a>
+                ) : <div></div>}
+                {next ? (
+                  <a
+                    href={docHref(next)}
+                    class="rounded-2xl border border-sand-200 bg-paper p-5 text-right transition duration-200 ease-out-soft hover:-translate-y-1 hover:border-water-400 hover:shadow-[var(--shadow-soft)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sun-500"
+                  >
+                    <span class="text-xs font-semibold uppercase tracking-[0.12em] text-slate-600">Next</span>
+                    <p class="mt-2 font-display text-base font-semibold text-brand-900">{next.data.title}</p>
+                    <p class="mt-0.5 text-sm text-slate-600">{groupLabel(next.data.app)}</p>
+                  </a>
+                ) : <div></div>}
+              </nav>
+            )}
+          </div>
+
+          {headings.length > 1 && (
+            <aside class="mt-12 xl:mt-0">
+              <div class="xl:sticky xl:top-24">
+                <p class="text-xs font-semibold uppercase tracking-[0.14em] text-water-700">On this page</p>
+                <ul class="mt-3 space-y-1.5 border-l border-sand-200 pl-4">
+                  {headings.map((h) => (
+                    <li>
+                      <a
+                        href={`#${h.slug}`}
+                        class="block rounded-sm text-sm leading-snug text-slate-600 transition duration-200 ease-out-soft hover:text-brand-900 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sun-500"
+                      >{h.text}</a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </aside>
+          )}
+        </div>
+      </div>
+    </div>
+  </div>
+</BaseLayout>

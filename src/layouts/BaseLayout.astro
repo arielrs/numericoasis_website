@@ -32,6 +32,8 @@ interface Props {
     tags?: readonly string[];
   };
   noindex?: boolean;
+  /** One-locale sections, such as the documentation. See SEO.astro. */
+  standalone?: boolean;
   /** Overrides for pages whose per-locale URLs are not simple mirrors. */
   alternates?: LocaleAlternates;
   /** Page-owned structured data, merged into the single per-page @graph. */
@@ -43,7 +45,7 @@ interface Props {
   };
 }
 
-const { title, description, metaDescription, image, article, noindex, alternates, graph = {} } = Astro.props;
+const { title, description, metaDescription, image, article, noindex, standalone, alternates, graph = {} } = Astro.props;
 const lang = detectLangFromPath(Astro.url.pathname);
 const t = useTranslations(lang);
 
@@ -94,6 +96,7 @@ const jsonLd = buildGraph({
       ogImage={ogImage}
       article={article}
       noindex={noindex}
+      standalone={standalone}
       lang={lang}
       alternates={alternates}
     />

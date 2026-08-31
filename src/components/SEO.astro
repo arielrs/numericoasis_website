@@ -27,6 +27,12 @@ interface Props {
     tags?: readonly string[];
   };
   noindex?: boolean;
+  /**
+   * A section that exists in one locale only. It still gets a canonical and is
+   * still indexed, but no hreflang cluster: advertising two alternates that do
+   * not exist is worse than advertising none.
+   */
+  standalone?: boolean;
   lang: Locale;
   /** Overrides for pages whose per-locale URLs are not simple mirrors. */
   alternates?: LocaleAlternates;
@@ -38,6 +44,7 @@ const {
   ogImage,
   article,
   noindex = false,
+  standalone = false,
   lang,
   alternates: alternateOverride,
 } = Astro.props;
@@ -56,10 +63,10 @@ const xDefaultHref = new URL(urls[DEFAULT_LOCALE], Astro.site).toString();
 <title>{fullTitle}</title>
 <meta name="description" content={description} />
 <link rel="canonical" href={canonical} />
-{alternates.map((a) => (
+{!standalone && alternates.map((a) => (
   <link rel="alternate" hreflang={a.hreflang} href={a.href} />
 ))}
-<link rel="alternate" hreflang="x-default" href={xDefaultHref} />
+{!standalone && <link rel="alternate" hreflang="x-default" href={xDefaultHref} />}
 {noindex ? (
   <meta name="robots" content="noindex, nofollow" />
 ) : (

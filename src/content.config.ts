@@ -241,4 +241,35 @@ const apps = defineCollection({
       }),
 });
 
-export const collections = { blog, apps };
+/**
+ * Product documentation, migrated out of the public Confluence space so that
+ * space can be switched off.
+ *
+ * English only, deliberately. The apps and blog collections carry "lang" and
+ * "translationKey" and are parity-checked in all three locales; this one is
+ * not, because 22,000 words of technical documentation is a different order of
+ * translation commitment. check-content.mjs only enforces parity for those two
+ * collections, so nothing here fights the build.
+ */
+const docs = defineCollection({
+  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/docs' }),
+  schema: z.object({
+    title: z.string(),
+    /**
+     * The app this page documents. Matches "translationKey" in the apps
+     * collection, so a page can be joined to its app for the icon and the
+     * Marketplace link. "legal" is the one value with no app behind it.
+     */
+    app: z.string(),
+    /** Sort order inside the app. Policies sit at 8+ so they land last. */
+    order: z.number().default(50),
+    description: z.string(),
+    /** Unpublished apps: migrated so nothing is lost, not yet shown. */
+    draft: z.boolean().default(false),
+    /** Traceability back to the page this came from, while Confluence still exists. */
+    sourcePageId: z.string().optional(),
+    sourceTitle: z.string().optional(),
+  }),
+});
+
+export const collections = { blog, apps, docs };
