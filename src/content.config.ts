@@ -108,7 +108,13 @@ const apps = defineCollection({
 
         // --- Links ----------------------------------------------------------
         marketplaceUrl: z.string().url().optional(),
-        documentationUrl: z.string().url().optional(),
+        /**
+         * Root relative on purpose. The docs are on this site, and
+         * check-dist.mjs only validates href="/..." links, so an absolute URL
+         * here was invisible to the link gate and would have 404ed silently
+         * after any rename.
+         */
+        documentationUrl: z.string().startsWith('/').optional(),
         supportUrl: z.string().url().optional(),
 
         // --- Placement ------------------------------------------------------
@@ -263,7 +269,22 @@ const docs = defineCollection({
     app: z.string(),
     /** Sort order inside the app. Policies sit at 8+ so they land last. */
     order: z.number().default(50),
-    description: z.string(),
+    /**
+     * The SERP snippet, and what renders when someone pastes a policy link into
+     * chat. The exporter derives a first draft from the body, which produced
+     * "Last Updated: July 2, 2026" on eight pages and a literal blockquote
+     * marker on another, so the shape is enforced rather than trusted.
+     */
+    description: z
+      .string()
+      .min(40)
+      .max(160)
+      .refine((v) => !/^\s*[>#*|-]/.test(v), {
+        message: 'description must not start with markdown punctuation',
+      })
+      .refine((v) => !/^(Last Updated|Release Date|Effective|Version)/i.test(v), {
+        message: 'description must describe the page, not restate a date or version',
+      }),
     /** Unpublished apps: migrated so nothing is lost, not yet shown. */
     draft: z.boolean().default(false),
     /** Traceability back to the page this came from, while Confluence still exists. */

@@ -2,7 +2,7 @@
 title: "Terms of service"
 app: "legal"
 order: 1
-description: "Terms of Service, Last Updated: 2026-02-11"
+description: "The terms covering every Numeric Oasis app: licensing, acceptable use, liability, and how the agreement ends. In full."
 # Migrated from Confluence. Kept so a page can be traced back to its origin.
 sourcePageId: "493420545"
 sourceTitle: "Terms of Service"
@@ -10,13 +10,13 @@ sourceTitle: "Terms of Service"
 
 **Terms of Service**, *Last Updated: 2026-02-11*
 
-### 1. Acceptance of Terms
+## 1. Acceptance of Terms
 
 By installing, accessing, or using any application ("App") developed and published by Numeric Oasis Ltda. ("Numeric Oasis", "we", "us", or "our") through the Atlassian Marketplace, you ("Customer", "you", or "your") agree to be bound by these Terms of Service ("Terms"). If you are accepting these Terms on behalf of an organization, you represent and warrant that you have the authority to bind that organization.
 
 If you do not agree to these Terms, do not install or use the App.
 
-### 2. Definitions
+## 2. Definitions
 
 **App**: Any software application developed by Numeric Oasis and distributed through the Atlassian Marketplace.
 
@@ -28,13 +28,13 @@ If you do not agree to these Terms, do not install or use the App.
 
 **Authorized Users**: Individuals within the Customer's organization permitted to use the App under the active Subscription.
 
-### 3. License Grant
+## 3. License Grant
 
 Subject to these Terms and payment of applicable fees, Numeric Oasis grants you a non-exclusive, non-transferable, revocable license to install and use the App solely within your Atlassian Platform instance, for your internal business purposes, and in accordance with the documentation provided.
 
 This license is limited to the number of Authorized Users or tier covered by your active Subscription.
 
-### 4. Restrictions
+## 4. Restrictions
 
 You shall not:
 
@@ -50,13 +50,13 @@ Use the App in any manner that violates applicable laws, regulations, or the Atl
 
 Attempt to gain unauthorized access to any systems or networks related to the App.
 
-### 5. Atlassian Marketplace and Third-Party Platform
+## 5. Atlassian Marketplace and Third-Party Platform
 
 The App is distributed through the Atlassian Marketplace and operates on the Atlassian Platform. Your use of the Atlassian Platform is governed by your separate agreement with Atlassian. Numeric Oasis is not responsible for the availability, functionality, or security of the Atlassian Platform itself.
 
 Billing, invoicing, and payment processing for Subscriptions are handled by Atlassian through the Marketplace. Numeric Oasis does not directly collect payment information from Customers.
 
-### 6. Subscription, Payment, and Renewal
+## 6. Subscription, Payment, and Renewal
 
 **6.1 Subscription Terms.** Access to the App requires an active paid Subscription purchased through the Atlassian Marketplace. Subscription terms, pricing, and tiers are as listed on the App's Marketplace page at the time of purchase.
 
@@ -68,7 +68,7 @@ Billing, invoicing, and payment processing for Subscriptions are handled by Atla
 
 **6.5 Price Changes.** Numeric Oasis reserves the right to modify pricing. Price changes will take effect at the next renewal cycle. Active Subscriptions will not be affected mid-term.
 
-### 7. Data Processing and Privacy
+## 7. Data Processing and Privacy
 
 **7.1 Data Residency.** Apps that qualify as "Runs on Atlassian" process and store all Customer Data exclusively within Atlassian's infrastructure. No Customer Data is transmitted to or stored on external servers controlled by Numeric Oasis.
 
@@ -88,19 +88,19 @@ Applicable provisions of the California Consumer Privacy Act (CCPA), United Stat
 
 **7.6 Sub-processors.** The App relies exclusively on Atlassian Forge as its hosting and storage infrastructure. Numeric Oasis does not engage additional sub-processors for the handling of Customer Data.
 
-### 8. Intellectual Property
+## 8. Intellectual Property
 
 The App, including all source code, design, documentation, and associated materials, is and remains the exclusive property of Numeric Oasis. These Terms do not grant you any ownership rights in the App. All rights not expressly granted herein are reserved.
 
 Feedback, suggestions, or enhancement requests submitted by Customers may be used by Numeric Oasis without obligation or compensation.
 
-### 9. Disclaimer of Warranties
+## 9. Disclaimer of Warranties
 
 THE APP IS PROVIDED "AS IS" AND "AS AVAILABLE" WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, NON-INFRINGEMENT, OR UNINTERRUPTED AVAILABILITY.
 
 Numeric Oasis does not warrant that the App will be error-free, that defects will be corrected within any specific timeframe, or that the App will meet all of your requirements. The App's functionality is dependent on the Atlassian Platform and its APIs, which are outside of Numeric Oasis's control.
 
-### 10. Limitation of Liability
+## 10. Limitation of Liability
 
 **10.1** TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, IN NO EVENT SHALL NUMERIC OASIS BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES, INCLUDING BUT NOT LIMITED TO LOSS OF PROFITS, DATA, BUSINESS OPPORTUNITIES, OR GOODWILL, ARISING OUT OF OR IN CONNECTION WITH THE USE OF OR INABILITY TO USE THE APP.
 
@@ -108,7 +108,7 @@ Numeric Oasis does not warrant that the App will be error-free, that defects wil
 
 **10.3** These limitations apply regardless of the theory of liability (contract, tort, strict liability, or otherwise) and even if Numeric Oasis has been advised of the possibility of such damages.
 
-### 11. Indemnification
+## 11. Indemnification
 
 You agree to indemnify, defend, and hold harmless Numeric Oasis and its officers, directors, employees, and agents from and against any and all claims, liabilities, damages, losses, and expenses (including reasonable legal fees) arising out of or in connection with:
 
@@ -118,7 +118,7 @@ Your violation of any applicable law or regulation;
 
 Any third-party claim resulting from your use of the App.
 
-### 12. Term and Termination
+## 12. Term and Termination
 
 **12.1 Term.** These Terms are effective from the date you first install or use the App and remain in effect for the duration of your Subscription.
 
@@ -128,27 +128,27 @@ Any third-party claim resulting from your use of the App.
 
 **12.4 Effect of Termination.** Upon termination, your license to use the App ceases immediately. All stored data associated with the App will be deleted in accordance with Section 7.3. Sections 4, 8, 9, 10, 11, and 13 shall survive termination.
 
-### 13. Governing Law and Dispute Resolution
+## 13. Governing Law and Dispute Resolution
 
 These Terms shall be governed by and construed in accordance with the laws of the Federative Republic of Brazil, without regard to its conflict of laws provisions.
 
 Any disputes arising out of or in connection with these Terms shall be submitted to the exclusive jurisdiction of the courts of the city where Numeric Oasis Ltda. is registered, Brazil, unless otherwise required by mandatory consumer protection law applicable to the Customer's jurisdiction.
 
-### 14. Modifications to These Terms
+## 14. Modifications to These Terms
 
 Numeric Oasis reserves the right to update or modify these Terms at any time. Material changes will be communicated through the App's Marketplace listing or via direct notice. Continued use of the App following the publication of revised Terms constitutes acceptance of such changes.
 
 The "Last Updated" date at the top of this document indicates the most recent revision.
 
-### 15. Severability
+## 15. Severability
 
 If any provision of these Terms is found to be invalid or unenforceable by a court of competent jurisdiction, the remaining provisions shall continue in full force and effect.
 
-### 16. Entire Agreement
+## 16. Entire Agreement
 
 These Terms, together with any applicable Service Level Agreement and the Atlassian Marketplace Terms, constitute the entire agreement between you and Numeric Oasis regarding the use of the App, and supersede all prior agreements, understandings, and communications, whether written or oral.
 
-### 17. Contact
+## 17. Contact
 
 For questions, concerns, or notices regarding these Terms, please contact:
 

@@ -2,7 +2,7 @@
 title: "Overview"
 app: "sprint-rollover-tracker"
 order: 1
-description: "Sprint Rollover Tracker is an Atlassian Forge app for Jira Cloud that turns sprint carryover from a hidden problem into a metric your team can act on. It a"
+description: "How Sprint Rollover Tracker turns sprint carryover into a measurable signal in Jira Cloud, and what it does with the numbers."
 draft: true
 # Migrated from Confluence. Kept so a page can be traced back to its origin.
 sourcePageId: "542244866"

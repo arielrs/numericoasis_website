@@ -2,7 +2,7 @@
 title: "Release notes"
 app: "astrolink"
 order: 8
-description: "Release Date: April 30, 2026"
+description: "Every Astrolink release, newest first, with the features and fixes that shipped in each version."
 # Migrated from Confluence. Kept so a page can be traced back to its origin.
 sourcePageId: "498597890"
 sourceTitle: "Astrolink - Release Notes"

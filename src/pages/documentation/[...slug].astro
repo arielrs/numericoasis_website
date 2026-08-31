@@ -9,16 +9,18 @@
 import { render } from 'astro:content';
 import DocsLayout from '../../layouts/DocsLayout.astro';
 import { SITE } from '../../consts';
-import { docGroups, docOrder, docSlug, groupLabel, tocFrom, type DocEntry } from '../../lib/docs';
+import { docGroups, docOrder, docSlug, groupLabel, neighbours, tocFrom, type DocEntry } from '../../lib/docs';
 import { ORG_ID, WEBSITE_ID, type JsonLdNode } from '../../lib/schema';
 
 export async function getStaticPaths() {
   const groups = await docGroups();
   const order = docOrder(groups);
 
-  return order.map((entry, i) => ({
+  // Neighbours come from within the group, not from the flat order. Six of
+  // twenty edges used to leave the app entirely.
+  return order.map((entry) => ({
     params: { slug: docSlug(entry) },
-    props: { entry, groups, prev: order[i - 1], next: order[i + 1] },
+    props: { entry, groups, ...neighbours(groups, entry) },
   }));
 }
 
@@ -64,6 +66,9 @@ const article: JsonLdNode = {
   graph={{
     breadcrumbs: [
       { name: 'Docs', path: '/documentation/' },
+      // Without the group, ten of 21 URLs published one of two byte identical
+      // trails, because "Docs / Overview" describes six different pages.
+      { name: label, path: `/documentation/${entry.data.app}/` },
       { name: entry.data.title, path: `/documentation/${docSlug(entry)}/` },
     ],
     extraNodes: [article],

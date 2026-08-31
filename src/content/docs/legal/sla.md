@@ -2,7 +2,7 @@
 title: "Service level agreement"
 app: "legal"
 order: 2
-description: "This Service Level Agreement (SLA) defines the support commitments provided by Numeric Oasis for all apps published on the Atlassian Marketplace(https://ma"
+description: "Our support commitments: response targets by severity, hours of cover, and how to escalate. The service level agreement for every app we publish."
 # Migrated from Confluence. Kept so a page can be traced back to its origin.
 sourcePageId: "492994563"
 sourceTitle: "Service Level Agreement (SLA)"

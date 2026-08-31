@@ -21,6 +21,8 @@ interface Props {
   groups: DocGroup[];
   /** Omitted on the hub, which is the one docs page with no current entry. */
   current?: DocEntry;
+  /** Set by a group index page, which has a group but no single entry. */
+  currentApp?: string;
   headings?: Heading[];
   prev?: DocEntry;
   next?: DocEntry;
@@ -33,7 +35,12 @@ interface Props {
   };
 }
 
-const { title, description, groups, current, headings = [], prev, next, graph } = Astro.props;
+const {
+  title, description, groups, current, currentApp, headings = [], prev, next, graph,
+} = Astro.props;
+
+/** The group in view, from either a leaf or a group index. */
+const activeApp = current?.data.app ?? currentApp;
 
 /**
  * Where the language switcher points from a docs page.
@@ -47,6 +54,12 @@ const alternates = Object.fromEntries(
   LOCALES.map((l) => [l, l === DEFAULT_LOCALE ? Astro.url.pathname : `/${l}/`]),
 ) as Record<(typeof LOCALES)[number], string>;
 
+/** One source of truth for the rail, so the track and the aside cannot disagree. */
+const hasRail = headings.length > 1;
+
+const focusRing =
+  'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sun-500';
+
 const linkBase =
   'block rounded-md px-3 py-1.5 text-sm transition duration-200 ease-out-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sun-500';
 ---
@@ -54,21 +67,44 @@ const linkBase =
 <BaseLayout title={title} description={description} standalone alternates={alternates} graph={graph}>
   <div class="container-wide py-10 lg:py-14">
     <div class="lg:grid lg:grid-cols-[minmax(0,16rem)_minmax(0,1fr)] lg:gap-12 xl:gap-16">
-      <!-- SIDEBAR. A <details> on narrow screens so it does not push the page
-           down by a screen and a half before the reader reaches any content. -->
-      <details class="group mb-8 lg:mb-0" open={Boolean(current)}>
-        <summary
-          class="flex cursor-pointer list-none items-center justify-between rounded-lg border border-sand-200 bg-sand-50 px-4 py-3 text-sm font-semibold text-brand-900 lg:hidden"
+      <!--
+        SIDEBAR.
+
+        This was a <details open={Boolean(current)}>, which asked a page
+        identity question where a viewport question belonged, and got both
+        answers wrong. On the hub there is no current page, so it was closed,
+        and its toggle was lg:hidden, so at desktop 22 links sat in the DOM and
+        the accessibility tree with nothing able to reach them. On every leaf it
+        was open on mobile too, putting the h1 at y=1297 on a 375px phone.
+
+        Being a disclosure also broke the sticky: a closed-or-open <details>
+        establishes the containing block, so lg:sticky on a child measured
+        navTop -1879 at scroll 2000 and the index scrolled away with the page.
+
+        Now: a button that only exists below lg, and a nav that is its own
+        sticky element.
+      -->
+      <div class="mb-8 lg:mb-0">
+        <button
+          type="button"
+          id="doc-nav-toggle"
+          aria-expanded="false"
+          aria-controls="doc-nav"
+          class="flex w-full cursor-pointer items-center justify-between rounded-lg border border-sand-200 bg-sand-50 px-4 py-3 text-sm font-semibold text-brand-900 transition duration-200 ease-out-soft hover:border-water-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sun-500 lg:hidden"
         >
           Documentation
           <svg
-            class="transition duration-200 ease-out-soft group-open:rotate-45"
+            class="transition duration-200 ease-out-soft"
             width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
             stroke-width="2.5" stroke-linecap="round" aria-hidden="true"
           ><path d="M12 5v14M5 12h14" /></svg>
-        </summary>
+        </button>
 
-        <nav class="mt-4 lg:sticky lg:top-24 lg:mt-0 lg:max-h-[calc(100vh-8rem)] lg:overflow-y-auto lg:pr-2" aria-label="Documentation">
+        <nav
+          id="doc-nav"
+          class="mt-4 hidden lg:sticky lg:top-24 lg:mt-0 lg:block lg:max-h-[calc(100vh-8rem)] lg:overflow-y-auto lg:pr-2"
+          aria-label="Documentation"
+        >
           <a
             href="/documentation/"
             class:list={[linkBase, 'font-semibold', current ? 'text-brand-800 hover:bg-sand-50' : 'bg-sand-100 text-brand-900']}
@@ -77,10 +113,20 @@ const linkBase =
 
           {groups.map((group) => (
             <div class="mt-5">
-              <p class="px-3 text-xs font-semibold uppercase tracking-[0.14em] text-water-700">
-                {group.label}
+              <p
+                id={`docgrp-${group.app}`}
+                class="px-3 text-xs font-semibold uppercase tracking-[0.14em] text-water-700"
+              >
+                <a
+                  href={`/documentation/${group.app}/`}
+                  class:list={[
+                    'rounded-sm transition duration-200 ease-out-soft hover:text-water-800',
+                    focusRing,
+                  ]}
+                  aria-current={!current && activeApp === group.app ? 'page' : undefined}
+                >{group.label}</a>
               </p>
-              <ul class="mt-1.5 space-y-0.5">
+              <ul class="mt-1.5 space-y-0.5" aria-labelledby={`docgrp-${group.app}`}>
                 {group.pages.map((page) => {
                   const active = current?.id === page.id;
                   return (
@@ -102,7 +148,7 @@ const linkBase =
             </div>
           ))}
         </nav>
-      </details>
+      </div>
 
       <div class="min-w-0">
         {current && (
@@ -112,13 +158,19 @@ const linkBase =
               class="rounded-sm transition duration-200 ease-out-soft hover:text-brand-900 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sun-500"
             >Docs</a>
             <span aria-hidden="true">/</span>
-            <span>{groupLabel(current.data.app)}</span>
+            <a
+              href={`/documentation/${current.data.app}/`}
+              class="rounded-sm transition duration-200 ease-out-soft hover:text-brand-900 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sun-500"
+            >{groupLabel(current.data.app)}</a>
             <span aria-hidden="true">/</span>
             <span class="font-medium text-brand-900">{current.data.title}</span>
           </nav>
         )}
 
-        <div class="xl:grid xl:grid-cols-[minmax(0,1fr)_minmax(0,13rem)] xl:gap-12">
+        <!-- The rail track is reserved only when the rail exists. Three pages
+             computed "592px 208px" with aside === null, holding 208px plus a
+             48px gap open for nothing. -->
+        <div class:list={[hasRail && 'xl:grid xl:grid-cols-[minmax(0,1fr)_minmax(0,13rem)] xl:gap-12']}>
           <div class="min-w-0">
             <slot />
 
@@ -148,7 +200,7 @@ const linkBase =
             )}
           </div>
 
-          {headings.length > 1 && (
+          {hasRail && (
             <aside class="mt-12 xl:mt-0">
               <div class="xl:sticky xl:top-24">
                 <p class="text-xs font-semibold uppercase tracking-[0.14em] text-water-700">On this page</p>
@@ -169,4 +221,17 @@ const linkBase =
       </div>
     </div>
   </div>
+
+  <script>
+    // Six lines, and only for the button that exists below lg. The nav is
+    // hidden by class, not by a disclosure, so nothing above lg depends on it.
+    const toggle = document.getElementById('doc-nav-toggle');
+    const nav = document.getElementById('doc-nav');
+    toggle?.addEventListener('click', () => {
+      const open = toggle.getAttribute('aria-expanded') === 'true';
+      toggle.setAttribute('aria-expanded', String(!open));
+      nav?.classList.toggle('hidden', open);
+      toggle.querySelector('svg')?.classList.toggle('rotate-45', !open);
+    });
+  </script>
 </BaseLayout>

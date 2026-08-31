@@ -2,7 +2,7 @@
 title: "Privacy policy"
 app: "sprint-rollover-tracker"
 order: 9
-description: "Last Updated: April 28, 2026"
+description: "What Sprint Rollover Tracker reads from Jira and what it stores. The privacy policy for the app, in full."
 draft: true
 # Migrated from Confluence. Kept so a page can be traced back to its origin.
 sourcePageId: "542375937"

@@ -2,7 +2,7 @@
 title: "Security policy"
 app: "onbudget"
 order: 10
-description: "Last Updated: July 2, 2026 App: OnBudget Vendor: Numeric Oasis"
+description: "Read only access, hashed identifiers, no report results stored, and a clean uninstall. How OnBudget handles your data."
 # Migrated from Confluence. Kept so a page can be traced back to its origin.
 sourcePageId: "589824001"
 sourceTitle: "OnBudget - Security Policy"

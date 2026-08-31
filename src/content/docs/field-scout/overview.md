@@ -2,7 +2,7 @@
 title: "Overview"
 app: "field-scout"
 order: 1
-description: "Field Scout is a free Atlassian Forge app for Jira Cloud that gives administrators a centralized dashboard to analyze and manage custom field usage across"
+description: "How Field Scout audits Jira custom fields: usage classification, duplicate detection, the health score, and staying under the 700 field limit."
 # Migrated from Confluence. Kept so a page can be traced back to its origin.
 sourcePageId: "508035075"
 sourceTitle: "Field Scout - Custom Field Audit for Jira"

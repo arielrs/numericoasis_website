@@ -2,7 +2,7 @@
 title: "Release notes"
 app: "onbudget"
 order: 8
-description: "Release Date: July 2026"
+description: "Every OnBudget release, newest first, with the features and fixes that shipped in each version."
 # Migrated from Confluence. Kept so a page can be traced back to its origin.
 sourcePageId: "589791233"
 sourceTitle: "OnBudget - Release Notes"

@@ -2,7 +2,7 @@
 title: "Release notes"
 app: "field-scout"
 order: 8
-description: "Release Date: March 2026"
+description: "Every Field Scout release, newest first, with the features and fixes that shipped in each version."
 # Migrated from Confluence. Kept so a page can be traced back to its origin.
 sourcePageId: "508297240"
 sourceTitle: "Field Scout - Release Notes"

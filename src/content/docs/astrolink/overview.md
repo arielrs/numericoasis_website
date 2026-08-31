@@ -2,7 +2,7 @@
 title: "Overview"
 app: "astrolink"
 order: 1
-description: "> What's new in v3.0 (April 2026): Path Finder, Impact Analysis, and Dependency Health analysis tools; full issue side panel; 10 node colour modes and 11 g"
+description: "How Astrolink renders the links between your Jira work items as an interactive star map: what it shows, where it appears, and how to read it."
 # Migrated from Confluence. Kept so a page can be traced back to its origin.
 sourcePageId: "498696194"
 sourceTitle: "Astrolink - Work Item Link Graph for Jira"

@@ -7,20 +7,12 @@
  * opening anything.
  */
 import { Image } from 'astro:assets';
-import { getCollection } from 'astro:content';
 import DocsLayout from '../../layouts/DocsLayout.astro';
 import { SITE } from '../../consts';
-import { docGroups, docHref } from '../../lib/docs';
+import { docGroups, docHref, iconFor, marketplaceFor } from '../../lib/docs';
 import { WEBSITE_ID, type JsonLdNode } from '../../lib/schema';
 
 const groups = await docGroups();
-
-// Icons come from the apps collection, joined on translationKey. "legal" has no
-// app behind it, and neither does an app that has not shipped yet.
-const apps = await getCollection('apps', ({ data }) => data.lang === 'en');
-const iconFor = (key: string) => apps.find((a) => a.data.translationKey === key)?.data.icon;
-const marketplaceFor = (key: string) =>
-  apps.find((a) => a.data.translationKey === key)?.data.marketplaceUrl;
 
 const canonical = new URL('/documentation/', SITE.url).toString();
 
@@ -65,9 +57,9 @@ const itemList: JsonLdNode = {
   </header>
 
   <div class="mt-12 grid gap-6 md:grid-cols-2">
-    {groups.map((group) => {
-      const icon = iconFor(group.app);
-      const marketplace = marketplaceFor(group.app);
+    {await Promise.all(groups.map(async (group) => {
+      const icon = await iconFor(group.app);
+      const marketplace = await marketplaceFor(group.app);
       return (
         <article class="flex flex-col rounded-2xl border border-sand-200 bg-paper p-7 transition duration-200 ease-out-soft hover:border-water-400 hover:shadow-[var(--shadow-soft)]">
           <div class="flex items-center gap-4">
@@ -79,7 +71,12 @@ const itemList: JsonLdNode = {
               </div>
             )}
             <div>
-              <h2 class="font-display text-xl font-semibold text-brand-900">{group.label}</h2>
+              <h2 class="font-display text-xl font-semibold text-brand-900">
+                <a
+                  href={`/documentation/${group.app}/`}
+                  class="rounded-sm transition duration-200 ease-out-soft hover:text-brand-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sun-500"
+                >{group.label}</a>
+              </h2>
               <p class="mt-0.5 text-sm text-slate-600">{group.blurb}</p>
             </div>
           </div>
@@ -118,7 +115,7 @@ const itemList: JsonLdNode = {
           )}
         </article>
       );
-    })}
+    }))}
   </div>
 
   <section class="mt-14 rounded-3xl bg-brand-900 p-8 sm:p-12">

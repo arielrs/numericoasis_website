@@ -420,8 +420,12 @@
   .prose-custom p {
     @apply my-4 leading-relaxed text-slate-700;
   }
+  /* break-words is load bearing. A bare support portal URL rendered 504px wide
+     in a 343px column, taking documentElement.scrollWidth to 520 against a 375
+     client width on both legal pages. That is a WCAG 1.4.10 Reflow failure, and
+     axe has no rule for it, so the gate was green while the page overflowed. */
   .prose-custom a {
-    @apply text-water-700 underline underline-offset-4 hover:text-water-600;
+    @apply break-words text-water-700 underline underline-offset-4 hover:text-water-600;
   }
   .prose-custom ul {
     @apply my-4 list-disc pl-6 text-slate-700;

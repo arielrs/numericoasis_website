@@ -2,7 +2,7 @@
 title: "Security policy"
 app: "millrace"
 order: 10
-description: "Last Updated: July 14, 2026 App: Millrace Vendor: Numeric Oasis"
+description: "Where Millrace runs, what it stores, who can read it, and what happens when you uninstall it."
 draft: true
 # Migrated from Confluence. Kept so a page can be traced back to its origin.
 sourcePageId: "600145921"

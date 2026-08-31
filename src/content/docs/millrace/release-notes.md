@@ -2,7 +2,7 @@
 title: "Release notes"
 app: "millrace"
 order: 8
-description: "Release Date: July 2026"
+description: "Every Millrace release, newest first, with the features and fixes that shipped in each version."
 draft: true
 # Migrated from Confluence. Kept so a page can be traced back to its origin.
 sourcePageId: "600113153"

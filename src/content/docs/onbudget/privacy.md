@@ -2,7 +2,7 @@
 title: "Privacy policy"
 app: "onbudget"
 order: 9
-description: "Last Updated: July 2, 2026"
+description: "What OnBudget reads from Jira and what it stores, which is your report settings and nothing else. The privacy policy, in full."
 # Migrated from Confluence. Kept so a page can be traced back to its origin.
 sourcePageId: "589758465"
 sourceTitle: "OnBudget - Privacy Policy"

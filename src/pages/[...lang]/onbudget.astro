@@ -16,12 +16,14 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import { SITE } from '../../consts';
 import { localeStaticPaths, contentSlug, withLocale, type Locale } from '../../i18n';
 import { onbudget as copy } from '../../i18n/pages/onbudget';
+import { appDetail as appDetailCopy } from '../../i18n/pages/app-detail';
 import { ORG_ID, WEBSITE_ID, type JsonLdNode } from '../../lib/schema';
 
 export const getStaticPaths = localeStaticPaths;
 
 const { lang } = Astro.props as { lang: Locale };
 const t = copy[lang];
+const appDetail = appDetailCopy[lang];
 
 const entries = await getCollection('apps', ({ data }) => data.lang === lang && data.flagship);
 const app = entries[0];
@@ -119,6 +121,12 @@ const otherApps = (
             </a>
           )}
           <a href="#how-it-works" class="btn-secondary">{t.hero.ctaSecondary}</a>
+          <!-- The flagship carried a documentationUrl and rendered no link to
+               it: grep -c "documentation/onbudget" dist/onbudget/index.html
+               returned 0, while every other app page had this button. -->
+          {d.documentationUrl && (
+            <a href={d.documentationUrl} class="btn-secondary">{appDetail.docs}</a>
+          )}
         </div>
       </div>
 

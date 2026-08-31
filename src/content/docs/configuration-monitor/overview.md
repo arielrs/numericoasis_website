@@ -2,7 +2,7 @@
 title: "Overview"
 app: "configuration-monitor"
 order: 1
-description: "Configuration Monitor is an Atlassian Forge app for Jira Cloud that gives Project Administrators full visibility into what changed in their project configu"
+description: "How Configuration Monitor gives Jira project admins a searchable audit log of every configuration change, with no site admin access required."
 # Migrated from Confluence. Kept so a page can be traced back to its origin.
 sourcePageId: "492306433"
 sourceTitle: "Configuration Monitor - Project Audit Log for Jira"

@@ -2,7 +2,7 @@
 title: "Overview"
 app: "millrace"
 order: 1
-description: "Millrace brings Critical Chain Project Management (CCPM) to Jira Cloud. It reads a project's work items and their dependency links, automatically levels re"
+description: "How Millrace brings Critical Chain Project Management to Jira Cloud: buffers, fever charts, and reading a plan by buffer consumption."
 draft: true
 # Migrated from Confluence. Kept so a page can be traced back to its origin.
 sourcePageId: "600047618"

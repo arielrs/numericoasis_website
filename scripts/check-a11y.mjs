@@ -45,6 +45,8 @@ const PAGES = [
   '/documentation/',
   '/documentation/onbudget/overview/',
   '/documentation/legal/terms/',
+  // A group index: new route shape, and the sidebar toggle is new markup.
+  '/documentation/onbudget/',
   '/pt-BR/onbudget/',
   '/es/apps/atelier/',
   '/404.html',

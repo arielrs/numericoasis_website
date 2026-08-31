@@ -120,7 +120,10 @@ const jsonLd = buildGraph({
       <slot />
     </main>
     <Footer lang={lang} />
-    <LocaleSuggestion currentLang={lang} alternates={alternates} />
+    <!-- Not on a one locale section. The docs are English only, so this told a
+         pt-BR reader a translation existed and then sent them to /pt-BR/,
+         destroying the page a Marketplace listing had pointed them at. -->
+    {!standalone && <LocaleSuggestion currentLang={lang} alternates={alternates} />}
 
     <script>
       /**

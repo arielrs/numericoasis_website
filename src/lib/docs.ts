@@ -7,6 +7,27 @@
  */
 import { getCollection, type CollectionEntry } from 'astro:content';
 
+/**
+ * Joins to the apps collection. A docs group and an app share a key, so the
+ * icon, the Marketplace link and the product page can all be looked up from
+ * one. Three pages need these now, so they live here rather than in the hub.
+ */
+const appEntry = async (key: string) =>
+  (await getCollection('apps', ({ data }) => data.lang === 'en')).find(
+    (a) => a.data.translationKey === key,
+  );
+
+export const iconFor = async (key: string) => (await appEntry(key))?.data.icon;
+
+export const marketplaceFor = async (key: string) => (await appEntry(key))?.data.marketplaceUrl;
+
+/** The product page, which is /onbudget/ for the flagship and /apps/<slug>/ otherwise. */
+export const appHrefFor = async (key: string) => {
+  const entry = await appEntry(key);
+  if (!entry) return undefined;
+  return entry.data.landingPath ?? `/apps/${key}/`;
+};
+
 export type DocEntry = CollectionEntry<'docs'>;
 
 /**
@@ -84,8 +105,23 @@ export async function docGroups(): Promise<DocGroup[]> {
   })).filter((group) => group.pages.length > 0);
 }
 
-/** Flattened reading order, which is what prev and next walk. */
+/**
+ * Flattened reading order.
+ *
+ * Kept for building the route list, but NOT for prev and next. Walking it
+ * across products meant six of twenty edges left the app: OnBudget's security
+ * policy led to Astrolink, and Atelier has one page so both of its arrows
+ * pointed at other products. Neighbours now come from within the group, and a
+ * boundary is a link to the group index instead.
+ */
 export const docOrder = (groups: DocGroup[]): DocEntry[] => groups.flatMap((g) => g.pages);
+
+/** The previous and next page inside the entry's own group. */
+export function neighbours(groups: DocGroup[], entry: DocEntry) {
+  const group = groups.find((g) => g.app === entry.data.app);
+  const i = group?.pages.findIndex((p) => p.id === entry.id) ?? -1;
+  return { prev: i > 0 ? group?.pages[i - 1] : undefined, next: i >= 0 ? group?.pages[i + 1] : undefined };
+}
 
 export const groupLabel = (app: string): string =>
   GROUPS.find((g) => g.app === app)?.label ?? app;

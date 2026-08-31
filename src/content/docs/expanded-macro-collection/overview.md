@@ -2,7 +2,7 @@
 title: "Overview"
 app: "expanded-macro-collection"
 order: 1
-description: "Expanded Macro Collection is an Atlassian Forge app for Confluence Cloud that bundles 13 practical macros behind one app and one Marketplace listing. It sp"
+description: "How the Expanded Macro Collection adds governance, content discovery and admin reporting to Confluence Cloud, as one app on one subscription."
 # Migrated from Confluence. Kept so a page can be traced back to its origin.
 sourcePageId: "584810499"
 sourceTitle: "Expanded Macro Collection"

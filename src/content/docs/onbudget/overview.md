@@ -2,7 +2,7 @@
 title: "Overview"
 app: "onbudget"
 order: 1
-description: "OnBudget is a budget and expense reporting app for Jira Cloud and Jira Service Management. It lets teams set a budget for a set of work, choose how spend i"
+description: "How OnBudget turns work already tracked in Jira into budgets, forecasts and cost reports: costing methods, dashboards, sharing and export."
 # Migrated from Confluence. Kept so a page can be traced back to its origin.
 sourcePageId: "589496323"
 sourceTitle: "OnBudget - Budget & Expense Reporting for Jira"

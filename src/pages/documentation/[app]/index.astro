@@ -1,0 +1,108 @@
+---
+/**
+ * One index per documentation group.
+ *
+ * /documentation/onbudget/ and its six siblings used to 404. That is the URL a
+ * reader hand-truncates when they want the rest of an app's documentation, it
+ * is the only sensible target for a per-product link from a Marketplace
+ * listing, and it is what the middle breadcrumb crumb needs in order to be a
+ * link rather than a dead <span>.
+ *
+ * It is also what lets prev and next stop at a group boundary instead of
+ * walking from one product into an unrelated one.
+ */
+import { Image } from 'astro:assets';
+import DocsLayout from '../../../layouts/DocsLayout.astro';
+import { SITE } from '../../../consts';
+import { docGroups, docHref, iconFor, marketplaceFor, appHrefFor } from '../../../lib/docs';
+import { WEBSITE_ID, type JsonLdNode } from '../../../lib/schema';
+
+export async function getStaticPaths() {
+  const groups = await docGroups();
+  return groups.map((group) => ({ params: { app: group.app }, props: { group, groups } }));
+}
+
+const { group, groups } = Astro.props as {
+  group: Awaited<ReturnType<typeof docGroups>>[number];
+  groups: Awaited<ReturnType<typeof docGroups>>;
+};
+
+const icon = await iconFor(group.app);
+const marketplace = await marketplaceFor(group.app);
+const productHref = await appHrefFor(group.app);
+
+const canonical = new URL(`/documentation/${group.app}/`, SITE.url).toString();
+
+const itemList: JsonLdNode = {
+  '@type': 'ItemList',
+  '@id': `${canonical}#pages`,
+  name: `${group.label} documentation`,
+  itemListOrder: 'https://schema.org/ItemListOrderAscending',
+  numberOfItems: group.pages.length,
+  isPartOf: { '@id': WEBSITE_ID },
+  itemListElement: group.pages.map((page, i) => ({
+    '@type': 'ListItem',
+    position: i + 1,
+    name: page.data.title,
+    url: new URL(docHref(page), SITE.url).toString(),
+  })),
+};
+---
+
+<DocsLayout
+  title={`${group.label} documentation`}
+  description={`Setup, features, release history and policies for ${group.label}. ${group.blurb}`}
+  groups={groups}
+  currentApp={group.app}
+  graph={{
+    breadcrumbs: [
+      { name: 'Docs', path: '/documentation/' },
+      { name: group.label, path: `/documentation/${group.app}/` },
+    ],
+    extraNodes: [itemList],
+    primaryEntityId: `${canonical}#pages`,
+    pageType: 'CollectionPage',
+  }}
+>
+  <header class="max-w-3xl">
+    <div class="flex items-center gap-4">
+      {icon && (
+        <Image src={icon} alt="" width={56} class="h-14 w-14 shrink-0 rounded-2xl object-cover ring-1 ring-sand-200" />
+      )}
+      <div>
+        <p class="eyebrow">Documentation</p>
+        <h1 class="mt-1 font-display text-3xl font-bold leading-tight tracking-tight text-brand-900 sm:text-4xl">
+          {group.label}
+        </h1>
+      </div>
+    </div>
+    <p class="mt-5 text-lg leading-relaxed text-slate-700">{group.blurb}</p>
+  </header>
+
+  <ul class="mt-10 grid gap-4 sm:grid-cols-2">
+    {group.pages.map((page) => (
+      <li>
+        <a
+          href={docHref(page)}
+          class="group flex h-full flex-col rounded-2xl border border-sand-200 bg-paper p-5 transition duration-200 ease-out-soft hover:-translate-y-1 hover:border-water-400 hover:shadow-[var(--shadow-soft)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sun-500"
+        >
+          <span class="font-display text-base font-semibold text-brand-900 transition group-hover:text-brand-700">
+            {page.data.title}
+          </span>
+          <span class="mt-1.5 text-sm leading-relaxed text-slate-600">{page.data.description}</span>
+        </a>
+      </li>
+    ))}
+  </ul>
+
+  {(marketplace || productHref) && (
+    <div class="mt-10 flex flex-wrap gap-3">
+      {productHref && <a href={productHref} class="btn-secondary">About {group.label}</a>}
+      {marketplace && (
+        <a href={marketplace} class="btn-secondary" rel="noopener" target="_blank">
+          View on the Marketplace
+        </a>
+      )}
+    </div>
+  )}
+</DocsLayout>

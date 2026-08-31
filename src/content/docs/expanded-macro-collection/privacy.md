@@ -2,7 +2,7 @@
 title: "Privacy policy"
 app: "expanded-macro-collection"
 order: 9
-description: "Last Updated: June 29, 2026"
+description: "What the Expanded Macro Collection stores, including the sign-off records it keeps by design, and what it never sends anywhere."
 # Migrated from Confluence. Kept so a page can be traced back to its origin.
 sourcePageId: "584908801"
 sourceTitle: "EMC - Privacy Policy"

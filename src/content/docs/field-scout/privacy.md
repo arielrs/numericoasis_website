@@ -2,7 +2,7 @@
 title: "Privacy policy"
 app: "field-scout"
 order: 9
-description: "Last Updated: March 30, 2026 App: Field Scout Vendor: Numeric Oasis"
+description: "What Field Scout reads from Jira and what it stores, which is nothing about the content of your work items. The privacy policy, in full."
 # Migrated from Confluence. Kept so a page can be traced back to its origin.
 sourcePageId: "508362762"
 sourceTitle: "Field Scout - Privacy Policy"

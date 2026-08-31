@@ -2,7 +2,7 @@
 title: "Release notes"
 app: "expanded-macro-collection"
 order: 8
-description: "Release Date: June 2026"
+description: "Every Expanded Macro Collection release, newest first, with the macros and fixes that shipped in each version."
 # Migrated from Confluence. Kept so a page can be traced back to its origin.
 sourcePageId: "584810516"
 sourceTitle: "EMC - Release Notes"

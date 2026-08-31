@@ -2,7 +2,7 @@
 title: "Release notes"
 app: "configuration-monitor"
 order: 8
-description: "Release Date: April 2026"
+description: "Every Configuration Monitor release, newest first, with the features and fixes that shipped in each version."
 # Migrated from Confluence. Kept so a page can be traced back to its origin.
 sourcePageId: "493256705"
 sourceTitle: "CM - Release Notes"

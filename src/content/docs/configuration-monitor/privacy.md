@@ -2,7 +2,7 @@
 title: "Privacy policy"
 app: "configuration-monitor"
 order: 9
-description: "Last Updated: March 30, 2026 App: Configuration Monitor Vendor: Numeric Oasis"
+description: "What Configuration Monitor stores, why it keeps change attribution for a year, and how the GDPR panel works. The privacy policy, in full."
 # Migrated from Confluence. Kept so a page can be traced back to its origin.
 sourcePageId: "492339201"
 sourceTitle: "CM - Privacy Policy"

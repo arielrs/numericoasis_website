@@ -11,7 +11,7 @@
  *   node scripts/confluence-export.mjs           write src/content/docs
  *   node scripts/confluence-export.mjs --dry     print the plan and change nothing
  */
-import { mkdir, writeFile } from 'node:fs/promises';
+import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { dirname, join } from 'node:path';
 
 const SITE = 'https://numericoasis.atlassian.net/wiki';
@@ -290,7 +290,7 @@ async function main() {
       }
     }
     const first = body.split('\n').find((l) => l && !l.startsWith('#') && !l.startsWith('|'));
-    const description = (first ?? '').replace(/[*`[\]]/g, '').slice(0, 155).trim();
+    const derived = (first ?? '').replace(/[*`[\]]/g, '').slice(0, 155).trim();
 
     const front = [
       '---',
@@ -307,6 +307,17 @@ async function main() {
     ].filter((l) => l !== null);
 
     const file = join(OUT, target.app, `${target.slug}.md`);
+
+    // A description written by hand outclasses one derived from the first line
+    // of body text, every time. Re-running the export must not throw it away.
+    let description = derived;
+    try {
+      const existing = await readFile(file, 'utf8');
+      const kept = existing.match(/^description:\s*"(.*)"\s*$/m);
+      if (kept) description = kept[1];
+    } catch {
+      // No file yet. The derived description is the starting point.
+    }
     if (!DRY) {
       await mkdir(dirname(file), { recursive: true });
       await writeFile(file, `${front.join('\n')}\n${body}\n`, 'utf8');

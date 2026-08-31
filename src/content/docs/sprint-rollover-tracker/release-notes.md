@@ -2,7 +2,7 @@
 title: "Release notes"
 app: "sprint-rollover-tracker"
 order: 8
-description: "Release Date: May 2026"
+description: "Every Sprint Rollover Tracker release, newest first, with the features and fixes that shipped in each version."
 draft: true
 # Migrated from Confluence. Kept so a page can be traced back to its origin.
 sourcePageId: "542343170"

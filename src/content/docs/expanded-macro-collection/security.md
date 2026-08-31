@@ -2,7 +2,7 @@
 title: "Security policy"
 app: "expanded-macro-collection"
 order: 10
-description: "Last Updated: June 30, 2026"
+description: "Where the Expanded Macro Collection runs, what it stores, who can read it, and what happens when you uninstall it."
 # Migrated from Confluence. Kept so a page can be traced back to its origin.
 sourcePageId: "588316676"
 sourceTitle: "EMC - Security Policy"

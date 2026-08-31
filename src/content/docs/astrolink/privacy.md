@@ -2,7 +2,7 @@
 title: "Privacy policy"
 app: "astrolink"
 order: 9
-description: "Last Updated: April 30, 2026 App: Astrolink Vendor: Numeric Oasis"
+description: "What Astrolink reads from Jira, what it stores, and what it never sends anywhere. The privacy policy for the app, in full."
 # Migrated from Confluence. Kept so a page can be traced back to its origin.
 sourcePageId: "498630659"
 sourceTitle: "Astrolink - Privacy Policy"

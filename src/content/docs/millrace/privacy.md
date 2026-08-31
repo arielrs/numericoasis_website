@@ -2,7 +2,7 @@
 title: "Privacy policy"
 app: "millrace"
 order: 9
-description: "Last Updated: July 14, 2026"
+description: "What Millrace reads from Jira and what it stores. The privacy policy for the app, in full."
 draft: true
 # Migrated from Confluence. Kept so a page can be traced back to its origin.
 sourcePageId: "600080385"

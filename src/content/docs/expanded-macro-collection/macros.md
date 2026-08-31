@@ -2,7 +2,7 @@
 title: "Macros reference"
 app: "expanded-macro-collection"
 order: 2
-description: "A reference for every macro in the Expanded Macro Collection, grouped by purpose, plus the per-space settings."
+description: "A reference for all thirteen macros, grouped by governance, navigation, admin reporting and authoring, with what each one does."
 # Migrated from Confluence. Kept so a page can be traced back to its origin.
 sourcePageId: "584843266"
 sourceTitle: "EMC - Macros Reference"
