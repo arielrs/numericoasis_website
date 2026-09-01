@@ -44,6 +44,21 @@ const files = await walk(DIST);
 const assets = new Set(files.map((f) => '/' + relative(DIST, f).split(sep).join('/')));
 const pages = files.filter((f) => f.endsWith('.html'));
 
+/**
+ * Every pathname the sitemap submits.
+ *
+ * Read so the noindex check below can assert the two never overlap. Submitting
+ * a URL and then telling Google not to index it is the "Submitted URL marked
+ * noindex" warning in Search Console, and it is entirely self-inflicted.
+ */
+const sitemapUrls = new Set();
+for (const file of files.filter((f) => /sitemap-\d+\.xml$/.test(f))) {
+  const xml = await readFile(file, 'utf8');
+  for (const match of xml.matchAll(/<loc>([^<]+)<\/loc>/g)) {
+    sitemapUrls.add(new URL(match[1]).pathname);
+  }
+}
+
 // 1. Route parity: every bare path must exist in all three locales.
 const bare = (url) => url.replace(/^\/(pt-BR|es)(?=\/|$)/, '') || '/';
 const byLocale = { en: new Set(), 'pt-BR': new Set(), es: new Set() };
@@ -110,6 +125,17 @@ for (const file of pages) {
   const ldBlocks = count(/application\/ld\+json/g);
   if (ldBlocks !== 1) errors.push(`${url}: expected exactly 1 JSON-LD block, got ${ldBlocks}`);
   if (!source.includes('"@graph"')) errors.push(`${url}: JSON-LD is not a @graph`);
+
+  // A deliberately unindexed page still has to be deliberate about it: noindex
+  // with follow, so the links carry, and absent from the sitemap, so we are not
+  // submitting a URL we have asked not to be indexed.
+  if (/name="robots" content="noindex/.test(source)) {
+    if (!/name="robots" content="noindex, follow"/.test(source)) {
+      errors.push(`${url}: noindex without follow, on a page that is in the route tree`);
+    }
+    if (sitemapUrls.has(url)) errors.push(`${url}: noindex, but submitted in the sitemap`);
+    continue;
+  }
 
   if (!/name="robots" content="index, follow, max-snippet:-1/.test(source)) {
     errors.push(`${url}: missing the indexable robots meta`);

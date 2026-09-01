@@ -18,7 +18,7 @@ Initial public release of Field Scout for Jira Cloud.
 
 - **Field Health Score:** Instantly see your overall field hygiene as a clear percentage.
 - **Automatic Classification:** Every custom field is classified as Active, Stale (>6 months or >1 year), Likely Unused, or Unused based on screen associations, context assignments, and last-used dates.
-- **Summary Cards:** At-a-glance metrics showing Field Health Score, total field count, system fields, team-managed fields, unused fields, likely unused fields, and stale fields, with visual warnings as you approach or exceed Jira's 700 field limit.
+- **Summary Cards:** At-a-glance metrics showing Field Health Score, total field count, system fields, team-managed fields, unused fields, likely unused fields, and stale fields, with visual warnings as a space approaches or exceeds Jira's 700 field limit.
 - **Actionable Guidelines:** Get prioritized cleanup recommendations, know exactly which fields need attention and why, with clear ACTION, REVIEW, and TIP labels.
 - **Field Scope:** See whether each field applies to All Spaces, Team-Managed, or Company-Managed projects.
 - **System Fields:** Built-in Jira fields are included for a complete picture of your field landscape.
@@ -35,7 +35,7 @@ Initial public release of Field Scout for Jira Cloud.
 
 - **Per-Project Field Counts:** See how many custom fields each project uses, with breakdowns for likely unused and unused fields. Click any count to filter the main table to that project.
 - **Team-Managed Discovery:** Automatically discovers fields that only exist in team-managed projects, adding them to your complete field inventory.
-- **700-Field Limit Context:** Company-managed projects share the 700-field limit per field configuration, see which projects are approaching it.
+- **700-Field Limit Context:** Company-managed projects share a field configuration, and the 700 field limit applies per space, so see which are approaching it.
 
 ### Filtering and Search
 

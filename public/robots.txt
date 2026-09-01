@@ -1,5 +1,5 @@
 # https://numericoasis.com/robots.txt
-# Last reviewed: 2026-08
+# Last reviewed: 2026-09
 
 # ---------------------------------------------------------------------------
 # Everything is crawlable.
@@ -58,15 +58,19 @@ Allow: /
 User-agent: Applebot-Extended
 Allow: /
 
+# Common Crawl. It honours robots.txt, and its corpus is an input to a long tail
+# of retrieval and training systems we will never negotiate with individually.
+# It sat in the block below until 2026-09, which contradicted the paragraph
+# above it: this is the same bet, made once, by a lot of downstream consumers.
+User-agent: CCBot
+Allow: /
+
 # --- Bulk scrapers with no citation upside: disallow ------------------------
 # Stated as intent. Bytespider and meta-externalagent have a documented history
 # of ignoring robots.txt and rotating IP ranges, and GitHub Pages gives us no
 # WAF, no rate limiting and no access logs, so this is not enforceable and we
 # cannot even measure compliance. Putting Cloudflare in front is the only real
 # answer if it ever becomes a problem.
-User-agent: CCBot
-Disallow: /
-
 User-agent: Bytespider
 Disallow: /
 

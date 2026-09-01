@@ -31,6 +31,14 @@ export const ptBR = {
     headline: 'O que o app enxerga, e o que ele guarda.',
     scopes: 'Permissões solicitadas',
   },
+  faq: {
+    eyebrow: 'Perguntas',
+    headline: 'O que os administradores perguntam antes de instalar.',
+  },
+  useCases: {
+    eyebrow: 'Onde encaixa',
+    headline: 'Para que os times usam.',
+  },
   cta: {
     headlinePrefix: 'Pronto para experimentar o',
     bodyFree: 'Ele é gratuito no Atlassian Marketplace. Instale e veja resultados em minutos.',

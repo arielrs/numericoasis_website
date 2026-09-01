@@ -28,6 +28,14 @@ interface Props {
   };
   noindex?: boolean;
   /**
+   * Keep following links while not indexing this page.
+   *
+   * The distinction matters for an archive: a tag page with one post is not
+   * worth an index entry, but its link to that post still should carry. The
+   * default stays nofollow, which is right for /poker/ and for a 404.
+   */
+  follow?: boolean;
+  /**
    * A section that exists in one locale only. It still gets a canonical and is
    * still indexed, but no hreflang cluster: advertising two alternates that do
    * not exist is worse than advertising none.
@@ -44,6 +52,7 @@ const {
   ogImage,
   article,
   noindex = false,
+  follow = false,
   standalone = false,
   lang,
   alternates: alternateOverride,
@@ -68,7 +77,7 @@ const xDefaultHref = new URL(urls[DEFAULT_LOCALE], Astro.site).toString();
 ))}
 {!standalone && <link rel="alternate" hreflang="x-default" href={xDefaultHref} />}
 {noindex ? (
-  <meta name="robots" content="noindex, nofollow" />
+  <meta name="robots" content={follow ? 'noindex, follow' : 'noindex, nofollow'} />
 ) : (
   <!-- max-snippet:-1 is what governs how much of the page can be quoted in AI
        Overviews and other generated answers. We want no ceiling on that. -->

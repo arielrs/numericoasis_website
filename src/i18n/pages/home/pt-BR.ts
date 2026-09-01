@@ -10,7 +10,7 @@ export const ptBR = {
   },
   hero: {
     eyebrow: 'Parceira no Atlassian Marketplace',
-    headline: 'Os apps Atlassian que a gente sempre quis que existissem.',
+    headline: 'Os apps de Jira e Confluence que a gente sempre quis que existissem.',
     lede: 'Quinze anos dentro do Jira e do Confluence ensinaram o que os times precisam contornar todo dia. Agora construímos os apps que fazem esse trabalho por eles, e cada um roda dentro do seu próprio ambiente Atlassian.',
     primary: 'Ver nossos apps',
     secondary: 'Como construímos',

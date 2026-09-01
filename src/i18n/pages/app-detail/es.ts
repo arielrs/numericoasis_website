@@ -31,6 +31,14 @@ export const es = {
     headline: 'Qué ve la app, y qué guarda.',
     scopes: 'Permisos solicitados',
   },
+  faq: {
+    eyebrow: 'Preguntas',
+    headline: 'Lo que preguntan los administradores antes de instalar.',
+  },
+  useCases: {
+    eyebrow: 'Dónde encaja',
+    headline: 'Para qué lo usan los equipos.',
+  },
   cta: {
     headlinePrefix: 'Listo para probar',
     bodyFree: 'Es gratis en el Atlassian Marketplace. Instálala y verás resultados en minutos.',

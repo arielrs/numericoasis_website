@@ -1,0 +1,88 @@
+---
+/**
+ * The website privacy policy, in all three locales.
+ *
+ * It exists because the site is about to run advertising measurement, and
+ * Google requires the disclosure to be live before the tag is. It is also the
+ * page a Google Ads reviewer looks for when deciding whether a business is
+ * identifiable, and its absence is a documented disapproval reason.
+ *
+ * Deliberately NOT under /documentation/. That section is English only and
+ * exempt from the parity gate, and a privacy policy that exists in one language
+ * on a trilingual site is the wrong kind of gap. This route sits under
+ * [...lang] so the gate enforces all three.
+ */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { SITE } from '../../consts';
+import { localeStaticPaths, useTranslations, withLocale, type Locale } from '../../i18n';
+import { privacy } from '../../i18n/pages/privacy';
+import { ORG_ID } from '../../lib/schema';
+
+export const getStaticPaths = localeStaticPaths;
+
+const { lang } = Astro.props as { lang: Locale };
+const t = privacy[lang];
+const chrome = useTranslations(lang);
+
+const mailto = `mailto:${SITE.email}?subject=${encodeURIComponent(t.contact.subject)}`;
+const linkClass =
+  'rounded-sm font-semibold text-water-700 transition duration-200 ease-out-soft hover:text-water-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sun-500';
+---
+
+<BaseLayout
+  title={t.meta.title}
+  description={t.meta.description}
+  metaDescription={t.meta.metaDescription}
+  graph={{
+    breadcrumbs: [{ name: t.meta.crumb, path: '/privacy/' }],
+    primaryEntityId: ORG_ID,
+  }}
+>
+  <section class="border-b border-sand-200 bg-sand-50 py-16 sm:py-24">
+    <div class="container-wide" data-enter>
+      <p class="eyebrow">{t.hero.eyebrow}</p>
+      <h1 class="mt-3 max-w-3xl font-display text-4xl font-bold leading-tight tracking-tight text-brand-900 sm:text-5xl">
+        {t.hero.headline}
+      </h1>
+      <p class="mt-6 max-w-2xl text-lg leading-relaxed text-slate-600">{t.hero.lede}</p>
+      <p class="mt-6 text-sm text-slate-600">
+        {t.updated}: <time datetime={t.updatedDate}>{t.updatedDate}</time>
+      </p>
+    </div>
+  </section>
+
+  <section class="py-16 sm:py-20">
+    <div class="container-wide max-w-3xl">
+      <div class="rounded-2xl border border-sand-200 bg-paper p-7 reveal">
+        <h2 class="font-display text-lg font-semibold text-brand-900">{t.scope.heading}</h2>
+        <p class="mt-3 text-base leading-relaxed text-slate-600">{t.scope.body}</p>
+        <a href={t.scope.linkHref} class:list={['mt-4 inline-block text-sm', linkClass]}>
+          {t.scope.linkLabel}
+        </a>
+      </div>
+
+      <div class="mt-10 space-y-10" data-reveal-group>
+        {t.sections.map((section) => (
+          <section class="reveal">
+            <h2 class="font-display text-xl font-bold tracking-tight text-brand-900">
+              {section.heading}
+            </h2>
+            <p class="mt-3 text-base leading-relaxed text-slate-600">{section.body}</p>
+          </section>
+        ))}
+      </div>
+
+      <div class="mt-14 rounded-2xl bg-brand-900 p-8 reveal">
+        <h2 class="font-display text-xl font-bold tracking-tight text-white">{t.contact.heading}</h2>
+        <p class="mt-3 text-base leading-relaxed text-brand-100">{t.contact.body}</p>
+        <a href={mailto} class="btn-cta mt-6 inline-block">{t.contact.cta}</a>
+      </div>
+
+      <nav class="mt-12 flex flex-wrap gap-x-8 gap-y-3 border-t border-sand-200 pt-6 text-sm" aria-label={chrome.legal.heading}>
+        <a href="/documentation/legal/terms/" class={linkClass}>{chrome.legal.terms}</a>
+        <a href="/documentation/legal/sla/" class={linkClass}>{chrome.legal.sla}</a>
+        <a href={withLocale(lang, '/contact/')} class={linkClass}>{chrome.footer.links.contact}</a>
+      </nav>
+    </div>
+  </section>
+</BaseLayout>

@@ -47,6 +47,10 @@ const PAGES = [
   '/documentation/legal/terms/',
   // A group index: new route shape, and the sidebar toggle is new markup.
   '/documentation/onbudget/',
+  // The privacy policy, and the page most likely to carry the consent banner
+  // while a reader is trying to read about the consent banner.
+  '/privacy/',
+  '/pt-BR/privacy/',
   '/pt-BR/onbudget/',
   '/es/apps/atelier/',
   '/404.html',
@@ -98,11 +102,13 @@ for (const viewport of VIEWPORTS) {
     // because axe judges a half-revealed element as invisible text. The two
     // things it has to outlast:
     //   scroll reveal   900ms transition + up to 5 x 70ms group stagger = 1250ms
-    //   hero entrance   1650ms delay + 600ms on the last element        = 2250ms
+    //   hero entrance   1050ms delay + 450ms on the last element        = 1500ms
     //   queued reveal   2000ms hero window + 8 x 80ms batch order
-    //                   + 350ms group stagger + 7 x 110ms words + 600ms = 4360ms
+    //                   + 350ms group stagger + 8 x 98ms words + 450ms = 4224ms
     // It used to wait 1200ms against a comment claiming a 700ms reveal, which
-    // was already 50ms short of the real worst case and passing on luck.
+    // was already 50ms short of the real worst case and passing on luck. The
+    // numbers above are the current ones: the hero choreography was cut by a
+    // quarter, and the scroll reveal deliberately was not.
     await page.waitForTimeout(4600);
 
     // On mobile, open the menu so its contents are actually in the tree.

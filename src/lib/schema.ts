@@ -12,7 +12,7 @@
  * entity rather than a pile of look-alikes.
  */
 import { SITE, ORG_DETAILS } from '../consts';
-import { BCP47_MAP, withLocale, type Locale } from '../i18n';
+import { BCP47_MAP, useTranslations, withLocale, type Locale } from '../i18n';
 
 export type JsonLdNode = Record<string, unknown> & {
   '@type': string | string[];
@@ -55,7 +55,18 @@ export interface GraphInput {
   homeLabel: string;
 }
 
-function organizationNode(): JsonLdNode {
+/**
+ * The organisation, described in the language of the page it appears on.
+ *
+ * @id, name, url, logo and sameAs stay byte identical across all three locales,
+ * because they are what makes the three graphs resolve to ONE entity rather
+ * than three. Only description and slogan localise: they are the human readable
+ * fields, and an answer engine reading the Portuguese page should get a
+ * Portuguese sentence back. The translated strings already exist and already
+ * feed the footer and the RSS channel description.
+ */
+function organizationNode(lang: Locale): JsonLdNode {
+  const t = useTranslations(lang);
   return {
     '@type': 'Organization',
     '@id': ORG_ID,
@@ -70,8 +81,8 @@ function organizationNode(): JsonLdNode {
       caption: SITE.name,
     },
     image: { '@id': LOGO_ID },
-    description: SITE.description,
-    slogan: ORG_DETAILS.slogan,
+    description: t.site.description,
+    slogan: t.site.slogan,
     email: SITE.email,
     foundingDate: ORG_DETAILS.foundingDate,
     address: {
@@ -106,7 +117,8 @@ function webSiteNode(lang: Locale): JsonLdNode {
     '@id': WEBSITE_ID,
     url: SITE.url,
     name: SITE.name,
-    description: SITE.description,
+    alternateName: SITE.shortName,
+    description: useTranslations(lang).site.description,
     publisher: { '@id': ORG_ID },
     inLanguage: BCP47_MAP[lang],
   };
@@ -167,7 +179,7 @@ export function buildGraph(input: GraphInput) {
   return {
     '@context': 'https://schema.org',
     '@graph': [
-      organizationNode(),
+      organizationNode(lang),
       webSiteNode(lang),
       webPage,
       ...(hasCrumbs ? [breadcrumbNode(canonical, lang, breadcrumbs, homeLabel)] : []),

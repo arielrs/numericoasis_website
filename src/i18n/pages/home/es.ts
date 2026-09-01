@@ -10,7 +10,7 @@ export const es = {
   },
   hero: {
     eyebrow: 'Socia en el Atlassian Marketplace',
-    headline: 'Las apps de Atlassian que siempre quisimos que existieran.',
+    headline: 'Las apps de Jira y Confluence que siempre quisimos que existieran.',
     lede: 'Quince años dentro de Jira y Confluence nos enseñaron qué tienen que esquivar los equipos todos los días. Ahora construimos las apps que hacen ese trabajo por ellos, y cada una funciona dentro de tu propio entorno de Atlassian.',
     primary: 'Ver nuestras apps',
     secondary: 'Cómo construimos',

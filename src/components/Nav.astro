@@ -9,9 +9,25 @@ interface Props {
   lang: Locale;
   /** Overrides for pages whose per-locale URLs are not simple mirrors. */
   alternates?: LocaleAlternates;
+  /**
+   * Where the header call to action goes on this page.
+   *
+   * The default points at the portfolio, which is right on a page that is not
+   * selling one thing. It is wrong in two places. On /apps/ it was a self
+   * link, the only button-styled control in the header pointing at the page it
+   * was already on. And on an app landing page it pulled the visitor off the
+   * product they arrived for and into a list, which on a page paid traffic
+   * lands on is a leak rather than navigation.
+   */
+  cta?: { href: string; label: string; external?: boolean };
 }
-const { lang, alternates } = Astro.props;
+const { lang, alternates, cta } = Astro.props;
 const t = useTranslations(lang);
+
+const ctaHref = cta ? cta.href : withLocale(lang, NAV_CTA.href);
+const ctaLabel = cta ? cta.label : t.nav[NAV_CTA.labelKey];
+const ctaRel = cta?.external ? 'noopener' : undefined;
+const ctaTarget = cta?.external ? '_blank' : undefined;
 
 const path = Astro.url.pathname;
 const isActive = (href: string) =>
@@ -61,8 +77,8 @@ const navHref = (link: (typeof NAV_LINKS)[number]) =>
 
     <div class="hidden items-center gap-3 md:flex">
       <LangSwitcher currentLang={lang} variant="desktop" alternates={alternates} />
-      <a href={withLocale(lang, NAV_CTA.href)} class="inline-flex btn-cta !py-2 !px-4">
-        {t.nav[NAV_CTA.labelKey]}
+      <a href={ctaHref} class="inline-flex btn-cta !py-2 !px-4" rel={ctaRel} target={ctaTarget}>
+        {ctaLabel}
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
       </a>
     </div>
@@ -98,8 +114,8 @@ const navHref = (link: (typeof NAV_LINKS)[number]) =>
       <div class="mt-2 border-t border-sand-200 pt-2">
         <LangSwitcher currentLang={lang} variant="mobile" alternates={alternates} />
       </div>
-      <a href={withLocale(lang, NAV_CTA.href)} class="mt-2 btn-cta justify-center">
-        {t.nav[NAV_CTA.labelKey]}
+      <a href={ctaHref} class="mt-2 btn-cta justify-center" rel={ctaRel} target={ctaTarget}>
+        {ctaLabel}
       </a>
     </div>
     </div>

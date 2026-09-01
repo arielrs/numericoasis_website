@@ -5,9 +5,10 @@ import mdx from '@astrojs/mdx';
 import tailwindcss from '@tailwindcss/vite';
 import { remarkReadingTime } from './src/lib/remark-reading-time.mjs';
 import { rehypeTableWrapper } from './src/lib/rehype-table-wrapper.mjs';
-import { buildLastmodMap } from './src/lib/sitemap-lastmod.mjs';
+import { buildLastmodMap, tagPostCounts, TAG_INDEX_FROM } from './src/lib/sitemap-lastmod.mjs';
 
 const LASTMOD = buildLastmodMap(process.cwd());
+const TAG_COUNTS = tagPostCounts(process.cwd());
 
 export default defineConfig({
   site: 'https://numericoasis.com',
@@ -85,15 +86,21 @@ export default defineConfig({
   // @astrojs/sitemap skips, so the stubs stay out of the sitemap.
   redirects: {
     // The consulting surface is gone. These six URLs are indexed, so they point
-    // at the app portfolio rather than 404ing. /apps/ and not /onbudget/ on
-    // purpose: someone searching to cut Marketplace spend who lands on a paid
-    // budgeting app has been baited, and would bounce.
+    // at something rather than 404ing.
+    //
+    // /services goes to the portfolio: it is a generic entry with no better
+    // match. /atlassian-app-cost-reduction goes to the post that actually
+    // answers it. Both honour the same rule, which is that a visitor searching
+    // to cut Marketplace spend must not land on a paid budgeting app: they
+    // have been baited, and they bounce. Sending them to the portfolio was the
+    // safe version of that rule; sending them to the article is the correct
+    // one, because the article is on topic and links onward.
     '/services': '/apps/',
     '/es/services': '/es/apps/',
     '/pt-BR/services': '/pt-BR/apps/',
-    '/atlassian-app-cost-reduction': '/apps/',
-    '/es/atlassian-app-cost-reduction': '/es/apps/',
-    '/pt-BR/atlassian-app-cost-reduction': '/pt-BR/apps/',
+    '/atlassian-app-cost-reduction': '/blog/atlassian-app-footprint-reduction/',
+    '/es/atlassian-app-cost-reduction': '/es/blog/atlassian-app-footprint-reduction/',
+    '/pt-BR/atlassian-app-cost-reduction': '/pt-BR/blog/atlassian-app-footprint-reduction/',
 
     // A services pitch end to end, with no product to point at. Drafted rather
     // than deleted, so the writing survives, but the URLs still resolve.
@@ -117,8 +124,15 @@ export default defineConfig({
   integrations: [
     mdx(),
     sitemap({
-      // Keep the hidden /poker/ timer out of the sitemap.
-      filter: (page) => !page.includes('/poker'),
+      // Keep the hidden /poker/ timer out of the sitemap, and keep out any tag
+      // archive the route has marked noindex. check-dist.mjs asserts the two
+      // decisions agree on every build.
+      filter: (page) => {
+        if (page.includes('/poker')) return false;
+        const path = new URL(page).pathname;
+        if (!path.includes('/blog/tag/')) return true;
+        return (TAG_COUNTS.get(path) ?? 0) >= TAG_INDEX_FROM;
+      },
       // Real dates from frontmatter, and only where one exists. See
       // src/lib/sitemap-lastmod.mjs for why the static pages get none.
       serialize(item) {

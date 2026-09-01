@@ -2,7 +2,7 @@
 title: "Overview"
 app: "field-scout"
 order: 1
-description: "How Field Scout audits Jira custom fields: usage classification, duplicate detection, the health score, and staying under the 700 field limit."
+description: "How Field Scout audits Jira custom fields: usage classification, duplicate detection, the health score, and staying under 700 fields per space."
 # Migrated from Confluence. Kept so a page can be traced back to its origin.
 sourcePageId: "508035075"
 sourceTitle: "Field Scout - Custom Field Audit for Jira"
@@ -10,13 +10,13 @@ sourceTitle: "Field Scout - Custom Field Audit for Jira"
 
 Field Scout is a free Atlassian Forge app for Jira Cloud that gives administrators a centralized dashboard to analyze and manage custom field usage across their entire instance.
 
-Jira Cloud enforces a **700 custom field limit**. Over time, fields accumulate from plugins, migrations, and changing workflows, many ending up unused, duplicated, or forgotten. Field Scout scans every custom field and classifies it by usage, so you always know where you stand and which fields are safe to clean up.
+Jira Cloud caps custom fields at **700 per space**, not across the whole site. Over time, fields accumulate from plugins, migrations, and changing workflows, many ending up unused, duplicated, or forgotten. Field Scout scans every custom field and classifies it by usage, so you always know where you stand and which fields are safe to clean up.
 
 ## Why Field Scout?
 
 | Challenge | How Field Scout Helps |
 | --- | --- |
-| **"We're approaching the 700 custom field limit"** | Instantly see your total field count with visual warnings as you approach or exceed the limit. |
+| **"A space is approaching the 700 custom field limit"** | Instantly see your total field count with visual warnings as a space approaches or exceeds the limit. |
 | **"I don't know which fields are actually being used"** | Every field is classified as Active, Stale, Likely Unused, or Unused based on real usage data from Jira. |
 | **"Old fields from removed plugins are cluttering our instance"** | Filter by origin to see fields from ScriptRunner, Tempo, JSM, and other plugins, even after the plugin is removed. |
 | **"I need to audit fields before a migration"** | Export your entire field inventory to CSV with all metadata, screens, contexts, last used dates, and classifications. |

@@ -51,7 +51,7 @@ export const en = {
   cta: {
     headline: 'Install it, or ask a question first.',
     body: 'It is on the Atlassian Marketplace with a free trial, so you can point it at a real project and see your own numbers before you decide. If you would rather talk it through first, we answer in English, Portuguese and Spanish.',
-    primary: 'Install from the Atlassian Marketplace',
+    primary: 'Try it free on the Atlassian Marketplace',
     secondary: 'Ask us a question',
   },
   alsoSee: {

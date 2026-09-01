@@ -82,3 +82,27 @@ export const ORG_DETAILS = {
  * Leave empty to ship no analytics at all.
  */
 export const CLOUDFLARE_ANALYTICS_TOKEN = '09bc00fc0b37489693bcfd821bde013c';
+
+/**
+ * Google tag ids, for advertising measurement.
+ *
+ * EMPTY SHIPS NOTHING. With no measurementId, src/components/ConsentGate.astro
+ * renders no script, no banner and no cookie, and the site stays exactly as
+ * cookieless as it was. Filling these in activates the tag, the consent banner
+ * and the outbound-click conversion together, which is deliberate: Google
+ * requires the privacy disclosure to be live before the tag is, and /privacy/
+ * already is.
+ *
+ * - measurementId:      the GA4 property, "G-XXXXXXXXXX"
+ * - adsConversionId:    the Google Ads account, "AW-XXXXXXXXX"
+ * - adsConversionLabel: the conversion action's label, from Google Ads
+ *
+ * The conversion these measure is an outbound click to the Atlassian
+ * Marketplace, not an install. Nothing we run can observe an install, because
+ * it happens on a domain we do not control. See ConsentGate.astro.
+ */
+export const GOOGLE_TAG = {
+  measurementId: '',
+  adsConversionId: '',
+  adsConversionLabel: '',
+} as const;

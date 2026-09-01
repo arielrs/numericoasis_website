@@ -297,6 +297,57 @@ function relink(md, unresolved) {
 
 const yaml = (v) => `"${String(v).replace(/\\/g, '\\\\').replace(/"/g, '\\"')}"`;
 
+/**
+ * Corrections applied to the Confluence source on the way out.
+ *
+ * The source pages describe Jira's 700 custom field limit as an instance-wide
+ * cap. It is 700 per space, and a Jira administrator evaluating a field-audit
+ * app is precisely the reader who will check that and find it wrong. Corrected
+ * here rather than in the markdown, so a re-export reproduces the correction
+ * instead of quietly reverting it.
+ *
+ * `expect` is the number of matches this pattern should find across the whole
+ * export. A shortfall is reported at the end, because the failure mode of a
+ * correction table is that the source changes underneath it and it goes silent.
+ */
+const CORRECTIONS = [
+  {
+    expect: 1,
+    from: /Jira Cloud enforces a \*\*700 custom field limit\*\*\./g,
+    to: 'Jira Cloud caps custom fields at **700 per space**, not across the whole site.',
+  },
+  {
+    expect: 1,
+    from: /"We're approaching the 700 custom field limit"/g,
+    to: '"A space is approaching the 700 custom field limit"',
+  },
+  {
+    expect: 1,
+    from: /as you approach or exceed Jira's 700 field limit/g,
+    to: "as a space approaches or exceeds Jira's 700 field limit",
+  },
+  {
+    expect: 1,
+    from: /visual warnings as you approach or exceed the limit/g,
+    to: 'visual warnings as a space approaches or exceeds the limit',
+  },
+  {
+    expect: 1,
+    from: /Company-managed projects share the 700-field limit per field configuration, see which projects are approaching it\./g,
+    to: 'Company-managed projects share a field configuration, and the 700 field limit applies per space, so see which are approaching it.',
+  },
+];
+
+function correct(md, tally) {
+  let out = md;
+  for (const rule of CORRECTIONS) {
+    const hits = out.match(rule.from);
+    if (hits) tally.set(rule, (tally.get(rule) ?? 0) + hits.length);
+    out = out.replace(rule.from, rule.to);
+  }
+  return out;
+}
+
 async function main() {
   const res = await fetch(`${SITE}/api/v2/spaces/${SPACE_ID}/pages?limit=250`, {
     headers: { Accept: 'application/json' },
@@ -307,6 +358,7 @@ async function main() {
   let written = 0;
   const unmapped = [];
   const unresolved = [];
+  const corrections = new Map();
 
   for (const page of results) {
     const target = MAP[page.id];
@@ -322,7 +374,10 @@ async function main() {
     if (!r.ok) throw new Error(`page ${page.id} failed: ${r.status}`);
     const doc = await r.json();
 
-    let body = normaliseHeadings(listify(relink(safe(convert(doc.body?.storage?.value ?? '')), unresolved)));
+    let body = correct(
+      normaliseHeadings(listify(relink(safe(convert(doc.body?.storage?.value ?? '')), unresolved))),
+      corrections,
+    );
 
     // The layout already renders the page title as the h1. Several Confluence
     // pages open with an h2 that repeats it, most often a bare "Overview",
@@ -391,6 +446,20 @@ async function main() {
   if (unmapped.length) {
     console.log(`\nNOT MAPPED, review before the space is closed:\n  ${unmapped.join('\n  ')}`);
   }
+  // A correction that stops matching means the Confluence source changed under
+  // it, and a silent no-op there would re-publish the wrong claim.
+  const missed = CORRECTIONS.filter((rule) => (corrections.get(rule) ?? 0) < rule.expect);
+  if (missed.length) {
+    console.log(
+      `
+CORRECTIONS THAT DID NOT APPLY (${missed.length}). Check whether each is still needed:`,
+    );
+    for (const rule of missed) console.log(`  ${rule.from}`);
+  } else {
+    console.log(`
+${CORRECTIONS.length} source corrections applied.`);
+  }
+
   console.log(`\n${written} pages${DRY ? ' planned' : ' written'}.`);
 }
 

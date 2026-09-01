@@ -19,6 +19,7 @@ export const es = {
     headline: 'El soporte pasa por el portal.',
     body: 'Abre la solicitud en nuestro portal de Jira Service Management, no por correo. Allí la petición se convierte en un ticket, entra en una cola y deja historial, que es justo lo que quieres cuando algo se rompe. El portal cubre todas las apps que publicamos.',
     cta: 'Abrir una solicitud de soporte',
+    signIn: 'Inicia sesión con tu cuenta de Atlassian. Es la misma que usas en Jira, y es lo que deja la solicitud a tu nombre.',
     includeTitle: 'Con estos datos solemos ahorrarnos una ida y vuelta',
     include: [
       'La URL de tu sitio de Atlassian',

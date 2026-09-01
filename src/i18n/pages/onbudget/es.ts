@@ -53,7 +53,7 @@ export const es = {
   cta: {
     headline: 'Instálala, o pregúntanos antes.',
     body: 'Está en el Atlassian Marketplace con prueba gratuita, así que puedes apuntarla a un proyecto real y ver tus propios números antes de decidir. Si prefieres hablarlo antes, atendemos en inglés, portugués y español.',
-    primary: 'Instalar desde el Atlassian Marketplace',
+    primary: 'Pruébalo gratis en el Atlassian Marketplace',
     secondary: 'Hacernos una pregunta',
   },
   alsoSee: {

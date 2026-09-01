@@ -17,6 +17,7 @@ export const en = {
     headline: 'Support goes through the portal.',
     body: 'Raise it in our Jira Service Management portal rather than by email. Requests there get a ticket, a queue and a history, which is what you want when something is broken. The portal covers every app we publish.',
     cta: 'Open a support request',
+    signIn: 'Sign in with your Atlassian account. It is the same one you use for Jira, and it is what puts the request in your name.',
     includeTitle: 'Include these and we can usually skip a round trip',
     include: [
       'Your Atlassian site URL',

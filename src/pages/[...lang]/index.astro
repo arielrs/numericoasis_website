@@ -295,14 +295,14 @@ const arrow =
       <h3 class="eyebrow mt-12">{nav.groups.jira}</h3>
       <div class="mt-6 grid gap-6 md:grid-cols-2" data-reveal-group>
         {jira.map((app) => (
-          <AppCard app={app} lang={lang} labels={cardLabels} wide={app.data.flagship} reveal />
+          <AppCard app={app} lang={lang} labels={cardLabels} wide={app.data.flagship} surface="home" reveal />
         ))}
       </div>
 
       <h3 class="eyebrow mt-14">{nav.groups.confluence}</h3>
       <div class="mt-6 grid gap-6 md:grid-cols-2" data-reveal-group>
         {confluence.map((app) => (
-          <AppCard app={app} lang={lang} labels={cardLabels} reveal />
+          <AppCard app={app} lang={lang} labels={cardLabels} surface="home" reveal />
         ))}
       </div>
     </div>

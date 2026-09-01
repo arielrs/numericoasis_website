@@ -1,0 +1,203 @@
+---
+/**
+ * Google tag, behind Consent Mode v2.
+ *
+ * WHY THIS EXISTS AT ALL
+ *
+ * Every conversion this business has ends on a domain it does not own. Someone
+ * clicks Install and lands on the Atlassian Marketplace, and nothing we run can
+ * see what happens next. Cloudflare Web Analytics is cookieless and aggregate,
+ * which is exactly right for understanding traffic and useless for answering
+ * the only question that matters once money is being spent: which keyword paid
+ * for itself.
+ *
+ * So the measurable conversion here is the OUTBOUND CLICK, not the install. It
+ * is a proxy, and it overstates: some people who click never install. What it
+ * gives Google Ads is a signal it can optimise toward, and a signal that is
+ * directionally right beats no signal at all. The install count is reconciled
+ * separately in the vendor console, using the UTM parameters from
+ * src/lib/outbound.ts, which work with no tag and no consent at all.
+ *
+ * WHY CONSENT MODE RATHER THAN A PLAIN TAG
+ *
+ * The site set zero cookies before this. That is an asset, and reversing it
+ * casually would be a bad trade. Consent Mode v2 keeps most of the value while
+ * giving up the least: with consent denied the tag still sends cookieless
+ * pings, so Google can model conversions without identifying anyone, and with
+ * consent granted it behaves normally.
+ *
+ * The defaults are region scoped. In the EEA, the UK, Switzerland and Brazil
+ * everything starts denied, which is what the GDPR and the LGPD require.
+ * Everywhere else it starts granted, because a consent banner that blocks a
+ * paid landing page in a jurisdiction that does not require one is a
+ * self-inflicted conversion cost. The banner is still shown to everyone, so the
+ * choice is real in both cases; the region only decides what happens for the
+ * visitor who ignores it.
+ *
+ * INERT UNTIL CONFIGURED
+ *
+ * With no measurement id in src/consts.ts this component renders nothing: no
+ * script, no banner, no cookie. That is the shipped default. Paste the ids and
+ * the whole thing activates at once, which is deliberate, because Google
+ * requires the privacy disclosure to be live before the tag is.
+ */
+import { GOOGLE_TAG } from '../consts';
+import { useTranslations, type Locale } from '../i18n';
+
+interface Props {
+  lang: Locale;
+}
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+
+const enabled = import.meta.env.PROD && Boolean(GOOGLE_TAG.measurementId);
+
+/**
+ * Where consent is required before anything is stored.
+ *
+ * The EEA thirty, plus the UK and Switzerland, plus Brazil. Google accepts ISO
+ * 3166-2 codes here and applies the most specific match, so this list only has
+ * to name the places where the answer differs from the global default.
+ */
+const CONSENT_REQUIRED = [
+  'AT', 'BE', 'BG', 'HR', 'CY', 'CZ', 'DK', 'EE', 'FI', 'FR', 'DE', 'GR', 'HU',
+  'IS', 'IE', 'IT', 'LV', 'LI', 'LT', 'LU', 'MT', 'NL', 'NO', 'PL', 'PT', 'RO',
+  'SK', 'SI', 'ES', 'SE', 'GB', 'CH', 'BR',
+];
+
+const config = JSON.stringify({
+  measurementId: GOOGLE_TAG.measurementId,
+  adsId: GOOGLE_TAG.adsConversionId,
+  adsLabel: GOOGLE_TAG.adsConversionLabel,
+  regions: CONSENT_REQUIRED,
+});
+---
+
+{enabled && (
+  <>
+    <script is:inline define:vars={{ config }} set:html={`
+      (function () {
+        var cfg = JSON.parse(config);
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { window.dataLayer.push(arguments); }
+        window.gtag = gtag;
+
+        // Denied first, and region scoped. This runs before gtag.js loads, which
+        // is the whole point: a default set after the tag has already fired is
+        // not a default.
+        gtag('consent', 'default', {
+          ad_storage: 'denied',
+          ad_user_data: 'denied',
+          ad_personalization: 'denied',
+          analytics_storage: 'denied',
+          wait_for_update: 500,
+          region: cfg.regions
+        });
+        gtag('consent', 'default', {
+          ad_storage: 'granted',
+          ad_user_data: 'granted',
+          ad_personalization: 'granted',
+          analytics_storage: 'granted'
+        });
+
+        // A stored choice overrides both defaults, everywhere.
+        var stored = null;
+        try { stored = localStorage.getItem('no-consent'); } catch (e) {}
+        if (stored === 'granted' || stored === 'denied') {
+          var v = stored;
+          gtag('consent', 'update', {
+            ad_storage: v, ad_user_data: v, ad_personalization: v, analytics_storage: v
+          });
+        }
+
+        gtag('js', new Date());
+        gtag('config', cfg.measurementId, { anonymize_ip: true });
+        if (cfg.adsId) gtag('config', cfg.adsId);
+      })();
+    `} />
+    <script is:inline async src={`https://www.googletagmanager.com/gtag/js?id=${GOOGLE_TAG.measurementId}`}></script>
+  </>
+)}
+
+{enabled && (
+  <div
+    id="consent-bar"
+    role="region"
+    aria-label={t.consent.label}
+    hidden
+    class="fixed inset-x-0 bottom-0 z-[80] border-t border-sand-200 bg-paper/95 backdrop-blur"
+  >
+    <div class="container-wide flex flex-col gap-4 py-4 sm:flex-row sm:items-center sm:justify-between">
+      <p class="max-w-2xl text-sm leading-relaxed text-slate-700">
+        {t.consent.body}{' '}
+        <a
+          href={t.consent.privacyHref}
+          class="rounded-sm font-medium text-water-700 underline underline-offset-2 transition hover:text-water-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sun-500"
+        >{t.consent.privacyLabel}</a>
+      </p>
+      <div class="flex shrink-0 gap-3">
+        <button type="button" id="consent-deny" class="btn-secondary">{t.consent.deny}</button>
+        <button type="button" id="consent-allow" class="btn-cta">{t.consent.allow}</button>
+      </div>
+    </div>
+  </div>
+)}
+
+{enabled && (
+  <script is:inline set:html={`
+    (function () {
+      var bar = document.getElementById('consent-bar');
+      if (!bar) return;
+
+      var stored = null;
+      try { stored = localStorage.getItem('no-consent'); } catch (e) {}
+      if (stored !== 'granted' && stored !== 'denied') bar.hidden = false;
+
+      function choose(value) {
+        try { localStorage.setItem('no-consent', value); } catch (e) {}
+        if (window.gtag) {
+          window.gtag('consent', 'update', {
+            ad_storage: value,
+            ad_user_data: value,
+            ad_personalization: value,
+            analytics_storage: value
+          });
+        }
+        bar.hidden = true;
+      }
+      var allow = document.getElementById('consent-allow');
+      var deny = document.getElementById('consent-deny');
+      if (allow) allow.addEventListener('click', function () { choose('granted'); });
+      if (deny) deny.addEventListener('click', function () { choose('denied'); });
+
+      // The conversion. Delegated, so it covers every Marketplace and support
+      // link on the page including the ones rendered inside cards and articles,
+      // and it keeps working when a new one is added. Fired regardless of
+      // consent: with consent denied this is a cookieless ping, which is what
+      // Consent Mode is for.
+      document.addEventListener('click', function (event) {
+        var link = event.target && event.target.closest ? event.target.closest('a[href]') : null;
+        if (!link || !window.gtag) return;
+        var href = link.getAttribute('href') || '';
+
+        if (href.indexOf('marketplace.atlassian.com') !== -1) {
+          var slot = 'unknown';
+          try { slot = new URL(href, location.href).searchParams.get('utm_content') || 'unknown'; } catch (e) {}
+          window.gtag('event', 'marketplace_click', {
+            link_url: href,
+            page_path: location.pathname,
+            slot: slot
+          });
+          var cfg = ${JSON.stringify({ adsId: GOOGLE_TAG.adsConversionId, adsLabel: GOOGLE_TAG.adsConversionLabel })};
+          if (cfg.adsId && cfg.adsLabel) {
+            window.gtag('event', 'conversion', { send_to: cfg.adsId + '/' + cfg.adsLabel });
+          }
+        } else if (href.indexOf('servicedesk/customer/portal') !== -1) {
+          window.gtag('event', 'support_click', { page_path: location.pathname });
+        } else if (href.indexOf('mailto:') === 0) {
+          window.gtag('event', 'email_click', { page_path: location.pathname });
+        }
+      });
+    })();
+  `} />
+)}

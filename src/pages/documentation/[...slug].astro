@@ -9,7 +9,8 @@
 import { render } from 'astro:content';
 import DocsLayout from '../../layouts/DocsLayout.astro';
 import { SITE } from '../../consts';
-import { docGroups, docOrder, docSlug, groupLabel, neighbours, tocFrom, type DocEntry } from '../../lib/docs';
+import { appHrefFor, docGroups, docOrder, docSlug, groupLabel, marketplaceFor, neighbours, tocFrom, type DocEntry } from '../../lib/docs';
+import { outbound } from '../../lib/outbound';
 import { ORG_ID, WEBSITE_ID, type JsonLdNode } from '../../lib/schema';
 
 export async function getStaticPaths() {
@@ -31,18 +32,47 @@ const { entry, groups, prev, next } = Astro.props as {
   next?: DocEntry;
 };
 
+/**
+ * Where this article can send a reader next.
+ *
+ * These are the deepest pages on the domain, 1,600 to 2,200 words each, and the
+ * most likely organic entry for an administrator's question. Until now every
+ * one of them was a commercial dead end: the only route to the product or the
+ * listing was the global footer. The legal group has neither, and both helpers
+ * return undefined there, which is the guard.
+ */
+const label = groupLabel(entry.data.app);
+const productHref = await appHrefFor(entry.data.app);
+const marketplace = await marketplaceFor(entry.data.app);
+const blurb = groups.find((g) => g.app === entry.data.app)?.blurb ?? '';
+
+/**
+ * A heading that says which product it belongs to.
+ *
+ * Six pages shipped `<h1>Overview</h1>` and five shipped `<h1>Release notes`,
+ * with the app name only in an eyebrow above. That is fine for a reader who
+ * arrived through the sidebar and useless for everything else: a search result,
+ * an answer engine quoting a heading, or a link preview. The title had the same
+ * problem in reverse, leading with the weakest word in it.
+ *
+ * The legal group keeps its bare title. "Terms of service" is already unique
+ * and "Terms and policies terms of service" would be worse.
+ */
+const isLegal = entry.data.app === 'legal';
+const lowerFirst = (text: string) =>
+  /^[A-Z][a-z]/.test(text) ? text.charAt(0).toLowerCase() + text.slice(1) : text;
+const heading = isLegal ? entry.data.title : `${label} ${lowerFirst(entry.data.title)}`;
+
 const { Content, headings } = await render(entry);
 const toc = tocFrom(headings);
 
 const pageUrl = new URL(`/documentation/${docSlug(entry)}/`, SITE.url).toString();
-const label = groupLabel(entry.data.app);
-
 // TechArticle rather than WebPage: these are product documentation, and the
 // distinction is one answer engines actually use when deciding what a page is.
 const article: JsonLdNode = {
   '@type': 'TechArticle',
   '@id': `${pageUrl}#techarticle`,
-  headline: `${label}: ${entry.data.title}`,
+  headline: heading,
   name: entry.data.title,
   description: entry.data.description,
   url: pageUrl,
@@ -56,7 +86,7 @@ const article: JsonLdNode = {
 ---
 
 <DocsLayout
-  title={`${entry.data.title}: ${label}`}
+  title={heading}
   description={entry.data.description}
   groups={groups}
   current={entry}
@@ -77,13 +107,37 @@ const article: JsonLdNode = {
   }}
 >
   <header>
-    <p class="eyebrow">{label}</p>
-    <h1 class="mt-3 font-display text-3xl font-bold leading-tight tracking-tight text-brand-900 sm:text-4xl">
-      {entry.data.title}
-    </h1>
+    {isLegal && <p class="eyebrow">{label}</p>}
+    <h1
+      class:list={[
+        'font-display text-3xl font-bold leading-tight tracking-tight text-brand-900 sm:text-4xl',
+        isLegal && 'mt-3',
+      ]}
+    >{heading}</h1>
   </header>
 
   <div class="prose-custom mt-8">
     <Content />
   </div>
+
+  {(productHref || marketplace) && (
+    <aside class="mt-14 rounded-2xl border border-sand-200 bg-sand-50 p-7">
+      <h2 class="font-display text-lg font-semibold text-brand-900">{label}</h2>
+      <p class="mt-2 max-w-2xl text-sm leading-relaxed text-slate-600">
+        {blurb} Built on Atlassian Forge, so it runs inside your Atlassian tenant
+        rather than on infrastructure we operate.
+      </p>
+      <div class="mt-5 flex flex-wrap gap-3">
+        {marketplace && (
+          <a
+            href={outbound(marketplace, `doc-${entry.data.app}`, 'doc-article')}
+            class="btn-cta"
+            rel="noopener"
+            target="_blank"
+          >Install on the Atlassian Marketplace</a>
+        )}
+        {productHref && <a href={productHref} class="btn-secondary !bg-paper">About {label}</a>}
+      </div>
+    </aside>
+  )}
 </DocsLayout>

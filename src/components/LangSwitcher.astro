@@ -16,6 +16,16 @@ interface Props {
 }
 const { currentLang, variant = 'desktop', alternates } = Astro.props;
 const urls = localeUrls(Astro.url.pathname, alternates);
+/**
+ * Carry the query string across a locale switch.
+ *
+ * A visitor who arrives on a paid click carries ?gclid=, and Google Ads auto
+ * tagging is what attributes the visit. Dropping it on a locale switch made the
+ * destination look like organic traffic and made the click unattributable, on
+ * exactly the two components a pt-BR or es speaking visitor is most likely to
+ * use first.
+ */
+const withSearch = (href: string) => `${href}${Astro.url.search}`;
 ---
 
 {variant === 'desktop' ? (
@@ -40,7 +50,7 @@ const urls = localeUrls(Astro.url.pathname, alternates);
       {LOCALES.map((l) => (
         <li>
           <a
-            href={urls[l]}
+            href={withSearch(urls[l])}
             data-locale={l}
             data-langswitcher-link
             class:list={[
@@ -61,7 +71,7 @@ const urls = localeUrls(Astro.url.pathname, alternates);
   <div class="flex items-center gap-2 px-3 py-2" data-langswitcher-mobile>
     {LOCALES.map((l) => (
       <a
-        href={urls[l]}
+        href={withSearch(urls[l])}
         data-locale={l}
         data-langswitcher-link
         class:list={[

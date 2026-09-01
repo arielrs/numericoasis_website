@@ -15,10 +15,13 @@ export const words = (text: string): string[] => text.split(/\s+/).filter(Boolea
 /**
  * The delay for word `index`, in milliseconds.
  *
- * 130ms apart, which is close to the 150ms the effect was modelled on but keeps
- * a long headline from running past the lede that follows it. Capped so a
- * headline nobody predicted cannot push the rest of the hero out to five
- * seconds.
+ * Was 350 + 130n. Cut by a quarter to 260 + 98n, which takes a seven word
+ * headline from settling at 1730ms to settling at 1298ms. The effect survives
+ * the cut because what makes it read as composed is the stagger being visible
+ * at all, not its absolute length.
+ *
+ * Capped so a headline nobody predicted cannot push the rest of the hero out to
+ * five seconds.
  */
-export const wordDelay = (index: number, start = 350, step = 130, cap = 8): number =>
+export const wordDelay = (index: number, start = 260, step = 98, cap = 8): number =>
   start + Math.min(index, cap) * step;

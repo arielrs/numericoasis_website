@@ -29,6 +29,14 @@ export const en = {
     headline: 'What the app can see, and what it keeps.',
     scopes: 'Requested permissions',
   },
+  faq: {
+    eyebrow: 'Questions',
+    headline: 'What administrators ask before installing.',
+  },
+  useCases: {
+    eyebrow: 'Where it fits',
+    headline: 'What teams use it for.',
+  },
   cta: {
     headlinePrefix: 'Ready to try',
     bodyFree: 'It is free on the Atlassian Marketplace. Install it and see results in minutes.',

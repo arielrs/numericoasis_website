@@ -53,7 +53,7 @@ export const ptBR = {
   cta: {
     headline: 'Instale, ou tire uma dúvida antes.',
     body: 'Ele está no Atlassian Marketplace com período de teste gratuito, então dá para apontar para um projeto real e ver os seus próprios números antes de decidir. Se preferir conversar antes, atendemos em inglês, português e espanhol.',
-    primary: 'Instalar pelo Atlassian Marketplace',
+    primary: 'Teste grátis no Atlassian Marketplace',
     secondary: 'Tirar uma dúvida',
   },
   alsoSee: {

@@ -19,6 +19,7 @@ export const ptBR = {
     headline: 'O suporte passa pelo portal.',
     body: 'Abra o chamado no nosso portal de Jira Service Management, e não por e-mail. Lá o pedido vira um ticket, entra em uma fila e ganha histórico, que é o que você quer quando algo quebrou. O portal cobre todos os apps que publicamos.',
     cta: 'Abrir um chamado de suporte',
+    signIn: 'Entre com a sua conta Atlassian. É a mesma que você usa no Jira, e é o que deixa o chamado no seu nome.',
     includeTitle: 'Com estes dados normalmente pulamos uma ida e volta',
     include: [
       'A URL do seu site Atlassian',

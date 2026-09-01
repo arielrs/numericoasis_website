@@ -6,14 +6,16 @@ import { getCollection } from 'astro:content';
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import AppCard from '../../../components/AppCard.astro';
 import { SITE } from '../../../consts';
-import { localeStaticPaths, contentSlug, withLocale, type Locale } from '../../../i18n';
+import { localeStaticPaths, contentSlug, useTranslations, withLocale, type Locale } from '../../../i18n';
 import { appsIndex } from '../../../i18n/pages/apps-index';
 import { WEBSITE_ID, type JsonLdNode } from '../../../lib/schema';
+import { outbound } from '../../../lib/outbound';
 
 export const getStaticPaths = localeStaticPaths;
 
 const { lang } = Astro.props as { lang: Locale };
 const t = appsIndex[lang];
+const chrome = useTranslations(lang);
 
 const apps = (await getCollection('apps', ({ data }) => data.lang === lang)).sort(
   (a, b) => a.data.order - b.data.order,
@@ -49,6 +51,7 @@ const labels = { builtFor: t.builtFor, readMore: t.readMore };
 ---
 
 <BaseLayout
+  navCta={{ href: withLocale(lang, '/contact/'), label: chrome.common.talkToTheTeam }}
   title={t.meta.title}
   description={t.meta.description}
   metaDescription={t.meta.metaDescription}
@@ -74,14 +77,14 @@ const labels = { builtFor: t.builtFor, readMore: t.readMore };
       <h2 class="eyebrow">{t.groups.jira}</h2>
       <div class="mt-6 grid gap-6 md:grid-cols-2" data-reveal-group>
         {jira.map((app) => (
-          <AppCard app={app} lang={lang} labels={labels} wide={app.data.flagship} reveal />
+          <AppCard app={app} lang={lang} labels={labels} wide={app.data.flagship} surface="apps-index" reveal />
         ))}
       </div>
 
       <h2 class="eyebrow mt-16">{t.groups.confluence}</h2>
       <div class="mt-6 grid gap-6 md:grid-cols-2" data-reveal-group>
         {confluence.map((app) => (
-          <AppCard app={app} lang={lang} labels={labels} reveal />
+          <AppCard app={app} lang={lang} labels={labels} surface="apps-index" reveal />
         ))}
       </div>
     </div>
@@ -99,7 +102,7 @@ const labels = { builtFor: t.builtFor, readMore: t.readMore };
           <div class="mt-8 flex flex-wrap gap-3">
             <a href={withLocale(lang, '/contact/')} class="btn-cta">{t.cta.primary}</a>
             <a
-              href={SITE.marketplaceUrl}
+              href={outbound(SITE.marketplaceUrl, 'apps-index', 'footer-cta')}
               class="btn-secondary !bg-paper"
               rel="noopener"
               target="_blank"

@@ -5,6 +5,7 @@ export const es = {
     description:
       'Numeric Oasis es socia en el Atlassian Marketplace. Construimos apps en Forge para Jira y Confluence Cloud: informes de costo y presupuesto, gobernanza y cumplimiento, y el trabajo de administración que mantiene ordenado un sitio que crece.',
     location: 'Canoas, RS, Brasil',
+    slogan: 'Apps que funcionan dentro de Atlassian, no al lado.',
   },
   nav: {
     apps: 'Apps',
@@ -41,10 +42,25 @@ export const es = {
   apps: {
     priceFree: 'Gratis',
     pricePaid: 'Prueba gratuita en el Marketplace',
+    priceTrial: 'Prueba gratuita',
     installOnMarketplace: 'Instalar desde el Atlassian Marketplace',
     viewOnMarketplace: 'Ver en el Marketplace',
     builtFor: 'Pensado para:',
     runsOnAtlassian: 'Runs on Atlassian',
+  },
+  consent: {
+    label: 'Elección sobre cookies',
+    body: 'Usamos analítica sin cookies por defecto. Con tu permiso, también medimos qué páginas y anuncios llevan a instalar una app, usando Google.',
+    allow: 'Permitir',
+    deny: 'Ahora no',
+    privacyLabel: 'Leer la política de privacidad',
+    privacyHref: '/es/privacy/',
+  },
+  legal: {
+    heading: 'Legal',
+    privacy: 'Política de privacidad',
+    terms: 'Términos del servicio',
+    sla: 'Acuerdo de nivel de servicio',
   },
   common: {
     home: 'Inicio',

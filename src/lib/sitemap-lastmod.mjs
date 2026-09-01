@@ -76,3 +76,47 @@ export function buildLastmodMap(root) {
 
   return map;
 }
+
+/**
+ * How many published posts each tag archive holds, keyed by pathname.
+ *
+ * The tag route marks an archive noindex below three posts, because four of the
+ * six tags hold a single post and the archive is then a duplicate of that one
+ * post's card. Submitting a URL and then asking for it not to be indexed is the
+ * "Submitted URL marked noindex" warning in Search Console, so the sitemap has
+ * to apply the same threshold.
+ *
+ * Counted here rather than shared with the route, because this runs inside
+ * astro.config.mjs where the content collections do not exist yet.
+ * check-dist.mjs asserts the two agree, so a drift fails the build instead of
+ * going quiet. A tag with no posts in a locale is simply absent from the map,
+ * which is the same answer as zero.
+ */
+export function tagPostCounts(root) {
+  const counts = new Map();
+
+  for (const lang of LOCALES) {
+    const dir = join(root, 'src', 'content', 'blog', lang);
+    if (!existsSync(dir)) continue;
+
+    for (const file of readdirSync(dir)) {
+      if (!/\.mdx?$/.test(file)) continue;
+      const text = readFileSync(join(dir, file), 'utf8');
+      if (frontmatterField(text, 'draft') === 'true') continue;
+
+      // tags is a flow sequence in every post: `tags: ["a", "b"]`.
+      const raw = frontmatterField(text, 'tags');
+      if (!raw) continue;
+      for (const entry of raw.replace(/^\[|\]$/g, '').split(',')) {
+        const name = entry.trim().replace(/^["']|["']$/g, '');
+        if (!name) continue;
+        const key = localePath(lang, `/blog/tag/${name}/`);
+        counts.set(key, (counts.get(key) ?? 0) + 1);
+      }
+    }
+  }
+  return counts;
+}
+
+/** The threshold, in one place. The route imports the same number. */
+export const TAG_INDEX_FROM = 3;

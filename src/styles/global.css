@@ -257,7 +257,7 @@
    */
   .enter,
   [data-enter] > * {
-    animation: enter 600ms var(--ease-out-soft) var(--enter-delay, 0ms) both;
+    animation: enter 450ms var(--ease-out-soft) var(--enter-delay, 0ms) both;
   }
 
   /*
@@ -277,7 +277,7 @@
 
   /* Inside a hero: plays once on load, no JavaScript. */
   [data-enter] .hero-word {
-    animation: enter-word 600ms var(--ease-out-soft) var(--word-delay, 0ms) both;
+    animation: enter-word 450ms var(--ease-out-soft) var(--word-delay, 0ms) both;
   }
 
   /*
@@ -298,9 +298,9 @@
        whatever is still animating above it. Without the sum, an element pushed
        back in the running order would still fire its words on time. */
     transition:
-      opacity 600ms var(--ease-out-soft) calc(var(--reveal-delay, 0ms) + var(--word-delay, 0ms)),
-      filter 600ms var(--ease-out-soft) calc(var(--reveal-delay, 0ms) + var(--word-delay, 0ms)),
-      transform 600ms var(--ease-out-soft) calc(var(--reveal-delay, 0ms) + var(--word-delay, 0ms));
+      opacity 450ms var(--ease-out-soft) calc(var(--reveal-delay, 0ms) + var(--word-delay, 0ms)),
+      filter 450ms var(--ease-out-soft) calc(var(--reveal-delay, 0ms) + var(--word-delay, 0ms)),
+      transform 450ms var(--ease-out-soft) calc(var(--reveal-delay, 0ms) + var(--word-delay, 0ms));
   }
 
   .js-motion [data-reveal-words].is-visible .hero-word {
@@ -343,23 +343,30 @@
    * The pacing.
    *
    * These were 60 to 580ms, so the whole hero was done inside a second and read
-   * as quick rather than composed. The reference site spreads the same movement
-   * across roughly 2.2 seconds, and that pacing is most of why it feels better.
+   * as quick rather than composed. Spreading the same movement across roughly
+   * two seconds is most of why it reads as composed instead.
+   *
+   * Then cut by a quarter, because there is a real cost on the other side. LCP
+   * is unaffected either way (the h1 element is opaque, only its word spans
+   * fade, and Chrome only excludes an element whose OWN opacity is zero: the
+   * home page measures 108ms), but a visitor arriving from a paid click cannot
+   * READ the headline until the last word lands. The metric and the experience
+   * disagreed, and the experience is the one being paid for.
    */
   [data-enter] > *:nth-child(1) {
-    --enter-delay: 150ms;
+    --enter-delay: 110ms;
   }
   [data-enter] > *:nth-child(2) {
-    --enter-delay: 300ms;
+    --enter-delay: 225ms;
   }
   [data-enter] > *:nth-child(3) {
-    --enter-delay: 450ms;
+    --enter-delay: 340ms;
   }
   [data-enter] > *:nth-child(4) {
-    --enter-delay: 600ms;
+    --enter-delay: 450ms;
   }
   [data-enter] > *:nth-child(n + 5) {
-    --enter-delay: 750ms;
+    --enter-delay: 560ms;
   }
 
   /*
@@ -369,13 +376,13 @@
    * above is right and a gap this size would just read as a stall.
    */
   [data-enter='words'] > *:nth-child(2) {
-    --enter-delay: 350ms;
+    --enter-delay: 260ms;
   }
   [data-enter='words'] > *:nth-child(3) {
-    --enter-delay: 1150ms;
+    --enter-delay: 860ms;
   }
   [data-enter='words'] > *:nth-child(4) {
-    --enter-delay: 1400ms;
+    --enter-delay: 1050ms;
   }
 
   /* A one-pass highlight that crosses the button on hover. The gradient is

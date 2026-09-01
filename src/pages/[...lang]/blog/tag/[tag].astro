@@ -22,6 +22,7 @@ import {
 import { blog } from '../../../../i18n/pages/blog';
 import { BLOG_TAGS, type BlogTag } from '../../../../content.config';
 import { WEBSITE_ID, type JsonLdNode } from '../../../../lib/schema';
+import { TAG_INDEX_FROM } from '../../../../lib/sitemap-lastmod.mjs';
 
 export async function getStaticPaths() {
   const published = await getCollection('blog', ({ data }) => !data.draft);
@@ -48,6 +49,22 @@ const posts = (
 
 const canonical = new URL(withLocale(lang, `/blog/tag/${tag}/`), SITE.url).toString();
 
+/**
+ * A tag archive earns indexing once it aggregates something.
+ *
+ * Four of the six tags currently hold a single post, which makes the archive a
+ * near duplicate of that post's own card with none of its content, and 18 of
+ * the 92 URLs in the sitemap are these. Crawl budget spent on them is crawl
+ * budget not spent on the app pages and the documentation, and a fifth of the
+ * indexable corpus being thin is a poor look on a domain about to be assessed
+ * for a paid traffic quality score.
+ *
+ * `follow`, not `nofollow`: the links to the posts should still carry. And the
+ * threshold is a count, not a list, so this reverses itself as the blog grows
+ * rather than needing anyone to remember.
+ */
+const thin = posts.length < TAG_INDEX_FROM;
+
 const itemList: JsonLdNode = {
   '@type': 'ItemList',
   '@id': `${canonical}#postlist`,
@@ -65,6 +82,8 @@ const itemList: JsonLdNode = {
 ---
 
 <BaseLayout
+  noindex={thin}
+  follow
   title={`${t.tagPage.headlinePrefix} ${label}`}
   description={`${t.tagPage.headlinePrefix} ${label}. ${t.meta.description}`}
   metaDescription={t.tagPage.metaDescription(label)}

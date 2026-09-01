@@ -8,7 +8,7 @@ export const en = {
   },
   hero: {
     eyebrow: 'Partner in the Atlassian Marketplace',
-    headline: 'The Atlassian apps we kept wishing existed.',
+    headline: 'The Jira and Confluence apps we kept wishing existed.',
     lede: 'Fifteen years inside Jira and Confluence taught us what teams keep having to work around. Now we build the apps that do that work for them, and every one runs inside your own Atlassian environment.',
     primary: 'See our apps',
     secondary: 'How we build',

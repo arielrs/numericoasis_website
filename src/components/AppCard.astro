@@ -17,6 +17,7 @@
 import { Image } from 'astro:assets';
 import type { CollectionEntry } from 'astro:content';
 import { PRODUCT_LABELS } from '../consts';
+import { outbound } from '../lib/outbound';
 import { contentSlug, withLocale, useTranslations, type Locale } from '../i18n';
 
 interface Props {
@@ -28,11 +29,13 @@ interface Props {
   };
   /** The app we are currently pushing spans its row. No label, just more room. */
   wide?: boolean;
+  /** The page this card is rendered on, for outbound attribution. */
+  surface: string;
   /** Opt in to the scroll reveal. Off by default so a card can render statically. */
   reveal?: boolean;
 }
 
-const { app, lang, labels, wide = false, reveal = false } = Astro.props;
+const { app, lang, labels, wide = false, reveal = false, surface } = Astro.props;
 const t = useTranslations(lang);
 
 // An app with its own landing page links there, not to /apps/<slug>/.
@@ -96,9 +99,12 @@ const focusRing =
     {app.data.products.map((p) => (
       <span class="rounded-full bg-water-50 px-2.5 py-1 text-water-700">{PRODUCT_LABELS[p] ?? p}</span>
     ))}
-    {app.data.priceModel === 'free' && (
-      <span class="rounded-full bg-sun-50 px-2.5 py-1 text-sun-700">{t.apps.priceFree}</span>
-    )}
+    <span
+      class:list={[
+        'rounded-full px-2.5 py-1',
+        app.data.priceModel === 'free' ? 'bg-sun-50 text-sun-700' : 'bg-water-50 text-water-700',
+      ]}
+    >{app.data.priceModel === 'free' ? t.apps.priceFree : t.apps.priceTrial}</span>
     <a
       href={href}
       class:list={['ml-auto rounded-sm text-slate-500 transition duration-200 ease-out-soft after:absolute after:inset-0 group-hover:text-water-700', focusRing]}
@@ -115,7 +121,7 @@ const focusRing =
 
   {app.data.marketplaceUrl && (
     <a
-      href={app.data.marketplaceUrl}
+      href={outbound(app.data.marketplaceUrl, surface, 'app-card')}
       class:list={[
         'relative z-10 mt-5 inline-flex items-center gap-1.5 self-start rounded-md border border-sand-200 px-3 py-1.5',
         'text-xs font-semibold text-brand-800 transition hover:border-water-400 hover:text-water-700',
