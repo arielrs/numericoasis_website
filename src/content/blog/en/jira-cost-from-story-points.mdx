@@ -1,0 +1,112 @@
+---
+lang: en
+translationKey: jira-cost-from-story-points
+title: "How to calculate the cost of a story point in Jira"
+metaTitle: "Calculate the cost of a story point in Jira"
+description: "The arithmetic is a cost per point multiplied by points delivered. Two ways to derive that rate, both worked through in full on the page, plus where story point costing is honest, how to check it fits your Jira data, and what to do when it does not."
+metaDescription: "Cost per point times points delivered. Two ways to get a cost per point, worked through in full, and how to check the method fits your Jira data first."
+pubDate: 2026-09-01
+tags: ["jira-cost-management", "onbudget", "how-to"]
+author: team
+draft: false
+---
+*Cost per story point, multiplied by story points delivered. That is the whole calculation.*
+
+If a team costs 246,000 to run for a quarter and completes 247 story points in that quarter, each point cost roughly 1,000. An epic carrying 180 points is then a 180,000 epic. Everything else here is where that number comes from, and when you can trust it.
+
+**Key takeaways**
+
+- Cost per point times points delivered. The arithmetic is one line; keeping it current is the work.
+- Two honest ways to get the rate: a known team cost divided by observed velocity, or a budget divided by the points in scope.
+- It prices delivered scope, not hours, and it breaks when one rate is shared across teams that estimate differently.
+- Unpointed work items cost nothing in this model. Check what share of your scope carries an estimate first.
+
+## Where does the cost per point come from?
+
+Two routes. One looks backwards at what a point has cost; the other forwards at what it may cost if you are to land on budget. They are not interchangeable.
+
+## Route one: a known team cost divided by observed velocity
+
+The numbers below are illustrative. Take a six-person delivery team whose fully loaded cost (salary, employer contributions, tooling, their share of overhead) comes to 82,000 a month. Over one quarter:
+
+**82,000 x 3 = 246,000**
+
+Now their completed velocity across the six two-week sprints in that quarter: 41, 38, 45, 39, 44 and 40 points.
+
+**41 + 38 + 45 + 39 + 44 + 40 = 247 points**
+
+Divide:
+
+**246,000 / 247 = 995.95 per point**
+
+Call it 1,000. Two decimal places would be false precision: you divided a payroll estimate by a set of relative estimates, so the third digit is not real.
+
+Three things decide whether it means anything.
+
+**Use a long enough window.** Mountain Goat Software's guidance is at least three sprints of data, preferably three months; its worked example runs eight people and 160,000 over fourteen weeks to reach 958 per point. One sprint tells you about one sprint.
+
+**Use completed points, not committed points.** Divide by what the team signed up for and you are pricing intent.
+
+**Use fully loaded cost, not salary.** A rate built on base salary alone understates every epic you apply it to, consistently, in the direction that makes budgets look fine.
+
+An epic with 180 points still open, at 1,000 a point, is 180,000 of remaining commitment: a number you can take to a prioritisation conversation.
+
+## Route two: a budget divided by the points in scope
+
+Sometimes you do not know the team cost and cannot easily find out. You do know the budget. Say a release has been given 400,000, and the work items in its scope carry 320 points between them:
+
+**400,000 / 320 = 1,250 per point**
+
+Every point now consumes a known share of the budget. This is allocative rather than descriptive: not what a point cost, but what a point may cost if the release is to land on its number.
+
+If scope holds, this consumes exactly the budget, which sounds useless until you see what it makes visible. Scope growth shows up at once as budget consumed above plan, and so does re-estimated work. It is a scope-creep detector wearing a currency symbol.
+
+This is what happens in OnBudget when you leave the unit cost blank. It divides the total budget across the total quantity, rather than asking you to invent a rate you do not have.
+
+## Why can't Jira do this for you?
+
+Because money was never modelled. Atlassian's own estimation documentation defines a story point as "an arbitrary number that measures the complexity of one story relative to others", tells you to enter it in the Story points field, and mentions cost, rates and budgets exactly nowhere. Jira records complexity and completion. It has no field where a rate lives.
+
+The guidance that does exist mostly points at Jira Align, a separate Atlassian product for enterprise planning. It is worth knowing what its Spend per Point report actually measures, because the name suggests otherwise: the article defines it as total time spent divided by story points completed, and its worked example is 80 hours divided by 20 points, giving 4 hours per point. That is time per point, not money per point. Even the tool the search results point you at is answering a different question, and Jira Cloud admins asking this question rarely have that product, and are not going to procure an enterprise planning platform to divide one number by another. So the question falls to a community thread, and the arithmetic ends up in a spreadsheet somebody exports on Fridays.
+
+## Where story point costing is honest, and where it is not
+
+It is honest when you price delivered scope for one team, over a period long enough for individual estimates to average out, with a rate derived from that same team.
+
+It is not hours. Points measure relative complexity, and Atlassian's framing is that teams aim for "reliable velocity" rather than estimation accuracy. Converting points to hours, then hours to an invoice, adds two layers of fiction to an approximation.
+
+It does not survive being shared between teams. Mountain Goat Software puts it plainly: "The velocities of two teams are not comparable unless the teams have taken great effort to establish a common baseline..." Apply one rate across five teams and the team that estimates generously looks cheap, permanently, for reasons unrelated to cost. The same fragility shows up inside a single team: re-baseline a scale mid-year and your cost per point moves without a single cost moving.
+
+And it is not defensible on small samples. Pricing one work item at cost per point is noise. Price an epic, a release, a quarter.
+
+None of that makes the method wrong. It makes it a planning instrument rather than an accounting one, which is worth saying when you present the number.
+
+## Check coverage before you commit
+
+Here is the failure that costs people a week. Every work item without a story point costs nothing in this model. If 40 percent of your scope is unpointed, your total is understated by roughly 40 percent and looks healthy right up until it does not.
+
+Check by hand first: count the work items in your intended scope, then count the same scope filtered to those where the estimate field is empty. That ratio is your coverage, and you want it before you build a report.
+
+OnBudget does this step for you. When you pick a costing method it samples your data and shows what share of your work items carries that signal. Three methods measured against the same data can score very differently, and you see all of them before you choose. A method that covers a small fraction of your work items is not a report. It is a warning.
+
+When coverage comes back low you have three options and only two are good. Narrow the scope to the team that genuinely estimates. Change the signal. Or backfill estimates, legitimate only if estimating is a practice you intend to keep.
+
+## When points are thin, price something else
+
+Most marketing, support and operations teams do not estimate in points and never will. That does not put them outside a budget report. Worklogs can be priced with a rate card. Any numeric field already on the work item can be priced per unit. Work items closed can be priced per item, and so can items sitting in a chosen status.
+
+We covered those alternatives in [Jira cost tracking without timesheets](/jira-cost-tracking-without-timesheets/). The short version: price the signal your team already produces, rather than the one the method prefers.
+
+## The hard part is keeping it current
+
+Cost per point is still an open question in Jira not because the maths is hard, but because a rate calculated in March is stale in April, and a spreadsheet exported on Friday is wrong by Monday.
+
+What "current" needs is unglamorous: a scope that re-evaluates itself, thresholds set in advance rather than after seeing the number, and a forecast of what happens if the run rate holds. In OnBudget that is two configurable percentages per report (at risk defaults to 80 percent of budget consumed, over budget to 100 percent), a linear forecast to the report end date or 30, 60 or 90 days out, and a report that regenerates rather than one that gets exported.
+
+Be clear about what that does not buy. A live report tells you the burn rate changed, not why. It will not convert between currencies, deliberately, because an invented exchange rate is worse than none. And it inherits every weakness of the underlying estimates, faster.
+
+## Where to start
+
+One team, one quarter, one number. Derive a rate from their fully loaded cost and completed velocity, write the scope down in a sentence, and apply it to one epic somebody has already asked about.
+
+If it holds up, the question becomes how to stop recalculating it by hand. [OnBudget](/onbudget/) does this inside Jira: it checks coverage first, prices story points per point or divides a budget across the points in scope, and tracks the result against thresholds and a forecast you set. It is read only, adds no fields to Jira, and purges everything on uninstall. Pricing and the free trial are on the [Marketplace listing](https://marketplace.atlassian.com/apps/2136850574/onbudget-cost-tracking-budget-reports-for-jira?utm_source=numericoasis&utm_medium=site&utm_campaign=post-story-points&utm_content=hero).

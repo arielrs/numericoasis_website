@@ -16,6 +16,7 @@ import DocsLayout from '../../../layouts/DocsLayout.astro';
 import { SITE } from '../../../consts';
 import { docGroups, docHref, iconFor, marketplaceFor, appHrefFor } from '../../../lib/docs';
 import { WEBSITE_ID, type JsonLdNode } from '../../../lib/schema';
+import { outbound } from '../../../lib/outbound';
 
 export async function getStaticPaths() {
   const groups = await docGroups();
@@ -99,7 +100,7 @@ const itemList: JsonLdNode = {
     <div class="mt-10 flex flex-wrap gap-3">
       {productHref && <a href={productHref} class="btn-secondary">About {group.label}</a>}
       {marketplace && (
-        <a href={marketplace} class="btn-secondary" rel="noopener" target="_blank">
+        <a href={outbound(marketplace, `doc-${group.app}`, 'doc-index')} class="btn-secondary" rel="noopener" target="_blank">
           View on the Marketplace
         </a>
       )}

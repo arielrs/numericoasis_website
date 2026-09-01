@@ -1,0 +1,112 @@
+---
+lang: es
+translationKey: jira-cost-from-story-points
+title: "Cómo calcular el coste de un story point en Jira"
+metaTitle: "Coste por story point en Jira: cómo calcularlo"
+description: "La aritmética es un coste por punto multiplicado por los puntos entregados. Dos formas de obtener esa tarifa, las dos trabajadas con números reales en la página, además de dónde es honesto el costeo por story point, cómo comprobar que encaja con tus datos de Jira y qué hacer cuando no encaja."
+metaDescription: "Coste por punto multiplicado por los puntos entregados. Dos formas de obtener la tarifa, con números reales, y cómo validarla con tus datos de Jira."
+pubDate: 2026-09-01
+tags: ["jira-cost-management", "onbudget", "how-to"]
+author: team
+draft: false
+---
+*Coste por story point, multiplicado por los story points entregados. Ese es todo el cálculo.*
+
+Si un equipo cuesta 246.000 € mantenerlo durante un trimestre y completa 247 story points (puntos de historia) en ese trimestre, cada punto costó unos 1.000 €. Un epic que lleva 180 puntos es entonces un epic de 180.000 €. Todo lo demás aquí es de dónde sale ese número, y cuándo puedes fiarte de él.
+
+**Ideas clave**
+
+- Coste por punto multiplicado por los puntos entregados. La aritmética es una sola línea; el trabajo está en mantenerla al día.
+- Dos formas honestas de obtener la tarifa: un coste de equipo conocido dividido entre la velocidad observada, o un presupuesto dividido entre los puntos del alcance.
+- Pone precio al alcance entregado, no a las horas, y se rompe cuando una misma tarifa se comparte entre equipos que estiman de forma distinta.
+- Los elementos de trabajo sin puntos cuestan cero en este modelo. Comprueba primero qué porcentaje de tu alcance lleva una estimación.
+
+## ¿De dónde sale el coste por punto?
+
+Dos rutas. Una mira hacia atrás, a lo que un punto ha costado; la otra hacia adelante, a lo que un punto puede costar si quieres cerrar dentro del presupuesto. No son intercambiables.
+
+## Ruta uno: un coste de equipo conocido dividido entre la velocidad observada
+
+Las cifras siguientes son ilustrativas. Toma un equipo de entrega de seis personas cuyo coste total (salario, cotizaciones, herramientas, su parte de los gastos generales) suma 82.000 € al mes. A lo largo de un trimestre:
+
+**82.000 x 3 = 246.000**
+
+Ahora su velocidad completada en los seis sprints de dos semanas de ese trimestre: 41, 38, 45, 39, 44 y 40 puntos.
+
+**41 + 38 + 45 + 39 + 44 + 40 = 247 puntos**
+
+Divide:
+
+**246.000 / 247 = 995,95 por punto**
+
+Llámalo 1.000. Dos decimales serían falsa precisión: has dividido una estimación de nómina entre un conjunto de estimaciones relativas, así que el tercer dígito no es real.
+
+Tres cosas deciden si eso significa algo.
+
+**Usa una ventana lo bastante larga.** La recomendación de Mountain Goat Software es de al menos tres sprints de datos, preferiblemente tres meses; su ejemplo trabajado usa ocho personas y 160.000 a lo largo de catorce semanas para llegar a 958 por punto. Un sprint te habla de un sprint.
+
+**Usa puntos completados, no puntos comprometidos.** Divide entre lo que el equipo se comprometió a entregar y estarás poniendo precio a una intención.
+
+**Usa el coste total, no el salario.** Una tarifa construida solo sobre el salario base infravalora todos los epics a los que la apliques, de forma consistente, en la dirección que hace que el presupuesto parezca tranquilo.
+
+Un epic con 180 puntos todavía abiertos, a 1.000 € el punto, son 180.000 € de compromiso pendiente: un número que puedes llevar a una conversación de priorización.
+
+## Ruta dos: un presupuesto dividido entre los puntos del alcance
+
+A veces no conoces el coste del equipo y no puedes averiguarlo con facilidad. El presupuesto sí lo conoces. Digamos que a una release le han asignado 400.000 €, y los elementos de trabajo de su alcance llevan 320 puntos entre todos:
+
+**400.000 / 320 = 1.250 por punto**
+
+Ahora cada punto consume una parte conocida del presupuesto. Esto es asignativo y no descriptivo: no es lo que un punto costó, sino lo que un punto puede costar si la release ha de cerrar en su cifra.
+
+Si el alcance se mantiene, esto consume exactamente el presupuesto, lo que suena inútil hasta que ves lo que deja a la vista. El crecimiento de alcance aparece de inmediato como presupuesto consumido por encima del plan, y el trabajo reestimado también. Es un detector de scope creep con un símbolo de moneda puesto.
+
+Esto es lo que ocurre en OnBudget cuando dejas el coste unitario en blanco. Divide el presupuesto total entre la cantidad total, en lugar de pedirte que inventes una tarifa que no tienes.
+
+## ¿Por qué no puede hacerlo Jira por ti?
+
+Porque el dinero nunca se modeló. La propia documentación de estimación de Atlassian define un story point como "un número arbitrario que mide la complejidad de una historia en relación con las demás", te dice que lo introduzcas en el campo Story points, y no menciona costes, tarifas ni presupuestos en ningún sitio. Jira registra complejidad y finalización. No tiene un campo donde viva una tarifa, ni donde viva el presupuesto de un proyecto.
+
+La orientación que sí aparece bien posicionada aquí viene sobre todo de Jira Align, que Atlassian sitúa como producto aparte, dentro de su Strategy Collection dirigida a responsables de grandes organizaciones, con su propio informe de gasto por punto. Eso funciona para las organizaciones que lo tienen. La mayoría de los administradores de Jira Cloud que hacen esta pregunta no lo tienen, y no van a contratar una plataforma corporativa de planificación para dividir un número entre otro. Así que la pregunta acaba en un hilo de la comunidad, y la aritmética acaba en una hoja de cálculo que alguien exporta los viernes.
+
+## Dónde es honesto el costeo por story point y dónde no
+
+Es honesto cuando pones precio al alcance entregado de un solo equipo, durante un periodo lo bastante largo como para que las estimaciones individuales se compensen, con una tarifa derivada de ese mismo equipo.
+
+No son horas. Los puntos miden complejidad relativa, y el planteamiento de Atlassian es que los equipos busquen una "velocidad fiable" antes que precisión en la estimación. Convertir puntos en horas, y horas en una factura, añade dos capas de ficción a una aproximación.
+
+No sobrevive a compartirse entre equipos. Mountain Goat Software lo dice sin rodeos: "Las velocidades de dos equipos no son comparables a menos que los equipos hayan hecho un gran esfuerzo por establecer una línea base común." Aplica una sola tarifa a cinco equipos y el equipo que estima con holgura parecerá barato, de forma permanente, por razones que nada tienen que ver con el coste. La misma fragilidad aparece dentro de un mismo equipo: cambia la escala de referencia a mitad de año y tu coste por punto se mueve sin que se haya movido ni un solo coste.
+
+Y no se puede defender con muestras pequeñas. Poner precio a un elemento de trabajo suelto con el coste por punto es ruido. Pon precio a un epic, a una release, a un trimestre.
+
+Nada de eso hace que el método esté mal. Lo convierte en un instrumento de planificación y no de contabilidad, que es algo que conviene decir cuando presentas el número.
+
+## Comprueba la cobertura antes de comprometerte
+
+Este es el fallo que le cuesta una semana a la gente. Todo elemento de trabajo sin story point cuesta cero en este modelo. Si el 40 por ciento de tu alcance está sin puntos, tu total está infravalorado en torno a un 40 por ciento y parece sano justo hasta que deja de parecerlo.
+
+Compruébalo a mano primero: cuenta los elementos de trabajo del alcance que pretendes usar, y luego cuenta ese mismo alcance filtrado por aquellos en los que el campo de estimación está vacío. Esa proporción es tu cobertura, y la quieres antes de construir un informe.
+
+OnBudget hace ese paso por ti. Cuando eliges un método de costeo, toma una muestra de tus datos y te muestra qué porcentaje de tus elementos de trabajo lleva esa señal. Tres métodos medidos sobre los mismos datos pueden puntuar de forma muy distinta, y los ves todos antes de elegir. Un método que cubre una fracción pequeña de tus elementos de trabajo no es un informe. Es un aviso.
+
+Cuando la cobertura sale baja tienes tres opciones y solo dos son buenas. Estrechar el alcance al equipo que estima de verdad. Cambiar de señal. O rellenar las estimaciones a posteriori, algo legítimo solo si estimar es una práctica que piensas mantener.
+
+## Cuando hay pocos puntos, pon precio a otra cosa
+
+La mayoría de los equipos de marketing, soporte y operaciones no estima en puntos y nunca lo hará. Eso no los deja fuera de un informe de presupuesto ni del control de costos de un proyecto. Los worklogs se pueden costear con un tarifario. Cualquier campo numérico que ya esté en el elemento de trabajo se puede costear por unidad. Los elementos cerrados se pueden costear por elemento, y también los que están parados en un estado concreto.
+
+Cubrimos esas alternativas en [Control de costes en Jira sin timesheets](/es/jira-cost-tracking-without-timesheets/). En corto: pon precio a la señal que tu equipo ya produce, y no a la que prefiere el método.
+
+## La parte difícil es mantenerlo al día
+
+El coste por punto sigue siendo una pregunta abierta en Jira no porque las matemáticas sean difíciles, sino porque una tarifa calculada en marzo está caducada en abril, y una hoja de cálculo exportada el viernes está mal el lunes.
+
+Lo que exige estar "al día" es poco lucido: un alcance que se reevalúa solo, umbrales fijados de antemano y no después de ver la cifra, y un pronóstico de qué pasa si el ritmo se mantiene. En OnBudget eso son dos porcentajes configurables por informe (en riesgo viene al 80 por ciento del presupuesto consumido, por encima del presupuesto al 100 por ciento), un pronóstico lineal hasta la fecha final del informe o a 30, 60 o 90 días, y un informe que se regenera en lugar de uno que se exporta.
+
+Ten claro lo que eso no compra. Un informe vivo te dice que el ritmo de gasto ha cambiado, no por qué. No convierte entre monedas, deliberadamente, porque un tipo de cambio inventado es peor que ninguno. Y hereda todas las debilidades de las estimaciones que tiene debajo, más rápido.
+
+## Por dónde empezar
+
+Un equipo, un trimestre, un número. Deriva una tarifa del coste total y de la velocidad completada de ese equipo, escribe el alcance en una frase, y aplícala a un epic por el que alguien ya haya preguntado.
+
+Si se sostiene, la pregunta pasa a ser cómo dejar de recalcularlo a mano. [OnBudget](/es/onbudget/) hace esto dentro de Jira: comprueba la cobertura primero, pone precio a los story points por punto o divide un presupuesto entre los puntos del alcance, y sigue el resultado frente a los umbrales y el pronóstico que definas. Es de solo lectura, no añade campos a Jira, y purga todo lo que guardaba al desinstalarlo. Los precios y la prueba gratuita están en la [ficha del Marketplace](https://marketplace.atlassian.com/apps/2136850574/onbudget-cost-tracking-budget-reports-for-jira?utm_source=numericoasis&utm_medium=site&utm_campaign=post-story-points&utm_content=hero).

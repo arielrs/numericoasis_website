@@ -13,7 +13,7 @@
  * IndexNow feeding Bing, which is what ChatGPT search reads.
  */
 import { getCollection } from 'astro:content';
-import { SITE } from '../consts';
+import { SITE, PRODUCT_LABELS } from '../consts';
 import { contentSlug } from '../i18n/paths';
 
 export async function GET() {
@@ -27,7 +27,11 @@ export async function GET() {
 
   const appLine = (app: (typeof apps)[number]) => {
     const url = `${SITE.url}${app.data.landingPath ?? `/apps/${contentSlug(app.id)}/`}`;
-    const host = app.data.hostProducts.map((h) => (h === 'jira' ? 'Jira' : 'Confluence')).join(' and ');
+    // products, not hostProducts. hostProducts is the install target, so a
+    // Jira app that also supports Jira Service Management reads as Jira only.
+    const host = app.data.products
+      .map((h) => PRODUCT_LABELS[h] ?? h)
+      .join(' and ');
     const price = app.data.priceModel === 'free' ? 'Free' : 'Paid';
     return `- [${app.data.name}](${url}): ${app.data.tagline} (${host} Cloud, ${price})`;
   };
@@ -38,7 +42,7 @@ export async function GET() {
     `> ${SITE.description}`,
     '',
     'A partner in the Atlassian Marketplace, based in Canoas, Brazil. Every app is',
-    'built on Atlassian Forge and carries the Runs on Atlassian badge, which means',
+    'built on Atlassian Forge, which makes it eligible for the Runs on Atlassian program and means',
     'it executes inside Atlassian infrastructure rather than on servers we operate.',
     'The site is published in English (/), Portuguese (/pt-BR/) and Spanish (/es/).',
     '',

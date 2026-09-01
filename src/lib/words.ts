@@ -21,7 +21,11 @@ export const words = (text: string): string[] => text.split(/\s+/).filter(Boolea
  * at all, not its absolute length.
  *
  * Capped so a headline nobody predicted cannot push the rest of the hero out to
- * five seconds.
+ * five seconds. The cap is 12 because the longest shipped headline is the
+ * pt-BR home hero at 13 words, and at 8 its last five words shared one delay
+ * and landed together, which is the effect switching itself off in the two
+ * locales nobody was checking. 12 settles at 1436ms, still under the 1730ms
+ * this all started from.
  */
-export const wordDelay = (index: number, start = 260, step = 98, cap = 8): number =>
+export const wordDelay = (index: number, start = 260, step = 98, cap = 12): number =>
   start + Math.min(index, cap) * step;

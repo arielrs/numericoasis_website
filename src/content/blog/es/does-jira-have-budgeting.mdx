@@ -1,0 +1,85 @@
+---
+lang: es
+translationKey: does-jira-have-budgeting
+title: "¿Jira tiene control de presupuestos?"
+metaTitle: "¿Jira tiene control de presupuestos?"
+description: "Jira Cloud no tiene presupuesto, ni tarifa, ni moneda. La propia documentación de control de tiempo de Atlassian lo demuestra. Qué te da Jira que se parece a presupuestar, por qué falla la hoja de cálculo del viernes y qué hace falta para cerrar la brecha."
+metaDescription: "No. Jira Cloud no tiene concepto de presupuesto, tarifa ni moneda. Qué documenta Atlassian, qué se confunde con presupuestar y cómo cerrar la brecha."
+pubDate: 2026-09-01
+tags: ["jira-cost-management", "onbudget", "how-to"]
+author: team
+draft: false
+---
+No. Jira Cloud no tiene concepto de presupuesto, ni de tarifa, ni de moneda. Registra trabajo, no dinero. Nada dentro de Jira sabe cuánto cuesta una hora, un punto de historia o un elemento de trabajo cerrado, y ningún informe nativo compara el gasto con un presupuesto.
+
+Esa es la respuesta entera. El resto es la prueba, y lo que hace falta para cerrar la brecha.
+
+**Ideas clave**
+
+- La propia página de configuración de control de tiempo de Atlassian documenta cinco ajustes. Ninguno de ellos es financiero.
+- Un campo numérico se puede formatear como moneda. Formatear no es presupuestar: el valor vive en un solo elemento de trabajo, y nada lo suma contra un objetivo.
+- Los equipos que no usan ni puntos de historia ni registros de horas quedan invisibles para casi todos los apaños de control de costes, el fallo que nadie menciona.
+
+## ¿Cómo sabemos que Jira no hace control de presupuestos?
+
+Porque Atlassian documenta exactamente qué se puede configurar, y nada de ello tiene que ver con dinero.
+
+El control de tiempo es lo que más se acerca al costeo, así que es el sitio justo donde mirar. La página [Configure time tracking](https://support.atlassian.com/jira-cloud-administration/docs/configure-time-tracking/) de Atlassian enumera lo que puede definir un administrador. Comprobado el 1 de septiembre de 2026, la lista es esta:
+
+- Horas de trabajo al día
+- Días de trabajo a la semana
+- Formato de visualización del tiempo
+- Unidad por defecto
+- Copia de los comentarios a la descripción del trabajo
+
+Horas, días, un formato de visualización, una unidad por defecto. Esa es toda la superficie. Ninguna tarifa, ninguna moneda, ningún coste por hora, ningún techo de presupuesto, ningún umbral. Jira es preciso sobre cómo cuenta el tiempo y silencioso sobre cuánto vale ese tiempo.
+
+## ¿Qué te da Jira que se parece a presupuestar?
+
+Cuatro cosas. Cada una es útil, ninguna de ellas es dinero.
+
+**Estimaciones.** Los puntos de historia y las estimaciones de tiempo dicen lo grande que el equipo cree que es el trabajo. Es una buena señal de planificación, denominada en puntos o en horas, nunca en euros. Jira nunca pregunta cuánto vale un punto.
+
+**Control de tiempo.** Los registros de trabajo (worklogs) recogen quién registró cuánto tiempo en qué elemento de trabajo. Esta es la materia prima del costeo, y la razón por la que la gente da por hecho que Jira ya lo hace. Se detiene en la duración. Dos personas registran una hora cada una y Jira trata esas horas como idénticas, porque no guarda ningún tarifario que las distinga.
+
+**Campos numéricos personalizados.** Puedes añadir un campo numérico a un elemento de trabajo y escribir una cifra dentro.
+
+**El burndown de épica.** La documentación de Atlassian dice que el informe "muestra datos según la estadística de estimación que usa tu tablero", es decir puntos, estimaciones de tiempo o un recuento de elementos de trabajo. Míralo de reojo y parece un presupuesto consumiéndose. Es alcance consumiéndose, y ambos se separan en cuanto tu ritmo de gasto cambia y tu alcance no.
+
+## ¿Lo resuelve un campo personalizado de moneda?
+
+En parte. Merece la pena ser preciso sobre dónde se detiene.
+
+Jira Cloud no tiene un tipo de campo Moneda. Tiene un campo numérico, que Atlassian describe como algo para "aportar información numérica en texto libre", con "tres opciones de formato: número, moneda, porcentaje". Así que puedes poner 12.500 en un elemento de trabajo y hacer que Jira lo muestre con un símbolo de moneda.
+
+Eso es un sitio donde anotar una cifra que alguien calculó en otra parte. No es presupuestar. El número se teclea a mano, así que está tan al día como la última persona que se acordó de él. Se guarda por elemento de trabajo, sin nada que lo sume a lo largo de una épica y compare el total con un objetivo. No lleva ningún umbral, así que nada se pone ámbar al 80 por ciento. Y es una cifra, no una derivación: no se puede recalcular, así que cuando el trabajo cambia deja de ser verdad sin avisar.
+
+Un campo formateado como moneda es una nota. Presupuestar es un cálculo.
+
+## ¿Por qué deja de funcionar la hoja de cálculo del viernes?
+
+Porque es una foto fija de algo que se mueve, y por a quién deja fuera.
+
+Alguien filtra un conjunto de elementos de trabajo, los pega en una hoja, multiplica una columna por una tarifa y envía el total. El lunes el sprint ha avanzado y el total está mal. Además es inauditable: la exportación desapareció y la multiplicación vivía en una celda que nadie más ve.
+
+El fallo que recibe menos atención es la cobertura. Una hoja construida sobre puntos de historia contiene solo a los equipos que estiman. Una construida sobre registros de trabajo contiene solo a los equipos que registran horas. Marketing, soporte y operaciones a menudo no hacen ni lo uno ni lo otro, así que no aparecen en esa hoja como una cifra pequeña. No aparecen en absoluto, y una revisión de presupuesto que excluye en silencio a varios departamentos es peor que ninguna, porque parece completa.
+
+## Tres preguntas que Jira no puede responder por sí solo
+
+- ¿Estamos por encima del presupuesto en esta épica, ahora mismo?
+- ¿Cuánto costó realmente aquella entrega?
+- Con este ritmo de consumo, ¿cuándo se acaba el presupuesto?
+
+Cada una necesita algo que Jira no guarda: un presupuesto con el que comparar, un precio para el trabajo y una proyección hacia adelante.
+
+## ¿Qué hace falta de verdad para cerrar la brecha?
+
+Cinco piezas.
+
+Un **presupuesto**, con una moneda y un alcance escrito, para que el total se pueda defender cuando alguien lo discuta. Una **señal de costeo**: algo que tus equipos ya producen (puntos, tiempo registrado, un campo numérico, o un recuento de elementos de trabajo cerrados o parados en un estado) y un precio para ella. **Umbrales** acordados de antemano, porque un umbral fijado después de ver el número es una racionalización. Un **pronóstico**, para que la pregunta pase a ser qué ocurre si este ritmo se mantiene. Y un **camino de vuelta a los elementos de trabajo**, porque la primera reacción ante cualquier cifra de coste es "qué trabajo compone ese número".
+
+Nada de eso pide a tus equipos que cambien su forma de trabajar. Te pide a ti que pongas precio a lo que ya registran.
+
+## Cómo lo hace OnBudget
+
+[OnBudget](/es/onbudget/) es una app para Jira Cloud que añade esas cinco piezas. Le das a un informe un alcance, un presupuesto y una moneda, y luego eliges uno de cinco métodos de costeo: puntos de historia, cualquier campo numérico, registros de trabajo valorados por tarifario o tarifa única, elementos de trabajo cerrados o resueltos, o elementos de trabajo parados en estados elegidos. Antes de que te comprometas, muestrea tus datos y enseña qué porcentaje de tus elementos de trabajo lleva realmente cada señal, así que averiguas si un método encaja antes de construir el informe. Los umbrales están por defecto en el 80 y el 100 por ciento del presupuesto consumido y son configurables. El pronóstico es un ritmo lineal a partir del gasto registrado hasta ahora. Es de solo lectura, no añade campos personalizados y no es un registrador de horas: pone precio a registros de trabajo que ya están ahí en lugar de registrar tiempo. No convierte entre monedas, y funciona sobre Forge, así que no hay versión Data Center ni Server. Si tus equipos no registran horas en absoluto, [costear trabajo de Jira sin partes de horas](/es/jira-cost-tracking-without-timesheets/) cubre los métodos que siguen sirviendo.

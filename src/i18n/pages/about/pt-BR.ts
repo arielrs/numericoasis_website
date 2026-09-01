@@ -12,14 +12,14 @@ export const ptBR = {
   hero: {
     eyebrow: 'Sobre a Numeric Oasis',
     headline: 'O time por trás dos apps.',
-    lede: 'Construímos e damos suporte a apps em Forge para Jira e Confluence Cloud. Todos rodam dentro do seu próprio ambiente Atlassian, levam o selo Runs on Atlassian e têm suporte de quem escreveu o código.',
+    lede: 'Construímos e damos suporte a apps em Forge para Jira e Confluence Cloud. Todos rodam inteiramente em Atlassian Forge, dentro do seu próprio ambiente Atlassian, e têm suporte de quem escreveu o código.',
   },
   standing: {
     eyebrow: 'Onde estamos',
     headline: 'Parceira no Atlassian Marketplace.',
     paragraphs: [
       'Tudo o que publicamos passa pelo Atlassian Marketplace, o que significa que a Atlassian cuida de licenciamento, cobrança e distribuição, e você compra nossos apps do mesmo jeito que compra qualquer outro. Nossa página de fornecedor lista tudo o que já publicamos.',
-      'Todo app que publicamos leva o selo Runs on Atlassian, a marca da Atlassian para apps cujo código roda em Forge dentro da infraestrutura da Atlassian. Não há servidor de fornecedor no caminho e nada seu sai do seu site.',
+      'Todo app que publicamos roda inteiramente em Atlassian Forge, que é o que o torna elegível para o programa Runs on Atlassian da Atlassian: o código roda dentro da infraestrutura da Atlassian. Não há servidor de fornecedor no caminho e nada seu sai do seu site.',
     ],
     link: 'Nossa página no Marketplace',
   },

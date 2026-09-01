@@ -19,7 +19,7 @@ export const ptBR = {
   proof: {
     label: 'Feito para gerar confiança',
     items: [
-      'Runs on Atlassian',
+      'Construído em Atlassian Forge',
       'Seus dados nunca saem da Atlassian',
       'Nenhum servidor de terceiros para avaliar',
       'Para Jira e Confluence Cloud',

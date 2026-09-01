@@ -1,22 +1,31 @@
 export const en = {
   meta: {
     crumb: 'OnBudget',
-    title: 'OnBudget: budget and cost reports for Jira',
+    title: 'Jira budget tracking and cost reporting',
   },
   hero: {
-    eyebrow: 'Atlassian Marketplace app for Jira Cloud',
-    headline: 'Budget and cost reporting for Jira, built for finance and PMO.',
+    eyebrow: 'Atlassian Marketplace app for Jira and Jira Service Management Cloud',
+    headline: 'Budget tracking and cost reporting for Jira projects.',
     lede: 'OnBudget turns the work your team already tracks in Jira into money. It samples your data first and tells you what share of your work items carries each costing signal, so you know what your data can actually support before you build a budget on top of it.',
     ctaSecondary: 'See how a report is built',
+  },
+  fit: {
+    eyebrow: 'Requirements and fit',
+    headline: 'Will it work on your Jira?',
+    items: [
+      'Jira Cloud and Jira Service Management. Installed from the Atlassian Marketplace by a Jira site admin.',
+      'Cloud only. There is no Data Center or Server version, because the app is built on Atlassian Forge.',
+      'Nothing to set up in Jira first. No new custom fields, no screen scheme changes, no workflow edits.',
+    ],
   },
   problem: { eyebrow: 'The problem' },
   steps: {
     eyebrow: 'How it works',
-    headline: 'Four steps from a Jira space to a budget you can defend.',
+    headline: 'Four steps from a Jira project to a budget you can defend.',
   },
   methods: {
     eyebrow: 'Costing',
-    headline: 'Pick the signal your team already has.',
+    headline: 'How does OnBudget calculate cost from Jira work?',
     lede: 'The hard part of costing Jira work is not the arithmetic. It is that every team measures something different, and half of them measure nothing at all. OnBudget samples your data and shows you what share of your work items carries each signal, before you build anything on top of it.',
   },
   dashboard: {
@@ -26,8 +35,8 @@ export const en = {
   },
   sharing: {
     eyebrow: 'Sharing',
-    headline: 'A shared report respects the reader, not the author.',
-    body: 'When someone opens a report you shared with them, it is regenerated under their own Jira permissions, so nobody sees work items they could not already open in Jira. Most reporting tools hand out a snapshot of what the author could see instead. And if a viewer lacks access to part of the scope, the report says so on the page rather than showing a smaller number without explaining why.',
+    headline: 'Can I share a report with someone who has restricted Jira access?',
+    body: 'When someone opens a report you shared with them, it is regenerated under their own Jira permissions, so nobody sees work items they could not already open in Jira. And if a viewer lacks access to part of the scope, the report says so on the page rather than showing a smaller number without explaining why.',
   },
   scale: {
     eyebrow: 'At scale',

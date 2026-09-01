@@ -10,7 +10,7 @@ sourceTitle: "Field Scout - Custom Field Audit for Jira"
 
 Field Scout is a free Atlassian Forge app for Jira Cloud that gives administrators a centralized dashboard to analyze and manage custom field usage across their entire instance.
 
-Jira Cloud caps custom fields at **700 per space**, not across the whole site. Over time, fields accumulate from plugins, migrations, and changing workflows, many ending up unused, duplicated, or forgotten. Field Scout scans every custom field and classifies it by usage, so you always know where you stand and which fields are safe to clean up.
+Jira Cloud caps custom fields at **700 per space**, not across the whole site. Over time, fields accumulate from apps, migrations, and changing workflows, many ending up unused, duplicated, or forgotten. Field Scout scans every custom field and classifies it by usage, so you always know where you stand and which fields are safe to clean up.
 
 ## Why Field Scout?
 
@@ -18,7 +18,7 @@ Jira Cloud caps custom fields at **700 per space**, not across the whole site. O
 | --- | --- |
 | **"A space is approaching the 700 custom field limit"** | Instantly see your total field count with visual warnings as a space approaches or exceeds the limit. |
 | **"I don't know which fields are actually being used"** | Every field is classified as Active, Stale, Likely Unused, or Unused based on real usage data from Jira. |
-| **"Old fields from removed plugins are cluttering our instance"** | Filter by origin to see fields from ScriptRunner, Tempo, JSM, and other plugins, even after the plugin is removed. |
+| **"Old fields from removed apps are cluttering our instance"** | Filter by origin to see fields from ScriptRunner, Tempo, JSM, and other apps, even after the app is removed. |
 | **"I need to audit fields before a migration"** | Export your entire field inventory to CSV with all metadata, screens, contexts, last used dates, and classifications. |
 | **"Some fields have no description and nobody knows what they do"** | Toggle the Missing Description filter to instantly find undocumented fields that need attention. |
 | **"I need to report on field hygiene to management"** | The Field Health Score gives you a single percentage that summarizes your instance's field hygiene, with actionable guidelines to improve it. |
@@ -48,7 +48,7 @@ Field Scout is designed for **Jira Cloud administrators**. It appears as an admi
 
 **Potential Duplicates**, Spot fields with identical or similar names that could be consolidated, with filtering by match type and field type.
 
-**Fields by Origin**, Understand which products and plugins created your fields, with per-origin health breakdowns in table or chart views.
+**Fields by Origin**, Understand which products and apps created your fields, with per-origin health breakdowns in table or chart views.
 
 **Fields by Type**, See how your fields are distributed across data types (text, select, date, etc.) in table, chart, or tag cloud views.
 
@@ -56,7 +56,7 @@ Field Scout is designed for **Jira Cloud administrators**. It appears as an admi
 
 **Field Scope**, Know whether each field applies to all projects, only team-managed projects, or only company-managed projects.
 
-**Origin Tracking**, See which product or plugin created each field: Jira Core, Jira Software, JSM, ScriptRunner, Tempo, Advanced Roadmaps, and more.
+**Origin Tracking**, See which product or app created each field: Jira Core, Jira Software, JSM, ScriptRunner, Tempo, Advanced Roadmaps, and more.
 
 **Comprehensive Filtering**, Search by name or ID. Filter by status, field type, origin, scope, and last-used recency. Toggle filters for locked fields, missing descriptions, zero screens, and zero contexts.
 

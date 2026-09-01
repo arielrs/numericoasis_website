@@ -19,7 +19,7 @@ export const es = {
   proof: {
     label: 'Hecho para generar confianza',
     items: [
-      'Runs on Atlassian',
+      'Construido en Atlassian Forge',
       'Tus datos nunca salen de Atlassian',
       'Ningún servidor de terceros que revisar',
       'Para Jira y Confluence Cloud',

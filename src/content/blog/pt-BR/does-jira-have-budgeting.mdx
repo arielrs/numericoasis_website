@@ -1,0 +1,85 @@
+---
+lang: pt-BR
+translationKey: does-jira-have-budgeting
+title: "O Jira faz controle de orçamento?"
+metaTitle: "O Jira faz controle de orçamento?"
+description: "O Jira Cloud não tem orçamento, taxa nem moeda. A própria documentação de controle de tempo da Atlassian prova isso. Veja o que o Jira oferece que parece controle de orçamento, por que a planilha de sexta-feira falha, e o que é preciso para fechar a lacuna."
+metaDescription: "Não. O Jira Cloud não tem conceito de orçamento, taxa ou moeda. O que a documentação da Atlassian lista e o que fazer para fechar essa lacuna."
+pubDate: 2026-09-01
+tags: ["jira-cost-management", "onbudget", "how-to"]
+author: team
+draft: false
+---
+Não. O Jira Cloud não tem conceito de orçamento, de taxa nem de moeda. Ele registra trabalho, não dinheiro. Nada dentro do Jira sabe quanto custa uma hora, um ponto de história ou um item de trabalho concluído, e nenhum relatório nativo compara o gasto com um orçamento.
+
+Essa é a resposta inteira. O resto é a prova, e o que é preciso para fechar a lacuna.
+
+**Pontos principais**
+
+- A própria página de configuração de controle de tempo da Atlassian documenta cinco ajustes. Nenhum deles é financeiro.
+- Um campo numérico pode ser formatado como moeda. Formatar não é orçar: o valor fica em um único item de trabalho, e nada o soma contra uma meta.
+- Times que não usam pontos de história nem apontamento de horas ficam invisíveis para quase todos os contornos de custo, a falha que ninguém menciona.
+
+## Como sabemos que o Jira não faz controle de orçamento?
+
+Porque a Atlassian documenta exatamente o que você pode configurar, e nada disso envolve dinheiro.
+
+O controle de tempo é o que chega mais perto do custeio, então é o lugar justo para olhar. A página [Configure time tracking](https://support.atlassian.com/jira-cloud-administration/docs/configure-time-tracking/) da Atlassian lista o que um administrador pode definir. Verificado em 1 de setembro de 2026, a lista é esta:
+
+- Horas de trabalho por dia
+- Dias de trabalho por semana
+- Formato de exibição do tempo
+- Unidade padrão
+- Cópia dos comentários para a descrição do trabalho
+
+Horas, dias, um formato de exibição, uma unidade padrão. É toda a superfície. Nenhuma taxa, nenhuma moeda, nenhum custo por hora, nenhum teto de orçamento, nenhum limite. O Jira é preciso sobre como conta o tempo e silencioso sobre quanto esse tempo vale.
+
+## O que o Jira oferece que parece controle de orçamento?
+
+Quatro coisas. Cada uma é útil, nenhuma delas é dinheiro.
+
+**Estimativas.** Pontos de história e estimativas de tempo dizem o tamanho que o time acha que o trabalho tem. É um bom sinal de planejamento, denominado em pontos ou em horas, nunca em reais. O Jira nunca pergunta quanto vale um ponto.
+
+**Controle de tempo.** Os registros de trabalho (worklogs) guardam quem apontou quanto tempo em qual item de trabalho. Essa é a matéria-prima do custeio, e a razão pela qual as pessoas presumem que o Jira já faz isso. Ele para na duração. Duas pessoas apontam uma hora cada e o Jira trata essas horas como idênticas, porque não guarda nenhuma tabela de valores que as diferencie.
+
+**Campos numéricos personalizados.** Você pode adicionar um campo numérico a um item de trabalho e digitar uma cifra nele.
+
+**O burndown de épico.** A documentação da Atlassian diz que o relatório "mostra dados com base na estatística de estimativa que o seu quadro está usando", ou seja, pontos, estimativas de tempo ou uma contagem de itens de trabalho. Bata o olho e ele parece um orçamento sendo consumido. É escopo sendo consumido, e os dois se separam no instante em que o seu ritmo de gasto muda e o seu escopo não.
+
+## Um campo personalizado de moeda resolve?
+
+Em parte. Vale ser preciso sobre onde ele para.
+
+O Jira Cloud não tem um tipo de campo Moeda. Ele tem um campo numérico, que a Atlassian descreve como algo para "fornecer informações numéricas em texto livre", com "três opções de formatação: número, moeda, porcentagem". Então dá para colocar 12.500 em um item de trabalho e fazer o Jira exibir esse valor com um símbolo de moeda.
+
+Isso é um lugar para anotar uma cifra que alguém calculou em outro lugar. Não é controle de orçamento. O número é digitado à mão, então ele só está tão atualizado quanto a última pessoa que lembrou dele. Fica guardado por item de trabalho, sem nada que o some ao longo de um épico e compare o total com uma meta. Não carrega limite nenhum, então nada fica amarelo aos 80 por cento. E é uma cifra, não uma derivação: não pode ser recalculado, então, quando o trabalho muda, ele deixa de ser verdade sem avisar.
+
+Um campo formatado como moeda é uma anotação. Orçar é um cálculo.
+
+## Por que a planilha de sexta-feira para de funcionar?
+
+Porque ela é uma foto parada de uma coisa em movimento, e por causa de quem ela deixa de fora.
+
+Alguém filtra um conjunto de itens de trabalho, cola numa planilha, multiplica uma coluna por uma taxa e manda o total. Na segunda a sprint andou e o total está errado. E é inauditável: a exportação sumiu e a multiplicação morava em uma célula que mais ninguém enxerga.
+
+A falha que recebe menos atenção é a cobertura. Uma planilha construída sobre pontos de história contém apenas os times que estimam. Uma construída sobre registros de trabalho contém apenas os times que apontam horas. Marketing, suporte e operações frequentemente não fazem nem uma coisa nem outra, então eles não aparecem nessa planilha como um número pequeno. Eles não aparecem de jeito nenhum, e uma revisão de orçamento que exclui vários departamentos em silêncio é pior do que nenhuma, porque parece completa.
+
+## Três perguntas que o Jira sozinho não responde
+
+- Estamos acima do orçamento neste épico, agora?
+- Quanto aquela entrega custou de verdade?
+- Nesse ritmo de consumo, quando o orçamento acaba?
+
+Cada uma precisa de algo que o Jira não guarda: um orçamento para comparar, um preço para o trabalho e uma projeção para a frente.
+
+## O que é preciso, na prática, para fechar a lacuna?
+
+Cinco peças.
+
+Um **orçamento**, com uma moeda e um escopo escrito, para que o total possa ser defendido quando for questionado. Um **sinal de custeio**: algo que os seus times já produzem (pontos, tempo apontado, um campo numérico, ou uma contagem de itens de trabalho concluídos ou parados em um status) e um preço para ele. **Limites** combinados de antemão, porque um limite definido depois de ver o número é uma racionalização. Uma **previsão**, para que a pergunta passe a ser o que acontece se esse ritmo se mantiver. E um **caminho de volta até os itens de trabalho**, porque a primeira reação a qualquer número de custo é "que trabalho compôs esse número".
+
+Nada disso pede que os seus times mudem o jeito de trabalhar. Pede que você precifique o que eles já registram.
+
+## Como o OnBudget faz isso
+
+O [OnBudget](/pt-BR/onbudget/) é um app para Jira Cloud que acrescenta essas cinco peças. Você dá a um relatório um escopo, um orçamento e uma moeda, e depois escolhe um entre cinco métodos de custeio: pontos de história, qualquer campo numérico, registros de trabalho precificados por tabela de valores ou taxa única, itens de trabalho concluídos ou resolvidos, ou itens de trabalho parados em status escolhidos. Antes de você se comprometer, ele amostra os seus dados e mostra que porcentagem dos seus itens de trabalho de fato carrega cada sinal, então você descobre se um método serve antes de construir o relatório. Os limites vêm por padrão em 80 e 100 por cento do orçamento consumido e são configuráveis. A previsão é um ritmo linear a partir do gasto registrado até aqui. Ele é somente leitura, não adiciona campos personalizados e não é um apontador de horas: ele precifica registros de trabalho que já estão lá, em vez de registrar tempo. Não converte entre moedas, e roda no Forge, então não existe versão Data Center nem Server. Se os seus times não apontam hora nenhuma, [custear trabalho no Jira sem apontamento de horas](/pt-BR/jira-cost-tracking-without-timesheets/) cobre os métodos que ainda se aplicam.

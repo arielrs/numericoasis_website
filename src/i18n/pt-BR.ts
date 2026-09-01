@@ -46,7 +46,7 @@ export const ptBR = {
     installOnMarketplace: 'Instalar pelo Atlassian Marketplace',
     viewOnMarketplace: 'Ver no Marketplace',
     builtFor: 'Feito para:',
-    runsOnAtlassian: 'Runs on Atlassian',
+    runsOnAtlassian: 'Construído em Atlassian Forge',
   },
   consent: {
     label: 'Escolha sobre cookies',
@@ -55,6 +55,10 @@ export const ptBR = {
     deny: 'Agora não',
     privacyLabel: 'Ler a política de privacidade',
     privacyHref: '/pt-BR/privacy/',
+  },
+  landing: {
+    ctaHeading: 'Teste no seu próprio Jira',
+    ctaBody: 'Teste gratuito no Atlassian Marketplace. Ele lê o seu Jira e não muda nada lá dentro, então não há nada para desfazer se não for para você.',
   },
   legal: {
     heading: 'Jurídico',

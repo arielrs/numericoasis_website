@@ -97,6 +97,26 @@ for (const file of pages) {
   }
 }
 
+// 2b. Every visible Marketplace link is attributed.
+//
+// Round one wrapped 193 of them and missed 13, including the home page's
+// OnBudget button in all three locales, and the miss was invisible because the
+// only evidence was a slot constant declared and never used. An untagged exit
+// lands in the vendor console as direct traffic, indistinguishable from
+// organic, which is the one thing the parameters exist to prevent.
+//
+// href only. The JSON-LD downloadUrl, installUrl and sameAs must stay bare:
+// they are identity references, and a tracked url there makes the node
+// disagree with the canonical listing.
+for (const file of pages) {
+  const source = await readFile(file, 'utf8');
+  for (const [, href] of source.matchAll(/href="(https:\/\/marketplace\.atlassian\.com[^"]*)"/g)) {
+    if (!href.includes('utm_source=')) {
+      errors.push(`${toUrl(file)}: untagged Marketplace link, ${href}`);
+    }
+  }
+}
+
 // 3. Head invariants on every indexable page.
 for (const file of pages) {
   const url = toUrl(file);

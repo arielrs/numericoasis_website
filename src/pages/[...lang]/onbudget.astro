@@ -44,7 +44,9 @@ const softwareNode: JsonLdNode = {
   '@type': 'SoftwareApplication',
   '@id': appId,
   name: d.listingName ?? d.name,
-  alternateName: d.name,
+  // The bare name collides with an unrelated expense tracker, a company on
+  // Crunchbase and a bookkeeping firm. This is the disambiguated string.
+  alternateName: 'OnBudget for Jira',
   description: d.answerFirst ?? d.description,
   abstract: d.tagline,
   applicationCategory: 'BusinessApplication',
@@ -93,7 +95,7 @@ const otherApps = (
 
 <BaseLayout
   navCta={d.marketplaceUrl
-    ? { href: outbound(d.marketplaceUrl, 'onbudget', 'hero'), label: chromeCta, external: true }
+    ? { href: outbound(d.marketplaceUrl, 'onbudget', 'nav'), label: chromeCta, external: true }
     : undefined}
   title={t.meta.title}
   description={d.answerFirst}
@@ -124,7 +126,10 @@ const otherApps = (
         <h1 class="mt-6 font-display text-4xl font-bold leading-tight tracking-tight text-brand-900 sm:text-5xl">
           {t.hero.headline}
         </h1>
-        <p class="mt-6 text-lg leading-relaxed text-slate-700">{t.hero.lede}</p>
+        {d.answerFirst && (
+          <p class="mt-6 text-lg leading-relaxed text-brand-800">{d.answerFirst}</p>
+        )}
+        <p class="mt-4 text-base leading-relaxed text-slate-600">{t.hero.lede}</p>
         <div class="mt-9 flex flex-wrap gap-3">
           {d.marketplaceUrl && (
             <a id="hero-install" href={outbound(d.marketplaceUrl, 'onbudget', 'hero')} class="btn-cta" rel="noopener" target="_blank">
@@ -166,6 +171,30 @@ const otherApps = (
             <li class="flex items-center gap-2">
               <svg class="text-water-600" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12" /></svg>
               {signal}
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  )}
+
+  <!-- REQUIREMENTS AND FIT.
+       The question "does this work on my Jira" was answered nowhere on the page,
+       so a Data Center admin could read the whole thing and only find out at the
+       Marketplace. On a page taking paid clicks that is budget spent on a
+       visitor who was never able to buy. -->
+  {t.fit && (
+    <section class="border-b border-sand-200 bg-sand-50 py-10 sm:py-12">
+      <div class="container-wide reveal max-w-4xl">
+        <p class="eyebrow">{t.fit.eyebrow}</p>
+        <h2 class="mt-2 font-display text-xl font-bold tracking-tight text-brand-900 sm:text-2xl">
+          {t.fit.headline}
+        </h2>
+        <ul class="mt-5 grid gap-3 sm:grid-cols-3">
+          {t.fit.items.map((item) => (
+            <li class="flex gap-2.5 text-sm leading-relaxed text-slate-700">
+              <svg class="mt-1 shrink-0 text-water-600" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12" /></svg>
+              <span>{item}</span>
             </li>
           ))}
         </ul>
@@ -442,6 +471,26 @@ const otherApps = (
     </div>
   </section>
 
+  {d.useCases.length > 0 && (
+    <section class="border-t border-sand-200 py-16 sm:py-24">
+      <div class="container-wide max-w-5xl">
+        <p class="eyebrow">{appDetail.useCases.eyebrow}</p>
+        <h2 class="mt-3 font-display text-3xl font-bold tracking-tight text-brand-900 sm:text-4xl">
+          {appDetail.useCases.headline}
+        </h2>
+        <div class="mt-10 grid gap-6 md:grid-cols-3" data-reveal-group>
+          {d.useCases.map((useCase) => (
+            <article class="reveal rounded-2xl border border-sand-200 bg-paper p-7">
+              <h3 class="font-display text-lg font-semibold text-brand-900">{useCase.persona}</h3>
+              <p class="mt-3 text-base leading-relaxed text-slate-600">{useCase.job}</p>
+              <p class="mt-3 text-base font-medium leading-relaxed text-brand-800">{useCase.outcome}</p>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
   <!-- 11. FAQ -->
   <section class="border-y border-sand-200 bg-sand-50 py-16 sm:py-24">
     <div class="container-wide reveal max-w-3xl">
@@ -541,33 +590,47 @@ const otherApps = (
   )}
 
   <script is:inline>
-    (function () {
+    // Deferred to DOMContentLoaded because the two bars this yields to are
+    // rendered by BaseLayout AFTER <main>, so at parse time neither exists yet
+    // and the observers below silently attached to nothing.
+    document.addEventListener('DOMContentLoaded', function () {
       var bar = document.getElementById('sticky-install');
       var hero = document.getElementById('hero-install');
       if (!bar || !hero || !('IntersectionObserver' in window)) return;
 
       var heroVisible = true;
+      var others = ['consent-bar', 'locale-suggestion']
+        .map(function (id) { return document.getElementById(id); })
+        .filter(Boolean);
 
+      // NOT offsetParent. Both of these are position:fixed, and the CSSOM View
+      // spec makes offsetParent null for any fixed element, so the check this
+      // replaces returned false unconditionally and the bars stacked.
       function blocked() {
-        return ['consent-bar', 'locale-suggestion'].some(function (id) {
-          var el = document.getElementById(id);
-          return el && !el.hidden && el.offsetParent !== null;
+        return others.some(function (el) {
+          return !el.hidden && el.getBoundingClientRect().height > 0;
         });
       }
-      function apply() { bar.hidden = heroVisible || blocked(); }
+      function apply() {
+        var hide = heroVisible || blocked();
+        bar.hidden = hide;
+        // Without this the bar covers the closing call to action and the first
+        // footer row at the foot of the page.
+        document.body.style.paddingBottom = hide ? '' : bar.offsetHeight + 'px';
+      }
 
       new IntersectionObserver(function (entries) {
         heroVisible = entries[0].isIntersecting;
         apply();
       }, { rootMargin: '0px 0px -40px 0px' }).observe(hero);
 
-      // Both other bars are dismissed by removing hidden or by a class change,
-      // so watch the attributes rather than guessing at their scripts.
-      ['consent-bar', 'locale-suggestion'].forEach(function (id) {
-        var el = document.getElementById(id);
-        if (el) new MutationObserver(apply).observe(el, { attributes: true, attributeFilter: ['hidden', 'class', 'style'] });
+      others.forEach(function (el) {
+        new MutationObserver(apply).observe(el, {
+          attributes: true,
+          attributeFilter: ['hidden', 'class', 'style'],
+        });
       });
       apply();
-    })();
+    });
   </script>
 </BaseLayout>

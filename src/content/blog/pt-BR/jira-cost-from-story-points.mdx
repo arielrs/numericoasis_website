@@ -1,0 +1,112 @@
+---
+lang: pt-BR
+translationKey: jira-cost-from-story-points
+title: "Como calcular o custo de um story point no Jira"
+metaTitle: "Custo por story point no Jira: como calcular"
+description: "A aritmética é um custo por ponto multiplicado pelos pontos entregues. Duas formas de chegar a essa taxa, ambas trabalhadas com números reais na página, mais onde o custeio por story point é honesto, como checar se ele cabe nos seus dados do Jira, e o que fazer quando não cabe."
+metaDescription: "Custo por ponto vezes pontos entregues. Duas formas de obter a taxa, com números reais, e como checar se o método cabe nos seus dados do Jira."
+pubDate: 2026-09-01
+tags: ["jira-cost-management", "onbudget", "how-to"]
+author: team
+draft: false
+---
+*Custo por story point, multiplicado pelos story points entregues. É esse o cálculo inteiro.*
+
+Se um time custa R$ 246.000 para operar durante um trimestre e conclui 247 story points (pontos de história) nesse trimestre, cada ponto custou aproximadamente R$ 1.000. Um epic que carrega 180 pontos é, então, um epic de R$ 180.000. Todo o resto aqui é de onde esse número vem, e quando você pode confiar nele.
+
+**Pontos principais**
+
+- Custo por ponto vezes pontos entregues. A aritmética é uma linha só; manter o número atualizado é que dá trabalho.
+- Duas formas honestas de chegar à taxa: um custo de time conhecido dividido pela velocidade observada, ou um orçamento dividido pelos pontos em escopo.
+- Ela precifica escopo entregue, e não horas, e quebra quando uma mesma taxa é compartilhada entre times que estimam de formas diferentes.
+- Itens de trabalho sem pontos custam zero nesse modelo. Confira antes qual porcentagem do seu escopo carrega uma estimativa.
+
+## De onde vem o custo por ponto?
+
+Dois caminhos. Um olha para trás, para o que um ponto custou; o outro olha para a frente, para o que um ponto pode custar se você quiser fechar dentro do orçamento. Eles não são intercambiáveis.
+
+## Caminho um: um custo de time conhecido dividido pela velocidade observada
+
+Os números abaixo são ilustrativos. Pegue um time de entrega de seis pessoas cujo custo total (salário, encargos, ferramentas, a parte que lhe cabe do overhead) chega a R$ 82.000 por mês. Ao longo de um trimestre:
+
+**82.000 x 3 = 246.000**
+
+Agora a velocidade concluída ao longo das seis sprints de duas semanas desse trimestre: 41, 38, 45, 39, 44 e 40 pontos.
+
+**41 + 38 + 45 + 39 + 44 + 40 = 247 pontos**
+
+Divida:
+
+**246.000 / 247 = 995,95 por ponto**
+
+Chame de 1.000. Duas casas decimais seriam falsa precisão: você dividiu uma estimativa de folha de pagamento por um conjunto de estimativas relativas, então o terceiro dígito não é real.
+
+Três coisas decidem se esse número significa alguma coisa.
+
+**Use uma janela longa o bastante.** A orientação da Mountain Goat Software é de pelo menos três sprints de dados, de preferência três meses; o exemplo trabalhado deles usa oito pessoas e 160.000 ao longo de catorze semanas para chegar a 958 por ponto. Uma sprint diz respeito a uma sprint.
+
+**Use pontos concluídos, não pontos comprometidos.** Divida pelo que o time se comprometeu a entregar e você está precificando intenção.
+
+**Use custo total, não salário.** Uma taxa construída só sobre o salário base subestima todo epic em que for aplicada, de forma consistente, na direção que faz o orçamento parecer tranquilo.
+
+Um epic com 180 pontos ainda abertos, a R$ 1.000 o ponto, é R$ 180.000 de compromisso restante: um número que você pode levar para uma conversa de priorização.
+
+## Caminho dois: um orçamento dividido pelos pontos em escopo
+
+Às vezes você não sabe o custo do time e não tem como descobrir com facilidade. O orçamento você sabe. Digamos que uma release recebeu R$ 400.000, e os itens de trabalho no escopo dela carregam 320 pontos entre si:
+
+**400.000 / 320 = 1.250 por ponto**
+
+Agora cada ponto consome uma fatia conhecida do orçamento. Isso é alocativo, e não descritivo: não é o que um ponto custou, e sim o que um ponto pode custar se a release for fechar no número dela.
+
+Se o escopo se mantiver, isso consome exatamente o orçamento, o que soa inútil até você ver o que fica visível. Crescimento de escopo aparece na hora como orçamento consumido acima do plano, e trabalho reestimado também. É um detector de scope creep usando um símbolo de moeda.
+
+É isso que acontece no OnBudget quando você deixa o custo unitário em branco. Ele divide o orçamento total pela quantidade total, em vez de pedir que você invente uma taxa que não tem.
+
+## Por que o Jira não faz isso por você?
+
+Porque dinheiro nunca foi modelado. A própria documentação de estimativa da Atlassian define um story point como "um número arbitrário que mede a complexidade de uma história em relação às outras", manda você preenchê-lo no campo Story points, e não menciona custo, taxas nem orçamento em lugar nenhum. O Jira registra complexidade e conclusão. Ele não tem um campo onde uma taxa possa morar, nem onde um orçamento de projeto possa viver.
+
+A orientação que de fato aparece bem ranqueada aqui vem em boa parte do Jira Align, que a Atlassian posiciona como produto separado, dentro da Strategy Collection voltada a lideranças de grandes organizações, com relatório próprio de gasto por ponto. Isso funciona para as organizações que o têm. A maior parte dos admins de Jira Cloud que fazem essa pergunta não tem, e não vai contratar uma plataforma corporativa de planejamento para dividir um número por outro. Então a pergunta cai em uma thread da comunidade, e a aritmética termina em uma planilha que alguém exporta na sexta.
+
+## Onde o custeio por story point é honesto, e onde não é
+
+Ele é honesto quando você precifica escopo entregue de um time só, ao longo de um período longo o bastante para que as estimativas individuais se compensem, com uma taxa derivada desse mesmo time.
+
+Ele não é hora. Pontos medem complexidade relativa, e o enquadramento da Atlassian é que os times busquem uma "velocidade confiável" em vez de precisão na estimativa. Converter pontos em horas, e horas em nota fiscal, acrescenta duas camadas de ficção a uma aproximação.
+
+Ele não sobrevive a ser compartilhado entre times. A Mountain Goat Software é direta: "As velocidades de dois times não são comparáveis a menos que os times tenham feito um grande esforço para estabelecer uma linha de base comum." Aplique uma taxa só em cinco times e o time que estima com folga parece barato, permanentemente, por razões que nada têm a ver com custo. A mesma fragilidade aparece dentro de um único time: mude a escala de referência no meio do ano e o seu custo por ponto se mexe sem que um único custo tenha se mexido.
+
+E ele não é defensável em amostras pequenas. Precificar um item de trabalho isolado pelo custo por ponto é ruído. Precifique um epic, uma release, um trimestre.
+
+Nada disso torna o método errado. Torna-o um instrumento de planejamento, e não de contabilidade, o que vale a pena dizer quando você apresenta o número.
+
+## Confira a cobertura antes de se comprometer
+
+Aqui está a falha que custa uma semana às pessoas. Todo item de trabalho sem story point custa zero nesse modelo. Se 40 por cento do seu escopo está sem pontos, seu total está subestimado em cerca de 40 por cento e parece saudável até o momento em que deixa de parecer.
+
+Confira na mão primeiro: conte os itens de trabalho no escopo pretendido, depois conte o mesmo escopo filtrado por aqueles em que o campo de estimativa está vazio. Essa razão é a sua cobertura, e você quer esse número antes de construir um relatório.
+
+O OnBudget faz essa etapa por você. Quando você escolhe um método de custeio, ele analisa uma amostra dos seus dados e mostra qual porcentagem dos seus itens de trabalho carrega aquele sinal. Três métodos medidos sobre os mesmos dados podem pontuar de forma bem diferente, e você vê todos antes de escolher. Um método que cobre uma fração pequena dos seus itens de trabalho não é um relatório. É um aviso.
+
+Quando a cobertura volta baixa, você tem três opções e só duas são boas. Estreite o escopo para o time que de fato estima. Troque o sinal. Ou preencha as estimativas em retrospecto, o que só é legítimo se estimar for uma prática que você pretende manter.
+
+## Quando os pontos são poucos, precifique outra coisa
+
+A maior parte dos times de marketing, suporte e operações não estima em pontos e nunca vai estimar. Isso não os coloca fora de um relatório de orçamento. Worklogs podem ser precificados com uma tabela de valores. Qualquer campo numérico já presente no item de trabalho pode ser precificado por unidade. Itens de trabalho fechados podem ser precificados por item, e itens parados em um status escolhido também.
+
+Cobrimos essas alternativas em [Controle de custos no Jira sem timesheets](/pt-BR/jira-cost-tracking-without-timesheets/). Em resumo: precifique o sinal que o seu time já produz, em vez do sinal que o método preferiria.
+
+## A parte difícil é manter o número atualizado
+
+Custo por ponto continua sendo pergunta em aberto no Jira não porque a matemática seja difícil, mas porque uma taxa calculada em março está velha em abril, e uma planilha exportada na sexta está errada na segunda.
+
+O que "atualizado" exige é pouco glamouroso: um escopo que se reavalia sozinho, limites definidos de antemão e não depois de ver o número, e uma previsão do que acontece se o ritmo se mantiver. No OnBudget isso são duas porcentagens configuráveis por relatório (em risco vem em 80 por cento do orçamento consumido, acima do orçamento em 100 por cento), uma previsão linear até a data final do relatório ou a 30, 60 ou 90 dias, e um relatório que se regenera em vez de um que é exportado.
+
+Seja claro sobre o que isso não compra. Um relatório vivo diz que o ritmo de gasto mudou, não por quê. Ele não converte moedas, e isso é deliberado, porque uma taxa de câmbio inventada é pior do que nenhuma. E ele herda toda fraqueza das estimativas que estão por baixo, só que mais rápido.
+
+## Por onde começar
+
+Um time, um trimestre, um número. Derive uma taxa do custo total e da velocidade concluída desse time, escreva o escopo em uma frase, e aplique a um epic sobre o qual alguém já perguntou.
+
+Se o número se sustentar, a pergunta passa a ser como parar de recalculá-lo na mão. O [OnBudget](/pt-BR/onbudget/) faz isso dentro do Jira: confere a cobertura primeiro, precifica story points por ponto ou divide um orçamento pelos pontos em escopo, e acompanha o resultado contra os limites e a previsão que você definir. Ele é somente leitura, não adiciona campos ao Jira, e apaga tudo o que guardou quando é desinstalado. Preços e teste gratuito estão na [listagem do Marketplace](https://marketplace.atlassian.com/apps/2136850574/onbudget-cost-tracking-budget-reports-for-jira?utm_source=numericoasis&utm_medium=site&utm_campaign=post-story-points&utm_content=hero).

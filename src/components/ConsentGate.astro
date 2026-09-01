@@ -36,10 +36,10 @@
  *
  * INERT UNTIL CONFIGURED
  *
- * With no measurement id in src/consts.ts this component renders nothing: no
- * script, no banner, no cookie. That is the shipped default. Paste the ids and
- * the whole thing activates at once, which is deliberate, because Google
- * requires the privacy disclosure to be live before the tag is.
+ * With neither id in src/consts.ts this component renders nothing: no script,
+ * no banner, no cookie. That is the shipped default. Either id activates the
+ * whole thing at once, which is deliberate, because Google requires the privacy
+ * disclosure to be live before the tag is.
  */
 import { GOOGLE_TAG } from '../consts';
 import { useTranslations, type Locale } from '../i18n';
@@ -50,7 +50,23 @@ interface Props {
 const { lang } = Astro.props;
 const t = useTranslations(lang);
 
-const enabled = import.meta.env.PROD && Boolean(GOOGLE_TAG.measurementId);
+/**
+ * Either id turns this on.
+ *
+ * It was keyed to the GA4 id alone, which meant a Google Ads only setup, which
+ * is the likelier starting point here, shipped no tag, no banner and no
+ * conversion while looking configured.
+ *
+ * A11Y_FORCE_CONSENT exists so the accessibility gate can see the banner while
+ * the ids are still empty. It renders the markup and the banner script, and no
+ * tag and no network call, because axe needs the DOM. Run it with
+ * `npm run a11y:consent`. Once real ids are pasted in, the ordinary gate covers
+ * the banner on every build and the flag stops mattering.
+ */
+const forced = process.env.A11Y_FORCE_CONSENT === '1';
+const hasTag = Boolean(GOOGLE_TAG.measurementId || GOOGLE_TAG.adsConversionId);
+const enabled = (import.meta.env.PROD && hasTag) || forced;
+const tagId = GOOGLE_TAG.measurementId || GOOGLE_TAG.adsConversionId;
 
 /**
  * Where consent is required before anything is stored.
@@ -67,13 +83,14 @@ const CONSENT_REQUIRED = [
 
 const config = JSON.stringify({
   measurementId: GOOGLE_TAG.measurementId,
+  tagId,
   adsId: GOOGLE_TAG.adsConversionId,
   adsLabel: GOOGLE_TAG.adsConversionLabel,
   regions: CONSENT_REQUIRED,
 });
 ---
 
-{enabled && (
+{enabled && hasTag && (
   <>
     <script is:inline define:vars={{ config }} set:html={`
       (function () {
@@ -90,7 +107,6 @@ const config = JSON.stringify({
           ad_user_data: 'denied',
           ad_personalization: 'denied',
           analytics_storage: 'denied',
-          wait_for_update: 500,
           region: cfg.regions
         });
         gtag('consent', 'default', {
@@ -111,11 +127,11 @@ const config = JSON.stringify({
         }
 
         gtag('js', new Date());
-        gtag('config', cfg.measurementId, { anonymize_ip: true });
+        if (cfg.measurementId) gtag('config', cfg.measurementId, { anonymize_ip: true });
         if (cfg.adsId) gtag('config', cfg.adsId);
       })();
     `} />
-    <script is:inline async src={`https://www.googletagmanager.com/gtag/js?id=${GOOGLE_TAG.measurementId}`}></script>
+    <script is:inline async src={`https://www.googletagmanager.com/gtag/js?id=${tagId}`}></script>
   </>
 )}
 
@@ -163,8 +179,42 @@ const config = JSON.stringify({
             analytics_storage: value
           });
         }
+        // Outside the consent regions the default is granted, so by the time
+        // someone clicks Deny the cookies already exist. An update stops future
+        // writes and deletes nothing, which would make Deny cosmetic for most
+        // of the traffic.
+        if (value === 'denied') forget();
         bar.hidden = true;
       }
+
+      function forget() {
+        var host = location.hostname;
+        var domains = ['', host, '.' + host];
+        var parts = host.split('.');
+        if (parts.length > 2) domains.push('.' + parts.slice(-2).join('.'));
+        document.cookie.split(';').forEach(function (raw) {
+          var name = raw.split('=')[0].trim();
+          if (!/^(_ga|_gid|_gcl|_gac)/.test(name)) return;
+          domains.forEach(function (d) {
+            document.cookie =
+              name + '=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/' + (d ? '; domain=' + d : '');
+          });
+        });
+      }
+
+      // The banner is the only consent control, so once a choice is stored
+      // there is no way back to it. Anything carrying data-consent-reopen
+      // brings it up again, which is what /privacy/ links to.
+      document.addEventListener('click', function (event) {
+        var trigger = event.target && event.target.closest
+          ? event.target.closest('[data-consent-reopen]')
+          : null;
+        if (!trigger) return;
+        event.preventDefault();
+        bar.hidden = false;
+        var first = bar.querySelector('button');
+        if (first) first.focus();
+      });
       var allow = document.getElementById('consent-allow');
       var deny = document.getElementById('consent-deny');
       if (allow) allow.addEventListener('click', function () { choose('granted'); });
@@ -189,7 +239,10 @@ const config = JSON.stringify({
             slot: slot
           });
           var cfg = ${JSON.stringify({ adsId: GOOGLE_TAG.adsConversionId, adsLabel: GOOGLE_TAG.adsConversionLabel })};
-          if (cfg.adsId && cfg.adsLabel) {
+          // Only an app listing counts. /vendors/ is the company page, and
+          // reporting that as a conversion teaches smart bidding to buy the
+          // clicks of people who were reading about us rather than installing.
+          if (cfg.adsId && cfg.adsLabel && href.indexOf('/apps/') !== -1) {
             window.gtag('event', 'conversion', { send_to: cfg.adsId + '/' + cfg.adsLabel });
           }
         } else if (href.indexOf('servicedesk/customer/portal') !== -1) {

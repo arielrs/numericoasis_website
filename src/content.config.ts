@@ -257,6 +257,39 @@ const apps = defineCollection({
  * translation commitment. check-content.mjs only enforces parity for those two
  * collections, so nothing here fights the build.
  */
+/**
+ * Commercial landing pages.
+ *
+ * Not blog posts: a post is dated, sits in a feed, and carries a byline. These
+ * are undated pages that receive paid traffic and answer one buying question,
+ * so they need a top level URL rather than a /blog/ one, and they must not turn
+ * up in the RSS feed or the post listing.
+ *
+ * Not app pages either: an app page describes a product, and one of these can
+ * describe a use case that spans products or none.
+ *
+ * Trilingual and enforced as such by scripts/check-content.mjs, because the
+ * whole point of the format is that it takes paid traffic in three markets.
+ */
+const landings = defineCollection({
+  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/landings' }),
+  schema: z.object({
+    title: z.string(),
+    /** The SERP title, capped. Same reasoning as the blog collection. */
+    metaTitle: z.string().max(60).optional(),
+    description: z.string(),
+    metaDescription: z.string().max(160).optional(),
+    /** Feeds the h1 area. Short, and it is the promise the ad made. */
+    eyebrow: z.string().optional(),
+    /** The app this page sells, joined to the apps collection by translationKey. */
+    app: z.string(),
+    updatedDate: z.coerce.date().optional(),
+    draft: z.boolean().default(false),
+    lang: langEnum,
+    translationKey: z.string(),
+  }),
+});
+
 const docs = defineCollection({
   loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/docs' }),
   schema: z.object({
@@ -293,4 +326,4 @@ const docs = defineCollection({
   }),
 });
 
-export const collections = { blog, apps, docs };
+export const collections = { blog, apps, docs, landings };

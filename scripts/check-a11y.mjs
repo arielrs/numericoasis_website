@@ -47,8 +47,18 @@ const PAGES = [
   '/documentation/legal/terms/',
   // A group index: new route shape, and the sidebar toggle is new markup.
   '/documentation/onbudget/',
-  // The privacy policy, and the page most likely to carry the consent banner
-  // while a reader is trying to read about the consent banner.
+  // The landings collection is a new route template, not a variation on an
+  // existing one, so both a default-locale and a prefixed-locale render.
+  '/jira-cost-tracking-without-timesheets/',
+  '/pt-BR/jira-cost-tracking-without-timesheets/',
+  // The new long-form posts carry comparison tables, which the migrated
+  // documentation did not have outside the docs section.
+  '/blog/how-to-choose-a-cost-tracking-app-for-jira/',
+  '/documentation/onbudget/what-onbudget-does-not-do/',
+  // The privacy policy. It carries the Manage cookies control, and under
+  // `npm run a11y:consent` it also carries the banner itself. Under a plain
+  // run the banner is not in the build at all, because no tag id is set: see
+  // scripts/a11y-consent.mjs.
   '/privacy/',
   '/pt-BR/privacy/',
   '/pt-BR/onbudget/',

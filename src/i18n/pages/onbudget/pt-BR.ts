@@ -3,18 +3,27 @@ import type { OnBudgetCopy } from './en';
 export const ptBR = {
   meta: {
     crumb: 'OnBudget',
-    title: 'OnBudget: orçamento e relatórios de custo no Jira',
+    title: 'Controle de custos e orçamento de projetos no Jira',
   },
   hero: {
-    eyebrow: 'App do Atlassian Marketplace para Jira Cloud',
-    headline: 'Orçamento e relatórios de custo no Jira, para finanças e PMO.',
-    lede: 'O OnBudget transforma em dinheiro o trabalho que seu time já registra no Jira. Antes de qualquer coisa ele analisa uma amostra dos seus dados e mostra que parcela dos work items carrega cada sinal de custo, para você saber o que os seus dados sustentam antes de montar um orçamento em cima deles.',
+    eyebrow: 'App do Atlassian Marketplace para Jira e Jira Service Management Cloud',
+    headline: 'Controle de orçamento e custos de projetos no Jira.',
+    lede: 'O OnBudget transforma em dinheiro o trabalho que seu time já registra no Jira. Antes de qualquer coisa ele analisa uma amostra dos seus dados e mostra que parcela dos itens de trabalho carrega cada sinal de custo, para você saber o que os seus dados sustentam antes de montar um orçamento em cima deles.',
     ctaSecondary: 'Veja como um relatório é montado',
+  },
+  fit: {
+    eyebrow: 'Requisitos e compatibilidade',
+    headline: 'Funciona no seu Jira?',
+    items: [
+      'Jira Cloud e Jira Service Management. Instalado pelo Atlassian Marketplace por um admin do site Jira.',
+      'Só Cloud. Não existe versão Data Center ou Server, porque o app é construído em Atlassian Forge.',
+      'Nada para configurar no Jira antes. Sem novos custom fields, sem mexer em screen schemes, sem editar workflows.',
+    ],
   },
   problem: { eyebrow: 'O problema' },
   steps: {
     eyebrow: 'Como funciona',
-    headline: 'Quatro passos de um espaço do Jira até um orçamento que você consegue defender.',
+    headline: 'Quatro passos de um projeto do Jira até um orçamento que você consegue defender.',
   },
   methods: {
     eyebrow: 'Custeio',
@@ -29,7 +38,7 @@ export const ptBR = {
   sharing: {
     eyebrow: 'Compartilhamento',
     headline: 'Um relatório compartilhado respeita quem lê, não quem criou.',
-    body: 'Quando alguém abre um relatório que você compartilhou, ele é recalculado com as permissões do Jira dessa pessoa, então ninguém vê itens de trabalho que já não pudesse abrir no Jira. A maioria das ferramentas de relatório entrega uma fotografia do que o autor conseguia ver. E se quem está lendo não tem acesso a parte do escopo, o relatório avisa na própria página, em vez de mostrar um número menor sem explicar por quê.',
+    body: 'Quando alguém abre um relatório que você compartilhou, ele é recalculado com as permissões do Jira dessa pessoa, então ninguém vê itens de trabalho que já não pudesse abrir no Jira. E se quem está lendo não tem acesso a parte do escopo, o relatório avisa na própria página, em vez de mostrar um número menor sem explicar por quê.',
   },
   scale: {
     eyebrow: 'Em escala',

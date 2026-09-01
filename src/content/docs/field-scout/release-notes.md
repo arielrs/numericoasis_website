@@ -23,12 +23,12 @@ Initial public release of Field Scout for Jira Cloud.
 - **Field Scope:** See whether each field applies to All Spaces, Team-Managed, or Company-Managed projects.
 - **System Fields:** Built-in Jira fields are included for a complete picture of your field landscape.
 - **Team-Managed Fields:** Discover fields that only exist in team-managed projects, previously invisible in the global field list.
-- **Origin Tracking:** Identifies the product or plugin that created each field, Jira Core, Jira Software, JSM, Advanced Roadmaps, ScriptRunner, Tempo, and more.
+- **Origin Tracking:** Identifies the product or app that created each field, Jira Core, Jira Software, JSM, Advanced Roadmaps, ScriptRunner, Tempo, and more.
 
 ### Analytics & Insights
 
 - **Potential Duplicates:** Find fields with identical or similar names that may be candidates for consolidation. Filter by match type, field type, and toggle team-managed fields on or off.
-- **Fields by Origin:** Understand which products and plugins created your fields. View as a table, bar chart, or pie chart, with health scores per origin.
+- **Fields by Origin:** Understand which products and apps created your fields. View as a table, bar chart, or pie chart, with health scores per origin.
 - **Fields by Type:** See how your fields are distributed across data types. View as a table, bar chart, pie chart, or tag cloud.
 
 ### Fields per Project

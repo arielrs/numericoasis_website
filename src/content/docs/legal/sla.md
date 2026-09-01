@@ -8,7 +8,7 @@ sourcePageId: "492994563"
 sourceTitle: "Service Level Agreement (SLA)"
 ---
 
-This Service Level Agreement (SLA) defines the support commitments provided by **Numeric Oasis** for all apps published on the [Atlassian Marketplace](https://marketplace.atlassian.com/vendors/1227498). This SLA applies to all customers using our products, including free and paid tiers.
+This Service Level Agreement (SLA) defines the support commitments provided by **Numeric Oasis** for all apps published on the [Atlassian Marketplace](https://marketplace.atlassian.com/vendors/1064627585/numeric-oasis?utm_source=numericoasis&utm_medium=site&utm_campaign=doc-legal&utm_content=doc-article). This SLA applies to all customers using our products, including free and paid tiers.
 
 ---
 
@@ -29,7 +29,7 @@ Support is provided during the following hours:
 | Detail | Value |
 | --- | --- |
 | Working Days | Monday to Friday |
-| Excludes | Weekends and public holidays (Brasil) |
+| Excludes | Weekends and public holidays (Brazil) |
 | Timezone | BRT (UTC-3) |
 
 ---

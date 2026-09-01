@@ -47,7 +47,7 @@ const frontmatterValue = (source, key) =>
     .replace(/^["']|["']$/g, '');
 
 // 1. Content-collection parity: every translationKey in every locale, exactly once.
-for (const collection of ['apps', 'blog']) {
+for (const collection of ['apps', 'blog', 'landings']) {
   const files = (await walk(join(ROOT, 'src/content', collection))).filter((f) => /\.mdx?$/.test(f));
   const seen = new Map();
 
@@ -132,6 +132,44 @@ for (const collection of ['apps', 'blog']) {
         if (lower.includes(phrase)) {
           errors.push(`${shown}:${i + 1}: defensive copy, "${phrase}"`);
         }
+      }
+    });
+  }
+}
+
+// 2b. Atlassian terminology.
+//
+// "plugin" and "add-on" are Server-era words Atlassian retired, and "JIRA" has
+// not been the product's capitalisation since 2011. They read as written by
+// someone who has not touched the platform recently, which is the opposite of
+// the impression a Marketplace vendor needs to make.
+//
+// Two migrated documentation pages carried "plugin" until the correction table
+// in scripts/confluence-export.mjs caught them. This is the guard that stops it
+// coming back on the next export, and it deliberately covers src/content/docs,
+// which the defensive-copy check above does not.
+{
+  const TERMS = [
+    { re: /\bplug-?ins?\b/i, say: 'plugin: Atlassian calls these apps' },
+    { re: /\badd-?ons?\b/i, say: 'add-on: Atlassian calls these apps' },
+    { re: /\bJIRA\b/, say: 'JIRA: the product is Jira' },
+  ];
+  const files = (await walk(join(ROOT, 'src'))).filter((f) => /\.(ts|astro|mdx?|md)$/.test(f));
+
+  for (const file of files) {
+    const shown = relative(ROOT, file);
+    if (!shown.startsWith(join('src', 'i18n')) &&
+        !shown.startsWith(join('src', 'content')) &&
+        !shown.startsWith(join('src', 'pages'))) continue;
+    // The poker timer is a separate, unrelated tool.
+    if (shown.startsWith(join('src', 'poker'))) continue;
+
+    const lines = (await readFile(file, 'utf8')).split('\n');
+    lines.forEach((line, i) => {
+      // A comment explaining the ban is not a violation of it.
+      if (/^\s*(\/\/|\*|<!--)/.test(line)) return;
+      for (const term of TERMS) {
+        if (term.re.test(line)) errors.push(`${shown}:${i + 1}: ${term.say}`);
       }
     });
   }

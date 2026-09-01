@@ -114,7 +114,7 @@ const linkClass =
       <p class="eyebrow">{t.elsewhere.label}</p>
       <ul class="mt-6 grid gap-4 sm:grid-cols-3">
         <li>
-          <a class={linkClass} href={SITE.marketplaceUrl} rel="noopener" target="_blank">
+          <a class={linkClass} href={outbound(SITE.marketplaceUrl, 'contact', 'footer-nav')} rel="noopener" target="_blank">
             {t.elsewhere.marketplace}
           </a>
         </li>

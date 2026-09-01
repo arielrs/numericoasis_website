@@ -1,0 +1,85 @@
+---
+lang: en
+translationKey: does-jira-have-budgeting
+title: "Does Jira have budgeting?"
+metaTitle: "Does Jira Have Budgeting? The Short Answer"
+description: "Jira Cloud has no budget, no rate and no currency. Atlassian documents exactly what you can configure, and none of it is money. Here is what Jira gives you that looks like budgeting, why the Friday spreadsheet fails, and what closing the gap takes."
+metaDescription: "No. Jira Cloud has no budget, rate or currency concept. What Atlassian's own docs list, what gets mistaken for budgeting, and how to close the gap."
+pubDate: 2026-09-01
+tags: ["jira-cost-management", "onbudget", "how-to"]
+author: team
+draft: false
+---
+No. Jira Cloud has no budget, no rate and no currency concept. It records work, not money. Nothing in Jira knows what an hour, a story point or a closed work item costs, and no built-in report compares spend against a budget.
+
+That is the whole answer. The rest is the evidence, and what closing the gap takes.
+
+**Key takeaways**
+
+- Atlassian's own time tracking configuration page documents working hours, working days, display format, default unit and comment copying. Not one setting on it is financial.
+- A number field can be formatted as currency. Formatting is not budgeting: the value sits on one work item, and nothing sums it against a target.
+- Teams that use neither story points nor timesheets are invisible to most cost workarounds, the failure nobody mentions.
+
+## How do we know Jira has no budgeting?
+
+Because Atlassian documents exactly what you are allowed to configure, and none of it involves money.
+
+Time tracking sits closest to costing, so it is the fair place to look. Atlassian's [Configure time tracking](https://support.atlassian.com/jira-cloud-administration/docs/configure-time-tracking/) page lists what an administrator can set. Checked on 1 September 2026, that list is:
+
+- Working hours per day
+- Working days per week
+- Time display format
+- Default unit
+- Copying of comments to work description
+
+Hours, days, a display format, a default unit. That is the whole surface. No rate, no currency, no cost per hour, no budget ceiling, no threshold. Jira is precise about how it counts time and silent about what that time is worth.
+
+## What does Jira give you that looks like budgeting?
+
+Four things. Each is useful, none of them is money.
+
+**Estimates.** Story points and time estimates tell you how big the team thinks the work is. That is a good planning signal, denominated in points or hours, never in pounds. Jira never asks what a point is worth.
+
+**Time tracking.** Worklogs record who logged how long against which work item. This is the raw material for costing, and the reason people assume Jira must already do it. It stops at duration. Two people log an hour each and Jira treats those hours as identical, because it holds no rate card to tell them apart.
+
+**Numeric custom fields.** You can add a number field to a work item and type a figure into it.
+
+**The epic burndown.** Atlassian's documentation says the report "shows data based on the estimation statistic that your board is using", so points, time estimates or a count of work items. Glance at it and it looks like a budget burning down. It is scope burning down, and the two diverge the moment your spend rate changes but your scope does not.
+
+## Can a currency custom field solve it?
+
+Partly. It is worth being precise about where it stops.
+
+Jira Cloud has no Currency field type. It has a number field, which Atlassian describes as allowing people "to provide numerical information as free-form text", with "three formatting options: number, currency, percentage". So you can put 12,500 on a work item and have Jira render it with a currency symbol.
+
+That is somewhere to record a figure someone worked out elsewhere. It is not budgeting. The number is typed by hand, so it is only as current as the last person who remembered it. It is stored per work item, with nothing that adds it up across an epic and compares the total to a target. It carries no threshold, so nothing turns amber at 80 percent. And it is a figure rather than a derivation: it cannot be recomputed, so when the work changes it quietly stops being true.
+
+A currency-formatted field is a note. Budgeting is a calculation.
+
+## Why does the Friday spreadsheet stop working?
+
+Because it is a snapshot of a moving thing, and because of who it leaves out.
+
+Someone filters a set of work items, pastes them into a sheet, multiplies a column by a rate, and sends the total. By Monday the sprint has moved and the total is wrong. It is also unauditable: the export is gone and the multiplication lived in a cell nobody else can see.
+
+The failure that gets less attention is coverage. A spreadsheet built on story points contains only teams that estimate. One built on worklogs contains only teams that log time. Marketing, support and operations frequently do neither, so they do not appear in that spreadsheet as a small number. They do not appear at all, and a budget review that quietly excludes several departments is worse than none, because it looks complete.
+
+## Three questions Jira cannot answer on its own
+
+- Are we over budget on this epic, right now?
+- What did that release actually cost us?
+- At this burn rate, when do we run out?
+
+Each needs something Jira does not hold: a budget to compare against, a price for the work, and a projection forward.
+
+## What does closing the gap actually take?
+
+Five pieces.
+
+A **budget**, with a currency and a written scope, so the total can be defended when it is challenged. A **costing signal**: something your teams already produce (points, logged time, a numeric field, or a count of work items closed or sitting in a status) and a price for it. **Thresholds** agreed in advance, because a threshold set after you see the number is a rationalisation. A **forecast**, so the question becomes what happens if this run rate holds. And a **route back to the work items**, because the first response to any cost figure is "which work made up that number".
+
+None of that asks your teams to change how they work. It asks you to price what they already record.
+
+## How OnBudget does it
+
+[OnBudget](/onbudget/) is a Jira Cloud app that adds those five pieces. You give a report a scope, a budget and a currency, then pick one of five costing methods: story points, any numeric field, worklogs priced by rate card or flat rate, work items closed or resolved, or work items sitting in chosen statuses. Before you commit, it samples your data and shows what share of your work items actually carries each signal, so you find out whether a method fits before you build the report. Thresholds default to 80 and 100 percent of budget consumed and are configurable. The forecast is a linear run rate from the spend so far. It is read only, adds no custom fields, and is not a time tracker: it prices worklogs that are already there rather than recording time. It does not convert between currencies, and it runs on Forge, so there is no Data Center or Server build. If your teams log no time at all, [costing Jira work without timesheets](/jira-cost-tracking-without-timesheets/) covers the methods that still apply.

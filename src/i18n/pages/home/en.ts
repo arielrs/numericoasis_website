@@ -22,7 +22,7 @@ export const en = {
   proof: {
     label: 'Built for trust',
     items: [
-      'Runs on Atlassian',
+      'Built on Atlassian Forge',
       'Your data never leaves Atlassian',
       'No third-party server to review',
       'For Jira and Confluence Cloud',

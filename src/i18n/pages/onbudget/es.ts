@@ -3,18 +3,27 @@ import type { OnBudgetCopy } from './en';
 export const es = {
   meta: {
     crumb: 'OnBudget',
-    title: 'OnBudget: presupuesto e informes de costo en Jira',
+    title: 'Control de costes y presupuestos de proyectos en Jira',
   },
   hero: {
-    eyebrow: 'App del Atlassian Marketplace para Jira Cloud',
-    headline: 'Presupuesto e informes de costo en Jira, para finanzas y PMO.',
+    eyebrow: 'App del Atlassian Marketplace para Jira y Jira Service Management Cloud',
+    headline: 'Control de presupuesto y costes de proyectos en Jira.',
     lede: 'OnBudget convierte en dinero el trabajo que tu equipo ya registra en Jira. Antes que nada analiza una muestra de tus datos y te dice qué parte de tus elementos de trabajo lleva cada señal de costo, para que sepas qué sostienen realmente tus datos antes de armar un presupuesto sobre ellos.',
     ctaSecondary: 'Mira cómo se construye un informe',
+  },
+  fit: {
+    eyebrow: 'Requisitos y compatibilidad',
+    headline: '¿Funciona en tu Jira?',
+    items: [
+      'Jira Cloud y Jira Service Management. Se instala desde el Atlassian Marketplace por un admin del sitio de Jira.',
+      'Solo Cloud. No hay versión Data Center ni Server, porque la app está construida en Atlassian Forge.',
+      'Nada que configurar en Jira antes. Sin nuevos custom fields, sin tocar screen schemes, sin editar workflows.',
+    ],
   },
   problem: { eyebrow: 'El problema' },
   steps: {
     eyebrow: 'Cómo funciona',
-    headline: 'Cuatro pasos desde un espacio de Jira hasta un presupuesto que puedes defender.',
+    headline: 'Cuatro pasos desde un proyecto de Jira hasta un presupuesto que puedes defender.',
   },
   methods: {
     eyebrow: 'Costeo',
@@ -29,7 +38,7 @@ export const es = {
   sharing: {
     eyebrow: 'Compartir',
     headline: 'Un informe compartido respeta a quien lo lee, no a quien lo creó.',
-    body: 'Cuando alguien abre un informe que compartiste, se recalcula con sus propios permisos de Jira, así que nadie ve elementos de trabajo que no pudiera abrir ya en Jira. La mayoría de las herramientas de informes entrega una fotografía de lo que veía el autor. Y si quien lo lee no tiene acceso a parte del alcance, el informe lo dice en la propia página, en lugar de mostrar una cifra más pequeña sin explicar por qué.',
+    body: 'Cuando alguien abre un informe que compartiste, se recalcula con sus propios permisos de Jira, así que nadie ve elementos de trabajo que no pudiera abrir ya en Jira. Y si quien lo lee no tiene acceso a parte del alcance, el informe lo dice en la propia página, en lugar de mostrar una cifra más pequeña sin explicar por qué.',
   },
   scale: {
     eyebrow: 'A escala',

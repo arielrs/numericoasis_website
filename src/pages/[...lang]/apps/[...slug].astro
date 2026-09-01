@@ -140,7 +140,7 @@ const faqNode: JsonLdNode | undefined =
 
 <BaseLayout
   navCta={d.marketplaceUrl
-    ? { href: outbound(d.marketplaceUrl, slug, 'hero'), label: chromeCta, external: true }
+    ? { href: outbound(d.marketplaceUrl, slug, 'nav'), label: chromeCta, external: true }
     : undefined}
   title={d.metaTitle ?? d.name}
   description={d.description}

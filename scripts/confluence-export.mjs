@@ -336,6 +336,52 @@ const CORRECTIONS = [
     from: /Company-managed projects share the 700-field limit per field configuration, see which projects are approaching it\./g,
     to: 'Company-managed projects share a field configuration, and the 700 field limit applies per space, so see which are approaching it.',
   },
+  // The SLA cites a vendor id that is not ours. Hand-fixed once, then reverted
+  // by the next export, which is the whole argument for this table existing:
+  // anything corrected in the markdown instead of here lives until someone
+  // re-runs the script, and nobody remembers that it was corrected.
+  {
+    expect: 1,
+    from: /https:\/\/marketplace\.atlassian\.com\/vendors\/1227498/g,
+    to: 'https://marketplace.atlassian.com/vendors/1064627585/numeric-oasis?utm_source=numericoasis&utm_medium=site&utm_campaign=doc-legal&utm_content=doc-article',
+  },
+  {
+    expect: 1,
+    from: /Weekends and public holidays \(Brasil\)/g,
+    to: 'Weekends and public holidays (Brazil)',
+  },
+  // "plugin" is Server-era vocabulary Atlassian retired years ago, and the
+  // house style bans it. The Confluence source predates that rule.
+  {
+    expect: 1,
+    from: /fields accumulate from plugins, migrations, and changing workflows/g,
+    to: 'fields accumulate from apps, migrations, and changing workflows',
+  },
+  {
+    expect: 1,
+    from: /and other plugins, even after the plugin is removed/g,
+    to: 'and other apps, even after the app is removed',
+  },
+  {
+    expect: 1,
+    from: /"Old fields from removed plugins are cluttering our instance"/g,
+    to: '"Old fields from removed apps are cluttering our instance"',
+  },
+  {
+    expect: 2,
+    from: /which products and plugins created your fields/g,
+    to: 'which products and apps created your fields',
+  },
+  {
+    expect: 1,
+    from: /which product or plugin created each field/g,
+    to: 'which product or app created each field',
+  },
+  {
+    expect: 1,
+    from: /the product or plugin that created each field/g,
+    to: 'the product or app that created each field',
+  },
 ];
 
 function correct(md, tally) {

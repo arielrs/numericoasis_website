@@ -20,6 +20,7 @@
 type Slot =
   | 'app-card'
   | 'hero'
+  | 'nav'
   | 'sticky'
   | 'footer-cta'
   | 'footer-nav'

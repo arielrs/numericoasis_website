@@ -22,14 +22,14 @@ export const en = {
     crumb: 'Privacy',
     title: 'Privacy policy for this website',
     metaDescription:
-      'What numericoasis.com collects, what it does not, and who processes it. Cookieless analytics by default, advertising measurement only with consent.',
+      'What numericoasis.com collects, what it does not, and who processes it. Cookieless analytics always. Advertising measurement you can turn off, and that never starts without consent where consent is required.',
     description:
-      'What numericoasis.com collects, what it does not collect, and which processors are involved. Analytics is cookieless by default. Advertising measurement runs only with your consent. Each app has its own separate privacy policy.',
+      'What numericoasis.com collects, what it does not collect, and which processors are involved. Analytics is cookieless and always on. Advertising measurement is yours to switch off, and it never starts without consent where the law requires consent first. Each app has its own separate privacy policy.',
   },
   hero: {
     eyebrow: 'Privacy',
     headline: 'What this website collects, and what it does not.',
-    lede: 'Short version: no account, no form, no profile. Cookieless analytics always, advertising measurement only if you allow it.',
+    lede: 'Short version: no account, no form, no profile. Cookieless analytics always, and advertising measurement you control.',
   },
   updated: 'Last updated',
   updatedDate: '2026-09-01',
@@ -49,8 +49,8 @@ export const en = {
       body: 'We use Cloudflare Web Analytics on every page. It sets no cookies, stores no identifier on your device and does not follow you between sites. It reports aggregate counts: which pages were viewed, roughly where visits came from, and how fast the pages loaded. We cannot pick an individual out of it, and neither can Cloudflare on our behalf.',
     },
     {
-      heading: 'Advertising measurement, only with your consent',
-      body: "When we run ads we need to know which of them lead somewhere. If you allow it, we load the Google tag, which sets cookies and reports to Google Analytics and Google Ads that a visit arrived and that someone clicked through to one of our Atlassian Marketplace listings. If you decline, or if you are in a region where consent is required and you ignore the banner, the tag runs without storage: it can count that something happened without keeping anything on your device or identifying you. You can change your mind at any time by clearing this site's data in your browser, which removes the stored choice and brings the banner back.",
+      heading: 'Advertising measurement, and the choice you get',
+      body: "When we run ads we need to know which of them lead somewhere. If you allow it, we load the Google tag, which sets cookies and reports to Google Analytics and Google Ads that a visit arrived and that someone clicked through to one of our Atlassian Marketplace listings. Where the law requires consent first, which for us means the EEA, the United Kingdom, Switzerland and Brazil, nothing is stored until you say yes: ignore the banner there and the tag runs without storage, counting that something happened without keeping anything on your device or identifying you. Everywhere else it starts on and the banner turns it off, so if you choose No thanks we both stop measuring and delete the Google cookies already set. You can reopen that choice at any time from the button below."
     },
     {
       heading: 'What we can and cannot see about an install',
@@ -66,7 +66,7 @@ export const en = {
     },
     {
       heading: 'Who processes data for us',
-      body: 'Cloudflare, for analytics and delivery. GitHub, for hosting. Google, for advertising measurement, and only with your consent. Atlassian, for the support portal and the Marketplace. We do not sell data, and there is no advertising network on this site beyond the Google tag described above.',
+      body: 'Cloudflare, for analytics and delivery. GitHub, for hosting. Google, for advertising measurement, which you can switch off. Atlassian, for the support portal and the Marketplace. We do not sell data, and there is no advertising network on this site beyond the Google tag described above.',
     },
     {
       heading: 'Your rights',
@@ -81,6 +81,11 @@ export const en = {
       body: 'When this policy changes we change the date at the top of the page. If a change is significant, for example if we start collecting something new, we will say so on the page rather than quietly editing it.',
     },
   ],
+  manage: {
+    heading: 'Change your mind',
+    body: 'Reopen the cookie banner and choose again. Choosing No thanks also deletes the Google cookies already set.',
+    cta: 'Manage cookies',
+  },
   contact: {
     heading: 'Questions about any of this',
     body: 'Write to us. A privacy question goes to a person, not a queue.',

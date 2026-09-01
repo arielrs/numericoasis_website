@@ -5,14 +5,14 @@ export const ptBR = {
     crumb: 'Privacidade',
     title: 'Política de privacidade deste site',
     metaDescription:
-      'O que o numericoasis.com coleta, o que não coleta e quem processa. Analytics sem cookies por padrão, medição de anúncios só com o seu consentimento.',
+      'O que o numericoasis.com coleta, o que não coleta e quem processa. Analytics sem cookies sempre. A medição de anúncios você desliga quando quiser, e ela nunca começa sem consentimento onde consentimento é obrigatório.',
     description:
-      'O que o numericoasis.com coleta, o que não coleta e quais processadores estão envolvidos. O analytics é sem cookies por padrão. A medição de anúncios só roda com o seu consentimento. Cada app tem a sua própria política de privacidade, separada desta.',
+      'O que o numericoasis.com coleta, o que não coleta e quais processadores estão envolvidos. O analytics é sem cookies e está sempre ligado. A medição de anúncios é sua para desligar, e ela nunca começa sem consentimento onde a lei exige consentimento primeiro. Cada app tem a sua própria política de privacidade, separada desta.',
   },
   hero: {
     eyebrow: 'Privacidade',
     headline: 'O que este site coleta, e o que não coleta.',
-    lede: 'Resumo: nenhuma conta, nenhum formulário, nenhum perfil. Analytics sem cookies sempre, medição de anúncios só se você permitir.',
+    lede: 'Resumo: nenhuma conta, nenhum formulário, nenhum perfil. Analytics sem cookies sempre, e medição de anúncios sob o seu controle.',
   },
   updated: 'Última atualização',
   updatedDate: '2026-09-01',
@@ -32,8 +32,8 @@ export const ptBR = {
       body: 'Usamos o Cloudflare Web Analytics em todas as páginas. Ele não grava cookies, não guarda identificador nenhum no seu aparelho e não segue você entre sites. Ele reporta contagens agregadas: quais páginas foram vistas, aproximadamente de onde vieram os acessos e quão rápido as páginas carregaram. Não conseguimos identificar ninguém a partir disso, e a Cloudflare também não faria isso por nós.',
     },
     {
-      heading: 'Medição de anúncios, só com o seu consentimento',
-      body: 'Quando anunciamos, precisamos saber quais anúncios levam a algum lugar. Se você permitir, carregamos a tag do Google, que grava cookies e informa ao Google Analytics e ao Google Ads que uma visita chegou e que alguém clicou para uma das nossas listagens no Atlassian Marketplace. Se você recusar, ou se estiver em uma região onde o consentimento é obrigatório e ignorar o aviso, a tag roda sem armazenamento: ela consegue contar que algo aconteceu sem guardar nada no seu aparelho e sem identificar você. Você pode mudar de ideia quando quiser limpando os dados deste site no navegador, o que apaga a escolha guardada e traz o aviso de volta.',
+      heading: 'Medição de anúncios, e a escolha que você tem',
+      body: 'Quando anunciamos, precisamos saber quais anúncios levam a algum lugar. Se você permitir, carregamos a tag do Google, que grava cookies e informa ao Google Analytics e ao Google Ads que uma visita chegou e que alguém clicou para uma das nossas listagens no Atlassian Marketplace. Onde a lei exige consentimento antes, o que para nós significa o Espaço Econômico Europeu, o Reino Unido, a Suíça e o Brasil, nada é guardado até você dizer sim: se ignorar o aviso ali, a tag roda sem armazenamento, contando que algo aconteceu sem guardar nada no seu aparelho e sem identificar você. Nos outros lugares ela começa ligada e o aviso a desliga, então se você escolher Agora não, paramos de medir e apagamos os cookies do Google já gravados. Você pode reabrir essa escolha a qualquer momento no botão abaixo.',
     },
     {
       heading: 'O que vemos e o que não vemos sobre uma instalação',
@@ -49,7 +49,7 @@ export const ptBR = {
     },
     {
       heading: 'Quem processa dados para nós',
-      body: 'Cloudflare, para analytics e entrega. GitHub, para hospedagem. Google, para medição de anúncios, e só com o seu consentimento. Atlassian, para o portal de suporte e o Marketplace. Não vendemos dados, e não há nenhuma rede de publicidade neste site além da tag do Google descrita acima.',
+      body: 'Cloudflare, para analytics e entrega. GitHub, para hospedagem. Google, para medição de anúncios, que você pode desligar. Atlassian, para o portal de suporte e o Marketplace. Não vendemos dados, e não há nenhuma rede de publicidade neste site além da tag do Google descrita acima.',
     },
     {
       heading: 'Os seus direitos',
@@ -64,6 +64,11 @@ export const ptBR = {
       body: 'Quando esta política mudar, mudamos a data no topo da página. Se a mudança for relevante, por exemplo se passarmos a coletar algo novo, vamos dizer isso na página em vez de editar em silêncio.',
     },
   ],
+  manage: {
+    heading: 'Mudou de ideia',
+    body: 'Reabra o aviso de cookies e escolha de novo. Escolher Agora não também apaga os cookies do Google já gravados.',
+    cta: 'Gerenciar cookies',
+  },
   contact: {
     heading: 'Dúvidas sobre qualquer um destes pontos',
     body: 'Escreva para a gente. Uma pergunta sobre privacidade vai para uma pessoa, não para uma fila.',

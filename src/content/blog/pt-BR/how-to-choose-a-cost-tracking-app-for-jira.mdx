@@ -1,0 +1,103 @@
+---
+lang: pt-BR
+translationKey: how-to-choose-a-cost-tracking-app-for-jira
+title: "Como escolher um app de controle de custos para Jira"
+metaTitle: "Escolher app de controle de custos no Jira"
+description: "Um guia de compra escrito pela equipe que desenvolve o OnBudget. Seis critérios formulados como perguntas que um comprador faria, uma tabela que compara cinco abordagens em vez de cinco produtos, e um relato direto de onde o OnBudget se encaixa e onde não se encaixa."
+metaDescription: "Seis critérios para escolher um app de controle de custos no Jira: o que sua equipe registra, moeda, permissões, onde ficam os dados e quantos apps licenciar."
+pubDate: 2026-09-01
+tags: ["jira-cost-management", "onbudget", "marketplace"]
+author: team
+draft: false
+---
+*O que separa uma ferramenta de controle de custos no Jira de outra não é a quantidade de gráficos que ela desenha. É qual sinal ela consegue transformar em dinheiro.*
+
+Antes de mais nada: nós fazemos o [OnBudget](/pt-BR/onbudget/), um app do Jira Cloud para controle de orçamento e relatórios de custos. Você está lendo um guia de compra escrito por um fornecedor, então avalie o texto com isso em mente. Os critérios abaixo se aplicam a todas as opções da sua lista, inclusive à nossa, e onde o OnBudget não atende a um deles isso está dito com as mesmas palavras que todo o resto.
+
+Toda ferramenta dessa categoria termina em gráficos, então toda demonstração se parece com a anterior. O que a demonstração não mostra é justamente o que decide se a ferramenta vai funcionar: qual quantidade dos seus dados no Jira ela consegue precificar, e se as suas equipes já produzem essa quantidade. Uma ferramenta que precifica tempo registrado não serve para uma equipe de marketing que não registra tempo, e uma que precifica story points não serve para um service desk que não estima. Os gráficos são intercambiáveis. O sinal não é.
+
+São seis perguntas, e nenhuma delas precisa do nome de um produto para ser respondida.
+
+## O que a sua equipe já registra?
+
+Comece por aqui. Essa pergunta elimina mais opções do que as outras cinco somadas.
+
+O Jira já guarda várias quantidades capazes de carregar um preço. Story points em um item de trabalho. Tempo em worklogs. Qualquer custom field numérico que alguém já preenche, sejam licenças, assentos ou unidades cotadas. E a contagem dos próprios itens de trabalho, concluídos ou parados em um status escolhido. Multiplique uma delas por uma taxa e você tem um custo.
+
+A pergunta não é qual é a mais rigorosa, e sim qual delas as suas equipes já produzem hoje, sem nova disciplina e sem preenchimento retroativo. Vá olhar antes de montar a lista de candidatos: abra um filtro no espaço que você mais quer custear, adicione a coluna de estimativa e conte os campos em branco.
+
+Depois pergunte a cada fornecedor se a ferramenta informa qual percentual dos seus itens de trabalho carrega o sinal antes de você montar o relatório ou só depois. Descobrir que um método cobre um terço dos seus dados é útil no primeiro dia e irritante na terceira semana.
+
+## Você precisa registrar tempo ou apenas precificar o tempo já registrado?
+
+São dois produtos diferentes, e costumam ser comprados como se fossem um só.
+
+Registrar tempo significa dar às pessoas um lugar para lançar horas, mais os lembretes, as aprovações e as correções que vêm junto. O [Tempo Timesheets](https://www.tempo.io/products/timesheets) é um exemplo conhecido, e a própria página dele descreve esse trabalho sem rodeios: worklogs que tornam "recording time spent on tasks effortless" e registro automático de tempo que "eliminates manual entry". Precificar o tempo já registrado é o outro trabalho: ler os worklogs que existem, multiplicar por uma taxa e não ter opinião alguma sobre como aquele tempo foi parar ali.
+
+Três casos. Se as suas equipes já lançam tempo no Jira, ou por meio de uma ferramenta que grava worklogs no Jira, você precisa de algo que precifique o que já está lá. Se elas não lançam tempo mas realmente deveriam lançar, compre registro de tempo e reserve orçamento para o trabalho de adoção junto com a licença. Se elas não lançam e não vão passar a lançar, pare de olhar para ferramentas baseadas em tempo e custeie outro sinal.
+
+A falha mais comum é o segundo caso se passando pelo primeiro: um relatório de custos construído sobre worklogs que metade da equipe preenche entrega um número que parece completo e não é.
+
+## Uma moeda por orçamento ou conversão entre moedas?
+
+Responda cedo. Essa pergunta divide o mercado e é fácil de responder.
+
+Se cada orçamento vive em uma única moeda, digamos BRL, a conversão é um recurso que você nunca vai abrir. Se o gasto chega em várias moedas e precisa ser consolidado em uma só, você precisa dela, e precisa interrogá-la: qual taxa, de qual fonte, em qual data, e um relatório histórico muda quando essa taxa se move?
+
+Algumas ferramentas convertem. Outras deliberadamente não convertem, pelo argumento de que uma moeda declarada é mais defensável do que uma taxa que ninguém escolheu. As duas posições são honestas. Não saber qual delas você comprou não é, e uma ferramenta que converte em silêncio vai perder a primeira discussão que tiver com o seu parceiro de finanças.
+
+## Quem lê o relatório e que acesso essa pessoa tem ao Jira?
+
+Quem pergunta quanto custou um epic frequentemente não é quem consegue abrir esse epic. Parceiros de finanças, patrocinadores e diretores de área costumam ter acesso limitado ao Jira, ou nenhum.
+
+Há dois mecanismos em circulação. Um snapshot congela os números no momento do compartilhamento, e qualquer pessoa com o link vê aqueles números. A alternativa regera o relatório sob as permissões do próprio leitor no Jira, de modo que ele vê custos apenas do trabalho que já poderia abrir no Jira.
+
+Snapshots são convenientes e vazam. A regeração não vaza, ao custo de leitores diferentes verem totais diferentes. Por isso a pergunta seguinte importa mais do que a primeira: o que acontece quando um leitor não enxerga parte do escopo? Descartar esses itens de trabalho em silêncio produz um total menor sem nenhuma explicação junto. O comportamento a procurar é um aviso no próprio relatório.
+
+## Os dados saem do seu ambiente Atlassian?
+
+Algumas ferramentas rodam inteiramente na infraestrutura da própria Atlassian. Outras copiam os dados do Jira para os sistemas do fornecedor e trabalham sobre eles lá. As duas são escolhas de engenharia legítimas, e uma camada de analytics normalmente não consegue fazer o seu trabalho sem uma cópia. O [eazyBI](https://eazybi.com/), um produto de relatórios bastante usado no ecossistema Atlassian, descreve o próprio modelo nesses termos: "Import your data from popular web applications, databases, or files."
+
+Se isso importa depende da sua organização. Sob um compromisso de residência de dados, ou onde a revisão de segurança é o gargalo da compra, importa muito. A Atlassian tem um nome para o primeiro formato: o programa [Runs on Atlassian](https://developer.atlassian.com/platform/marketplace/runs-on-atlassian/), cujos requisitos incluem que "Apps exclusively use Atlassian-hosted compute and storage" e que "Customers can control external data egress (for example, analytics and logs) via admin controls".
+
+Duas verificações relacionadas: o que a ferramenta armazena e onde a exportação é gerada, no seu navegador ou em um servidor.
+
+## Quantos apps você precisa licenciar para ter o quadro completo?
+
+Os compradores chegam a este critério por último e se arrependem de não ter chegado primeiro. Ele tem duas metades.
+
+A primeira é a contagem. Alguns quadros completos são montados a partir de mais de um produto, e fornecedores com uma suíte costumam ser francos sobre isso nas próprias páginas. A página do Timesheets da Tempo, citada acima, diz que "Timesheets integrates with other Tempo products to deliver powerful reporting features, across Jira programs, projects, and portfolios". Essa pode ser exatamente a arquitetura que você quer, e uma suíte que você já possui é um bom motivo para permanecer dentro dela. Só conte as peças antes de comparar.
+
+A segunda metade é a configuração, e ela aparece como atraso, não como custo. O que precisa mudar no Jira antes de a ferramenta produzir o primeiro número? Novos custom fields significam um contexto de campo, um screen scheme e uma conversa com quem cuida deles. Alterações de workflow significam uma janela de mudança. Uma camada de analytics significa alguém que escreva as queries e alguém que as mantenha depois.
+
+Some o tempo decorrido entre a compra e o primeiro número defensável, não a quantidade de licenças. É esse total que decide se a ferramenta ainda estará em uso daqui a seis meses.
+
+## As abordagens, lado a lado
+
+As linhas são abordagens, não produtos, porque um mesmo produto pode ocupar mais de uma linha. Leia as células como perguntas a fazer a um fornecedor.
+
+| Abordagem | Sinal que ela precifica | Exige tempo registrado | Conversão de moeda | Acesso de quem lê | Local dos dados | Peças a licenciar |
+|---|---|---|---|---|---|---|
+| Produto de timesheet mais um produto financeiro | Horas lançadas, por função ou por pessoa | Sim, essa é a premissa | Pergunte ao fornecedor | Varia conforme o produto | Pergunte ao fornecedor | Conte a suíte, não o app |
+| Camada de analytics sobre dados de worklog | Qualquer coisa no modelo importado, se você souber escrever a query | Em geral sim, para custo | Você define na query | Governado pela ferramenta de analytics, não pelo Jira | Em geral uma cópia fora do Jira | Um, mais quem mantém as queries |
+| Lançamento manual de custos por categoria | O que uma pessoa digitar | Não | O que a planilha fizer | Qualquer pessoa com o arquivo | Onde quer que o arquivo esteja | Nenhum, e esse é o problema |
+| App nativo de orçamento no Jira | Story points, worklogs, um custom field numérico ou contagem de itens de trabalho | Não | Pergunte; alguns não convertem por decisão de projeto | Pode seguir as permissões do Jira | Pode permanecer dentro da Atlassian | Um |
+| PSA ou sistema contábil externo | Faturas, timesheets, lançamentos contábeis | Em geral sim | Sim, é central na categoria | Acesso ao financeiro, não ao Jira | Fora da Atlassian por definição | Um, mais a integração |
+
+## Onde o OnBudget se encaixa e onde não se encaixa
+
+O OnBudget é a quarta linha. Ele precifica um entre cinco sinais: story points por ponto, qualquer custom field numérico por unidade, worklogs por rate card ou taxa fixa, itens de trabalho fechados ou resolvidos por item, ou itens de trabalho parados em status escolhidos por item. Antes de você fixar um método, ele amostra os seus dados e mostra qual percentual dos seus itens de trabalho carrega aquele sinal, o que é o primeiro critério respondido antes de construir o relatório em vez de depois. O construtor tem quatro etapas e mostra uma prévia do relatório antes de salvar. Ele não adiciona custom fields, não altera telas e mantém escopos somente leitura, de modo que desinstalar apaga tudo o que ele guardava. Roda inteiramente no Forge, o que o torna elegível para o programa Runs on Atlassian.
+
+Agora os limites, nos mesmos termos diretos.
+
+Ele não é um registrador de tempo e não grava horas. Ele lê worklogs que já existem no Jira, inclusive worklogs gravados ali por outro app, e os precifica. Se a sua equipe não tem worklogs e você quer ter, esta é a compra errada para essa metade do problema.
+
+Ele não converte entre moedas. Uma moeda por relatório, entre dezoito moedas ISO. Isso é deliberado: uma taxa de câmbio inventada é pior do que taxa de câmbio nenhuma. Se o seu portfólio precisa de uma consolidação convertida, trate isso como uma lacuna real.
+
+Ele não faz faturamento nem controle de receita. Ele não grava absolutamente nada no Jira, o que é uma vantagem em termos de risco e uma limitação se você queria valores de custo armazenados de volta no item de trabalho. E é construído sobre o Forge, portanto é apenas Cloud. Não existe versão Data Center ou Server.
+
+## Por onde começar
+
+Não comece pela lista de candidatos. Descubra qual sinal os seus dados realmente carregam e compre contra essa resposta, não contra uma lista de recursos.
+
+Se uma abordagem nativa do Jira for onde você chegar, a [página do OnBudget](/pt-BR/onbudget/) cobre os cinco métodos e o construtor, a [documentação](/documentation/onbudget/) cobre rate cards, limites, previsão e o modelo de compartilhamento, e há um texto mais longo sobre [custear o trabalho no Jira sem timesheets](/pt-BR/jira-cost-tracking-without-timesheets/) se o segundo critério for onde está o seu problema. O teste gratuito e o restante dos detalhes estão na [página do Marketplace](https://marketplace.atlassian.com/apps/2136850574/onbudget-cost-tracking-budget-reports-for-jira?utm_source=numericoasis&utm_medium=site&utm_campaign=post-how-to-choose&utm_content=hero).

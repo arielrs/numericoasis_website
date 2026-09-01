@@ -10,14 +10,14 @@ export const en = {
   hero: {
     eyebrow: 'About Numeric Oasis',
     headline: 'The team behind the apps.',
-    lede: 'We build and support Forge apps for Jira and Confluence Cloud. Every one runs inside your own Atlassian environment, carries the Runs on Atlassian badge, and is supported by the people who wrote it.',
+    lede: 'We build and support Forge apps for Jira and Confluence Cloud. Every one runs inside your own Atlassian environment, entirely on Atlassian Forge, and is supported by the people who wrote it.',
   },
   standing: {
     eyebrow: 'Where we stand',
     headline: 'A partner in the Atlassian Marketplace.',
     paragraphs: [
       'Everything we publish goes through the Atlassian Marketplace, which means Atlassian handles licensing, billing and distribution, and you buy our apps the same way you buy any other. Our vendor page lists everything we have published.',
-      'Every app we ship carries the Runs on Atlassian badge, the Atlassian mark for apps whose code runs on Forge inside Atlassian infrastructure. There is no vendor server in the path and nothing of yours leaves your site.',
+      "Every app we ship runs entirely on Atlassian Forge, which is what makes it eligible for Atlassian's Runs on Atlassian program: the code executes inside Atlassian infrastructure. There is no vendor server in the path and nothing of yours leaves your site.",
     ],
     link: 'Our Marketplace vendor page',
   },
