@@ -3,11 +3,11 @@ lang: es
 translationKey: onbudget
 name: OnBudget
 listingName: "OnBudget - Cost Tracking & Budget Reports for Jira"
-descriptor: "Control de presupuesto e informes de costo para Jira"
-metaDescription: "Convierte el trabajo ya registrado en Jira en presupuestos, pronósticos e informes de costo. Presupuestado frente a real por proyecto, epic o equipo."
+descriptor: "Control de presupuesto e informes de coste para Jira"
+metaDescription: "Convierte el trabajo ya registrado en Jira en presupuestos, pronósticos e informes de coste. Presupuestado frente a real por proyecto, epic o equipo."
 version: "2.4.0"
 dateModified: 2026-08-19
-tagline: Control de presupuesto e informes de costo para Jira. Presupuestado frente a real, salud y pronóstico, a partir del trabajo que tu equipo ya registra.
+tagline: Control de presupuesto e informes de coste para Jira. Presupuestado frente a real, salud y pronóstico, a partir del trabajo que tu equipo ya registra.
 description: OnBudget es una app para Jira Cloud que convierte en dinero el trabajo que ya está registrado en Jira. Mide el gasto por puntos de historia, por registros de trabajo valorados con tarifarios, por un campo numérico o por el recuento de elementos de trabajo, y sigue el presupuestado frente a real con umbrales de salud, variación y pronóstico lineal en un panel que reorganizas y compartes. Funciona con los campos que tu Jira ya tiene.
 marketplaceUrl: https://marketplace.atlassian.com/apps/2136850574/onbudget-cost-tracking-budget-reports-for-jira
 documentationUrl: /documentation/onbudget/overview/
@@ -26,7 +26,7 @@ dataStatement: >-
   permisos de Jira, y desinstalarla borra todo lo que tenía.
 
 answerFirst: >-
-  OnBudget es una app para Jira Cloud de control de presupuesto e informes de costo. Convierte en
+  OnBudget es una app para Jira Cloud de control de presupuesto e informes de coste. Convierte en
   dinero el trabajo que ya registras en Jira. Elige puntos de historia, registros de trabajo con
   tarifarios, un campo numérico o el recuento de elementos, fija un presupuesto en una de 18 monedas
   y obtén gasto, variación y pronóstico en tu panel. Lee tu Jira, a partir de los campos y worklogs que ya están ahí.
@@ -71,7 +71,7 @@ steps:
     body: >-
       Un presupuesto total en cualquiera de las 18 monedas, más los dos porcentajes que deciden cuándo el
       informe se pone ámbar y cuándo se pone rojo. Los formatos de número, decimal y fecha se definen por
-      informe, así que un presupuesto en pesos se lee como tal.
+      informe, así que un presupuesto en euros se lee como tal.
     shot: builder-budget
   - title: Elige la señal que tu equipo ya produce
     body: >-
@@ -150,7 +150,7 @@ useCases:
     outcome: Registros de trabajo valorados por tarifario, exportados a CSV y conciliables línea a línea.
   - persona: Gerente de marketing
     job: Seguir el presupuesto de una campaña en un equipo que nunca ha usado puntos de historia.
-    outcome: Costo por elemento de trabajo completado, con la cobertura confirmada antes de construir el informe.
+    outcome: Coste por elemento de trabajo completado, con la cobertura confirmada antes de construir el informe.
 
 faq:
   - q: ¿OnBudget me obliga a crear campos personalizados en Jira?
@@ -159,12 +159,12 @@ faq:
       existentes, estados y resoluciones. No hay nada que añadir a un esquema de pantallas ni nada que
       rellenar retroactivamente, y por eso el primer informe lleva minutos en lugar de una solicitud de
       cambio.
-  - q: ¿Qué puede usar OnBudget para calcular el costo?
+  - q: ¿Qué puede usar OnBudget para calcular el coste?
     a: >-
       Cinco señales. Puntos de historia con precio por punto, cualquier campo numérico con precio por
       unidad, registros de trabajo valorados por tarifario o tarifa única, elementos de trabajo cerrados o
       resueltos con precio por elemento, y elementos en estados elegidos con precio por elemento. También
-      puedes dejar el costo unitario en blanco y dejar que OnBudget reparta el presupuesto total entre la
+      puedes dejar el coste unitario en blanco y dejar que OnBudget reparta el presupuesto total entre la
       cantidad total.
   - q: ¿Cómo sabe OnBudget cuánto cuesta una hora de trabajo?
     a: >-
@@ -182,7 +182,7 @@ faq:
     a: >-
       No, y tampoco lo intenta. Una app de registro de horas decide cómo se anotan las horas. OnBudget
       lee lo que quedó en los worklogs de Jira y le pone precio, así que si tu equipo registra horas
-      con otra app que escribe en Jira, OnBudget cobra esos worklogs igual que cualquier otro. Y
+      con otra app que escribe en Jira, OnBudget pone precio a esos worklogs igual que a cualquier otro. Y
       tampoco los necesita: los puntos de historia, un campo numérico o el recuento de elementos de
       trabajo sirven igual cuando nadie registra horas.
   - q: ¿Qué monedas admite, y OnBudget convierte entre ellas?
@@ -224,7 +224,7 @@ faq:
   - q: ¿Hay una versión gratuita?
     a: >-
       OnBudget es una app de pago con periodo de prueba gratuito, que se vende en el Atlassian Marketplace.
-      Consulta el anuncio para ver los precios actuales, que es donde se mantienen correctos.
+      Consulta la ficha del Marketplace para ver los precios actuales, que es donde se mantienen correctos.
 
 screenshots:
   - image: ../../../assets/screenshots/onbudget/01-cards-home.png
@@ -235,7 +235,7 @@ screenshots:
     caption: "Un informe pasado de presupuesto: 106 por ciento consumido, saldo restante negativo y un pronóstico muy por encima de la línea."
   - image: ../../../assets/screenshots/onbudget/05-builder-origin.png
     slot: builder-origin
-    caption: "Paso uno del asistente: apunta el informe a espacios, a elementos de trabajo concretos o a una consulta JQL, y decide si arrastra todo lo que cuelga de una épica."
+    caption: "Paso uno del asistente: apunta el informe a espacios, a elementos de trabajo concretos o a una consulta JQL, y decide si incluye todo lo que cuelga de una épica."
   - image: ../../../assets/screenshots/onbudget/06-builder-budget.png
     slot: builder-budget
     caption: "Paso dos: un presupuesto total en una de 18 monedas, los dos umbrales que ponen el informe en ámbar y en rojo, y los formatos de número y fecha del informe."

@@ -5,7 +5,7 @@ export const es = {
     title: 'Todas nuestras apps para Jira y Confluence',
     crumb: 'Apps',
     metaDescription:
-      'Nuestras apps del Atlassian Marketplace para Jira y Confluence Cloud. Sabe cuánto cuesta el trabajo, gobierna Confluence y mantén Jira ordenado.',
+      'Nuestras apps del Atlassian Marketplace para Jira y Confluence Cloud. Descubre cuánto cuesta el trabajo, gobierna Confluence y mantén Jira ordenado.',
     description:
       'Apps de Numeric Oasis en el Atlassian Marketplace, construidas en Forge para Jira y Confluence Cloud. Control de presupuesto, gobernanza en Confluence, mapa de dependencias, auditoría de configuración y limpieza de campos personalizados.',
   },

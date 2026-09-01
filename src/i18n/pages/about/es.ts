@@ -12,7 +12,7 @@ export const es = {
   hero: {
     eyebrow: 'Sobre Numeric Oasis',
     headline: 'El equipo detrás de las apps.',
-    lede: 'Construimos y damos soporte a apps en Forge para Jira y Confluence Cloud. Todas funcionan por completo en Atlassian Forge, dentro de tu propio entorno de Atlassian, y las soporta quien escribió el código.',
+    lede: 'Construimos y damos soporte a apps en Forge para Jira y Confluence Cloud. Todas funcionan por completo en Atlassian Forge, dentro de tu propio entorno de Atlassian, y les da soporte quien escribió el código.',
   },
   standing: {
     eyebrow: 'Dónde estamos',
@@ -58,7 +58,7 @@ export const es = {
       'es el lado de ingeniería. Rigor, datos en los que se puede confiar, decisiones apoyadas en algo más que una corazonada. Es lo que nos vuelve cuidadosos con los detalles que deciden si una plataforma sigue funcionando en el tercer año: el rastro de auditoría que prueba qué cambió, la comprobación de permisos que aguanta cuando alguien comparte un informe, la limpieza de campos que no rompe un esquema de pantallas.',
     oasisLabel: 'Oasis',
     oasis:
-      'es lo que queremos que las apps se sientan. La mayoría de los administradores de Atlassian que nos encuentran ya están enterrados: demasiadas apps, demasiadas configuraciones a medias, demasiados proveedores a los que no consiguen poner en una llamada. Intentamos ser lo contrario. Un trabajo por app, afirmaciones que puedes verificar en el Marketplace, y contacto directo con quien escribe el código.',
+      'es la sensación que queremos que dejen las apps. La mayoría de los administradores de Atlassian que nos encuentran ya están desbordados: demasiadas apps, demasiadas configuraciones a medias, demasiados proveedores a los que no consiguen poner en una llamada. Intentamos ser lo contrario. Un trabajo por app, afirmaciones que puedes verificar en el Marketplace, y contacto directo con quien escribe el código.',
     close: 'Software que deja tranquila la parte técnica.',
   },
   where: {

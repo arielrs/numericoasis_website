@@ -10,7 +10,10 @@
  * `Shape<typeof en>` (see src/i18n/shape.ts) and surface through `astro check`.
  */
 import { readdir, readFile } from 'node:fs/promises';
-import { join, relative } from 'node:path';
+import { join, relative, sep } from 'node:path';
+import { writeFile } from 'node:fs/promises';
+import { createHash } from 'node:crypto';
+import { FORBIDDEN, META_CAPS } from './termbase.mjs';
 import { parse as parseYaml } from 'yaml';
 
 const ROOT = process.cwd();
@@ -242,6 +245,209 @@ for (const collection of ['apps', 'blog', 'landings']) {
       }
     } catch (error) {
       errors.push(`${shown}: invalid YAML: ${String(error.message).split('\n')[0]}`);
+    }
+  }
+}
+
+// 4. Translation fluency.
+//
+// The site shipped in three languages with no translation tooling at all. The
+// parity check above confirms a file EXISTS with the right translationKey; it
+// never opens the body. A fluency audit found what that misses: words that are
+// not Portuguese, a Spanish sentence saying the author puts up with the apps
+// rather than supports them, one English structure calqued into both languages
+// ten times, and a Spanish corpus written in two variants at once.
+//
+// It also found two English headings rewritten into questions with their
+// Portuguese and Spanish twins left behind, which nothing noticed for a month.
+// That is the staleness check at the end of this block.
+//
+// The rules live in scripts/termbase.mjs, because a file whose whole job is to
+// list forbidden phrasings would trip the defensive-copy check if it sat inside
+// the directories that check scans.
+{
+  const LOCALE_DIRS = { 'pt-BR': 'pt-BR', es: 'es' };
+  const files = (await walk(join(ROOT, 'src'))).filter((f) => /\.(ts|mdx?|md)$/.test(f));
+
+  for (const file of files) {
+    const shown = relative(ROOT, file);
+    if (!shown.startsWith(join('src', 'i18n')) && !shown.startsWith(join('src', 'content'))) continue;
+
+    // Which locale is this file? Content is foldered by locale; the i18n
+    // bundles are named by it.
+    const locale = Object.keys(LOCALE_DIRS).find(
+      (l) => shown.includes(`${sep}${l}${sep}`) || shown.endsWith(`${sep}${l}.ts`),
+    );
+    if (!locale) continue;
+
+    const rules = FORBIDDEN[locale] ?? [];
+    const lines = (await readFile(file, 'utf8')).split('\n');
+    lines.forEach((line, i) => {
+      if (/^\s*(\/\/|\*|<!--|#)/.test(line)) return;
+      // Slugs stay English on purpose: src/i18n/paths.ts builds every locale URL
+      // by re-prefixing the same bare path, so a translated slug in one locale
+      // breaks the hreflang cluster for all three. Strip links and identifiers
+      // before testing, or the gate fires on the URL rather than the prose.
+      const prose = line
+        .replace(/\]\([^)]*\)/g, '')
+        .replace(/https?:\/\/\S+/g, '')
+        .replace(
+          // listingName is the app's official Marketplace title and must stay
+          // English byte for byte. The rest are identifiers and paths.
+          /^\s*(translationKey|listingName|slug|image|heroImage|icon|marketplaceUrl|documentationUrl|supportUrl):.*/,
+          '',
+        );
+      for (const rule of rules) {
+        if (rule.re.test(prose)) errors.push(`${shown}:${i + 1}: ${locale}, ${rule.say}`);
+      }
+    });
+  }
+}
+
+// 5. Meta field lengths in the i18n dictionaries.
+//
+// zod caps metaTitle at 50 and metaDescription at 160 for src/content/**, so the
+// MDX cannot exceed them: the build fails first. The src/i18n/pages/** bundles
+// are plain TypeScript objects and had no guard, which is how three privacy
+// metaDescriptions reached 207 to 217 characters and one Spanish title reached
+// 53. Portuguese and Spanish run longer than English, so a field that just fits
+// in English truncates mid-clause in the other two.
+{
+  const files = (await walk(join(ROOT, 'src', 'i18n', 'pages'))).filter(
+    (f) => /\.ts$/.test(f) && !f.endsWith(`${sep}index.ts`),
+  );
+
+  for (const file of files) {
+    const shown = relative(ROOT, file);
+    const source = await readFile(file, 'utf8');
+    for (const [key, cap] of [['title', META_CAPS.title], ['metaDescription', META_CAPS.description]]) {
+      // Single-quoted scalars, possibly wrapped onto the next line by the
+      // formatter. Escaped quotes are rare here and are handled.
+      const re = new RegExp(`\\b${key}:\\s*(?:\\n\\s*)?'((?:[^'\\\\]|\\\\.)*)'`, 'g');
+      for (const match of source.matchAll(re)) {
+        const value = match[1].replace(/\\'/g, "'");
+        if (value.length > cap) {
+          const line = source.slice(0, match.index).split('\n').length;
+          errors.push(`${shown}:${line}: ${key} is ${value.length} characters, cap is ${cap}`);
+        }
+      }
+    }
+  }
+}
+
+// 6. Stale translations.
+//
+// Rewrite an English string and its Portuguese and Spanish twins keep the old
+// meaning, silently. That happened to two OnBudget headings: the English was
+// rewritten into a question for answer-engine extraction and the other two
+// locales carried statements for a month with a green build every time.
+//
+// The manifest stores a hash per English string. A changed hash means the
+// translations need looking at. Accept them with:
+//
+//     node scripts/check-content.mjs --accept-translations
+//
+// which is deliberately a separate, explicit act rather than something that
+// happens on its own.
+{
+  const MANIFEST = join(ROOT, 'scripts', 'translation-state.json');
+  const accept = process.argv.includes('--accept-translations');
+
+  const current = {};
+  const enFiles = (await walk(join(ROOT, 'src', 'i18n'))).filter(
+    (f) => f.endsWith(`${sep}en.ts`) && !f.endsWith(`${sep}index.ts`),
+  );
+  for (const file of enFiles) {
+    const shown = relative(ROOT, file).split(sep).join('/');
+    const source = await readFile(file, 'utf8');
+    // Every single-quoted scalar in the file, in order. Positional rather than
+    // keyed, which is cruder than walking the AST and enough: any edit to an
+    // English string moves its hash.
+    const strings = [...source.matchAll(/'((?:[^'\\\n]|\\.){8,})'/g)].map((m) => m[1]);
+    current[shown] = createHash('sha256').update(strings.join(' ')).digest('hex').slice(0, 16);
+  }
+
+  if (accept) {
+    await writeFile(MANIFEST, `${JSON.stringify(current, null, 2)}\n`, 'utf8');
+    console.log(`translation state accepted for ${Object.keys(current).length} English bundles`);
+  } else {
+    let stored = {};
+    try {
+      stored = JSON.parse(await readFile(MANIFEST, 'utf8'));
+    } catch {
+      stored = null;
+    }
+    if (stored === null) {
+      errors.push(
+        'scripts/translation-state.json is missing: run node scripts/check-content.mjs --accept-translations',
+      );
+    } else {
+      for (const [bundle, hash] of Object.entries(current)) {
+        if (stored[bundle] && stored[bundle] !== hash) {
+          errors.push(
+            `${bundle}: English copy changed. Review the pt-BR and es twins, then run ` +
+              `node scripts/check-content.mjs --accept-translations`,
+          );
+        }
+      }
+    }
+  }
+}
+
+// 7. Per-locale array shape in the content collections.
+//
+// The parity check above confirms a file exists per locale. Zod validates each
+// file in isolation and cannot express "the same length as the English one".
+// So trustSignals going from four items in English to three in Spanish shipped
+// two differently-shaped pages and a green build, and only a manual diff would
+// have found it. This rewrite touched all six apps in all three locales, which
+// is exactly the change that makes the gap expensive.
+//
+// Shape<T> already does this for src/i18n/** by preserving tuple arity. This is
+// the same guarantee for src/content/**, where the types come from Astro's
+// generated string[] and carry no length.
+{
+  const SHAPED = ['trustSignals', 'keyFeatures', 'audiences', 'valueProps', 'featureGroups', 'faq', 'useCases'];
+  const byKey = new Map();
+
+  for (const collection of ['apps', 'blog', 'landings']) {
+    const files = (await walk(join(ROOT, 'src/content', collection))).filter((f) => /\.mdx?$/.test(f));
+    for (const file of files) {
+      // Normalised, because the working tree is CRLF on Windows and a regex
+      // anchored on \n silently matches nothing against \r\n. An earlier
+      // version of this check passed on every file for exactly that reason.
+      const source = (await readFile(file, 'utf8')).replace(/\r\n/g, '\n');
+      const key = frontmatterValue(source, 'translationKey');
+      const lang = frontmatterValue(source, 'lang');
+      if (!key || !lang) continue;
+
+      // Count top-level "  - " entries under each field, without parsing YAML:
+      // the frontmatter here is hand-written and uniformly two-space indented.
+      const counts = {};
+      for (const field of SHAPED) {
+        const match = source.match(new RegExp(`^${field}:\\n((?:  [-#].*\\n|    .*\\n|\\n(?=  ))*)`, 'm'));
+        if (!match) continue;
+        counts[field] = (match[1].match(/^  - /gm) ?? []).length;
+      }
+      const id = `${collection}/${key}`;
+      if (!byKey.has(id)) byKey.set(id, {});
+      byKey.get(id)[lang] = { counts, shown: relative(ROOT, file) };
+    }
+  }
+
+  for (const [id, locales] of byKey) {
+    const reference = locales.en;
+    if (!reference) continue;
+    for (const [lang, entry] of Object.entries(locales)) {
+      if (lang === 'en') continue;
+      for (const [field, count] of Object.entries(reference.counts)) {
+        const mine = entry.counts[field];
+        if (mine === undefined) {
+          errors.push(`${entry.shown}: ${id} has ${field} in en and not in ${lang}`);
+        } else if (mine !== count) {
+          errors.push(`${entry.shown}: ${field} has ${mine} entries, en has ${count}`);
+        }
+      }
     }
   }
 }

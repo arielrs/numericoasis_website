@@ -27,17 +27,17 @@ export const ptBR = {
   },
   methods: {
     eyebrow: 'Custeio',
-    headline: 'Escolha o sinal que seu time já produz.',
+    headline: 'Como o OnBudget calcula custo a partir do trabalho no Jira?',
     lede: 'A parte difícil de custear trabalho no Jira não é a aritmética. É que cada time mede uma coisa diferente, e metade deles não mede nada. O OnBudget analisa seus dados e mostra qual porcentagem dos seus itens de trabalho carrega cada sinal, antes de você construir qualquer coisa em cima disso.',
   },
   dashboard: {
     eyebrow: 'Painéis',
-    headline: 'O painel é seu para reorganizar.',
+    headline: 'O painel é seu. Organize do seu jeito.',
     lede: 'Nove tipos de gadget, cada um com seus formatos de gráfico. Arraste um para outra posição, redimensione pelo canto, clone, remova, ou alterne entre barra, linha, área, pizza, rosca, tabela e número puro. Salve o layout quando ele passar a fazer sentido para você.',
   },
   sharing: {
     eyebrow: 'Compartilhamento',
-    headline: 'Um relatório compartilhado respeita quem lê, não quem criou.',
+    headline: 'Dá para compartilhar um relatório com quem tem acesso restrito ao Jira?',
     body: 'Quando alguém abre um relatório que você compartilhou, ele é recalculado com as permissões do Jira dessa pessoa, então ninguém vê itens de trabalho que já não pudesse abrir no Jira. E se quem está lendo não tem acesso a parte do escopo, o relatório avisa na própria página, em vez de mostrar um número menor sem explicar por quê.',
   },
   scale: {

@@ -34,7 +34,7 @@ export const ptBR = {
     custom: {
       title: 'Molde o relatório, depois molde a tela.',
       report: 'Você decide o que o relatório cobre: espaços inteiros, itens de trabalho escolhidos por chave ou por texto, ou uma consulta JQL. Você define o orçamento e a moeda, os dois limites que deixam o relatório em risco e depois acima do orçamento, e os formatos de número e data em que ele é lido.',
-      dashboard: 'Depois o painel é seu para reorganizar. Arraste um gadget para outra posição, redimensione pelo canto, clone ou remova, alterne entre barra, linha, área, pizza, rosca, tabela e número puro, e salve o layout quando ele passar a fazer sentido para você.',
+      dashboard: 'Depois é só reorganizar o painel do seu jeito. Arraste um gadget para outra posição, redimensione pelo canto, clone ou remova, alterne entre barra, linha, área, pizza, rosca, tabela e número puro, e salve o layout quando ele passar a fazer sentido para você.',
     },
     ctaPrimary: 'Veja o que o OnBudget faz',
     ctaSecondary: 'Ver no Marketplace',

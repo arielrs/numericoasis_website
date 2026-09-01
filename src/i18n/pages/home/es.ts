@@ -6,7 +6,7 @@ export const es = {
     metaDescription:
       'Socia del Atlassian Marketplace, con apps para Jira y Confluence Cloud. Sigue todos los presupuestos de Jira en una sola pantalla con OnBudget.',
     description:
-      'Numeric Oasis es socia en el Atlassian Marketplace y construye apps en Forge para Jira y Confluence Cloud. OnBudget convierte el trabajo ya registrado en Jira en presupuestos, pronósticos e informes de costo, y cada app que publicamos funciona dentro de tu propio entorno de Atlassian.',
+      'Numeric Oasis es socia en el Atlassian Marketplace y construye apps en Forge para Jira y Confluence Cloud. OnBudget convierte el trabajo ya registrado en Jira en presupuestos, pronósticos e informes de coste, y cada app que publicamos funciona dentro de tu propio entorno de Atlassian.',
   },
   hero: {
     eyebrow: 'Socia en el Atlassian Marketplace',
@@ -34,7 +34,7 @@ export const es = {
     custom: {
       title: 'Da forma al informe, y luego a la pantalla.',
       report: 'Tú decides qué cubre el informe: espacios completos, elementos de trabajo elegidos por clave o por texto, o una consulta JQL. Tú fijas el presupuesto y su moneda, los dos umbrales que lo ponen en riesgo y luego por encima del presupuesto, y los formatos de número y fecha en que se lee.',
-      dashboard: 'Después el panel es tuyo para reorganizar. Arrastra un gadget a otro hueco, redimensiónalo desde la esquina, clónalo o elimínalo, cámbialo entre barra, línea, área, circular, de anillo, tabla y número simple, y guarda el diseño cuando se lea como tú piensas.',
+      dashboard: 'Después reorganiza el panel a tu gusto. Arrastra un gadget a otro hueco, redimensiónalo desde la esquina, clónalo o elimínalo, cámbialo entre barra, línea, área, circular, de anillo, tabla y número simple, y guarda el diseño cuando se lea como tú piensas.',
     },
     ctaPrimary: 'Mira lo que hace OnBudget',
     ctaSecondary: 'Ver en el Marketplace',

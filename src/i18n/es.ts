@@ -3,7 +3,7 @@ import type { Dictionary } from './en';
 export const es = {
   site: {
     description:
-      'Numeric Oasis es socia en el Atlassian Marketplace. Construimos apps en Forge para Jira y Confluence Cloud: informes de costo y presupuesto, gobernanza y cumplimiento, y el trabajo de administración que mantiene ordenado un sitio que crece.',
+      'Numeric Oasis es socia en el Atlassian Marketplace. Construimos apps en Forge para Jira y Confluence Cloud: informes de coste y presupuesto, gobernanza y cumplimiento, y el trabajo de administración que mantiene ordenado un sitio que crece.',
     location: 'Canoas, RS, Brasil',
     slogan: 'Apps que funcionan dentro de Atlassian, no al lado.',
   },

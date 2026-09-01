@@ -23,7 +23,7 @@ export const ptBR = {
     includeTitle: 'Com estes dados normalmente pulamos uma ida e volta',
     include: [
       'A URL do seu site Atlassian',
-      'Qual app, e a versão que aparece no anúncio do Marketplace',
+      'Qual app, e a versão que aparece na página do app no Marketplace',
       'O que você esperava que acontecesse',
       'O que aconteceu no lugar, com uma captura de tela se houver o que capturar',
     ],

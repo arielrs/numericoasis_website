@@ -20,7 +20,7 @@ Si tienes que decir cuánto costó una campaña o un trimestre de soporte, y tu 
 
 ## Por qué el consejo habitual no encaja
 
-El control de costes, control de costos en buena parte de América Latina, deduce normalmente el gasto de las horas registradas: horas por una tarifa. La condición previa está incorporada al método. Alguien tiene que registrar las horas, cada día, con precisión, y seguir haciéndolo. Donde ese hábito ya existe es el método preferible, porque una tarifa por hora es más fina que cualquier recuento, y OnBudget pone precio a los worklogs con tarifarios precisamente para ese caso.
+El control de costes deduce normalmente el gasto de las horas registradas: horas por una tarifa. La condición previa está incorporada al método. Alguien tiene que registrar las horas, cada día, con precisión, y seguir haciéndolo. Donde ese hábito ya existe es el método preferible, porque una tarifa por hora es más fina que cualquier recuento, y OnBudget pone precio a los worklogs con tarifarios precisamente para ese caso.
 
 Donde el hábito no existe, el método no se degrada con elegancia. Produce un número que refleja quién se acordó de registrar, no quién hizo el trabajo, y no puede decir nada del trimestre pasado, porque los datos empiezan el día en que empieza el hábito. Así que mira lo que tu Jira ya guarda.
 
@@ -36,7 +36,7 @@ Una media por elemento es defendible cuando los elementos son comparables: un ti
 
 El segundo recuento pone precio a los elementos de trabajo por el estado en el que están ahora, para los estados que elijas. Costea el trabajo en curso, no el trabajo terminado.
 
-Eso responde a otra pregunta. No cuánto hemos gastado, sino cuánto está comprometido ahora mismo. Cuarenta elementos parados en En curso y En revisión, con precio por elemento, son el valor que está atado en vuelo en este momento, y vigilados semana a semana muestran si ese compromiso crece.
+Eso responde a otra pregunta. No cuánto hemos gastado, sino cuánto está comprometido ahora mismo. Cuarenta elementos parados en En curso y En revisión, con precio por elemento, son el dinero comprometido ahora mismo en trabajo en curso, y vigilados semana a semana muestran si ese compromiso crece.
 
 Léelo por lo que es: una foto del presente, no del esfuerzo transcurrido. Pone precio a la etapa, no a la duración.
 
@@ -58,7 +58,7 @@ No hay ningún paso en el que configures Jira, porque no hay nada que configurar
 
 ## Cómo leer el resultado
 
-Presupuestado frente a real, en una de 18 monedas, con formatos de número, decimal y fecha definidos por informe. Dos umbrales deciden cuándo un informe pasa a ámbar y cuándo pasa a rojo. En riesgo viene por defecto al 80 por ciento del presupuesto consumido, y por encima del presupuesto al 100 por ciento, y los dos son tuyos para cambiarlos. El estado de riesgo también se activa cuando la previsión proyecta un sobrecoste, aunque una previsión por sí sola nunca pone un informe en rojo. Gobiernan la etiqueta de salud, el color del medidor y el orden de la pantalla de inicio, así que los informes que piden atención suben a lo alto de una lista larga.
+Presupuestado frente a real, en una de 18 monedas, con formatos de número, decimal y fecha definidos por informe. Dos umbrales deciden cuándo un informe pasa a ámbar y cuándo pasa a rojo. En riesgo viene por defecto al 80 por ciento del presupuesto consumido, y por encima del presupuesto al 100 por ciento, y y puedes cambiar los dos. El estado de riesgo también se activa cuando la previsión proyecta un sobrecoste, aunque una previsión por sí sola nunca pone un informe en rojo. Gobiernan la etiqueta de salud, el color del medidor y el orden de la pantalla de inicio, así que los informes que piden atención suben a lo alto de una lista larga.
 
 El pronóstico es un ritmo lineal a partir del gasto registrado hasta ahora, proyectado hasta la fecha de fin del informe, o a 30, 60 o 90 días vista, o apagado. Dice qué pasa si se mantiene el ritmo actual.
 

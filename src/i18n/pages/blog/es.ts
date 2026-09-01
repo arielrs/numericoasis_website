@@ -3,11 +3,11 @@ import type { BlogCopy } from './en';
 export const es = {
   meta: {
     crumb: 'Blog',
-    title: 'Costo, administración y gobernanza en Jira',
+    title: 'Coste, administración y gobernanza en Jira',
     metaDescription:
-      'Apuntes sobre visibilidad de costos, gobernanza en Confluence y salud de la configuración de Jira, del equipo que construye apps del Marketplace.',
+      'Apuntes sobre visibilidad de costes, gobernanza en Confluence y salud de la configuración de Jira, del equipo que construye apps del Marketplace.',
     description:
-      'Apuntes sobre visibilidad de costos en Atlassian, gobernanza en Confluence y salud de la configuración de Jira, del equipo que construye apps del Atlassian Marketplace.',
+      'Apuntes sobre visibilidad de costes en Atlassian, gobernanza en Confluence y salud de la configuración de Jira, del equipo que construye apps del Atlassian Marketplace.',
   },
   index: {
     eyebrow: 'Del taller',
@@ -39,7 +39,7 @@ export const es = {
     cta: {
       onbudget: {
         headline: '¿Quieres esto sin la hoja de cálculo?',
-        body: 'OnBudget convierte el trabajo que tu equipo ya registra en Jira en presupuestos, pronósticos e informes de costo. Funciona con los campos que tu equipo ya rellena, y lee tu Jira en vez de editarlo.',
+        body: 'OnBudget convierte el trabajo que tu equipo ya registra en Jira en presupuestos, pronósticos e informes de coste. Funciona con los campos que tu equipo ya rellena, y lee tu Jira en vez de editarlo.',
         primary: 'Mira qué hace OnBudget',
         secondary: 'Escríbenos',
       },
@@ -59,7 +59,7 @@ export const es = {
   },
   tags: {
     onbudget: 'OnBudget',
-    'jira-cost-management': 'Costos en Jira',
+    'jira-cost-management': 'Costes en Jira',
     'confluence-governance': 'Gobernanza en Confluence',
     'jira-administration': 'Administración de Jira',
     forge: 'Forge',

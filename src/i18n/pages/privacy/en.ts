@@ -22,7 +22,7 @@ export const en = {
     crumb: 'Privacy',
     title: 'Privacy policy for this website',
     metaDescription:
-      'What numericoasis.com collects, what it does not, and who processes it. Cookieless analytics always. Advertising measurement you can turn off, and that never starts without consent where consent is required.',
+      'What numericoasis.com collects and who processes it. Cookieless analytics always, and advertising measurement you can switch off.',
     description:
       'What numericoasis.com collects, what it does not collect, and which processors are involved. Analytics is cookieless and always on. Advertising measurement is yours to switch off, and it never starts without consent where the law requires consent first. Each app has its own separate privacy policy.',
   },

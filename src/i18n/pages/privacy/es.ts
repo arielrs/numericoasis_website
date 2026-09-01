@@ -5,14 +5,14 @@ export const es = {
     crumb: 'Privacidad',
     title: 'Política de privacidad de este sitio',
     metaDescription:
-      'Qué recoge numericoasis.com, qué no recoge y quién lo procesa. Analítica sin cookies siempre. La medición de anuncios la puedes apagar, y nunca empieza sin consentimiento donde el consentimiento es obligatorio.',
+      'Qué recoge numericoasis.com y quién lo procesa. Analítica sin cookies siempre, y medición de anuncios que puedes apagar.',
     description:
-      'Qué recoge numericoasis.com, qué no recoge y qué procesadores intervienen. La analítica es sin cookies y siempre está activa. La medición de anuncios es tuya para apagarla, y nunca empieza sin consentimiento donde la ley exige consentimiento primero. Cada app tiene su propia política de privacidad, aparte de esta.',
+      'Qué recoge numericoasis.com, qué no recoge y qué procesadores intervienen. La analítica es sin cookies y siempre está activa. Puedes apagar la medición de anuncios cuando quieras, y nunca empieza sin consentimiento donde la ley exige consentimiento primero. Cada app tiene su propia política de privacidad, aparte de esta.',
   },
   hero: {
     eyebrow: 'Privacidad',
     headline: 'Qué recoge este sitio, y qué no.',
-    lede: 'En corto: ninguna cuenta, ningún formulario, ningún perfil. Analítica sin cookies siempre, y medición de anuncios bajo tu control.',
+    lede: 'En resumen: ninguna cuenta, ningún formulario, ningún perfil. Analítica sin cookies siempre, y medición de anuncios bajo tu control.',
   },
   updated: 'Última actualización',
   updatedDate: '2026-09-01',

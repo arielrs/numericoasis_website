@@ -36,29 +36,29 @@ Uma média por item é defensável quando os itens são comparáveis: um tipo de
 
 A segunda contagem precifica itens de trabalho pelo status em que eles estão agora, para os status que você escolher. Ela custeia trabalho em andamento, e não trabalho terminado.
 
-Isso responde a outra pergunta. Não quanto gastamos, mas quanto está comprometido neste momento. Quarenta itens parados em Em andamento e Aguardando revisão, precificados por item, são o valor preso em voo agora, e acompanhados semana a semana mostram se esse comprometimento está crescendo.
+Isso responde a outra pergunta. Não quanto gastamos, mas quanto está comprometido neste momento. Quarenta itens parados em Em andamento e Aguardando revisão, precificados por item, são o dinheiro comprometido agora, parado em trabalho em andamento, e acompanhados semana a semana mostram se esse comprometimento está crescendo.
 
 Leia pelo que é: um retrato do presente, não do esforço decorrido. Ela precifica a etapa, não a duração.
 
 ## Sinal três: um campo numérico já existente, precificado por unidade
 
-Se alguém do seu time já digita uma quantidade em um campo, isso é um sinal de custo. Licenças solicitadas, assentos, unidades enviadas, horas cotadas, tiragens de impressão. Aponte o OnBudget para o campo, dê a ele um custo por unidade, e ele precifica. Esse costuma ser o mais preciso dos três: um número que uma pessoa digitou de propósito quase sempre significa alguma coisa específica. O risco é que campos opcionais tendem a ficar metade vazios, e é para isso que serve a próxima seção.
+Se alguém do seu time já digita uma quantidade em um campo, isso é um sinal de custo. Licenças solicitadas, usuários, unidades enviadas, horas cotadas, tiragens de impressão. Aponte o OnBudget para o campo, dê a ele um custo por unidade, e ele precifica. Esse costuma ser o mais preciso dos três: um número que uma pessoa digitou de propósito quase sempre significa alguma coisa específica. O risco é que campos opcionais tendem a ficar metade vazios, e é para isso que serve a próxima seção.
 
 ## Confira a cobertura antes de se comprometer
 
-Antes de você montar o relatório, o OnBudget amostra os seus dados reais e diz que fatia dos seus itens de trabalho carrega cada sinal. Três métodos medidos sobre os mesmos dados podem pontuar de forma bem diferente, e você vê todos lado a lado antes de escolher.
+Antes de você montar o relatório, o OnBudget analisa uma amostra dos seus dados reais e diz que fatia dos seus itens de trabalho carrega cada sinal. Três métodos medidos sobre os mesmos dados podem pontuar de forma bem diferente, e você vê todos lado a lado antes de escolher.
 
 O modo de falha mais comum não é escolher o método errado. É escolher um, construir em cima dele e descobrir uma semana depois que metade dos itens não carrega valor nenhum, ou seja, metade do trabalho foi precificada como zero e o orçamento parecia saudável. A cobertura coloca essa descoberta antes do trabalho, e não depois. Leia os números ao pé da letra: 47 por cento significa que menos da metade dos itens no escopo carrega um valor. Estreite o escopo até a cobertura ficar alta, ou custeie o sinal que pontuar mais alto.
 
 ## Quatro passos, e uma prévia antes de salvar
 
-O construtor tem quatro passos. Escolha de onde vêm os números: projetos inteiros, que o Jira agora chama de spaces, ou itens de trabalho escolhidos por chave, prefixo ou texto do resumo, ou uma consulta JQL validada enquanto você digita, com um botão para puxar sub-tarefas e tudo que está sob um epic. Defina o orçamento, a moeda e os dois limites. Escolha o método de custo, com a cobertura mostrada antes da escolha. Adicione um período e um horizonte de previsão, depois veja a prévia do relatório inteiro e gere de novo até ficar certo, antes de salvar qualquer coisa.
+O construtor tem quatro passos. Escolha de onde vêm os números: projetos inteiros, que o Jira agora chama de spaces, ou itens de trabalho escolhidos por chave, prefixo ou texto do resumo, ou uma consulta JQL validada enquanto você digita, com um botão para puxar subtarefas e tudo que está sob um epic. Defina o orçamento, a moeda e os dois limites. Escolha o método de custo, com a cobertura mostrada antes da escolha. Adicione um período e um horizonte de previsão, depois veja a prévia do relatório inteiro e gere de novo até ficar certo, antes de salvar qualquer coisa.
 
 Não existe um passo em que você configura o Jira, porque não há nada para configurar. É essa a diferença entre um primeiro relatório levar minutos e um primeiro relatório levar uma solicitação de mudança.
 
 ## Como ler o resultado
 
-Orçado versus real, em uma de 18 moedas, com formatos de número, de decimal e de data definidos por relatório. Dois limites decidem quando um relatório fica âmbar e quando fica vermelho. Em risco vem por padrão em 80 por cento do orçamento consumido, e acima do orçamento em 100 por cento, e os dois são seus para mudar. O status de risco também sobe quando a previsão projeta um estouro, embora uma previsão sozinha nunca deixe um relatório vermelho. Eles comandam a etiqueta de saúde, a cor do medidor e a ordenação da tela inicial, então os relatórios que precisam de atenção sobem para o topo de uma lista longa.
+Orçado versus real, em uma de 18 moedas, com formatos de número, de decimal e de data definidos por relatório. Dois limites decidem quando um relatório fica âmbar e quando fica vermelho. Em risco vem por padrão em 80 por cento do orçamento consumido, e acima do orçamento em 100 por cento, e e você pode mudar os dois. O status de risco também sobe quando a previsão projeta um estouro, embora uma previsão sozinha nunca deixe um relatório vermelho. Eles comandam a etiqueta de saúde, a cor do medidor e a ordenação da tela inicial, então os relatórios que precisam de atenção sobem para o topo de uma lista longa.
 
 A previsão é um ritmo linear a partir do gasto registrado até agora, projetado até a data final do relatório, ou para 30, 60 ou 90 dias à frente, ou desligada. Ela diz o que acontece se o ritmo atual se mantiver.
 

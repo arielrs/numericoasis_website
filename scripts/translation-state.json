@@ -1,0 +1,12 @@
+{
+  "src/i18n/en.ts": "849adee0f2c279b8",
+  "src/i18n/pages/about/en.ts": "46b658b18b44f2c3",
+  "src/i18n/pages/app-detail/en.ts": "daf91010e1995d9d",
+  "src/i18n/pages/apps-index/en.ts": "b8345e55cdd84dcf",
+  "src/i18n/pages/blog/en.ts": "23f66528af35769c",
+  "src/i18n/pages/contact/en.ts": "d606550c1cbdf5fc",
+  "src/i18n/pages/home/en.ts": "3324d884f6217376",
+  "src/i18n/pages/not-found/en.ts": "da1e4bde06a5f6c5",
+  "src/i18n/pages/onbudget/en.ts": "402659002df05c4e",
+  "src/i18n/pages/privacy/en.ts": "8d16554223556137"
+}

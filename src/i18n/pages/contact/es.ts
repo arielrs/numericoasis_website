@@ -23,7 +23,7 @@ export const es = {
     includeTitle: 'Con estos datos solemos ahorrarnos una ida y vuelta',
     include: [
       'La URL de tu sitio de Atlassian',
-      'Qué app, y la versión que aparece en su anuncio del Marketplace',
+      'Qué app, y la versión que aparece en su ficha del Marketplace',
       'Qué esperabas que pasara',
       'Qué pasó en su lugar, con una captura de pantalla si hay algo que capturar',
     ],

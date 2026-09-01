@@ -5,9 +5,9 @@ export const ptBR = {
     crumb: 'Privacidade',
     title: 'Política de privacidade deste site',
     metaDescription:
-      'O que o numericoasis.com coleta, o que não coleta e quem processa. Analytics sem cookies sempre. A medição de anúncios você desliga quando quiser, e ela nunca começa sem consentimento onde consentimento é obrigatório.',
+      'O que o numericoasis.com coleta e quem processa. Analytics sem cookies sempre, e medição de anúncios que você desliga quando quiser.',
     description:
-      'O que o numericoasis.com coleta, o que não coleta e quais processadores estão envolvidos. O analytics é sem cookies e está sempre ligado. A medição de anúncios é sua para desligar, e ela nunca começa sem consentimento onde a lei exige consentimento primeiro. Cada app tem a sua própria política de privacidade, separada desta.',
+      'O que o numericoasis.com coleta, o que não coleta e quais processadores estão envolvidos. O analytics é sem cookies e está sempre ligado. Você desliga a medição de anúncios quando quiser, e ela nunca começa sem consentimento onde a lei exige consentimento primeiro. Cada app tem a sua própria política de privacidade, separada desta.',
   },
   hero: {
     eyebrow: 'Privacidade',

@@ -3,12 +3,12 @@ import type { OnBudgetCopy } from './en';
 export const es = {
   meta: {
     crumb: 'OnBudget',
-    title: 'Control de costes y presupuestos de proyectos en Jira',
+    title: 'Control de costes y presupuestos en Jira',
   },
   hero: {
     eyebrow: 'App del Atlassian Marketplace para Jira y Jira Service Management Cloud',
     headline: 'Control de presupuesto y costes de proyectos en Jira.',
-    lede: 'OnBudget convierte en dinero el trabajo que tu equipo ya registra en Jira. Antes que nada analiza una muestra de tus datos y te dice qué parte de tus elementos de trabajo lleva cada señal de costo, para que sepas qué sostienen realmente tus datos antes de armar un presupuesto sobre ellos.',
+    lede: 'OnBudget convierte en dinero el trabajo que tu equipo ya registra en Jira. Antes que nada analiza una muestra de tus datos y te dice qué parte de tus elementos de trabajo lleva cada señal de coste, para que sepas qué sostienen realmente tus datos antes de armar un presupuesto sobre ellos.',
     ctaSecondary: 'Mira cómo se construye un informe',
   },
   fit: {
@@ -27,17 +27,17 @@ export const es = {
   },
   methods: {
     eyebrow: 'Costeo',
-    headline: 'Elige la señal que tu equipo ya produce.',
+    headline: '¿Cómo calcula OnBudget el coste a partir del trabajo en Jira?',
     lede: 'La parte difícil de costear el trabajo en Jira no es la aritmética. Es que cada equipo mide algo distinto, y la mitad no mide nada. OnBudget analiza tus datos y te muestra qué porcentaje de tus elementos de trabajo lleva cada señal, antes de que construyas nada encima.',
   },
   dashboard: {
     eyebrow: 'Paneles',
-    headline: 'El panel es tuyo para reorganizarlo.',
+    headline: 'El panel es tuyo: colócalo como quieras.',
     lede: 'Nueve tipos de gadget, cada uno con sus formatos de gráfico. Arrastra uno a otro hueco, redimensiónalo desde la esquina, clónalo, elimínalo, o cámbialo entre barra, línea, área, circular, de anillo, tabla y número simple. Guarda el diseño cuando se lea como tú piensas.',
   },
   sharing: {
     eyebrow: 'Compartir',
-    headline: 'Un informe compartido respeta a quien lo lee, no a quien lo creó.',
+    headline: '¿Puedo compartir un informe con alguien que tiene acceso restringido a Jira?',
     body: 'Cuando alguien abre un informe que compartiste, se recalcula con sus propios permisos de Jira, así que nadie ve elementos de trabajo que no pudiera abrir ya en Jira. Y si quien lo lee no tiene acceso a parte del alcance, el informe lo dice en la propia página, en lugar de mostrar una cifra más pequeña sin explicar por qué.',
   },
   scale: {
