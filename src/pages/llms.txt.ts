@@ -41,9 +41,12 @@ export async function GET() {
     '',
     `> ${SITE.description}`,
     '',
+    // "rather than on servers we operate" was the same defensive register the
+    // rest of the site just had rewritten out of it. No gate reaches this file:
+    // it is a .ts under src/pages, which the copy check does not scan.
     'A partner in the Atlassian Marketplace, based in Canoas, Brazil. Every app is',
-    'built on Atlassian Forge, which makes it eligible for the Runs on Atlassian program and means',
-    'it executes inside Atlassian infrastructure rather than on servers we operate.',
+    'built on Atlassian Forge, which makes it eligible for the Runs on Atlassian program and',
+    'means it executes inside your own Atlassian infrastructure.',
     'The site is published in English (/), Portuguese (/pt-BR/) and Spanish (/es/).',
     '',
     '## Apps',

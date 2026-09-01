@@ -17,7 +17,7 @@ export const en = {
     headline: 'A partner in the Atlassian Marketplace.',
     paragraphs: [
       'Everything we publish goes through the Atlassian Marketplace, which means Atlassian handles licensing, billing and distribution, and you buy our apps the same way you buy any other. Our vendor page lists everything we have published.',
-      "Every app we ship runs entirely on Atlassian Forge, which is what makes it eligible for Atlassian's Runs on Atlassian program: the code executes inside Atlassian infrastructure. There is no vendor server in the path and nothing of yours leaves your site.",
+      "Every app we ship runs entirely on Atlassian Forge, which is what makes it eligible for Atlassian's Runs on Atlassian program: the code executes inside Atlassian infrastructure. Every request runs inside Atlassian, and what is yours stays on your site.",
     ],
     link: 'Our Marketplace vendor page',
   },
@@ -25,14 +25,14 @@ export const en = {
     eyebrow: 'How we build',
     headline: 'Built to pass your security review.',
     paragraphs: [
-      'Forge means our code runs inside Atlassian infrastructure rather than on a server of ours. Your reviewer has no third-party host to assess, nothing leaving Atlassian to document, and nothing of yours sitting in a database we operate. Most of the questionnaire is answered by where the code runs.',
+      'Forge means our code runs inside Atlassian infrastructure rather than on a server of ours. Your reviewer assesses one platform they have already approved, documents one boundary that your data never crosses, and finds nothing of yours in a database we operate. Most of the questionnaire is answered by where the code runs.',
       'Permissions follow the same principle. Each app asks for the scopes it needs to do its job, and each one says on its own page exactly what it stores. The table below puts every app side by side, so you can check them all in one place.',
     ],
   },
   dataTable: {
     eyebrow: 'What each app stores',
     headline: 'Per app, in plain terms.',
-    lede: 'Most of our apps hold nothing about your content. The ones that do hold personal data hold it because the job requires it: an acknowledgement that does not name who acknowledged it is not an acknowledgement, and an audit log that does not name who made the change is not an audit log.',
+    lede: 'Most of our apps read your content and keep none of it. The ones that do hold personal data hold it because the job requires it: an acknowledgement that does not name who acknowledged it is not an acknowledgement, and an audit log that does not name who made the change is not an audit log.',
     columns: {
       app: 'App',
       host: 'Host',

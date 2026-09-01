@@ -29,7 +29,6 @@ export const ptBR = {
   data: {
     eyebrow: 'Dados e permissões',
     headline: 'O que o app enxerga, e o que ele guarda.',
-    scopes: 'Permissões solicitadas',
   },
   faq: {
     eyebrow: 'Perguntas',

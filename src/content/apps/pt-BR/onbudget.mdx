@@ -8,7 +8,7 @@ metaDescription: "Transforme o trabalho já registrado no Jira em orçamentos, p
 version: "2.4.0"
 dateModified: 2026-08-19
 tagline: Controle de orçamento e relatórios de custo para o Jira. Orçado versus realizado, saúde e previsão, a partir do trabalho que seu time já registra.
-description: O OnBudget é um app para Jira Cloud que transforma em dinheiro o trabalho que já está registrado no Jira. Meça o gasto por pontos de história, por registros de trabalho precificados com tabelas de valores, por um campo numérico ou pela contagem de itens de trabalho, e acompanhe orçado versus realizado com limites de saúde, variação e previsão linear em um painel que você reorganiza e compartilha. Sem criar campos personalizados.
+description: O OnBudget é um app para Jira Cloud que transforma em dinheiro o trabalho que já está registrado no Jira. Meça o gasto por pontos de história, por registros de trabalho precificados com tabelas de valores, por um campo numérico ou pela contagem de itens de trabalho, e acompanhe orçado versus realizado com limites de saúde, variação e previsão linear em um painel que você reorganiza e compartilha. Funciona com os campos que o seu Jira já tem.
 marketplaceUrl: https://marketplace.atlassian.com/apps/2136850574/onbudget-cost-tracking-budget-reports-for-jira
 documentationUrl: /documentation/onbudget/overview/
 supportUrl: https://numericoasis.atlassian.net/servicedesk/customer/portal/39
@@ -21,21 +21,15 @@ priceModel: paid
 icon: ../../../assets/logos/onbudget.png
 runsOnAtlassian: true
 storesPersonalData: false
-scopeSummary:
-  - "read:jira-work"
-  - "read:jira-user"
-  - "storage:app"
 dataStatement: >-
-  O OnBudget guarda as configurações dos seus relatórios e nada além disso. Ele nunca guarda o
-  conteúdo dos seus itens de trabalho, e nunca guarda o resultado de um relatório. Toda leitura é
-  feita com as suas próprias permissões do Jira, identificadores de conta e de grupo passam por hash
-  antes de virarem chaves de armazenamento, e desinstalar o app apaga tudo o que ele mantinha.
+  O OnBudget guarda a configuração dos seus relatórios e nada além disso. Toda leitura é feita com
+  as suas próprias permissões do Jira, e desinstalar apaga tudo o que ele mantinha.
 
 answerFirst: >-
   O OnBudget é um app para Jira Cloud de controle de orçamento e relatórios de custo. Ele transforma
   em dinheiro o trabalho que você já registra no Jira. Escolha pontos de história, registros de
   trabalho com tabelas de valores, um campo numérico ou a contagem de itens, defina um orçamento em
-  uma de 18 moedas e receba gasto, variação e previsão no seu painel. Ele lê o seu Jira e não muda nada nele.
+  uma de 18 moedas e receba gasto, variação e previsão no seu painel. Ele lê o seu Jira, a partir dos campos e worklogs que já estão lá.
 
 audiences:
   - PMO e gestores de portfólio
@@ -142,9 +136,9 @@ keyFeatures:
   - Inglês, português e espanhol
 
 trustSignals:
-  - Não muda nada no Jira
-  - Sem campos personalizados novos
-  - Guarda apenas as configurações do relatório
+  - Cinco formas de precificar o trabalho
+  - Funciona com os dados que já estão no Jira
+  - Orçamento, previsão e variação
   - Construído em Atlassian Forge
 
 useCases:

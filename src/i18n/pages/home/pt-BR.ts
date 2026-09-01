@@ -21,7 +21,7 @@ export const ptBR = {
     items: [
       'Construído em Atlassian Forge',
       'Seus dados nunca saem da Atlassian',
-      'Nenhum servidor de terceiros para avaliar',
+      'Sua análise de segurança fica dentro da Atlassian',
       'Para Jira e Confluence Cloud',
       'Teste gratuito em todo app pago',
       'Suporte em inglês, português e espanhol',
@@ -30,7 +30,7 @@ export const ptBR = {
   focus: {
     eyebrow: 'OnBudget, para Jira Cloud',
     headline: 'Todo orçamento do Jira em uma tela só.',
-    lede: 'Orçado versus realizado, saúde e previsão, a partir do trabalho que seu time já registra no Jira. Orçamentos de entrega, produto e marketing lado a lado, cada um na sua moeda, e nenhum campo personalizado novo para ninguém preencher.',
+    lede: 'Orçado versus realizado, saúde e previsão, a partir do trabalho que seu time já registra no Jira. Orçamentos de entrega, produto e marketing lado a lado, cada um na sua moeda, e funciona com os campos que o seu time já preenche.',
     custom: {
       title: 'Molde o relatório, depois molde a tela.',
       report: 'Você decide o que o relatório cobre: espaços inteiros, itens de trabalho escolhidos por chave ou por texto, ou uma consulta JQL. Você define o orçamento e a moeda, os dois limites que deixam o relatório em risco e depois acima do orçamento, e os formatos de número e data em que ele é lido.',
@@ -48,7 +48,7 @@ export const ptBR = {
     eyebrow: 'Dentro da Atlassian',
     headline: 'Tudo o que construímos roda dentro do seu próprio ambiente Atlassian.',
     paragraphs: [
-      'Todo app que publicamos roda em Atlassian Forge, então o código executa dentro da infraestrutura da Atlassian e os seus dados ficam no seu próprio ambiente Atlassian. Isso já responde a maior parte de uma revisão de segurança antes mesmo de ela começar: não há host de terceiros para avaliar, nada saindo da Atlassian para documentar, e nenhum tempo de atividade separado do qual depender.',
+      'Todo app que publicamos roda em Atlassian Forge, então o código executa dentro da infraestrutura da Atlassian e os seus dados ficam no seu próprio ambiente Atlassian. Isso já responde a maior parte de uma revisão de segurança antes mesmo de ela começar: quem revisa avalia uma plataforma que já foi aprovada, e a disponibilidade da qual você depende é a mesma de sempre.',
       'Cada app pede as permissões de que precisa para fazer o seu trabalho, e cada um publica exatamente o que guarda na própria página. Nossa página Sobre lista todos eles em uma tabela só, para você conferir antes de instalar e não depois.',
       'Somos parceiros no Atlassian Marketplace, trabalhamos de Canoas, no sul do Brasil, e atendemos suporte em inglês, português e espanhol.',
     ],

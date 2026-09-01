@@ -16,8 +16,8 @@ export const ptBR = {
     headline: 'Funciona no seu Jira?',
     items: [
       'Jira Cloud e Jira Service Management. Instalado pelo Atlassian Marketplace por um admin do site Jira.',
-      'Só Cloud. Não existe versão Data Center ou Server, porque o app é construído em Atlassian Forge.',
-      'Nada para configurar no Jira antes. Sem novos custom fields, sem mexer em screen schemes, sem editar workflows.',
+      'Roda no Jira Cloud, construído em Atlassian Forge. Data Center e Server não são suportados.',
+      'Pronto assim que instala. Ele lê os campos, status e worklogs que o seu Jira já tem.',
     ],
   },
   problem: { eyebrow: 'O problema' },
@@ -48,7 +48,6 @@ export const ptBR = {
   security: {
     eyebrow: 'Segurança e dados',
     headline: 'Os dados do seu Jira ficam no seu Jira.',
-    scopes: 'Permissões solicitadas',
   },
   languages: {
     eyebrow: 'Idiomas',

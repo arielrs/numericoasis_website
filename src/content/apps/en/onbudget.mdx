@@ -8,7 +8,7 @@ metaDescription: "Turn work already tracked in Jira into budgets, forecasts and 
 version: "2.4.0"
 dateModified: 2026-08-19
 tagline: Budget tracking and cost reporting for Jira. Budget versus actual, health, and forecast, from work your team already tracks.
-description: OnBudget is a Jira Cloud app that turns work already tracked in Jira into money. Measure spend from story points, worklogs priced by rate cards, a numeric field, or counts of work items, then follow budget versus actual with health thresholds, variance, and a linear forecast on a dashboard you can rearrange and share. No new custom fields.
+description: OnBudget is a Jira Cloud app that turns work already tracked in Jira into money. Measure spend from story points, worklogs priced by rate cards, a numeric field, or counts of work items, then follow budget versus actual with health thresholds, variance, and a linear forecast on a dashboard you can rearrange and share. It works with the fields your Jira already has.
 marketplaceUrl: https://marketplace.atlassian.com/apps/2136850574/onbudget-cost-tracking-budget-reports-for-jira
 documentationUrl: /documentation/onbudget/overview/
 supportUrl: https://numericoasis.atlassian.net/servicedesk/customer/portal/39
@@ -21,21 +21,15 @@ priceModel: paid
 icon: ../../../assets/logos/onbudget.png
 runsOnAtlassian: true
 storesPersonalData: false
-scopeSummary:
-  - "read:jira-work"
-  - "read:jira-user"
-  - "storage:app"
 dataStatement: >-
-  OnBudget stores your report settings and nothing else. It never stores the content of your
-  work items, and it never stores the results of a report. Every read is made with your own Jira
-  permissions, account and group identifiers are hashed before they are used as storage keys, and
-  uninstalling the app purges everything it held.
+  OnBudget keeps your report settings and nothing else. Every read runs with your own Jira
+  permissions, and uninstalling purges everything it held.
 
 answerFirst: >-
   OnBudget is a Jira Cloud app for budget tracking and cost reporting. It turns work you already
   track in Jira into money. Pick story points, worklogs with rate cards, a numeric field, or counts
   of work items, set a budget in one of 18 currencies, and get spend, variance, and a forecast on
-  your dashboard. It reads your Jira and changes nothing in it.
+  your dashboard. It reads your Jira, working from the fields and worklogs already there.
 
 audiences:
   - PMO and portfolio managers
@@ -142,9 +136,9 @@ keyFeatures:
   - English, Portuguese and Spanish
 
 trustSignals:
-  - Changes nothing in Jira
-  - No new custom fields
-  - Stores only your report settings
+  - Five ways to price your work
+  - Works with the data already in Jira
+  - Budget, forecast and variance
   - Built on Atlassian Forge
 
 useCases:

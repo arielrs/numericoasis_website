@@ -58,7 +58,7 @@ export const en = {
   },
   landing: {
     ctaHeading: 'Try it on your own Jira',
-    ctaBody: 'A free trial on the Atlassian Marketplace. It reads your Jira and changes nothing in it, so there is nothing to undo if it is not for you.',
+    ctaBody: 'A free trial on the Atlassian Marketplace. It reads your Jira rather than editing it, so trying it costs you a Marketplace click and nothing else.',
   },
   legal: {
     heading: 'Legal',

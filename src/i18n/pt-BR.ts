@@ -58,7 +58,7 @@ export const ptBR = {
   },
   landing: {
     ctaHeading: 'Teste no seu próprio Jira',
-    ctaBody: 'Teste gratuito no Atlassian Marketplace. Ele lê o seu Jira e não muda nada lá dentro, então não há nada para desfazer se não for para você.',
+    ctaBody: 'Teste gratuito no Atlassian Marketplace. Lê o seu Jira em vez de editar, então testar custa um clique no Marketplace e mais nada.',
   },
   legal: {
     heading: 'Jurídico',

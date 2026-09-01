@@ -19,7 +19,7 @@ export const ptBR = {
     headline: 'Parceira no Atlassian Marketplace.',
     paragraphs: [
       'Tudo o que publicamos passa pelo Atlassian Marketplace, o que significa que a Atlassian cuida de licenciamento, cobrança e distribuição, e você compra nossos apps do mesmo jeito que compra qualquer outro. Nossa página de fornecedor lista tudo o que já publicamos.',
-      'Todo app que publicamos roda inteiramente em Atlassian Forge, que é o que o torna elegível para o programa Runs on Atlassian da Atlassian: o código roda dentro da infraestrutura da Atlassian. Não há servidor de fornecedor no caminho e nada seu sai do seu site.',
+      'Todo app que publicamos roda inteiramente em Atlassian Forge, que é o que o torna elegível para o programa Runs on Atlassian da Atlassian: o código roda dentro da infraestrutura da Atlassian. Cada requisição roda dentro da Atlassian, e o que é seu fica no seu site.',
     ],
     link: 'Nossa página no Marketplace',
   },
@@ -27,14 +27,14 @@ export const ptBR = {
     eyebrow: 'Como construímos',
     headline: 'Feito para passar na sua revisão de segurança.',
     paragraphs: [
-      'Forge significa que nosso código roda dentro da infraestrutura da Atlassian e não em um servidor nosso. Quem revisa não tem host de terceiros para avaliar, nada saindo da Atlassian para documentar, e nada seu em um banco de dados que a gente opera. A maior parte do questionário é respondida por onde o código roda.',
+      'Forge significa que nosso código roda dentro da infraestrutura da Atlassian e não em um servidor nosso. Quem revisa avalia uma plataforma que já foi aprovada, documenta um limite que os seus dados nunca cruzam, e não encontra nada seu em um banco de dados que a gente opera. A maior parte do questionário é respondida por onde o código roda.',
       'As permissões seguem o mesmo princípio. Cada app pede os escopos de que precisa para fazer o seu trabalho, e cada um diz na própria página exatamente o que guarda. A tabela abaixo põe todos lado a lado, para você conferir tudo em um lugar só.',
     ],
   },
   dataTable: {
     eyebrow: 'O que cada app guarda',
     headline: 'App por app, em linguagem simples.',
-    lede: 'A maioria dos nossos apps não guarda nada sobre o seu conteúdo. Os que guardam dados pessoais guardam porque o trabalho exige: um aceite que não diz quem aceitou não é um aceite, e uma trilha de auditoria que não diz quem fez a mudança não é uma trilha de auditoria.',
+    lede: 'A maioria dos nossos apps lê o seu conteúdo e não guarda nada dele. Os que guardam dados pessoais guardam porque o trabalho exige: um aceite que não diz quem aceitou não é um aceite, e uma trilha de auditoria que não diz quem fez a mudança não é uma trilha de auditoria.',
     columns: {
       app: 'App',
       host: 'Produto',

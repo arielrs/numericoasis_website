@@ -11,7 +11,7 @@ export const ptBR = {
   },
   eyebrow: 'Atlassian Marketplace',
   headline: 'Apps para Jira e Confluence Cloud.',
-  lede: 'Todos rodam em Forge dentro do seu próprio ambiente Atlassian, então seus dados ficam onde já estão, não há servidor de fornecedor para a segurança aprovar, e as atualizações chegam sem janela de manutenção.',
+  lede: 'Todos rodam em Forge dentro do seu próprio ambiente Atlassian, então seus dados ficam onde já estão, a sua análise de segurança cobre uma plataforma que você já aprovou, e as atualizações chegam sem janela de manutenção.',
   groups: {
     jira: 'Para o Jira',
     confluence: 'Para o Confluence',

@@ -80,7 +80,7 @@ Se a disciplina de timesheet já funciona na sua organização, use-a e precifiq
 
 O OnBudget é um app para Jira Cloud e também atende o Jira Service Management. Ele é construído sobre o Atlassian Forge, então é só Cloud: não existe versão para Data Center nem para Server, e rodar inteiramente no Forge é o que o torna elegível para o programa Runs on Atlassian.
 
-Ele pede read:jira-work, read:jira-user e storage:app. Somente leitura no Jira: nenhum campo personalizado novo, nenhuma alteração em esquema de telas, nada gravado de volta. Ele guarda a configuração dos seus relatórios e nada mais, nunca o conteúdo dos itens de trabalho e nunca o resultado de um relatório, e desinstalar apaga tudo o que ele guardava. A interface está em inglês, português e espanhol. O OnBudget é pago, com teste gratuito, no Atlassian Marketplace.
+Ele lê o seu Jira em vez de editar, e funciona com os campos, status e worklogs que já estão lá. Guarda a configuração dos seus relatórios e nada mais, e desinstalar apaga tudo o que ele guardava. A interface está em inglês, português e espanhol. O OnBudget é pago, com teste gratuito, no Atlassian Marketplace.
 
 ## Teste com os seus próprios dados
 

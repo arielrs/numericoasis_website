@@ -153,7 +153,6 @@ const apps = defineCollection({
          * false. A missing value must fail the build, not publish an answer.
          */
         storesPersonalData: z.boolean(),
-        scopeSummary: z.array(z.string()).default([]),
         dataStatement: z.string().optional(),
         trustSignals: z.array(z.string()).default([]),
 

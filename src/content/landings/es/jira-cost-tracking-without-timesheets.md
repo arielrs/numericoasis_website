@@ -80,7 +80,7 @@ Si en tu organización ya funciona la disciplina de los partes de horas, úsala 
 
 OnBudget es una app para Jira Cloud y da soporte a Jira Service Management. Está construida sobre Atlassian Forge, así que es solo Cloud: no hay versión para Data Center ni para Server, y funcionar por completo sobre Forge es lo que la hace elegible para el programa Runs on Atlassian.
 
-Pide read:jira-work, read:jira-user y storage:app. Solo lectura sobre Jira: ningún campo personalizado nuevo, ningún cambio en el esquema de pantallas, nada escrito de vuelta. Guarda la configuración de tus informes y nada más, nunca el contenido de los elementos de trabajo y nunca el resultado de un informe, y desinstalarla borra todo lo que guardaba. La interfaz está en inglés, portugués y español. OnBudget es de pago, con prueba gratuita, en el Atlassian Marketplace.
+Lee tu Jira en vez de editarlo, y funciona con los campos, estados y worklogs que ya están ahí. Guarda la configuración de tus informes y nada más, y desinstalarla borra todo lo que guardaba. La interfaz está en inglés, portugués y español. OnBudget es de pago, con prueba gratuita, en el Atlassian Marketplace.
 
 ## Pruébalo con tus propios datos
 

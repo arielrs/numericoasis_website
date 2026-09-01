@@ -29,7 +29,6 @@ export const es = {
   data: {
     eyebrow: 'Datos y permisos',
     headline: 'Qué ve la app, y qué guarda.',
-    scopes: 'Permisos solicitados',
   },
   faq: {
     eyebrow: 'Preguntas',

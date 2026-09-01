@@ -13,6 +13,7 @@ import { Image } from 'astro:assets';
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import AppCard from '../../components/AppCard.astro';
+import CapabilityStrip from '../../components/CapabilityStrip.astro';
 import { outbound } from '../../lib/outbound';
 import HeroCanvas from '../../components/HeroCanvas.astro';
 import PostCard from '../../components/PostCard.astro';
@@ -156,28 +157,7 @@ const arrow =
        The heading was an invisible aria-label reading "How our apps are built",
        which told the reader the row was about us. It is now visible, and says
        what our own Marketplace listings say over the same facts. -->
-  <section class="border-b border-sand-200 bg-paper py-8">
-    <div class="container-wide">
-      <h2 class="eyebrow reveal text-center" data-reveal-words>
-        {words(t.proof.label).map((word, i) => (
-          <>
-            <span class="hero-word" style={`--word-delay: ${wordDelay(i, 0, 90)}ms`}>{word}</span>{' '}
-          </>
-        ))}
-      </h2>
-      <ul
-        class="mt-4 flex flex-wrap items-center justify-center gap-x-6 gap-y-3 text-xs font-semibold uppercase tracking-[0.14em] text-brand-700"
-        data-reveal-group
-      >
-        {t.proof.items.map((item) => (
-          <li class="reveal flex items-center gap-2">
-            <svg class="text-water-600" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12" /></svg>
-            {item}
-          </li>
-        ))}
-      </ul>
-    </div>
-  </section>
+  <CapabilityStrip items={t.proof.items} label={t.proof.label} reveal />
 
   <!-- 3. ONBUDGET: the app we lead with, given the room to actually sell.
        This used to be one screenshot, two hedged paragraphs and a text link.

@@ -37,13 +37,13 @@ export const en = {
     cta: {
       onbudget: {
         headline: 'Want this without the spreadsheet?',
-        body: 'OnBudget turns the work your team already tracks in Jira into budgets, forecasts and cost reports. No new custom fields, and nothing in your Jira changes.',
+        body: 'OnBudget turns the work your team already tracks in Jira into budgets, forecasts and cost reports. It works with the fields your team already fills in, and it reads your Jira rather than editing it.',
         primary: 'See what OnBudget does',
         secondary: 'Ask us a question',
       },
       general: {
         headline: 'We build Atlassian Marketplace apps.',
-        body: 'Forge apps for Jira and Confluence Cloud that run inside your own Atlassian environment. Your data stays where it already is, and there is no vendor server for security to sign off.',
+        body: 'Forge apps for Jira and Confluence Cloud that run inside your own Atlassian environment. Your data stays where it already is, and your security review covers one platform you have already approved.',
         primary: 'See our apps',
         secondary: 'Ask us a question',
       },

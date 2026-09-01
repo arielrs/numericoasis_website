@@ -39,13 +39,13 @@ export const es = {
     cta: {
       onbudget: {
         headline: '¿Quieres esto sin la hoja de cálculo?',
-        body: 'OnBudget convierte el trabajo que tu equipo ya registra en Jira en presupuestos, pronósticos e informes de costo. Sin campos personalizados nuevos, y nada cambia en tu Jira.',
+        body: 'OnBudget convierte el trabajo que tu equipo ya registra en Jira en presupuestos, pronósticos e informes de costo. Funciona con los campos que tu equipo ya rellena, y lee tu Jira en vez de editarlo.',
         primary: 'Mira qué hace OnBudget',
         secondary: 'Escríbenos',
       },
       general: {
         headline: 'Construimos apps del Atlassian Marketplace.',
-        body: 'Apps en Forge para Jira y Confluence Cloud que funcionan dentro de tu propio entorno de Atlassian. Tus datos se quedan donde ya están, y no hay servidor de proveedor que seguridad tenga que aprobar.',
+        body: 'Apps en Forge para Jira y Confluence Cloud que funcionan dentro de tu propio entorno de Atlassian. Tus datos se quedan donde ya están, y tu revisión de seguridad cubre una plataforma que ya tienes aprobada.',
         primary: 'Mira nuestras apps',
         secondary: 'Escríbenos',
       },

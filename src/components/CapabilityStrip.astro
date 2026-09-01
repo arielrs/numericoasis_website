@@ -1,0 +1,72 @@
+---
+/**
+ * The row of short claims that sits directly under a hero.
+ *
+ * WHAT THIS REPLACED, AND WHY
+ *
+ * Three near-identical copies of this markup existed: the app detail route, the
+ * OnBudget route and the home page. Two were byte for byte the same. They
+ * rendered small uppercase letter-spaced grey text with tick marks, which is
+ * the visual language of a compliance footer, and they were filled with claims
+ * like "Changes nothing in Jira" and "Shows only what you can already see".
+ *
+ * Both halves were wrong. The wording sold an absence: the second of those
+ * appeared on Astrolink, a product whose entire job is to show you something
+ * you could not see before. And the styling asked a reader to treat a
+ * capability claim as fine print.
+ *
+ * So the row now states what the app DOES, in sentence case, as chips that look
+ * like product rather than like a disclaimer. The read only and permission
+ * facts are still worth making, and they still are, further down the page where
+ * a buyer has formed the question rather than above the fold where the claim
+ * plants the doubt it then answers.
+ *
+ * One component, three call sites, so the treatment cannot drift apart again.
+ */
+import { words, wordDelay } from '../lib/words';
+
+interface Props {
+  items: readonly string[];
+  /**
+   * A visible heading above the row. The home page uses one; the app pages do
+   * not, because their hero already names the product.
+   */
+  label?: string;
+  /**
+   * Home page only. Joins the scroll reveal choreography, and animates the
+   * label word by word the way the rest of that page does.
+   */
+  reveal?: boolean;
+}
+
+const { items, label, reveal = false } = Astro.props;
+---
+
+<section class="border-b border-sand-200 bg-paper py-7">
+  <div class="container-wide">
+    {label && (
+      <h2 class:list={['eyebrow text-center', reveal && 'reveal']} data-reveal-words={reveal ? '' : undefined}>
+        {reveal
+          ? words(label).map((word, i) => (
+              <>
+                <span class="hero-word" style={`--word-delay: ${wordDelay(i, 0, 90)}ms`}>{word}</span>{' '}
+              </>
+            ))
+          : label}
+      </h2>
+    )}
+    <ul
+      class:list={['flex flex-wrap items-center justify-center gap-2.5', label && 'mt-4']}
+      data-reveal-group={reveal ? '' : undefined}
+    >
+      {items.map((item) => (
+        <li
+          class:list={[
+            'rounded-full border border-sand-200 bg-sand-50 px-4 py-1.5 text-sm font-medium text-brand-800',
+            reveal && 'reveal',
+          ]}
+        >{item}</li>
+      ))}
+    </ul>
+  </div>
+</section>

@@ -96,41 +96,91 @@ for (const collection of ['apps', 'blog', 'landings']) {
   }
 }
 
-// 2b. Defensive copy.
+// 2b. Defensive copy, in three languages.
 //
-// A review of every English string found the site was selling its hosting
-// choice instead of the buyer's outcome, and volunteering what it would not do:
-// "Forge only, and that is a deliberate constraint", "Read-only where we can
-// be", "we do not hold a partner tier", "or tell you that none of ours do".
-// Four instances of one habit, which means it needs a guard or it comes back
-// one string at a time.
+// The habit: selling an absence instead of a benefit. "Changes nothing in
+// Jira" tells a buyer the app does nothing. "Shows only what you can already
+// see" told them it showed them less, on Astrolink, whose entire job is to show
+// them something they could not see before.
 //
-// Deliberately short, and deliberately literal. It bans the exact phrasings
-// that were removed, not the words in general: "No new custom fields" is a
-// benefit a Jira admin wants to read, and stays.
+// This list has been wrong twice. The first version banned four exact English
+// phrasings that had just been removed, and a later audit found 73 more
+// instances of the same habit that it could not see, because two thirds of them
+// were in Portuguese or Spanish and the list was English only. Both faults are
+// fixed here: the rules are per locale, and they match the SHAPE of the habit
+// rather than four sentences somebody once wrote.
+//
+// Reversal on the record: the previous version of this comment carved out "No
+// new custom fields" as "a benefit a Jira admin wants to read". The owner
+// overruled that after seeing it on the page. It is still a real benefit; it is
+// now stated as one ("works with the data already in Jira") rather than as a
+// thing we do not do. Do not re-add the carve-out.
+//
+// src/content/docs is EXCLUDED. The old version silently policed it, because
+// COPY_DIRS contains src/content, and its own comment claimed otherwise.
+// /documentation/onbudget/what-onbudget-does-not-do/ is a deliberate asset:
+// answer engines build comparison tables out of negative facts, and a product
+// with no stated limits is left out of them. The same goes for the "what you
+// give up" sections in the long-form posts. Absence claims belong there. They do
+// not belong above the fold on a page someone is paying to send traffic to.
 {
   const BANNED = [
-    'deliberate constraint',
-    'forge only',
-    'rather than beside it',
-    'we do not hold',
-    'narrow focus',
-    'where we can be',
-    'none of ours do',
-    'not the pitch',
+    // The originals, kept.
+    { re: /deliberate constraint/i, say: 'sells the constraint, not the outcome' },
+    { re: /\bforge only\b/i, say: 'sells the hosting choice as a limit' },
+    { re: /rather than beside it/i, say: 'defensive framing' },
+    { re: /\bnarrow focus\b/i, say: 'diminisher' },
+    { re: /where we can be\b/i, say: 'hedged capability' },
+    { re: /none of ours do/i, say: 'defensive framing' },
+    { re: /not the pitch/i, say: 'defensive framing' },
+
+    // English: the shapes the audit actually found.
+    { re: /changes? nothing in (jira|confluence)/i, say: 'sells an absence: say what it does with your data' },
+    { re: /shows? only what you (can )?already/i, say: 'sells an absence: say it respects permissions' },
+    { re: /\bnever writes to\b/i, say: 'sells an absence: say it reads rather than edits' },
+    { re: /\bno new custom fields\b/i, say: 'sells an absence: say it works with the fields already there' },
+    { re: /\bstores only\b/i, say: 'diminisher: say what it keeps and why' },
+    { re: /no third-party server to review/i, say: 'sells an absence: say the review stays inside Atlassian' },
+    { re: /nothing to undo/i, say: 'pre-concedes the sale' },
+    { re: /uninstall removes everything/i, say: 'sells the exit, not the product' },
+
+    // Portuguese.
+    { re: /não mud[ao] nada no (jira|confluence)/i, say: 'vende uma ausência: diga o que ele faz' },
+    { re: /mostra só o que você já/i, say: 'vende uma ausência: diga que respeita permissões' },
+    { re: /nunca escreve n[oa]/i, say: 'vende uma ausência: diga que lê em vez de editar' },
+    { re: /sem campos personalizados novos/i, say: 'vende uma ausência: diga que usa os campos que já existem' },
+    { re: /guarda apenas/i, say: 'diminuidor: diga o que guarda e por quê' },
+    { re: /nenhum servidor de terceiros/i, say: 'vende uma ausência' },
+    { re: /nada para desfazer/i, say: 'concede a venda antes da hora' },
+    { re: /desinstalar remove tudo/i, say: 'vende a saída, não o produto' },
+
+    // Spanish.
+    { re: /no cambia nada en (jira|confluence)/i, say: 'vende una ausencia: di qué hace' },
+    { re: /muestra solo lo que ya/i, say: 'vende una ausencia: di que respeta los permisos' },
+    { re: /nunca escribe en/i, say: 'vende una ausencia: di que lee en vez de editar' },
+    { re: /sin campos personalizados nuevos/i, say: 'vende una ausencia: di que usa los campos que ya existen' },
+    { re: /guarda solo/i, say: 'diminutivo: di qué guarda y por qué' },
+    { re: /ningún servidor de terceros/i, say: 'vende una ausencia' },
+    { re: /nada que deshacer/i, say: 'concede la venta antes de tiempo' },
+    { re: /desinstalar lo elimina todo/i, say: 'vende la salida, no el producto' },
   ];
+
   const COPY_DIRS = [join('src', 'i18n'), join('src', 'content'), join('src', 'consts.ts')];
+  // Product documentation and the legal pages state limits on purpose.
+  const EXEMPT = [join('src', 'content', 'docs'), join('src', 'i18n', 'pages', 'privacy')];
   const files = (await walk(join(ROOT, 'src'))).filter((f) => /\.(ts|mdx?|md)$/.test(f));
 
   for (const file of files) {
     const shown = relative(ROOT, file);
     if (!COPY_DIRS.some((dir) => shown.startsWith(dir))) continue;
+    if (EXEMPT.some((dir) => shown.startsWith(dir))) continue;
     const lines = (await readFile(file, 'utf8')).split('\n');
     lines.forEach((line, i) => {
-      const lower = line.toLowerCase();
-      for (const phrase of BANNED) {
-        if (lower.includes(phrase)) {
-          errors.push(`${shown}:${i + 1}: defensive copy, "${phrase}"`);
+      // A comment explaining the ban is not a violation of it.
+      if (/^\s*(\/\/|\*|<!--|#)/.test(line)) return;
+      for (const rule of BANNED) {
+        if (rule.re.test(line)) {
+          errors.push(`${shown}:${i + 1}: defensive copy, ${rule.say}`);
         }
       }
     });
