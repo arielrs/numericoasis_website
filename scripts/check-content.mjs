@@ -364,7 +364,7 @@ for (const collection of ['apps', 'blog', 'landings']) {
     // keyed, which is cruder than walking the AST and enough: any edit to an
     // English string moves its hash.
     const strings = [...source.matchAll(/'((?:[^'\\\n]|\\.){8,})'/g)].map((m) => m[1]);
-    current[shown] = createHash('sha256').update(strings.join(' ')).digest('hex').slice(0, 16);
+    current[shown] = createHash('sha256').update(strings.join(' ')).digest('hex').slice(0, 16);
   }
 
   if (accept) {
@@ -449,6 +449,41 @@ for (const collection of ['apps', 'blog', 'landings']) {
         }
       }
     }
+  }
+}
+
+// 8. The Google tag configuration is all-or-nothing per product.
+//
+// src/consts.ts GOOGLE_TAG holds three independent strings, and two of them only
+// work as a pair. Paste adsConversionId without adsConversionLabel and
+// ConsentGate.astro still loads the tag, still fires marketplace_click, and
+// never fires a single conversion, because the send_to needs both halves. The
+// site would look correctly configured and Smart Bidding would have nothing to
+// learn from. That is the kind of failure nobody notices for a month of spend.
+{
+  const source = await readFile(join(ROOT, 'src', 'consts.ts'), 'utf8');
+  // `\\s`, not `\s`. Inside a template literal `\s` is not a valid escape and
+  // collapses to a bare "s", so the pattern would require `measurementId:s*'...'`
+  // and match nothing, leaving this whole guard silently inert. The same bug
+  // lives in frontmatterValue above, where it happens to be harmless.
+  const read = (key) => (source.match(new RegExp(`${key}:\\s*'([^']*)'`)) ?? [])[1] ?? '';
+
+  const measurement = read('measurementId');
+  const adsId = read('adsConversionId');
+  const adsLabel = read('adsConversionLabel');
+
+  if (Boolean(adsId) !== Boolean(adsLabel)) {
+    errors.push(
+      'src/consts.ts: GOOGLE_TAG needs adsConversionId and adsConversionLabel together. ' +
+        `Got ${adsId ? 'an id with no label' : 'a label with no id'}, which ships click ` +
+        'events and no conversions.',
+    );
+  }
+  if (measurement && !/^G-[A-Z0-9]+$/.test(measurement)) {
+    errors.push(`src/consts.ts: measurementId should look like G-XXXXXXXXXX, got "${measurement}"`);
+  }
+  if (adsId && !/^AW-\d+$/.test(adsId)) {
+    errors.push(`src/consts.ts: adsConversionId should look like AW-123456789, got "${adsId}"`);
   }
 }
 
