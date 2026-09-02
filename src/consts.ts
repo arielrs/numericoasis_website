@@ -102,7 +102,7 @@ export const CLOUDFLARE_ANALYTICS_TOKEN = '09bc00fc0b37489693bcfd821bde013c';
  * it happens on a domain we do not control. See ConsentGate.astro.
  */
 export const GOOGLE_TAG = {
-  measurementId: '',
+  measurementId: 'G-B57RCD9930',
   adsConversionId: '',
   adsConversionLabel: '',
 } as const;
