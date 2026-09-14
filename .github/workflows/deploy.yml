@@ -1,3 +1,11 @@
+# Action majors are kept current because GitHub retires the Node runtime an
+# action declares, not the action itself. A pin left behind is first forced onto
+# the newer runtime with a deprecation annotation on every run, and is then
+# stopped outright. checkout, setup-node and deploy-pages declare node24 at the
+# majors pinned below. withastro/action is composite and reaches
+# upload-pages-artifact through its own pins, so it moves in step with
+# deploy-pages rather than on its own schedule.
+
 name: Deploy to GitHub Pages
 
 on:
@@ -21,13 +29,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       # Runs `npm run build`, whose prebuild and postbuild hooks run astro check,
       # the content-parity and typography checks, and the dist checks. A failure
       # here means nothing is uploaded, so a broken build cannot reach the site.
       - name: Install, build, and upload your site
-        uses: withastro/action@v3
+        uses: withastro/action@v6
         with:
           node-version: 22
 
@@ -40,10 +48,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Set up Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
           node-version: 22
           cache: npm
@@ -77,7 +85,7 @@ jobs:
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5
 
   # Requires a repository variable INDEXNOW_KEY (Settings, Secrets and variables,
   # Actions, Variables) matching the key file in public/. It is a variable rather
@@ -88,7 +96,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Submit URLs to IndexNow
         env:
