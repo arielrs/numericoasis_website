@@ -108,6 +108,17 @@ export default defineConfig({
     '/es/blog/real-value-custom-integrations': '/es/blog/',
     '/pt-BR/blog/real-value-custom-integrations': '/pt-BR/blog/',
 
+    // Two OnBudget posts, live since 1 September and pulled back to draft on
+    // 14 September. Same treatment as the post above: the writing stays in the
+    // repo, and the URLs that were indexed in that window resolve rather than
+    // 404.
+    '/blog/does-jira-have-budgeting': '/blog/',
+    '/es/blog/does-jira-have-budgeting': '/es/blog/',
+    '/pt-BR/blog/does-jira-have-budgeting': '/pt-BR/blog/',
+    '/blog/jira-cost-from-story-points': '/blog/',
+    '/es/blog/jira-cost-from-story-points': '/es/blog/',
+    '/pt-BR/blog/jira-cost-from-story-points': '/pt-BR/blog/',
+
     // OnBudget is the flagship and lives at its own top-level URL. The
     // predictable /apps/<slug>/ form redirects rather than 404s.
     '/apps/onbudget': '/onbudget/',
