@@ -41,6 +41,16 @@ interface Props {
   alternates?: LocaleAlternates;
   /** Where the header call to action points on this page. See Nav.astro. */
   navCta?: { href: string; label: string; external?: boolean };
+  /**
+   * Opt this page into the scroll reveal and the on-load entrance.
+   *
+   * Off by default, and deliberately opt-in rather than opt-out: a new page
+   * should have to argue for motion, not inherit it. On today's site that means
+   * the home page and the two pages that take buying traffic. The rules live in
+   * global.css and every one of them is gated on the [data-motion] attribute
+   * this renders, so a page that does not ask simply paints its content.
+   */
+  motion?: boolean;
   /** Page-owned structured data, merged into the single per-page @graph. */
   graph?: {
     breadcrumbs?: Crumb[];
@@ -50,7 +60,7 @@ interface Props {
   };
 }
 
-const { title, description, metaDescription, image, article, noindex, follow, standalone, alternates, navCta, graph = {} } = Astro.props;
+const { title, description, metaDescription, image, article, noindex, follow, standalone, alternates, navCta, motion = false, graph = {} } = Astro.props;
 const lang = detectLangFromPath(Astro.url.pathname);
 const t = useTranslations(lang);
 
@@ -71,7 +81,7 @@ const jsonLd = buildGraph({
 ---
 
 <!doctype html>
-<html lang={HTML_LANG_MAP[lang]} class="scroll-smooth">
+<html lang={HTML_LANG_MAP[lang]} class="scroll-smooth" data-motion={motion ? '' : undefined}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -79,7 +89,14 @@ const jsonLd = buildGraph({
     <!-- Scroll reveals hide their content, so the rule that hides it is gated
          behind this class. It is set here, inline and before any paint, so
          there is no flash of already-visible content; and it is set by script,
-         so a reader with JavaScript off never gets the hidden state at all. -->
+         so a reader with JavaScript off never gets the hidden state at all.
+
+         Set on every page, not only the ones with motion. The hidden state also
+         needs [data-motion], which only the motion pages render, but the
+         reduced-motion carve-outs at the foot of global.css are keyed on this
+         class alone and damp hover transitions on btn-cta site wide. Making
+         this conditional would quietly collapse those to the blanket 0.01ms on
+         every page that does not animate. -->
     <script is:inline>
       document.documentElement.classList.add('js-motion');
     </script>
@@ -147,94 +164,101 @@ const jsonLd = buildGraph({
        *
        * Failure is safe by construction. If IntersectionObserver is missing,
        * or this script throws, everything is revealed immediately.
+       *
+       * Pages that did not opt into motion never had anything hidden, because
+       * the CSS that hides it needs the [data-motion] attribute on <html>.
+       * Leaving early keeps this from walking the DOM and setting a class that
+       * resolves nothing on most of the site.
        */
-      const groups = Array.from(document.querySelectorAll<HTMLElement>('[data-reveal-group]'));
+      if (document.documentElement.hasAttribute('data-motion')) {
+        const groups = Array.from(document.querySelectorAll<HTMLElement>('[data-reveal-group]'));
 
-      // Two ways in, matching the two CSS selectors: an element marked
-      // `.reveal` itself, or any direct child of a marked group. The group form
-      // means a section only has to tag its wrapper, and the children still
-      // arrive one after another.
-      const nodes = Array.from(
-        new Set([
-          ...document.querySelectorAll<HTMLElement>('.reveal'),
-          ...groups.flatMap((g) => Array.from(g.children) as HTMLElement[]),
-        ]),
-      );
-
-      const showAll = () => nodes.forEach((el) => el.classList.add('is-visible'));
-
-      // Reduced motion resolves every reveal at once, deliberately.
-      //
-      // global.css already says this in words: decorative motion is damped
-      // rather than stopped, but a reveal is not decorative, it is the content.
-      // Leaving the observer in charge meant anything sitting in the bottom
-      // tenth of the viewport stayed at opacity 0 until the reader scrolled,
-      // and forever if they never did. Measured at 11 of 35 on-screen elements,
-      // unchanged from 100ms through 1200ms. The script and the CSS intent now
-      // agree.
-      const calm = window.matchMedia('(prefers-reduced-motion: reduce)');
-
-      if (!('IntersectionObserver' in window) || calm.matches) {
-        showAll();
-      } else {
-        for (const group of groups) {
-          Array.from(group.children).forEach((el, i) => {
-            (el as HTMLElement).style.setProperty('--reveal-delay', `${Math.min(i, 5) * 70}ms`);
-          });
-        }
-
-        /**
-         * The hero plays a fixed choreography on load, ending around 2s.
-         * Anything already in the viewport at that moment would otherwise
-         * reveal at 0ms and land in the middle of it, so the reader sees the
-         * second section arrive before the headline has finished saying itself.
-         * On a laptop that is exactly what happened to the proof strip.
-         *
-         * Reveals that fire while the hero is still running queue behind it,
-         * and a batch arriving together is sorted into document order first, so
-         * the page introduces itself top to bottom however tall the screen is.
-         */
-        const HERO_END = 2000;
-        const started = performance.now();
-
-        const observer = new IntersectionObserver(
-          (entries) => {
-            const arriving = entries.filter((entry) => entry.isIntersecting);
-            if (!arriving.length) return;
-
-            arriving.sort((a, b) =>
-              a.target.compareDocumentPosition(b.target) & Node.DOCUMENT_POSITION_FOLLOWING
-                ? -1
-                : 1,
-            );
-
-            const elapsed = performance.now() - started;
-            const queueBehindHero = elapsed < HERO_END ? HERO_END - elapsed : 0;
-
-            arriving.forEach((entry, i) => {
-              const el = entry.target as HTMLElement;
-              if (queueBehindHero) {
-                // Whatever stagger the element already carries from its group
-                // is kept; the queue offset is added on top of it.
-                const own = parseFloat(el.style.getPropertyValue('--reveal-delay')) || 0;
-                el.style.setProperty(
-                  '--reveal-delay',
-                  `${own + queueBehindHero + Math.min(i, 8) * 80}ms`,
-                );
-              }
-              el.classList.add('is-visible');
-              observer.unobserve(el);
-            });
-          },
-          { rootMargin: '0px 0px -10% 0px', threshold: 0 },
+        // Two ways in, matching the two CSS selectors: an element marked
+        // `.reveal` itself, or any direct child of a marked group. The group form
+        // means a section only has to tag its wrapper, and the children still
+        // arrive one after another.
+        const nodes = Array.from(
+          new Set([
+            ...document.querySelectorAll<HTMLElement>('.reveal'),
+            ...groups.flatMap((g) => Array.from(g.children) as HTMLElement[]),
+          ]),
         );
 
-        nodes.forEach((el) => observer.observe(el));
+        const showAll = () => nodes.forEach((el) => el.classList.add('is-visible'));
 
-        // A backstop for anything the observer never reports on, which can
-        // happen if a container is display:none at load or the page is
-        // restored from bfcache mid-scroll.
-        window.setTimeout(showAll, 4000);
+        // Reduced motion resolves every reveal at once, deliberately.
+        //
+        // global.css already says this in words: decorative motion is damped
+        // rather than stopped, but a reveal is not decorative, it is the content.
+        // Leaving the observer in charge meant anything sitting in the bottom
+        // tenth of the viewport stayed at opacity 0 until the reader scrolled,
+        // and forever if they never did. Measured at 11 of 35 on-screen elements,
+        // unchanged from 100ms through 1200ms. The script and the CSS intent now
+        // agree.
+        const calm = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+        if (!('IntersectionObserver' in window) || calm.matches) {
+          showAll();
+        } else {
+          for (const group of groups) {
+            Array.from(group.children).forEach((el, i) => {
+              (el as HTMLElement).style.setProperty('--reveal-delay', `${Math.min(i, 5) * 70}ms`);
+            });
+          }
+
+          /**
+           * The hero plays a fixed choreography on load, ending around 2s.
+           * Anything already in the viewport at that moment would otherwise
+           * reveal at 0ms and land in the middle of it, so the reader sees the
+           * second section arrive before the headline has finished saying itself.
+           * On a laptop that is exactly what happened to the proof strip.
+           *
+           * Reveals that fire while the hero is still running queue behind it,
+           * and a batch arriving together is sorted into document order first, so
+           * the page introduces itself top to bottom however tall the screen is.
+           */
+          const HERO_END = 2000;
+          const started = performance.now();
+
+          const observer = new IntersectionObserver(
+            (entries) => {
+              const arriving = entries.filter((entry) => entry.isIntersecting);
+              if (!arriving.length) return;
+
+              arriving.sort((a, b) =>
+                a.target.compareDocumentPosition(b.target) & Node.DOCUMENT_POSITION_FOLLOWING
+                  ? -1
+                  : 1,
+              );
+
+              const elapsed = performance.now() - started;
+              const queueBehindHero = elapsed < HERO_END ? HERO_END - elapsed : 0;
+
+              arriving.forEach((entry, i) => {
+                const el = entry.target as HTMLElement;
+                if (queueBehindHero) {
+                  // Whatever stagger the element already carries from its group
+                  // is kept; the queue offset is added on top of it.
+                  const own = parseFloat(el.style.getPropertyValue('--reveal-delay')) || 0;
+                  el.style.setProperty(
+                    '--reveal-delay',
+                    `${own + queueBehindHero + Math.min(i, 8) * 80}ms`,
+                  );
+                }
+                el.classList.add('is-visible');
+                observer.unobserve(el);
+              });
+            },
+            { rootMargin: '0px 0px -10% 0px', threshold: 0 },
+          );
+
+          nodes.forEach((el) => observer.observe(el));
+
+          // A backstop for anything the observer never reports on, which can
+          // happen if a container is display:none at load or the page is
+          // restored from bfcache mid-scroll.
+          window.setTimeout(showAll, 4000);
+        }
       }
     </script>
   </body>

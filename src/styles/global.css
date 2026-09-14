@@ -213,19 +213,31 @@
   /*
    * Scroll reveal.
    *
-   * The hidden state is gated behind .js-motion, which BaseLayout sets on
-   * <html> from an inline script in <head>. With JavaScript off, blocked, or
-   * simply broken, none of these rules match and every page renders exactly as
-   * it did before this file gained a reveal at all. That matters more than the
-   * animation does: a reveal that fails closed is a blank page, and axe reads
-   * computed style, so text left at opacity 0 fails colour contrast and blocks
-   * the deploy.
+   * The hidden state is gated behind two flags that have to agree.
+   *
+   * .js-motion is set on <html> by an inline script in BaseLayout's <head>.
+   * With JavaScript off, blocked, or simply broken, none of these rules match
+   * and every page renders exactly as it did before this file gained a reveal
+   * at all. That matters more than the animation does: a reveal that fails
+   * closed is a blank page, and axe reads computed style, so text left at
+   * opacity 0 fails colour contrast and blocks the deploy.
+   *
+   * [data-motion] is rendered into the markup at build time, and only by the
+   * pages that ask for motion: the home page and the two commercial landing
+   * pages. Everywhere else the content is simply present. Motion is a device
+   * for the pages that are selling something, and on an about page or a policy
+   * page it is a tax the reader pays to read what they came for.
+   *
+   * The reason it is a build-time attribute rather than a second class set by
+   * script is that the entrance rules further down animate with no JavaScript
+   * at all, and gating those behind a scripted class would hand them a failure
+   * mode they do not currently have.
    *
    * Only transform and opacity are animated. Neither triggers layout, so CLS
    * stays at zero.
    */
-  .js-motion .reveal,
-  .js-motion [data-reveal-group] > * {
+  .js-motion[data-motion] .reveal,
+  .js-motion[data-motion] [data-reveal-group] > * {
     opacity: 0;
     transform: translateY(30px);
     transition:
@@ -233,8 +245,8 @@
       transform 900ms var(--ease-out-soft) var(--reveal-delay, 0ms);
   }
 
-  .js-motion .reveal.is-visible,
-  .js-motion [data-reveal-group] > .is-visible {
+  .js-motion[data-motion] .reveal.is-visible,
+  .js-motion[data-motion] [data-reveal-group] > .is-visible {
     opacity: 1;
     transform: none;
   }
@@ -255,8 +267,8 @@
    * and the content is simply there. No JavaScript is involved in any of it, so
    * there is no failure mode where the hero stays blank.
    */
-  .enter,
-  [data-enter] > * {
+  [data-motion] .enter,
+  [data-motion] [data-enter] > * {
     animation: enter 450ms var(--ease-out-soft) var(--enter-delay, 0ms) both;
   }
 
@@ -276,7 +288,7 @@
   }
 
   /* Inside a hero: plays once on load, no JavaScript. */
-  [data-enter] .hero-word {
+  [data-motion] [data-enter] .hero-word {
     animation: enter-word 450ms var(--ease-out-soft) var(--word-delay, 0ms) both;
   }
 
@@ -286,10 +298,11 @@
    * A transition rather than an animation, keyed off the `.is-visible` class
    * the existing IntersectionObserver already sets. No new observer, no new
    * script, and it inherits the failure behaviour that was already reasoned
-   * through: gated behind .js-motion, so with JavaScript off none of it
-   * matches and the words are simply there.
+   * through: gated behind .js-motion and [data-motion], so with JavaScript
+   * off, or on a page that did not ask for motion, none of it matches and the
+   * words are simply there.
    */
-  .js-motion [data-reveal-words] .hero-word {
+  .js-motion[data-motion] [data-reveal-words] .hero-word {
     opacity: 0;
     filter: blur(10px);
     transform: translateY(22%);
@@ -303,7 +316,7 @@
       transform 450ms var(--ease-out-soft) calc(var(--reveal-delay, 0ms) + var(--word-delay, 0ms));
   }
 
-  .js-motion [data-reveal-words].is-visible .hero-word {
+  .js-motion[data-motion] [data-reveal-words].is-visible .hero-word {
     opacity: 1;
     filter: blur(0);
     transform: none;
@@ -312,15 +325,15 @@
   /* The container must not fade as well. Two opacity curves multiplied together
      give a slow, muddy start that looks like a rendering fault rather than an
      effect. The words carry the whole reveal for these elements. */
-  .js-motion .reveal[data-reveal-words],
-  .js-motion [data-reveal-group] > [data-reveal-words] {
+  .js-motion[data-motion] .reveal[data-reveal-words],
+  .js-motion[data-motion] [data-reveal-group] > [data-reveal-words] {
     opacity: 1;
     transform: none;
   }
 
   /* The words animate themselves, so the heading must not animate as well or
      the two transforms compound. */
-  [data-enter] > h1[data-words] {
+  [data-motion] [data-enter] > h1[data-words] {
     animation: none;
   }
 
@@ -334,8 +347,8 @@
    * Transform does not affect LCP, so the heading rises into place while its
    * neighbours fade, and the difference is invisible at this distance.
    */
-  [data-enter] > h1,
-  h1.enter {
+  [data-motion] [data-enter] > h1,
+  [data-motion] h1.enter {
     animation-name: enter-shift;
   }
 
