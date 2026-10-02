@@ -1,0 +1,75 @@
+---
+lang: en
+translationKey: jira-700-custom-field-limit
+title: "Jira's 700 custom field limit is not a site-wide cap"
+metaTitle: "Jira's 700 field limit is per space"
+description: "Jira Cloud caps custom fields at 700 per space, not across your whole site, and one field can count toward several spaces at once. What Atlassian's guardrails actually say, what happens when a space reaches the line, and the order to audit in."
+metaDescription: "Jira caps custom fields at 700 per space, not per site. What Atlassian's guardrails say, what happens at the limit, and how to audit before you hit it."
+pubDate: 2026-10-02
+tags: ["jira-administration", "atlassian-cloud", "how-to"]
+author: team
+draft: false
+---
+
+Jira Cloud limits custom fields to **700 per space**, not 700 across your whole site. Atlassian's guardrails documentation says both halves of that plainly: the limit is "700 per space (fields included in field configuration schemes associated with the space)", and "there is no limit on the total number of custom fields that can exist across the site". Enforcement began in March 2026.
+
+That distinction matters more than it sounds. If you have been counting your site total and panicking, or counting it and relaxing, you have been watching the wrong number.
+
+## What the limit actually counts
+
+It counts fields reachable from a space through its field configuration schemes. Not fields that exist. Not fields anyone uses.
+
+The consequence is in one more sentence from the same page: "a field can count toward more than one space if it is included in schemes associated with those spaces."
+
+So a single field attached to forty schemes is forty counts, not one. Your exposure is not your field total divided by your spaces. It is whatever your worst space is carrying, and a tidy average can hide a space that is two fields from the line.
+
+## Trashed fields are already out of the count
+
+"Trashed fields don't count toward the 700-field limit."
+
+Worth knowing before you plan anything drastic, because it changes what counts as progress. Moving a field to trash reduces the number immediately, and it is a far easier thing to get approved than a deletion.
+
+## What happens when a space reaches the limit
+
+"If a space reaches either limit, Jira prevents an administrator from associating additional fields or work types with that space until usage is reduced."
+
+Read that carefully, because it is less dramatic than the word "limit" suggests. Nothing is deleted. Nothing is archived or disabled. People carry on creating and updating work items in that space. Other spaces are unaffected. What stops is your ability, as an administrator, to attach anything new to that one space.
+
+It is an administrative block, not an outage. That should change how urgently you treat it, and it should also change who you explain it to: the people who feel this first are admins with a change request in hand, not users.
+
+## Why "per space" changes the cleanup you run
+
+If the limit were site-wide, the job would be simple and brutal: delete fields until the number comes down.
+
+Because it is per space, the job is different. You are reducing exposure in the spaces closest to the line, which is not the same work and often not the same fields.
+
+Two consequences that catch people out:
+
+- **The expensive field is the over-attached one.** A field one team genuinely uses, attached to every scheme on the site, costs you a count in every space. It is a better cleanup target than a field nobody uses that only exists in one quiet space.
+- **Deleting unused fields in a healthy space buys you nothing.** It feels productive. It moves no number that Jira is actually enforcing.
+
+## The order to audit in
+
+1. **Rank your spaces by how close they are to 700.** Everything else is noise until you know where the pressure is. One space at 680 is a problem; forty spaces at 200 are not.
+2. **Inside those spaces, find fields with no real usage.** Not fields that look unused. Fields that have not been written to, with a date to prove it.
+3. **Find duplicates.** Years of migrations and departing admins leave you with "Customer", "Customer Name" and "Client" meaning the same thing on three different screens.
+4. **Check where fields came from.** Apps that were uninstalled often leave their fields behind, and those are usually the easiest removals to justify because nobody owns them.
+5. **Only then look at screens and contexts**, so you know what a removal will actually touch before you touch it.
+
+## Before you remove anything, export
+
+Deleting a custom field in Jira takes its data with it, everywhere, and there is no undo for the values. Export the full inventory first: field, type, origin, screens, contexts, last used, and which projects use it. If the cleanup turns out to be wrong, the export is the only record of what the configuration used to be.
+
+This is also the artefact that makes the work defensible. "We removed 180 fields" is a story. A before-and-after CSV is evidence, and it is what a migration or an audit will ask you for later.
+
+## Where Field Scout fits
+
+We publish [Field Scout](/apps/field-scout/), a free Forge app that does the audit above and nothing else.
+
+It classifies every custom field as Active, Stale, Likely Unused or Unused from real Jira usage rather than from guesswork, flags potential duplicates by exact and similar name, breaks usage down per project, tracks which product or app each field came from, and exports the whole inventory as CSV in four modes, including a cleanup list and a screen audit. It runs on Atlassian Forge, inside your own Atlassian environment, and it reads your Jira rather than editing it, so running the audit changes nothing you then have to undo.
+
+It is free on the Atlassian Marketplace. If you would rather do this with JQL and a spreadsheet, the order above still holds, and it is still the right order.
+
+## The short version
+
+The number to watch is your worst space, not your site. A field counts once per space that can reach it. Trashed fields have already stopped counting. And hitting the limit blocks an administrator, not a user, which buys you time to do the cleanup properly rather than in a hurry.

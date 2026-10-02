@@ -1,0 +1,75 @@
+---
+lang: pt-BR
+translationKey: jira-700-custom-field-limit
+title: "O limite de 700 custom fields do Jira não vale para o site inteiro"
+metaTitle: "Limite de 700 campos do Jira: por space"
+description: "O Jira Cloud limita custom fields a 700 por space, e não no site inteiro, e um mesmo campo pode contar em vários spaces ao mesmo tempo. O que os guardrails da Atlassian dizem de fato, o que acontece quando um space chega no limite, e em que ordem auditar."
+metaDescription: "O Jira limita custom fields a 700 por space, não por site. O que dizem os guardrails da Atlassian e como auditar antes de bater no limite."
+pubDate: 2026-10-02
+tags: ["jira-administration", "atlassian-cloud", "how-to"]
+author: team
+draft: false
+---
+
+O Jira Cloud limita custom fields a **700 por space**, e não 700 no site inteiro. A documentação de guardrails da Atlassian diz as duas metades disso com todas as letras: o limite é "700 per space (fields included in field configuration schemes associated with the space)" e "there is no limit on the total number of custom fields that can exist across the site". A cobrança desse limite começou em março de 2026.
+
+Essa diferença pesa mais do que parece. Se você vinha contando o total do site e se desesperando, ou contando e ficando tranquilo, estava olhando para o número errado.
+
+## O que o limite conta de verdade
+
+Ele conta os campos que um space alcança através dos seus field configuration schemes. Não os campos que existem. Não os campos que alguém usa.
+
+A consequência está em mais uma frase da mesma página: "a field can count toward more than one space if it is included in schemes associated with those spaces".
+
+Ou seja, um único campo ligado a quarenta schemes conta quarenta vezes, não uma. A sua exposição não é o total de campos dividido pelo número de spaces. É o que o seu pior space está carregando, e uma média bonitinha esconde fácil um space que está a dois campos do limite.
+
+## Campos na lixeira já saíram da conta
+
+"Trashed fields don't count toward the 700-field limit."
+
+Vale saber antes de planejar qualquer coisa drástica, porque muda o que conta como progresso. Mandar um campo para a lixeira já reduz o número, e é bem mais fácil de aprovar do que uma exclusão.
+
+## O que acontece quando um space chega no limite
+
+"If a space reaches either limit, Jira prevents an administrator from associating additional fields or work types with that space until usage is reduced."
+
+Leia com calma, porque é bem menos dramático do que a palavra "limite" sugere. Nada é apagado. Nada é arquivado nem desativado. As pessoas seguem criando e atualizando itens de trabalho naquele space. Os outros spaces não são afetados. O que para é a sua capacidade, como administrador, de ligar qualquer coisa nova àquele space específico.
+
+É um bloqueio administrativo, não uma queda. Isso muda a urgência, e muda também para quem você explica o assunto: quem sente primeiro é o admin com uma solicitação de mudança na mão, não o usuário.
+
+## Por que "por space" muda a limpeza que você faz
+
+Se o limite fosse do site inteiro, o trabalho seria simples e bruto: apagar campos até o número cair.
+
+Como é por space, o trabalho é outro. Você está reduzindo a exposição nos spaces mais próximos do limite, o que não é a mesma tarefa e quase nunca são os mesmos campos.
+
+Duas consequências que pegam todo mundo de surpresa:
+
+- **O campo caro é o que está ligado em todo lugar.** Um campo que um time usa de verdade, mas que está em todos os schemes do site, custa uma posição em cada space. É um alvo de limpeza melhor do que um campo que ninguém usa e que só existe em um space tranquilo.
+- **Apagar campos sem uso em um space saudável não compra nada.** Dá sensação de produtividade. Não mexe em nenhum número que o Jira esteja de fato cobrando.
+
+## Em que ordem auditar
+
+1. **Ordene os seus spaces por proximidade dos 700.** Todo o resto é ruído até você saber onde está a pressão. Um space em 680 é um problema; quarenta spaces em 200 não são.
+2. **Dentro desses spaces, ache os campos sem uso real.** Não os que parecem sem uso. Os que não recebem escrita, com data para comprovar.
+3. **Ache as duplicatas.** Anos de migrações e de admins que foram embora deixam "Cliente", "Nome do Cliente" e "Customer" significando a mesma coisa em três telas diferentes.
+4. **Veja de onde cada campo veio.** Apps desinstalados costumam deixar os campos para trás, e esses são os mais fáceis de justificar, porque não têm dono.
+5. **Só então olhe telas e contextos**, para saber o que uma remoção vai tocar antes de tocar.
+
+## Antes de remover qualquer coisa, exporte
+
+Apagar um custom field no Jira leva os dados dele junto, em todo lugar, e não existe desfazer para os valores. Exporte o inventário completo antes: campo, tipo, origem, telas, contextos, último uso e quais projetos usam. Se a limpeza se mostrar errada, a exportação é o único registro de como a configuração era.
+
+Esse também é o artefato que torna o trabalho defensável. "Removemos 180 campos" é uma história. Um CSV de antes e depois é prova, e é o que uma migração ou uma auditoria vai pedir lá na frente.
+
+## Onde o Field Scout entra
+
+A gente publica o [Field Scout](/pt-BR/apps/field-scout/), um app gratuito em Forge que faz exatamente essa auditoria e mais nada.
+
+Ele classifica cada custom field como Active, Stale, Likely Unused ou Unused a partir do uso real no Jira, e não de achismo, aponta possíveis duplicatas por nome exato e por nome parecido, abre o uso por projeto, mostra de qual produto ou app cada campo veio, e exporta o inventário inteiro em CSV em quatro modos, incluindo uma lista de limpeza e uma auditoria de telas. Roda em Atlassian Forge, dentro do seu próprio ambiente Atlassian, e lê o seu Jira em vez de editar, então rodar a auditoria não cria nada para você desfazer depois.
+
+É gratuito no Atlassian Marketplace. Se você preferir fazer isso com JQL e uma planilha, a ordem acima continua valendo, e continua sendo a ordem certa.
+
+## Resumindo
+
+O número para acompanhar é o seu pior space, não o seu site. Um campo conta uma vez em cada space que consegue alcançá-lo. Campos na lixeira já pararam de contar. E bater no limite bloqueia um administrador, não um usuário, o que te dá tempo de fazer a limpeza direito em vez de na correria.
