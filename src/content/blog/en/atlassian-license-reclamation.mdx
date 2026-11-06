@@ -1,0 +1,65 @@
+---
+lang: en
+translationKey: atlassian-license-reclamation
+title: "Finding the Atlassian licenses you pay for and nobody uses"
+metaTitle: 'Find the Atlassian licenses nobody uses'
+description: "Atlassian Cloud bills for every account with product access, whether or not the person logged in this year, and your Marketplace apps follow the same user count. How to find the inactive accounts, sort them before removing anyone, and make reclamation a habit rather than a yearly project."
+metaDescription: 'Atlassian Cloud bills for every account with product access, used or not, and your apps follow that count. How to find inactive users and reclaim the cost.'
+pubDate: 2026-10-10
+tags: ["atlassian-consulting", "jira-administration", "atlassian-cloud"]
+author: team
+heroImage: ../../../assets/blog/atlassian-license-reclamation.jpg
+heroImageAlt: 'Flat illustration: a row of teal tiles each holding a person silhouette, three of them faded to grey with small orange price tags, a navy magnifying glass over the grey ones, and a stack of gold coins at the end of the row.'
+---
+
+*People leave, contractors finish, test accounts accumulate. The license count only goes down if somebody makes it.*
+
+On Atlassian Cloud you pay for people with access to a product, not for people who use it. Someone who left in March and still has Jira access in November is still on the bill. So is the contractor whose project ended, the test account created for a demo, and the colleague who logged in once to approve something two years ago.
+
+Each one is small. Together, on a site that has grown for a few years without anyone pruning it, they are routinely a noticeable share of the bill. And the bill is bigger than the Atlassian line suggests.
+
+## Your apps follow the same count
+
+Marketplace apps on Cloud are licensed for the same number of users as the product they run in. An app installed in Jira is priced on Jira's user count, whether one team uses it or everyone does.
+
+That means an inflated user count is paid several times: once for Jira, and again for every app installed in it. Reclaiming fifty inactive Jira users lowers the Jira bill and every Jira app bill with it. This is the number worth putting in front of whoever approves the budget.
+
+## Find who has not been active, per product
+
+The admin console records when each person was last active in each product, and the user list can be exported. Export it, and filter for people with product access who have not been active for longer than a threshold you choose. Ninety days is a common starting point; a quarter-end approver might need a longer one.
+
+Do it per product. Someone can be active in Confluence every day and not have opened Jira in a year, and only one of those licenses is in use.
+
+## Sort the list before removing anyone
+
+The inactive list is not a removal list. Before touching it, sort each account into one of a few groups:
+
+1. **Leavers.** People who no longer work with you. Remove product access.
+2. **Long absences.** Parental leave, sabbaticals, long sick leave. Keep, and note the return date.
+3. **Occasional users.** Approvers, auditors and managers who log in once a quarter. Usually keep; sometimes a lighter route works, such as receiving notifications by email or using a service desk portal as a customer, which needs no agent license.
+4. **Service and integration accounts.** Check whether each one still has a living integration behind it, and whether it actually needs product access.
+5. **External collaborators.** Decide whether they still need access, and on which products.
+
+The sort is what makes the cleanup safe to do without asking forgiveness afterwards. Removing a long-absence account by mistake costs a morning of apologies; removing the account an integration logs in as costs an outage.
+
+## Remove access through groups, not one person at a time
+
+Product access is granted through groups. Removing a person from the group that grants access, rather than deactivating the account outright, keeps the change reversible: their history, their work items and their pages stay exactly where they are, and access can be restored in seconds if the sort got someone wrong.
+
+It also keeps the change auditable. "Removed from the Jira access group on this date, because inactive since that date" is a record anyone can check.
+
+## Time it for the bill
+
+How quickly a reduction shows up depends on how you pay. On a monthly subscription you are billed per user, so the next bill reflects it. On an annual subscription you buy a user tier, so the saving arrives at renewal, and only if the count drops below a tier boundary. Plan the cleanup for the weeks before renewal, and know which boundary you are aiming for.
+
+## Make it a habit, not a project
+
+A one-off cleanup decays within a year. What keeps the count honest is a small process:
+
+- **Offboarding removes access the day someone leaves**, through the same group, as a step on the checklist rather than an afterthought.
+- **A quarterly review** of the inactive list, with the sort above, takes an hour once the first one is done.
+- **An automated flag** that lists accounts inactive past the threshold, so the review starts from a list rather than a hunt.
+
+## The short version
+
+You pay for access, not for use, and your Marketplace apps pay the same count again. Export last-active dates per product, sort the inactive accounts before removing anyone, remove access through groups so it stays reversible and auditable, time the cleanup for your renewal, and turn it into a quarterly habit. If you would like help with the first pass, it is part of the administration work our [Atlassian team](/atlassian/) does.

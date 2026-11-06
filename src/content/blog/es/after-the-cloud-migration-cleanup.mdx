@@ -1,0 +1,64 @@
+---
+lang: es
+translationKey: after-the-cloud-migration-cleanup
+title: "Después de la migración a Cloud: limpiar lo que dejó la mudanza"
+metaTitle: 'Limpiar después de migrar Jira a Cloud'
+description: "El corte salió bien. Después los administradores encuentran (migrated) por todas partes: esquemas, roles y pantallas duplicados, y notas debajo de cada campo. Por qué existen los duplicados, cómo consolidarlos sin riesgo y cómo evitar que el sitio nuevo vuelva a parecerse al antiguo."
+metaDescription: 'Tras el corte a Jira Cloud, los administradores encuentran copias (migrated) por todas partes. Por qué existen, cómo unirlas sin riesgo y cómo frenar la deriva.'
+pubDate: 2026-10-22
+tags: ["atlassian-consulting", "cloud-migration", "jira-administration"]
+author: team
+heroImage: ../../../assets/blog/after-the-cloud-migration-cleanup.jpg
+heroImageAlt: 'Ilustración plana: un pequeño brazo robótico azul marino sobre una amplia plataforma en forma de nube verde azulada barre engranajes grises sueltos y cables enredados hacia un cubo azul marino, mientras unas flechas naranjas ordenadas rodean la plataforma.'
+---
+
+*El fin de semana del corte salió según el plan. El lunes, un administrador abre la lista de esquemas y encuentra dos de todo, uno con "(migrated)" detrás del nombre.*
+
+Una migración que sale bien no es una migración limpia. El trabajo de la herramienta de migración es llevarse tus datos sin perder nada, y cuando encuentra en Cloud algo que ya existe con el mismo nombre, hace lo seguro: crea una segunda copia y la marca. El resultado es un sitio que funciona el lunes por la mañana y arrastra una capa de duplicados que nadie quiere tocar, porque nadie está seguro de qué copia se está usando.
+
+Merece la pena quitar esa capa pronto. Cada duplicado es un error futuro: un permiso concedido en el rol equivocado, un campo editado en el contexto equivocado, un esquema modificado que no usa ningún space.
+
+## Por qué existen los duplicados
+
+La herramienta no puede unir con seguridad dos cosas con el mismo nombre. Dos roles de proyecto llamados "Developers" pueden significar lo mismo, o no; unirlos a ciegas podría conceder un acceso que nadie pretendía. Así que conserva los dos y añade una marca al recién llegado. Se ve en roles, esquemas, pantallas, prioridades, tipos de trabajo y más, con "(migrated)", "(migrated 2)" y así sucesivamente cuando un nombre chocó más de una vez.
+
+## Renombra si el nombre está libre, consolida si no
+
+El método que usamos para cualquier tipo de duplicado tiene dos ramas:
+
+1. **Si el nombre limpio está libre**, renombra el elemento marcado. "Developers (migrated)" pasa a ser "Developers", y no cambia nada más.
+2. **Si ya existe un gemelo limpio**, consolida en él: encuentra todo lo que hace referencia al elemento marcado, los spaces, los esquemas, los miembros, apunta cada referencia al gemelo limpio, y solo entonces elimina el elemento marcado.
+
+Empareja los gemelos por nombre, nunca por ID interno, porque los ID cambian entre el sitio antiguo y el nuevo. Y quita el patrón completo de la marca, numerado o no, para que varias copias marcadas lleven al mismo gemelo limpio.
+
+## Simulación, registro para deshacer, copia antes de borrar
+
+La consolidación toca mucha configuración a la vez, así que los scripts que usamos siguen tres reglas sin excepción:
+
+- **Simulación por defecto.** Cada ejecución primero muestra lo que cambiaría, y no cambia nada hasta que se le indica.
+- **Un registro para deshacer.** Cada cambio queda anotado con su antes y su después, así que un cambio de nombre o una reasignación se pueden revertir.
+- **Una copia completa antes de cada borrado.** Los borrados no se pueden deshacer, así que antes de quitar un elemento se guardan su definición completa, todas sus referencias y todos sus miembros. Si la consolidación estaba mal, el elemento se puede reconstruir exactamente como era.
+
+Los scripts también se pueden ejecutar dos veces sin riesgo: la segunda ejecución solo hace lo que quede.
+
+## Las notas debajo de cada campo
+
+Muchos campos migrados llevan una nota de "Migrated on" que aparece como texto de ayuda gris debajo del campo en las pantallas de creación, edición y vista. Es inofensiva y está en todas partes, lo que hace que el sitio parezca a medio terminar para cualquiera que abra un elemento de trabajo.
+
+La nota puede vivir en dos sitios: en la descripción del propio campo, y en la descripción de cada configuración de campo que lo usa. Limpia solo el primero, y la nota sobrevive en la mayoría de las pantallas. Limpia los dos.
+
+## Los spaces archivados necesitan cuidado
+
+Los spaces archivados son de solo lectura, así que su configuración no se puede consolidar tal como están. Hay que restaurarlos, cambiarlos y volver a archivarlos, y comprobar después que de verdad quedaron archivados. Restaurar un space también puede disparar notificaciones, así que a gran escala es un paso que hay que planificar y anunciar, no ejecutar en silencio.
+
+## Las reglas de automatización merecen una revisión, no una copia
+
+Las reglas de automatización que llegaron pueden hacer referencia a elementos que luego se consolidaron, o a identificadores que significaban algo en el sitio antiguo. Revisa cada regla que haga referencia a un esquema, rol, campo o estado que hayas cambiado, y prueba las que importan. Una regla que dejó de coincidir con nada sin avisar es el tipo de fallo que nadie notifica, porque nadie se fija en lo que no pasó.
+
+## Después, evita que vuelva a desviarse
+
+Un sitio limpio empieza a desviarse en cuanto todo el mundo tiene permisos de administrador y no hay convenciones. Tres hábitos pequeños lo mantienen limpio: una lista corta de quién puede crear esquemas y campos, convenciones de nombres escritas donde los administradores las encuentren, y una revisión trimestral de la configuración nueva. Un registro de auditoría de los cambios de configuración hace que la revisión sea rápida; por eso construimos [Configuration Monitor](/es/apps/configuration-monitor/).
+
+## En resumen
+
+La herramienta de migración crea duplicados marcados cada vez que un nombre ya existe en Cloud. Renombra los que tienen el nombre limpio libre, consolida el resto en sus gemelos limpios por nombre, y hazlo con simulaciones, un registro para deshacer y una copia antes de cada borrado. Limpia las notas de migración en los dos sitios donde viven, trata los spaces archivados con cuidado, revisa las reglas de automatización que tocaban lo que cambiaste, y pon convenciones para que el sitio siga limpio. La limpieza posterior a la migración forma parte de lo que hace nuestro [equipo de Atlassian](/es/atlassian/).

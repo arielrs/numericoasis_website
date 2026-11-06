@@ -1,0 +1,57 @@
+---
+lang: es
+translationKey: build-gates-for-a-website
+title: "Barreras en el build: cómo nuestro sitio se niega a publicar sus propios errores"
+metaTitle: 'Barreras en el build contra errores publicados'
+description: "Este sitio se publica en tres idiomas a partir de Markdown y TypeScript, y los errores que antes llegaban a producción ahora hacen fallar el build. Las comprobaciones que ejecutamos, de la paridad de traducciones a la accesibilidad en un navegador real, y lo que a propósito no intentan hacer."
+metaDescription: 'Nuestro sitio sale en tres idiomas, y los errores que antes llegaban a producción ahora hacen fallar el build. Lo que comprobamos, y lo que no intentamos hacer.'
+pubDate: 2026-10-20
+tags: ["custom-development"]
+author: team
+heroImage: ../../../assets/blog/build-gates-for-a-website.jpg
+heroImageAlt: 'Ilustración plana: una tarjeta de página web blanca con tres puertas altas en arco, azul marino, verde azulada y naranja, cada una con una pequeña luz redonda arriba, y una página arrugada en el suelo junto a la primera puerta.'
+---
+
+*Una página en inglés que faltaba en español. Un enlace que se rompió al renombrar una página. Un fragmento de búsqueda cortado a mitad de palabra. Cada uno llegó a producción una vez. Ninguno puede ya.*
+
+Este sitio se construye a partir de Markdown, MDX y TypeScript, se publica en inglés, portugués y español, y se despliega automáticamente con cada push. Ese pipeline es rápido, y ese es justo el problema: un pipeline rápido publica errores tan deprisa como publica correcciones. Así que, en lugar de confiar en una revisión cuidadosa, hicimos que el propio build rechace los errores que de verdad hemos cometido. Esto es lo que comprueba.
+
+## Cada página existe en cada idioma
+
+La primera barrera cuenta. Cada artículo del blog, página de app y landing lleva una clave de traducción, y el build comprueba que cada clave existe exactamente una vez en cada uno de los tres idiomas. Un artículo publicado en inglés y olvidado en portugués antes pasaba en verde y mostraba una lista más corta a dos tercios de los visitantes. Ahora falla antes de desplegar nada.
+
+## Se detecta una traducción desactualizada
+
+La paridad atrapa las páginas que faltan; no atrapa una traducción que existe pero ya no corresponde. Así que el build guarda una huella del texto en inglés con el que se revisó por última vez cada traducción. Cuando cambia el inglés, el build falla hasta que alguien confirma que también se revisaron el portugués y el español. Es un poco de fricción, puesta justo donde las traducciones solían desviarse en silencio.
+
+## Un glosario, exigido en el código
+
+Algunas palabras hay que traducirlas siempre igual, y otras no hay que traducirlas. Nuestro español es el de España, así que la variante latinoamericana de la palabra "coste" se rechaza allí donde aparezca. Los términos de producto que los administradores escriben en inglés en un buscador se quedan en inglés en todos los idiomas. Estas reglas viven en un archivo que lee el build, así que una edición bienintencionada no puede reintroducir en silencio una incoherencia que ya habíamos corregido.
+
+## El estilo de la casa, exigido en el código
+
+Nuestro estilo prohíbe un signo de puntuación, y el build lo rechaza en cualquier parte del contenido. Parece pedante. Es también el ejemplo más claro del principio: una regla de estilo escrita en un documento se cumple hasta el día en que alguien tiene prisa, y una regla de estilo que exige el build se cumple todos los días.
+
+## Los fragmentos de búsqueda caben
+
+Los títulos para los resultados de búsqueda tienen un límite de 50 caracteres y las descripciones, de 160, y se comprueban en todos los idiomas. El portugués y el español son más largos que el inglés, así que los fragmentos traducidos eran justo los que se cortaban a mitad de frase. Ahora uno demasiado largo hace fallar el build en el idioma en el que se pasa.
+
+## Cada enlace interno funciona
+
+Después de generar el sitio, un script recorre el HTML y comprueba que cada enlace interno apunta a una página que existe. Renombrar una página sin actualizar los enlaces que llevan a ella es la forma más habitual en que un sitio se degrada, y esta comprobación impide desplegarlo.
+
+## Accesibilidad, comprobada en un navegador real
+
+El sitio se abre en un navegador real, se carga una página representativa de cada tipo a un ancho de escritorio y a uno de móvil, y un comprobador automático de accesibilidad se ejecuta sobre cada una contra los criterios WCAG 2.1 AA. Los fallos de contraste, las etiquetas que faltan y los órdenes de encabezados rotos hacen fallar la ejecución. Aprendimos su valor por la vía directa: un color de nuestra propia paleta de marca quedaba muy por debajo del contraste mínimo en tamaños pequeños, y la comprobación lo atrapó antes que un visitante.
+
+## Una lista cerrada de temas
+
+Las etiquetas del blog son páginas indexables, así que una errata en una etiqueta publicaría una página de tema nueva y casi vacía en tres idiomas. Por eso las etiquetas son una lista cerrada, y un artículo solo puede usar etiquetas de ella. Añadir un tema nuevo es un cambio deliberado, que se hace cuando hay artículos suficientes para merecer una página.
+
+## Lo que no hacen las barreras
+
+Nada de esto hace que el texto sea bueno. Las barreras no juzgan si un argumento se sostiene, si una traducción suena natural o si una página merece publicarse. Existen para detener, de forma mecánica, los errores que ya hemos cometido, para que el tiempo que las personas dedican a revisar vaya a lo que solo las personas pueden juzgar.
+
+## En resumen
+
+Cuenta cada página en cada idioma. Guarda una huella del texto de origen para atrapar las traducciones desactualizadas. Lleva el glosario y el estilo de la casa al código. Limita los fragmentos de búsqueda. Comprueba cada enlace interno después del build. Ejecuta comprobaciones de accesibilidad en un navegador real a dos anchos. Mantén los temas en una lista cerrada. Cada barrera existe porque el error que bloquea ocurrió una vez. Ponemos el mismo tipo de protecciones en los [sitios y herramientas que hacemos para clientes](/es/custom-development/).

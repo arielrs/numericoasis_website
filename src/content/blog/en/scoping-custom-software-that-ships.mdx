@@ -1,0 +1,63 @@
+---
+lang: en
+translationKey: scoping-custom-software-that-ships
+title: "How to scope a custom software project so it actually ships"
+metaTitle: 'Scoping custom software so it actually ships'
+description: "Custom software projects rarely fail in the code. They fail in the scope: too large to finish before the priorities change. How we write the job down, find the smallest release worth having, and keep a list of what we are not building."
+metaDescription: 'Custom software rarely fails in the code. It fails in the scope. How we find the smallest release worth having and keep a list of what we will not build.'
+pubDate: 2026-09-29
+tags: ["custom-development"]
+author: team
+heroImage: ../../../assets/blog/scoping-custom-software-that-ships.jpg
+heroImageAlt: 'Flat illustration: a navy road winding up through teal hills, with small orange flags at intervals along it and a compass and a ruler lying on the road in the foreground.'
+---
+
+*Most custom software that never ships was not badly written. It was badly scoped: big enough that the world changed before it was finished.*
+
+When a custom project stalls, the post-mortem usually blames the code, the people or the vendor. In our experience it is the scope, almost every time. The project was defined as everything the business could imagine needing, the first useful release sat six months away, and by month four the priorities had moved and the budget with them.
+
+Scoping is the cheapest place to prevent that, because nothing has been built yet and every decision costs a sentence. Here is how we do it.
+
+## Write down the job, not the features
+
+A feature list is the wrong first artefact. "A dashboard, user roles, an approval flow, export to Excel" describes a product and says nothing about why anyone needs it.
+
+Start with the job instead, in one or two sentences a stranger could check:
+
+> Every Friday, someone exports open orders from the shop, corrects the shipping codes by hand, and pastes them into the warehouse system. It takes four hours and goes wrong about twice a month.
+
+That sentence is the specification. It names who does the work, how often, how long it takes, and how it fails. Every later decision can be tested against it: does this feature make Friday shorter, or make it fail less? If not, it is not in the first release.
+
+## Find the smallest version worth having
+
+Release one is the smallest thing that removes real pain on its own, even if nothing else is ever built. For the Friday job above, that might be a small service that reads the export, applies the corrections the person was making by hand, and flags the rows it is unsure about. No dashboard. No roles. Four hours become twenty minutes of checking flags.
+
+The test we apply is blunt: if we stopped after release one, would anybody miss it? If the answer is no, the release is a milestone, not a release, and it needs to shrink until the answer becomes yes.
+
+## Keep a list of what you are not building
+
+Every scope we write has an "out" list, and it is often longer than the "in" list. It holds the features that came up and are not in release one, each with a line saying why.
+
+The out list does three jobs. It protects the date, because a request that is already on the list has an answer. It records ideas without losing them, so nobody feels ignored. And it gets reread after release one, when real use has shown which items matter. Most of them, in our experience, turn out not to.
+
+## Fix the date, move the scope
+
+Small releases on a steady cadence are the backbone. When something proves harder than expected, which it will, the scope of that release moves and the date does not. The alternative, holding the scope and slipping the date, is how a six-week project becomes a nine-month one, one reasonable delay at a time.
+
+This only works if the scope is written in small enough pieces that removing one does not break the rest. That is another reason to start from the job: pieces that each make the job shorter can ship independently.
+
+## Make the first release boring to deploy
+
+The first week of a project is the right time to set up the parts nobody demos: the pipeline that builds and deploys, a staging environment, automated tests that run on every change, and basic monitoring. Doing it first makes every later release a non-event. Doing it last means the first release is also the first time anything has been deployed, which is when projects discover their worst surprises.
+
+## Ask who owns it afterwards
+
+A scope is incomplete until it says who runs the software after it ships. Who fixes it when it breaks at two in the morning? Who adds the next field when the warehouse changes a code? If the answer is "the people who built it", the documentation and the handover need to be in the scope from the start, not bolted on at the end.
+
+## Estimate as a range, with assumptions
+
+A single number for a custom project is a guess with false precision. We give a range for release one and a written list of the assumptions behind it: the export format stays the same, the warehouse system has an API we can use, someone on your side can answer questions within a day. When an assumption breaks, everyone can see why the estimate moved.
+
+## The short version
+
+Write the job down before the features. Ship the smallest release that removes real pain on its own. Keep a list of what you are not building and reread it after real use. Hold the date and move the scope. Set up deployment in week one, decide who owns the software afterwards, and estimate as a range with its assumptions written down. That is most of what separates software that ships from software that is always nearly ready. It is also how we run [custom development](/custom-development/) for clients.

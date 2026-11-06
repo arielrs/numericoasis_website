@@ -1,0 +1,62 @@
+---
+lang: es
+translationKey: smartsheet-to-jira-and-confluence
+title: "Salir de Smartsheet hacia Jira y Confluence: qué va a cada sitio"
+metaTitle: 'De Smartsheet a Jira y Confluence'
+description: "Llevarlo todo a Jira es el plan equivocado. Un conjunto de Smartsheet son muchos tipos de cosas vestidas con la misma cuadrícula. Cómo clasificar las hojas por lo que de verdad son, migrar solo las vivas, usar plantillas en lugar de casos sueltos, y resolver las fórmulas, automatizaciones y formularios que nunca migran solos."
+metaDescription: 'Un conjunto de Smartsheet son muchas cosas en una cuadrícula. Cómo clasificar las hojas, migrar las vivas y resolver fórmulas, automatizaciones y formularios.'
+pubDate: 2026-10-17
+tags: ["atlassian-consulting", "cloud-migration"]
+author: team
+heroImage: ../../../assets/blog/smartsheet-to-jira-and-confluence.jpg
+heroImageAlt: 'Ilustración plana: una cuadrícula de hoja de cálculo gris clara a la izquierda cuyas filas se desprenden y se colocan a la derecha en un tablero de tarjetas de tareas azul marino y naranjas y en una pila ordenada de páginas blancas.'
+---
+
+*Un seguimiento, un plan de proyecto, un formulario de entrada, un informe de estado y un modelo de presupuesto pueden parecer la misma cuadrícula. No son lo mismo, y no van al mismo sitio.*
+
+Las organizaciones que dejan Smartsheet por Atlassian suelen empezar con el mismo plan: meterlo todo en Jira. Es un instinto razonable, porque Jira es donde ya vive el trabajo, y es el plan equivocado, porque un conjunto de Smartsheet no es un solo tipo de cosa. Son decenas de tipos de cosas que casualmente comparten una cuadrícula, y cada tipo tiene un hogar natural distinto.
+
+## Clasifica las hojas por lo que son
+
+El primer trabajo es un modelo de destino: en qué se convierte cada tipo de hoja. El que usamos es este:
+
+| Una hoja que es... | Va a | Notas |
+| --- | --- | --- |
+| Un seguimiento, lista de tareas o registro | Un space de Jira | Cada fila se convierte en un elemento de trabajo |
+| Un plan de proyecto con dependencias | Jira Plans | Las dependencias se convierten en vínculos entre elementos de trabajo |
+| Una cola de entrada con formulario | Jira Service Management | Tipos de solicitud, con agentes con licencia |
+| Un informe de estado o registro de riesgos | Una página de Confluence | Narrativa, no filas |
+| Una consolidación de otras hojas | Un space compartido de Jira | Alimentado por automatización desde los spaces de origen |
+| Un presupuesto o modelo financiero | Una herramienta de hojas de cálculo | Hay cosas que deben seguir siendo hojas de cálculo |
+
+La última fila importa tanto como las demás. Un modelo financiero con cien fórmulas entrelazadas no es un problema de Jira, y forzarlo a serlo produce algo peor que lo que había.
+
+## Migra las hojas vivas, archiva el resto
+
+Un conjunto grande de Smartsheet es, sobre todo, historia. Antes de planificar ninguna migración, mide qué hojas se usan de verdad: abiertas, editadas, compartidas hace poco. Los datos de actividad están disponibles, y suelen mostrar que una minoría de hojas lleva casi todo el trabajo vivo.
+
+Migra las vivas. Exporta el resto, cada hoja con sus adjuntos, a un archivo que se pueda buscar y volver a abrir. Nadie pierde nada, y la migración se reduce a la parte que importa.
+
+## Usa plantillas, no casos sueltos
+
+Migrar hojas a mano, una a una, no escala más allá de unas decenas. Lo que escala es un pequeño conjunto de plantillas de destino, derivadas de las propias hojas: la mayoría de los seguimientos se parecen, la mayoría de las colas de entrada se parecen.
+
+Cada plantilla se construye una vez, la prueban los dueños de algunas hojas reales en un sitio de pruebas, y se aprueba. Después, todas las hojas de ese tipo se cargan a través de ella. Cuando un dueño encuentra un hueco, arreglar la plantilla arregla todas las hojas que la usan, y no una a una.
+
+## Lo que nunca migra solo
+
+Las filas y los adjuntos migran con herramientas. Cinco cosas no, y cada una necesita su propia línea en el plan:
+
+1. **Fórmulas.** El valor de una celda migra; la fórmula que hay detrás, no. Los campos de fórmula de Jira calculan dentro de un único elemento de trabajo. Los totales sobre muchas filas necesitan automatización o Jira Plans. Lee cada fórmula antes del corte, porque después solo quedan los valores.
+2. **Automatizaciones.** Los flujos de Smartsheet se convierten en reglas de Jira Automation, reconstruidas con criterio y no copiadas.
+3. **Formularios.** Los formularios públicos de entrada se convierten en formularios de solicitud de Jira Service Management, y el enlace antiguo hay que sustituirlo en todos los sitios donde se publicó, desde la intranet hasta las firmas de correo.
+4. **Integraciones.** Todo lo que alimentaba una hoja desde fuera se reconstruye contra Jira, y todo lo que leía de una hoja se apunta a un sitio nuevo.
+5. **Recordatorios y solicitudes de actualización.** Se convierten en reglas de automatización programadas.
+
+## Demuestra que llegó cada fila
+
+La migración no termina cuando termina el cargador. Termina cuando una conciliación demuestra que llegó cada fila de cada hoja viva: recuentos por hoja frente a recuentos por space de Jira, adjuntos comprobados, y una muestra de filas comparada campo a campo. Ese informe es también lo que permite a los dueños dar su aprobación con tranquilidad.
+
+## En resumen
+
+No lo metas todo en Jira. Clasifica las hojas por lo que son, y envía los seguimientos a Jira, los planes a Jira Plans, las colas de entrada a Jira Service Management, los informes a Confluence y los modelos financieros a una herramienta de hojas de cálculo. Migra las hojas vivas, exporta y archiva el resto, construye un pequeño conjunto de plantillas probadas, planifica por separado fórmulas, automatizaciones, formularios, integraciones y recordatorios, y concilia cada fila. Sacar equipos de otras herramientas forma parte de la consultoría de nuestro [equipo de Atlassian](/es/atlassian/).

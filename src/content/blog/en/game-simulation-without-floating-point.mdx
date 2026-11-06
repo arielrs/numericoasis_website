@@ -1,0 +1,55 @@
+---
+lang: en
+translationKey: game-simulation-without-floating-point
+title: "No floating point: building a game simulation that never drifts"
+metaTitle: 'A game simulation with no floating point'
+description: "Kindelve's simulation produces the same result, bit for bit, on a phone, a laptop and a server. How we get there: whole numbers for everything that accumulates, percentages by floor division, a seeded random generator in pure 32-bit integer arithmetic, and no clock inside the rules."
+metaDescription: 'Our game gives the same result bit for bit on a phone, a laptop and a server. Whole numbers, floor-division percentages, seeded randomness, and no clock.'
+pubDate: 2026-10-28
+tags: ["game-development"]
+author: team
+heroImage: ../../../assets/blog/game-simulation-without-floating-point.jpg
+heroImageAlt: 'Hand-coloured engraving: a brass mechanical calculating engine with interlocking toothed gears and a hand crank on an oak table, beside a tall stack of bound ledgers and a pair of brass dividers.'
+---
+
+*Run the same descent, with the same choices at the same moments, on a phone in Safari, a laptop in Chrome and a server in Node. You get the same result. Not a close result. The same one, down to the last bit.*
+
+That property is the foundation of Kindelve, and we decided on it before writing any gameplay. It is what will let a leaderboard prove a score by replaying it instead of trusting the player's device. It is what makes a balance change testable: change one number, replay a thousand recorded descents, compare. And it is surprisingly easy to lose, because the obvious way to write a game uses decimal numbers everywhere.
+
+## Where the drift comes from
+
+In JavaScript, the four basic operations on decimal numbers are precisely specified and give the same answer everywhere. The trouble is everything else. Functions like `Math.pow`, `Math.sin` and `Math.exp` are approximations, and each JavaScript engine is free to approximate them its own way, so the last bit of a result can differ between the engine in Chrome, the one in Safari and the one in Firefox.
+
+One differing bit sounds harmless. In a simulation that runs twenty times a second and feeds each result into the next, it is not. Damage rounds a hair differently, a creature survives with one point of health instead of zero, the fight takes a different turn, and two minutes later the two runs have nothing in common. Nothing crashes and no test on a single machine notices. The leaderboard simply stops agreeing with itself.
+
+## Whole numbers for everything that accumulates
+
+So the simulation does not use decimals for anything that adds up over time. Positions, health, damage, the in-game currency and time itself are all whole numbers:
+
+- **Distance** is counted in thousandths of a floor's depth, so movement is smooth without fractions.
+- **Time** is counted in ticks, twenty to a second, never in milliseconds read from a clock.
+- **Percentages** are applied with a single helper that multiplies and then divides with floor rounding, so "150 percent" always means the same integer on every device.
+
+Rounding down every time introduces a small bias, and that is deliberate. A uniform bias is the same everywhere. Clever rounding that breaks ties differently in different situations is exactly the kind of thing that creates disagreements.
+
+## Growth without `Math.pow`
+
+Upgrade costs grow exponentially, and the natural way to write that is a power function. We do not. Costs are computed by repeated whole-number multiplication, one level at a time, each step rounded down. Levels are small, so the loop costs nothing, and the result is identical everywhere because it never leaves integer arithmetic.
+
+## Randomness you can replay
+
+`Math.random` is forbidden in the simulation. It cannot be seeded, so a run built on it can never be repeated, and every engine implements it differently.
+
+Instead the simulation uses a small, well-known pseudo-random generator, xoshiro128**, written so that every operation stays inside 32-bit integer arithmetic. It is seeded through a second small generator so that simple seeds, like the number of a day, still produce well-mixed sequences. Picking a random whole number in a range uses rejection sampling, which keeps the distribution exactly uniform without introducing any decimals. And the generator's whole state can be saved and restored, so a run can be paused, stored and resumed without changing what happens next.
+
+## No clock inside the rules
+
+The simulation never asks what time it is. Time inside a descent is a tick counter that the simulation itself advances. Anything that genuinely depends on the real world clock, a reward that expires at midnight, for example, is applied outside the simulation, after the descent is over. That boundary keeps the rules pure: the same inputs always produce the same outputs, whenever and wherever they run.
+
+## Enforced by tests, not by good intentions
+
+Rules like these are easy to break by accident in a hurry, so tests enforce them. One test scans the simulation's code for the forbidden calls. Others run fixed seeds with fixed inputs and compare the final state against a recorded fingerprint, so any change that alters a result, however slightly, is caught the moment it is made, and has to be acknowledged as intentional.
+
+## The short version
+
+Decimal arithmetic is precise for the basic operations and engine-dependent for everything else, and a simulation that compounds results tick after tick turns one differing bit into a different game. So Kindelve counts everything that accumulates in whole numbers, applies percentages with floor division, grows costs by repeated multiplication, draws randomness from a seeded integer generator, keeps the clock outside the rules, and lets tests enforce all of it. It is a little less convenient to write, and it is what makes a provable leaderboard possible. More about the game on our [Game Studio](/studio/) page.

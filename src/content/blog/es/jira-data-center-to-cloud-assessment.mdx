@@ -1,0 +1,88 @@
+---
+lang: es
+translationKey: jira-data-center-to-cloud-assessment
+title: "Lo que debería decirte una evaluación de migración de Jira Data Center a Cloud"
+metaTitle: 'Lo que dice una evaluación de migración de Jira'
+description: "Una evaluación de migración no es una lista de apps instaladas. Es una decisión para cada app, una limpieza medida y una cifra de esfuerzo que puedes defender en una reunión. Este es el formato que usamos, y por qué existe cada parte."
+metaDescription: 'Una evaluación de migración de Jira no es una lista de apps. Es una decisión por app, una limpieza medida y un esfuerzo defendible. El formato que usamos.'
+pubDate: 2026-09-27
+tags: ["atlassian-consulting", "cloud-migration", "atlassian-cloud"]
+author: team
+heroImage: ../../../assets/blog/jira-data-center-to-cloud-assessment.jpg
+heroImageAlt: 'Ilustración plana: un rack de servidores azul marino a la izquierda, una nube verde azulada a la derecha y, entre ambos, un camino punteado de tarjetas, una lista de comprobación, una pieza de puzle y un engranaje, con una lupa sobre la pieza de puzle.'
+---
+
+*Un inventario te dice lo que tienes. Una evaluación te dice cómo será el lunes por la mañana después de la migración, cuánto cuesta llegar hasta ahí y qué ni siquiera merece la pena migrar.*
+
+La mayoría de las evaluaciones de migración de Data Center a Cloud que nos piden revisar llegan como una hoja de cálculo: una fila por app instalada, una columna que dice "compatible" o "no compatible", y un total. Es un buen punto de partida y un mal punto de llegada. Responde a "qué está instalado", que en realidad nadie preguntaba, y deja intactas las tres preguntas que deciden el proyecto.
+
+Esas tres preguntas son: qué cambia para quienes usan Jira cada día, cuánto trabajo hace falta para llegar ahí, y qué se puede dejar atrás. Todo lo que sigue existe para responderlas.
+
+## Clasifica las apps antes de estudiarlas
+
+Un sitio Data Center maduro arrastra decenas de apps, y no todas merecen la misma atención. La primera pasada es una clasificación, no un estudio, en cuatro niveles:
+
+1. **Rojo.** Mucho acoplamiento con tus datos y tus flujos de trabajo, y ningún equivalente sencillo en Cloud. Las apps de scripting y las que añaden sus propios tipos de custom field suelen caer aquí. Reciben una evaluación completa y un plan de sustitución.
+2. **Amarillo.** Algo de acoplamiento, o una versión Cloud que existe pero se comporta de otra manera. Las apps de integración y las automatizaciones con acciones incompatibles suelen caer aquí. Reciben una evaluación completa con la reconfiguración por escrito.
+3. **Verde.** Nativa en Cloud, migrada automáticamente o casi sin uso. Basta con una nota breve.
+4. **Gris.** Desactivada, instalada para una prueba o sin ningún uso. Una línea en el resumen.
+
+La clasificación sirve para proteger tu tiempo. Una semana investigando la historia en Cloud de una app que nadie abre desde 2023 es el desperdicio más habitual en estos proyectos, y es invisible hasta que alguien clasifica primero.
+
+## Mide el uso en la base de datos, no en la memoria
+
+"Eso no lo usa nadie" y "eso lo usa todo el mundo" suelen ser falsos, y los dos se dicen con mucha seguridad en las reuniones de arranque.
+
+La base de datos lo zanja. Para cada app: cuántos elementos de trabajo llevan sus campos, cuándo se escribieron esos campos por última vez, qué spaces dependen de ella, cuántos flujos de trabajo la referencian. Pon de tres a cinco filas de ejemplo en la página de evaluación, junto a los recuentos. La gente se cree las cifras cuando ve un ejemplo, y los ejemplos traen sorpresas a menudo: el campo "sin uso" que un equipo rellena en cada elemento de trabajo, la app "crítica" cuyo último uso real fue hace dos años.
+
+## Hazle a cada app las mismas diez preguntas
+
+Para las apps rojas y amarillas escribimos siempre la misma página, en el mismo orden:
+
+1. Qué hace la app, en una tabla de capacidades.
+2. La decisión de migración, en una línea.
+3. Los detalles de la app: proveedor, versión, estado.
+4. El uso actual, a partir de las consultas anteriores.
+5. Qué se lleva de esa app la herramienta de migración, y qué no.
+6. Alternativas nativas de Cloud, y los huecos entre ellas y lo que usas hoy.
+7. El enfoque recomendado, elemento por elemento.
+8. Riesgos, con impacto, probabilidad y mitigación.
+9. Esfuerzo, como un rango, con quién hace qué.
+10. Qué pasa si nada la sustituye.
+
+La repetición es intencionada. Cuando veinte páginas de apps tienen la misma forma, el resumen casi se escribe solo y las reuniones de revisión van más rápido, porque todo el mundo sabe dónde mirar.
+
+La décima pregunta es la que hace posibles las decisiones. A veces la respuesta honesta es "no pasa casi nada", y la app se retira en lugar de reconstruirse. Esa sola respuesta ha ahorrado más presupuesto de migración que cualquier sustitución ingeniosa que hayamos diseñado.
+
+## El barrido de limpieza paga la evaluación
+
+Migrar un sitio a Cloud es la mejor ocasión que vas a tener para dejar de pagar por el desorden, y el momento más barato para quitarlo es antes de migrarlo. Un barrido de limpieza busca:
+
+- Componentes y versiones que ningún elemento de trabajo usa, que a menudo son una buena parte de los totales.
+- Spaces vacíos o que no cambian desde hace años.
+- Custom fields que nunca han tenido valor, y campos con nombres duplicados.
+- Esquemas que ningún space usa, y filtros y dashboards compartidos cuyos dueños ya se fueron.
+- Reglas de automatización que llevan meses sin dispararse, y mail handlers que apuntan a buzones muertos.
+
+Cada elemento viene con un recuento, así que el barrido se lee como evidencia y no como opinión, y cada eliminación va precedida de una exportación. Un sitio más pequeño migra más rápido, falla menos en los ensayos y empieza su vida en Cloud limpio.
+
+## El esfuerzo como un rango, con sus motivos
+
+Una cifra única invita a una discusión única. Dimensionamos cada elemento como bajo, medio, alto o bloqueante, le damos un rango de horas y lo sumamos todo en un rango para el proyecto. Bloqueante significa que no hay equivalente en Cloud: la elección es aceptar la pérdida o rediseñar el proceso, y esa elección es tuya, no nuestra.
+
+Junto al rango escribimos lo que lo mueve. "Esto baja si decidís retirar el flujo de aprobación antiguo" es más útil en una reunión de presupuesto que una cifra más ajustada sin motivos detrás.
+
+## Lo que nunca aparece en la lista de apps
+
+Algunos de los elementos más arriesgados de una migración ni siquiera son apps, y ningún inventario los muestra:
+
+- Scripts guardados en el sistema de archivos del servidor y no en la base de datos.
+- Webhooks salientes y application links hacia sistemas que quizá no acepten llamadas desde Cloud.
+- Listas de IP permitidas al otro lado de una integración, que rechazarán las direcciones de Cloud.
+- Credenciales y tokens guardados dentro de configuraciones de apps.
+
+Todo esto va a una lista de recuperación manual con responsable y fecha, porque cada uno es una caída el lunes por la mañana si se descubre después del corte en lugar de antes.
+
+## En resumen
+
+Una evaluación se gana lo que cuesta cuando responde tres preguntas: qué cambia para tus usuarios, cuánto cuesta y qué puedes dejar atrás. Clasifica las apps antes de estudiarlas, mide el uso con la base de datos y no con opiniones, hazle las mismas diez preguntas a cada app importante, busca el desorden antes de migrarlo, y presenta el esfuerzo como un rango, con sus motivos. Si quieres un segundo par de ojos sobre un plan, ese es el trabajo de nuestro [equipo de Atlassian](/es/atlassian/).

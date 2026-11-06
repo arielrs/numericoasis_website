@@ -1,0 +1,57 @@
+---
+lang: en
+translationKey: build-gates-for-a-website
+title: "Build gates: how our website refuses to publish its own mistakes"
+metaTitle: 'Build gates that stop a website shipping mistakes'
+description: "This site ships in three languages from Markdown and TypeScript, and the mistakes that used to reach production now fail the build instead. The checks we run, from translation parity to accessibility in a real browser, and what they deliberately do not try to do."
+metaDescription: 'Our site ships in three languages, and the mistakes that used to reach production now fail the build. The checks we run, and what they do not try to do.'
+pubDate: 2026-10-20
+tags: ["custom-development"]
+author: team
+heroImage: ../../../assets/blog/build-gates-for-a-website.jpg
+heroImageAlt: 'Flat illustration: a white web page card holding three tall arched gates in navy, teal and orange, each topped with a small round light, with a crumpled page lying beside the first gate.'
+---
+
+*A page in English but missing in Spanish. A link that broke when a page was renamed. A search snippet cut off mid-word. Each of these reached production once. None of them can now.*
+
+This website is built from Markdown, MDX and TypeScript, published in English, Portuguese and Spanish, and deployed automatically on every push. That pipeline is fast, which is exactly the problem: a fast pipeline publishes mistakes as quickly as it publishes fixes. So instead of relying on careful review, we made the build itself refuse the mistakes we have actually made. Here is what it checks.
+
+## Every page exists in every language
+
+The first gate counts. Every blog post, app page and landing page carries a translation key, and the build checks that each key exists exactly once in each of the three languages. A post published in English and forgotten in Portuguese used to build green and show a shorter list to two thirds of visitors. Now it fails before anything is deployed.
+
+## A translation that went stale is detected
+
+Parity catches missing pages; it cannot catch a translation that exists but no longer matches. So the build keeps a fingerprint of the English text each translation was last reviewed against. When the English changes, the build fails until someone confirms the Portuguese and Spanish were reviewed too. It is a small amount of friction, placed exactly where translations used to drift silently.
+
+## A termbase, enforced in code
+
+Some words must be translated the same way every time, and some must not be translated at all. Our Spanish is Spain's Spanish, so one regional spelling of "cost" is rejected wherever it appears. Product terms that administrators type into a search box in English stay in English in every language. These rules live in a file the build reads, so a well-meaning edit cannot quietly reintroduce an inconsistency we already fixed.
+
+## House style, enforced in code
+
+Our house style bans one punctuation mark outright, and the build rejects it anywhere in the content. It sounds pedantic. It is also the clearest example of the principle: a style rule written in a document is followed until the day someone is in a hurry, and a style rule the build enforces is followed every day.
+
+## Search snippets fit
+
+Titles meant for search results are capped at 50 characters and descriptions at 160, and the caps are checked in every language. Portuguese and Spanish run longer than English, so the translated snippets used to be the ones cut off mid-clause. Now an overlong one fails the build in whichever language it is too long.
+
+## Every internal link resolves
+
+After the site is built, a script walks the generated HTML and checks that every internal link points at a page that exists. Renaming a page without updating the links to it is the most common way a site rots, and this check makes it impossible to deploy.
+
+## Accessibility, checked in a real browser
+
+The site is opened in a real browser, a representative page of each kind is loaded at a desktop width and at a phone width, and an automated accessibility checker runs against each against the WCAG 2.1 AA criteria. Contrast failures, missing labels and broken heading orders fail the run. We learned the value of this the direct way: a colour from our own brand palette measured well below the contrast minimum at small sizes, and the check caught it before a visitor did.
+
+## A closed list of topics
+
+Blog tags are indexable pages, so a typo in a tag would publish a new, nearly empty topic page in three languages. Tags are therefore a closed list, and a post can only use tags from it. Adding a new topic is a deliberate change, made when there are enough posts to deserve a page.
+
+## What the gates do not do
+
+None of this makes the writing good. The gates do not judge whether an argument is sound, whether a translation reads naturally, or whether a page is worth publishing. They exist to stop the mistakes we have already made, mechanically, so that the time people spend reviewing goes to the things only people can judge.
+
+## The short version
+
+Count every page in every language. Fingerprint the source text so stale translations are caught. Encode the termbase and the house style. Cap the search snippets. Check every internal link after the build. Run accessibility checks in a real browser at two widths. Keep topics on a closed list. Each gate exists because the mistake it blocks happened once. We build the same kind of guardrails into the [sites and tools we build for clients](/custom-development/).

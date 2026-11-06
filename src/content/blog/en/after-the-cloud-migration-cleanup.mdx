@@ -1,0 +1,64 @@
+---
+lang: en
+translationKey: after-the-cloud-migration-cleanup
+title: "After the Cloud migration: cleaning up what the move left behind"
+metaTitle: 'Cleaning up after a Jira Cloud migration'
+description: "The cutover went well. Then the administrators find (migrated) everywhere: duplicate schemes, roles and screens, and notes under every field. Why the duplicates exist, how to consolidate them safely, and how to keep the new site from drifting back into the old one."
+metaDescription: 'After a Jira Cloud cutover, administrators find (migrated) copies everywhere. Why the duplicates exist, how to merge them safely, and how to stop the drift.'
+pubDate: 2026-10-22
+tags: ["atlassian-consulting", "cloud-migration", "jira-administration"]
+author: team
+heroImage: ../../../assets/blog/after-the-cloud-migration-cleanup.jpg
+heroImageAlt: 'Flat illustration: a small navy robot arm on a wide teal cloud platform sweeping loose grey gears and tangled wires into a navy bin, while neat orange arrows loop around the platform.'
+---
+
+*The cutover weekend went to plan. On Monday, an administrator opens the scheme list and finds two of everything, one of them with "(migrated)" after its name.*
+
+A successful migration is not a clean one. The migration tooling's job is to move your data without losing any of it, and when it meets something on the Cloud side that already exists under the same name, it does the safe thing: it creates a second copy and tags it. The result is a site that works on Monday morning and carries a layer of duplicates that nobody wants to touch, because nobody is sure which copy is in use.
+
+That layer is worth removing early. Every duplicate is a future mistake: a permission granted on the wrong role, a field edited in the wrong context, a scheme changed that no space uses.
+
+## Why the duplicates exist
+
+The tooling cannot safely merge two things with the same name. Two project roles called "Developers" might mean the same thing, or they might not; merging them blindly could grant access nobody intended. So it keeps both, and appends a tag to the newcomer. You see it on roles, schemes, screens, priorities, work types and more, with "(migrated)", "(migrated 2)" and so on when a name collided more than once.
+
+## Rename if the name is free, consolidate if it is not
+
+The method we use for every kind of duplicate has two branches:
+
+1. **If the clean name is free**, rename the tagged item. "Developers (migrated)" becomes "Developers", and nothing else changes.
+2. **If a clean twin already exists**, consolidate onto it: find everything that refers to the tagged item, the spaces, the schemes, the members, point each reference at the clean twin, and only then remove the tagged item.
+
+Match twins by name, never by internal ID, because IDs differ between your old site and your new one. And strip the whole tag pattern, numbered or not, so that several tagged copies can all resolve to the same clean twin.
+
+## Dry run, undo ledger, snapshot before delete
+
+Consolidation touches a lot of configuration at once, so the scripts we use follow three rules without exception:
+
+- **Dry run by default.** Every run first prints what it would change, and changes nothing until told to.
+- **An undo ledger.** Every change is logged with its before and after, so a rename or a reassignment can be reversed.
+- **A snapshot before every delete.** Deletes cannot be undone, so before an item is removed its full definition, every reference to it and every member are saved. If the consolidation was wrong, the item can be rebuilt exactly.
+
+The scripts are also safe to run twice: a second run does only what is left.
+
+## The notes under every field
+
+Many migrated fields carry a "Migrated on" note that shows as grey help text under the field on create, edit and view screens. It is harmless and it is everywhere, which makes the site look unfinished to every user who opens a work item.
+
+The note can live in two places: the field's own description, and the description in each field configuration that uses it. Clean only the first, and the note survives on most screens. Clean both.
+
+## Archived spaces need care
+
+Archived spaces are read-only, so their configuration cannot be consolidated as they are. They have to be restored, changed and archived again, and checked afterwards to confirm they really are archived. Restoring a space can also trigger notifications, so at scale this is a step to plan and announce, not to run quietly.
+
+## Automation rules deserve a look, not a copy
+
+Automation rules that came across may refer to items that have since been consolidated, or to identifiers that meant something on the old site. Review every rule that references a scheme, role, field or status you changed, and test the ones that matter. A rule that silently stopped matching anything is the kind of failure nobody reports, because nobody notices the thing that did not happen.
+
+## Then keep it from drifting back
+
+A clean site drifts the moment everyone has administrator rights and no conventions. Three small habits keep it clean: a short list of who can create schemes and fields, naming conventions written down where administrators will find them, and a quarterly review of new configuration. An audit log of configuration changes makes the review fast; it is the reason we built [Configuration Monitor](/apps/configuration-monitor/).
+
+## The short version
+
+The migration tooling creates tagged duplicates whenever a name already exists on Cloud. Rename the ones whose clean name is free, consolidate the rest onto their clean twins by name, and do it with dry runs, an undo ledger and a snapshot before every delete. Clean the migration notes in both places they live, handle archived spaces deliberately, review the automation rules that touched what you changed, and put conventions in place so the site stays clean. Post-migration clean-up is part of what our [Atlassian team](/atlassian/) does.

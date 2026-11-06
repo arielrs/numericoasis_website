@@ -1,0 +1,65 @@
+---
+lang: es
+translationKey: atlassian-license-reclamation
+title: "Encontrar las licencias de Atlassian que pagas y nadie usa"
+metaTitle: 'Las licencias de Atlassian que nadie usa'
+description: "Atlassian Cloud cobra por cada cuenta con acceso al producto, haya entrado o no la persona este año, y tus apps del Marketplace siguen el mismo recuento de usuarios. Cómo encontrar las cuentas inactivas, clasificarlas antes de quitar a nadie y convertir la recuperación de licencias en un hábito y no en un proyecto anual."
+metaDescription: 'Atlassian Cloud cobra por cada cuenta con acceso, la use o no, y tus apps siguen ese recuento. Cómo encontrar usuarios inactivos y recuperar el coste.'
+pubDate: 2026-10-10
+tags: ["atlassian-consulting", "jira-administration", "atlassian-cloud"]
+author: team
+heroImage: ../../../assets/blog/atlassian-license-reclamation.jpg
+heroImageAlt: 'Ilustración plana: una fila de cuadrados verde azulados, cada uno con la silueta de una persona, tres de ellos apagados en gris con pequeñas etiquetas de precio naranjas, una lupa azul marino sobre los grises y una pila de monedas doradas al final de la fila.'
+---
+
+*La gente se va, los contratistas terminan, las cuentas de prueba se acumulan. El recuento de licencias solo baja si alguien lo hace bajar.*
+
+En Atlassian Cloud pagas por las personas con acceso a un producto, no por las que lo usan. Alguien que se fue en marzo y en noviembre sigue teniendo acceso a Jira sigue en la factura. También el contratista cuyo proyecto terminó, la cuenta de prueba creada para una demo y el compañero que entró una vez para aprobar algo hace dos años.
+
+Cada uno es poca cosa. Juntos, en un sitio que ha crecido unos años sin que nadie lo poda, suelen ser una parte apreciable de la factura. Y la factura es mayor de lo que sugiere la línea de Atlassian.
+
+## Tus apps siguen el mismo recuento
+
+Las apps del Marketplace en Cloud se licencian para el mismo número de usuarios que el producto en el que funcionan. Una app instalada en Jira se cobra según el recuento de usuarios de Jira, la use un equipo o la use todo el mundo.
+
+Eso significa que un recuento de usuarios inflado se paga varias veces: una por Jira, y otra más por cada app instalada en él. Recuperar cincuenta usuarios inactivos de Jira baja la factura de Jira y la de cada app de Jira con ella. Esa es la cifra que merece la pena poner delante de quien aprueba el presupuesto.
+
+## Averigua quién no está activo, por producto
+
+La consola de administración registra cuándo estuvo activa por última vez cada persona en cada producto, y la lista de usuarios se puede exportar. Expórtala y filtra a quienes tienen acceso al producto y llevan inactivos más tiempo que el umbral que elijas. Noventa días es un punto de partida habitual; quien aprueba el cierre trimestral puede necesitar uno más largo.
+
+Hazlo por producto. Alguien puede estar activo en Confluence cada día y no haber abierto Jira en un año, y solo una de esas licencias está en uso.
+
+## Clasifica la lista antes de quitar a nadie
+
+La lista de inactivos no es una lista de bajas. Antes de tocarla, pon cada cuenta en uno de estos grupos:
+
+1. **Quienes se fueron.** Personas que ya no trabajan contigo. Quita el acceso al producto.
+2. **Ausencias largas.** Permisos de maternidad o paternidad, excedencias, bajas largas. Mantén, y anota la fecha de vuelta.
+3. **Usuarios ocasionales.** Aprobadores, auditores y responsables que entran una vez por trimestre. Normalmente mantén; a veces sirve una vía más ligera, como recibir las notificaciones por correo o usar un portal del service desk como cliente, que no necesita licencia de agente.
+4. **Cuentas de servicio y de integración.** Comprueba si cada una sigue teniendo una integración viva detrás, y si de verdad necesita acceso al producto.
+5. **Colaboradores externos.** Decide si siguen necesitando acceso, y en qué productos.
+
+La clasificación es lo que hace que la limpieza sea segura sin tener que pedir perdón después. Quitar por error la cuenta de alguien de baja cuesta una mañana de disculpas; quitar la cuenta con la que entra una integración cuesta una caída.
+
+## Quita el acceso por grupos, no persona a persona
+
+El acceso a los productos se concede mediante grupos. Sacar a una persona del grupo que da acceso, en lugar de desactivar la cuenta del todo, mantiene el cambio reversible: su historial, sus elementos de trabajo y sus páginas siguen exactamente donde estaban, y el acceso se recupera en segundos si la clasificación se equivocó con alguien.
+
+También mantiene el cambio auditable. "Sacada del grupo de acceso a Jira en esta fecha, por estar inactiva desde aquella" es un registro que cualquiera puede comprobar.
+
+## Elige el momento según la facturación
+
+Lo rápido que se nota una reducción depende de cómo pagues. Con una suscripción mensual se factura por usuario, así que la siguiente factura ya lo refleja. Con una suscripción anual compras un tramo de usuarios, así que el ahorro llega en la renovación, y solo si el recuento baja de un límite de tramo. Planifica la limpieza para las semanas previas a la renovación, y ten claro a qué límite apuntas.
+
+## Conviértelo en un hábito, no en un proyecto
+
+Una limpieza puntual se deshace en menos de un año. Lo que mantiene honesto el recuento es un proceso pequeño:
+
+- **La baja de una persona quita el acceso el mismo día en que se va**, por el mismo grupo, como un paso de la lista de comprobación y no como algo que se recuerda después.
+- **Una revisión trimestral** de la lista de inactivos, con la clasificación de arriba, lleva una hora una vez hecha la primera.
+- **Un aviso automático** que enumere las cuentas inactivas más allá del umbral, para que la revisión empiece con una lista y no con una búsqueda.
+
+## En resumen
+
+Pagas por el acceso, no por el uso, y tus apps del Marketplace pagan el mismo recuento otra vez. Exporta las fechas de última actividad por producto, clasifica las cuentas inactivas antes de quitar a nadie, quita el acceso por grupos para que siga siendo reversible y auditable, elige el momento según tu renovación, y conviértelo en un hábito trimestral. Si quieres ayuda con la primera pasada, forma parte del trabajo de administración de nuestro [equipo de Atlassian](/es/atlassian/).

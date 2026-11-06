@@ -1,0 +1,53 @@
+---
+lang: en
+translationKey: money-buys-time-never-power
+title: "Money buys time, never power: a fair-play rule we enforce with a test"
+metaTitle: 'Money buys time, never power'
+description: "Kindelve is free, and nothing in it can be bought yet. When something can, one rule decides what: money buys time and vanity, never power or access. Why we wrote that rule into the code and the tests rather than into a policy, and what it allows and forbids."
+metaDescription: 'Kindelve is free, and when anything is for sale, money will buy time and vanity, never power. Why that rule lives in the code and the tests, not in a policy.'
+pubDate: 2026-11-06
+tags: ["game-development"]
+author: team
+heroImage: ../../../assets/blog/money-buys-time-never-power.jpg
+heroImageAlt: 'Hand-coloured engraving: an antique brass hourglass beside a small pile of gold coins on a wooden counter, and on the stone wall behind it a plain iron sword locked behind a small iron grille.'
+---
+
+*Every free game eventually has to decide what it sells. Most decide one offer at a time, under pressure, and drift. We decided once, before there was anything to sell, and wrote it where it cannot drift.*
+
+Kindelve is free to play, and as of today nothing in it can be bought. The buttons that will one day take money exist, are disabled, and say so: a button that pretends to take money is worse than one that admits it cannot. When there is something to buy, one rule decides what it can be.
+
+**Money buys time and vanity, never power or access.**
+
+A player who pays can reach the same place sooner, or look different on the way. A player who pays can never reach a place a free player cannot, and can never play a descent that is easier than a free player's.
+
+## What "time" means, precisely
+
+The only thing designed to be sold is a boost: for a period of hours, the currency a finished descent banks is multiplied. It is applied once, after the descent is over, to what the descent earned. It is never applied during the descent.
+
+That boundary is structural, not a matter of discipline. The simulation that runs a descent takes no clock and no boost as inputs. It cannot see whether the player paid. A paying player's descent is therefore exactly as hard as anyone else's, creature for creature and hit for hit, because it is the same function with the same inputs. The money only touches what happens afterwards.
+
+## Every offer can be earned
+
+Every offer carries two prices: a money price, and a price in the game's own currency that any player can earn by playing. Both prices appear on the same card at the same weight. Nothing is for sale that a free player cannot also get by playing.
+
+A test enforces it. If an offer is ever added without an in-game price, the build fails, and that offer cannot ship. A second test pins down exactly what an offer is allowed to contain: if an offer ever gained a field that the simulation reads, the test would fail before the offer could change what happens inside a descent.
+
+## Boosts do not stack
+
+If two boosts are running, the better one applies, not the product of both. Stacking is how a shop becomes an arms race: three small boosts multiply into something no free player can approach, and "faster" quietly becomes "necessary". With no stacking, the most a payer can have is one multiplier, the same one a free player can earn.
+
+## There is a ceiling
+
+Relics, the account-wide finds that make every creature stronger, stack only up to a cap. That cap is the ceiling the rule relies on: buying time gets you to it sooner, and it never gets you past it, because past it there is nothing left for money to buy.
+
+## No ads on Steam
+
+The plan for a Steam version is a free game with no third-party advertising at all, because the platform does not allow it and because players there do not want it. Anything a browser player might be offered for watching an advertisement will instead come as a small daily gift. A Steam player will never be worse off than a browser player who watches every advertisement.
+
+## Why write a rule as code
+
+A fair-play promise written in a document is honoured until the quarter when revenue is short and one offer would make the difference. Then it is reinterpreted, once, reasonably, and the next exception is easier. A rule enforced by the build does not get reinterpreted under pressure. Changing it means deleting a test whose name says what it protects, in a change that someone has to review and sign. That is not impossible, but it is visible, and visible is enough.
+
+## The short version
+
+Money buys time and vanity, never power or access. The only thing designed to be sold multiplies what a finished descent banks, applied after the descent, and the simulation cannot see it. Every offer can also be earned, boosts do not stack, progress has a ceiling, and the planned Steam version has no ads. Tests enforce the parts that matter, so the rule survives the day it becomes inconvenient. You can play [Kindelve](/studio/) free today.

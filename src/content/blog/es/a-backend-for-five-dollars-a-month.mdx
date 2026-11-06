@@ -1,0 +1,63 @@
+---
+lang: es
+translationKey: a-backend-for-five-dollars-a-month
+title: "Un backend por cinco dólares al mes: cuándo alojar en el borde es la decisión correcta"
+metaTitle: 'Un backend por cinco dólares al mes'
+description: "El backend por defecto de un producto nuevo es un servidor, una base de datos gestionada y una factura que empieza en decenas de dólares. Para muchos productos pequeños, funciones en el borde con una base de datos en el borde hacen el mismo trabajo por una fracción. El backend de nuestro juego como ejemplo, con las cifras, las restricciones y cuándo no hacerlo."
+metaDescription: 'Muchos productos pequeños necesitan servidor y base de datos. Funciones y base de datos en el borde lo resuelven por cinco dólares al mes. Un ejemplo real.'
+pubDate: 2026-11-04
+tags: ["custom-development"]
+author: team
+heroImage: ../../../assets/blog/a-backend-for-five-dollars-a-month.jpg
+heroImageAlt: 'Ilustración plana: un pequeño globo verde azulado ligeramente luminoso con finas líneas naranjas que unen puntos diminutos sobre su superficie, y una sola moneda dorada sobre un pedestal azul marino delante de él.'
+---
+
+*La mayoría de los productos pequeños no necesitan un servidor encendido todo el día esperando peticiones. Necesitan unos cientos de líneas de código que despiertan cuando alguien llama, hacen su trabajo en milisegundos y vuelven a dormirse.*
+
+Cuando un producto nuevo necesita un backend, el plan por defecto es conocido: un servidor virtual o un contenedor gestionado, una base de datos gestionada, un servicio de monitorización, y una factura mensual que empieza en decenas de dólares antes de que nadie lo use y crece a partir de ahí. Para muchos productos ese es el plan correcto. Para muchos pequeños, es pagar por mantener una máquina ociosa.
+
+Las funciones en el borde son la alternativa: pequeños fragmentos de código que se ejecutan en la red de un proveedor, cerca del usuario, solo cuando llega una petición, con una base de datos que vive en la misma red. El backend de nuestro juego funciona así, y es un buen ejemplo, porque sus cifras son pequeñas y reales.
+
+## Qué hace el backend
+
+El juego en sí son archivos estáticos: la página, el código, el arte. Los sirve directamente la red de contenidos del proveedor y nunca tocan nuestro código. Una pequeña función responde solo a las peticiones de una ruta, y hoy hace dos trabajos:
+
+- **La clasificación diaria del Trial.** Un jugador envía las entradas de su descenso, y el backend lo vuelve a ejecutar para demostrar la puntuación antes de que aparezca en la clasificación.
+- **Quién está jugando ahora.** Mientras el juego está abierto, lo avisa cada par de minutos, y el backend cuenta los aparatos de los que ha tenido noticia hace poco.
+
+Los datos viven en una base de datos SQL en el borde: una tabla de entradas del Trial y una tabla de quién se vio y cuándo.
+
+## Las cifras
+
+En el plan de pago del proveedor, cinco dólares al mes dan diez millones de peticiones y treinta millones de milisegundos de CPU, más una cuota de base de datos de veinticinco mil millones de filas leídas, cincuenta millones de filas escritas y cinco gigabytes de almacenamiento. No se cobra la transferencia de datos. Pasada la cuota, las peticiones cuestan treinta céntimos de dólar el millón.
+
+Modela mil jugadores que juegan todos los días, con un patrón intenso de avisos de presencia, entradas y comprobaciones del Trial, y llegas a unos tres millones de peticiones al mes. Es menos de un tercio de la cuota, sin ningún exceso. La factura son cinco dólares, y siguen siendo cinco dólares hasta que el juego tenga decenas de miles de jugadores diarios. Las peticiones de los archivos del juego nunca despiertan la función, así que ni siquiera entran en esa cuenta.
+
+## La restricción que dio forma al código
+
+El plan gratuito permite diez milisegundos de CPU por petición. Volver a ejecutar un Trial completo de cinco minutos lleva más que eso. Así que la repetición se corta en trozos: cada petición vuelve a ejecutar unos cientos de ticks, guarda la simulación en pausa en la base de datos, y la petición siguiente continúa exactamente donde se quedó. Guardar y restaurar la simulación es exacto al tick, así que una repetición troceada llega al mismo resultado que una entera.
+
+La función además se calienta al arrancar, construyendo sus tablas de consulta y pasando una vez por los caminos más usados, para que la primera petición real no pague ese coste.
+
+Es un buen ejemplo de cómo los límites del borde dan forma al diseño. En el plan de pago el límite es de treinta segundos por petición, y los trozos podrían convertirse en una sola petición. Escribirlo primero para el límite más estricto hizo el código más robusto, no menos.
+
+## Cuándo alojar en el borde es la decisión correcta
+
+- **El tráfico es pequeño o mediano**, o irregular, y prefieres no pagar por tiempo ocioso.
+- **Las peticiones son cortas y sin estado**: leer algo, comprobar algo, escribir algo, responder.
+- **El público está repartido**, y ejecutarse cerca de cada usuario es una ventaja que viene gratis.
+- **La operación debe ser casi nula**: ningún sistema operativo que actualizar, ningún servidor que reiniciar, despliegues en segundos.
+
+## Cuándo no lo es
+
+- **El trabajo de larga duración**, como procesar vídeo o grandes lotes, corresponde a máquinas hechas para ello.
+- **Las consultas relacionales pesadas** sobre grandes volúmenes pueden superar el punto ideal de una base de datos en el borde.
+- **El estado compartido en tiempo real**, como una partida multijugador, necesita una coordinación que las funciones de petición simples no dan, aunque los proveedores ofrecen piezas para ello.
+
+## Tres cosas que cambian la factura
+
+Si un backend en el borde sale caro, casi siempre es por uno de tres motivos: un endpoint que quema CPU en cada llamada, un cliente que llama muchas más veces de las necesarias, o un almacenamiento que crece para siempre porque nunca se poda nada. Cada uno es una decisión de diseño, y cada uno es barato de acertar el primer día.
+
+## En resumen
+
+Para muchos productos pequeños, una función y una base de datos en el borde sustituyen a un servidor y una base de datos gestionada por cinco dólares al mes. El backend de nuestro juego demuestra las puntuaciones volviendo a ejecutar las partidas y cuenta quién está jugando, y mil jugadores diarios caben con holgura en la cuota básica. Usa el borde para peticiones cortas y sin estado y públicos repartidos; usa servidores para el trabajo largo, las consultas pesadas y el estado en tiempo real; y vigila la CPU por llamada, la frecuencia de las llamadas y el crecimiento del almacenamiento. Es el tipo de decisión de arquitectura que tomamos en proyectos de [desarrollo a medida](/es/custom-development/).

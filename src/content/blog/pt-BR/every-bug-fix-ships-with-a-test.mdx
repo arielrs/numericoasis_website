@@ -1,0 +1,59 @@
+---
+lang: pt-BR
+translationKey: every-bug-fix-ships-with-a-test
+title: "Por que toda correção de bug que entregamos vem com um teste que a prova"
+metaTitle: 'Toda correção de bug vem com um teste'
+description: "Nossa regra é simples: uma correção de bug entra junto com um teste que falha sem a correção. Como aplicamos, como tornamos difícil pular a regra sem torná-la impossível, e por que é a prática de qualidade mais barata que conhecemos."
+metaDescription: 'Uma correção de bug entra com um teste que falha sem ela. Como aplicamos a regra, como tornamos difícil pulá-la, e por que é o hábito de qualidade mais barato.'
+pubDate: 2026-10-08
+tags: ["custom-development"]
+author: team
+heroImage: ../../../assets/blog/every-bug-fix-ships-with-a-test.jpg
+heroImageAlt: 'Ilustração em estilo flat: um pequeno besouro laranja preso num cartão sob uma redoma de vidro, num pedestal azul-marinho, ao lado de um grande escudo verde-azulado com um sinal de visto e uma pilha de cartões azul-marinho.'
+---
+
+*Um bug que foi corrigido uma vez nunca deveria conseguir voltar sem um teste ficar vermelho. A regra é só essa.*
+
+Toda equipe diz que valoriza qualidade. A questão é quanto essa palavra custa numa terça à tarde, quando a correção está pronta, o cliente está esperando, e escrever o teste parece formalidade. Nossa resposta é uma regra sem espaço para julgamento: toda correção de bug entra com um teste que falha sem a correção. Não "deveria", não "quando for possível". Todas.
+
+## Reproduza primeiro como um teste que falha
+
+A ordem importa. Antes de mexer no código, escrevemos um teste que reproduz o bug e o vemos falhar. Só então corrigimos o código e vemos o teste passar.
+
+Se não conseguimos fazer o teste falhar, ainda não entendemos o bug, e qualquer correção seria um palpite. Isso acontece mais do que se imagina: o sintoma relatado tem uma causa diferente da óbvia, e é o teste falhando que revela isso. Uma correção aplicada à causa óbvia teria fechado o chamado e deixado o bug onde estava.
+
+## Dê ao teste o nome do bug
+
+Cada teste de regressão leva o nome do bug que protege e aponta para o registro dele: o que aconteceu, o que causou, como foi encontrado. Um ano depois, quando alguém se perguntar por que existe um teste de aparência estranha, a resposta está a um clique. Sem esse vínculo, testes estranhos são apagados como entulho, e é exatamente assim que bugs antigos voltam.
+
+## Nunca reescreva um teste de regressão para ele aceitar o novo comportamento
+
+Às vezes o comportamento esperado muda de verdade, e um teste de regressão começa a falhar por um bom motivo. A tentação é editar o teste até ele passar. Não fazemos isso. O teste antigo é renomeado para dizer qual contrato ele documentava, e um teste novo é escrito para o novo comportamento, substituindo o antigo de forma explícita.
+
+Parece burocrático. Na prática, é a diferença entre "mudamos o comportamento de propósito" e "um teste foi ajustado em silêncio até o build ficar verde", e só um dos dois é seguro de entregar.
+
+## Torne a regra difícil de pular, mas não impossível
+
+Uma regra que não pode ser quebrada acaba sendo contornada. Uma regra que pode ser quebrada em silêncio acaba ignorada. Então verificamos no build: um commit que diz corrigir algo e mexe no código sem mexer em nenhum teste derruba o pipeline.
+
+Existe um jeito de passar pela verificação, de propósito. O commit pode trazer uma nota explícita dizendo por que nenhum teste era possível, e essa nota fica registrada e é revisada. Algumas correções realmente não podem ser testadas de forma sensata. O que importa é que pular a regra seja visível, raro e explicado, e não invisível e rotineiro.
+
+## O que ela compra
+
+Três coisas, em ordem de quanto valem:
+
+1. **O mesmo bug não volta.** Só isso já paga a prática. Regressões são os bugs mais caros, porque quebram a confiança além do software: "vocês já tinham corrigido isso" é uma frase que nenhum cliente deveria precisar escrever.
+2. **Os testes se acumulam onde o código é frágil.** Uma suíte de testes nascida de bugs reais se concentra exatamente nos lugares que quebraram antes, que são os mais propensos a quebrar de novo.
+3. **As notas de versão ficam honestas.** Quando toda correção tem um teste, "corrigido" significa comprovadamente corrigido, e não "achamos que corrigimos".
+
+## O que ela custa
+
+Normalmente entre dez e trinta minutos por correção, a maior parte gasta entendendo o bug o suficiente para reproduzi-lo, que é um tempo de que a correção precisava de qualquer forma. Comparado a uma única regressão chegando a um cliente, não tem nem comparação.
+
+## Onde outras barreiras assumem
+
+Nem todo defeito é um bug de lógica. Uma palavra errada numa página, uma cor que falha no contraste, um link quebrado depois de uma renomeação: esses são protegidos por outras verificações no build, como comparação de capturas de tela e verificações de conteúdo, e não por um teste unitário a cada correção. O princípio é o mesmo: um erro que aconteceu uma vez deveria ser pego por uma máquina na segunda.
+
+## Em resumo
+
+Reproduza o bug como um teste que falha antes de corrigi-lo. Dê ao teste o nome do bug. Substitua testes de regressão em vez de editá-los. Faça o build cobrar a regra, com uma saída registrada para a rara exceção honesta. Custa minutos por correção e evita a conversa mais cara do software. É como construímos os nossos próprios produtos e o [software sob medida](/pt-BR/custom-development/) que fazemos para clientes.

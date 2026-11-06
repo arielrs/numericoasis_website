@@ -1,0 +1,64 @@
+---
+lang: pt-BR
+translationKey: scriptrunner-cloud-migration-sizing
+title: "Dimensionando a migração do ScriptRunner para o Cloud antes de fechar uma data"
+metaTitle: 'Dimensionando a migração do ScriptRunner'
+description: "O ScriptRunner costuma ser o app mais difícil de uma migração do Jira, e as estimativas dele erram para os dois lados. Como montar uma matriz de todos os scripts, tirar o que está morto, juntar os duplicados, traduzir um primeiro rascunho para ver a dificuldade real e apresentar dois números honestos."
+metaDescription: 'O ScriptRunner é o app mais difícil da maioria das migrações do Jira. Como inventariar os scripts, tirar os mortos, juntar duplicados e estimar com honestidade.'
+pubDate: 2026-10-06
+tags: ["atlassian-consulting", "cloud-migration", "jira-administration"]
+author: team
+heroImage: ../../../assets/blog/scriptrunner-cloud-migration-sizing.jpg
+heroImageAlt: 'Ilustração em estilo flat: uma grande balança laranja pesando uma pilha de cartões azul-marinho marcados com linhas cinza de código contra um pequeno relógio verde-azulado, com uma fita métrica desenrolada embaixo.'
+---
+
+*O ScriptRunner no Cloud tem o mesmo nome do ScriptRunner no Data Center. Não é o mesmo produto, e estimativas que esquecem isso erram para os dois lados.*
+
+Na maioria dos sites Jira Data Center que avaliamos, o ScriptRunner é o app que decide o esforço da migração. Normalmente está lá há anos, mexe em workflows, campos, listeners e jobs agendados, e boa parte do que ele faz foi escrita por pessoas que já não estão por perto para explicar.
+
+As estimativas que vemos para ele falham de dois jeitos opostos. "Mais ou menos um dia por script" soa prudente e produz um número tão grande que a migração é adiada. "O ScriptRunner tem versão Cloud, então migra" soa tranquilizador e produz um fim de semana de virada cheio de transições quebradas. As duas vêm de pular o mesmo trabalho.
+
+## Por que o Cloud é outro produto
+
+No Data Center, um script roda dentro do Jira, com acesso direto à API Java interna do Jira e ao banco de dados. No Cloud, o ScriptRunner roda fora do Jira e conversa com ele pela API REST pública, como qualquer outra integração.
+
+Essa única diferença explica a maioria das surpresas. Código que chamava classes internas precisa ser reescrito contra endpoints REST. Alguns eventos que um listener do Data Center conseguia interceptar no momento em que aconteciam chegam no Cloud depois do fato, então um script que antes impedia algo agora precisa reagir a ele. Comportamentos de campos nas telas funcionam dentro de limites mais estreitos. Nada disso é defeito; é o que significa rodar fora do produto. Mas torna falso o "migra" para a maioria dos scripts customizados.
+
+## Uma linha por script
+
+A estimativa começa com uma matriz: uma linha para cada item do ScriptRunner, seja de que tipo for. Cada linha registra o tipo do item, os spaces que ele afeta, quando rodou pela última vez, se está desativado, uma decisão, um destino no Cloud e como verificar que a versão Cloud funciona.
+
+Parece pesado para um exercício de dimensionamento. É o único formato que conhecemos que permite entregar o trabalho para desenvolvedores depois, refazer as contas quando o escopo muda e responder "por que isso está na estimativa?" para qualquer linha.
+
+## Quatro decisões, não duas
+
+Cada linha recebe uma de quatro decisões:
+
+1. **Reimplementar no ScriptRunner para Cloud.** O padrão para tudo o que ainda é necessário.
+2. **Substituir por Jira Automation.** Regras simples que disparam num evento e preenchem um campo muitas vezes pertencem a ela hoje, e são mais fáceis de manter.
+3. **Substituir por outro app ou por um pequeno app em Forge.** Quando o trabalho fica melhor em outro lugar.
+4. **Retirar.** Quando nada precisa ser feito.
+
+Nos inventários de Jira que dimensionamos, a reimplementação costuma ser a maioria, a Automation fica com uma fatia relevante, e as retiradas nunca são irrelevantes.
+
+## Retire primeiro, estime depois
+
+Antes de estimar qualquer coisa, tire o que não precisa migrar: itens desativados, itens que nunca rodaram, itens cuja última execução foi há muitos meses, itens que só afetam spaces arquivados ou mortos, e itens ligados a workflows de teste. Cada um deles é uma linha que alguém teria estimado, construído e testado para nada.
+
+## Junte os duplicados
+
+Acervos grandes de ScriptRunner estão cheios de copiar e colar. O mesmo validador vive em quarenta workflows com uma chave de space diferente em cada um. Normalize os espaços em branco, gere um hash de cada script e agrupe os idênticos. Nos acervos que medimos, cerca de um quarto das funções de workflow se reduziu a um conjunto bem menor de fragmentos compartilhados. Estimar cada cópia separadamente é como um dimensionamento dobra.
+
+## Traduza um primeiro rascunho para ver a dificuldade real
+
+O jeito mais rápido de saber quão difícil é migrar um script é começar a migrá-lo. Uma tradução de primeiro rascunho de cada script restante, feita para dimensionar e não para entregar, mostra exatamente onde está a dificuldade: chamadas a APIs internas sem equivalente REST, lógica que supunha rodar antes de uma mudança e não depois, e dados que precisam ser convertidos antes da virada. Um script que parece assustador muitas vezes se traduz em minutos; um de dez linhas às vezes não tem equivalente nenhum no Cloud.
+
+## Apresente dois números, lado a lado
+
+Damos dois totais. Uma base que supõe que cada item é reconstruído individualmente, e um total assistido que reflete padrões construídos uma vez e reutilizados, duplicados juntados e recursos do Cloud fazendo parte do trabalho. Depois explicamos a diferença linha por linha.
+
+Dois números com os seus motivos se sustentam numa reunião de orçamento muito melhor do que um. Quando alguém pergunta por que o número assistido é menor, a resposta está na matriz, e não na nossa confiança.
+
+## Em resumo
+
+O ScriptRunner no Cloud roda fora do Jira, então a maioria dos scripts customizados precisa ser reescrita, e não apenas migrada. Monte uma matriz com uma linha por item, escolha entre reimplementar, Automation, outro app ou retirar, tire os itens mortos antes de estimar, junte os duplicados, traduza um primeiro rascunho para achar a dificuldade real, e apresente um número base e um assistido com a diferença explicada. É o dimensionamento que o nosso [time Atlassian](/pt-BR/atlassian/) faz antes de alguém se comprometer com uma data.

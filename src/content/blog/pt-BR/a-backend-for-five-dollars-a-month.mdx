@@ -1,0 +1,63 @@
+---
+lang: pt-BR
+translationKey: a-backend-for-five-dollars-a-month
+title: "Um backend por cinco dólares por mês: quando hospedar na borda é a escolha certa"
+metaTitle: 'Um backend por cinco dólares por mês'
+description: "O backend padrão de um produto novo é um servidor, um banco de dados gerenciado e uma conta que começa nas dezenas de dólares. Para muitos produtos pequenos, funções na borda com um banco de dados na borda fazem o mesmo trabalho por uma fração disso. O backend do nosso jogo como exemplo, com os números, as restrições e quando não fazer assim."
+metaDescription: 'Muitos produtos pequenos precisam de servidor e banco de dados. Funções e banco na borda resolvem por cinco dólares ao mês. Um exemplo real, com os números.'
+pubDate: 2026-11-04
+tags: ["custom-development"]
+author: team
+heroImage: ../../../assets/blog/a-backend-for-five-dollars-a-month.jpg
+heroImageAlt: 'Ilustração em estilo flat: um pequeno globo verde-azulado levemente luminoso com finas linhas laranja ligando pontos minúsculos na sua superfície, e uma única moeda dourada sobre um pedestal azul-marinho à frente dele.'
+---
+
+*A maioria dos produtos pequenos não precisa de um servidor ligado o dia todo esperando requisições. Precisa de algumas centenas de linhas de código que acordam quando alguém chama, fazem o trabalho em milissegundos e voltam a dormir.*
+
+Quando um produto novo precisa de um backend, o plano padrão é conhecido: um servidor virtual ou um contêiner gerenciado, um banco de dados gerenciado, um serviço de monitoramento, e uma conta mensal que começa nas dezenas de dólares antes de alguém usar e cresce a partir daí. Para muitos produtos esse é o plano certo. Para muitos pequenos, é pagar para manter uma máquina ociosa.
+
+As funções na borda são a alternativa: pequenos trechos de código que rodam na rede de um provedor, perto do usuário, só quando chega uma requisição, com um banco de dados que vive na mesma rede. O backend do nosso jogo roda assim, e é um bom exemplo, porque os números dele são pequenos e reais.
+
+## O que o backend faz
+
+O jogo em si são arquivos estáticos: a página, o código, a arte. Eles são servidos direto pela rede de conteúdo do provedor e nunca tocam o nosso código. Uma pequena função responde só às requisições de um caminho, e hoje ela faz dois trabalhos:
+
+- **O quadro diário do Trial.** Um jogador envia as entradas da sua descida, e o backend a repete para provar a pontuação antes de ela aparecer no quadro.
+- **Quem está jogando agora.** Enquanto o jogo está aberto, ele avisa a cada dois minutos, e o backend conta os aparelhos de que teve notícia recentemente.
+
+Os dados ficam num banco SQL na borda: uma tabela de entradas do Trial e uma tabela de quem foi visto quando.
+
+## Os números
+
+No plano pago do provedor, cinco dólares por mês compram dez milhões de requisições e trinta milhões de milissegundos de CPU, mais uma franquia de banco de dados de vinte e cinco bilhões de linhas lidas, cinquenta milhões de linhas gravadas e cinco gigabytes de armazenamento. Não há cobrança por transferência de dados. Passada a franquia, as requisições custam trinta centavos de dólar por milhão.
+
+Modele mil jogadores que jogam todos os dias, com um padrão intenso de avisos de presença, entradas e verificações do Trial, e você chega a cerca de três milhões de requisições por mês. É menos de um terço da franquia, sem nenhum excedente. A conta é de cinco dólares, e continua cinco dólares até o jogo ter dezenas de milhares de jogadores por dia. As requisições pelos arquivos do jogo nunca acordam a função, então nem entram nessa conta.
+
+## A restrição que moldou o código
+
+O plano gratuito permite dez milissegundos de CPU por requisição. Repetir um Trial inteiro de cinco minutos leva mais do que isso. Então a repetição é cortada em pedaços: cada requisição repete algumas centenas de ticks, salva a simulação pausada no banco de dados, e a requisição seguinte continua exatamente de onde parou. Salvar e restaurar a simulação é exato até o tick, então uma repetição em pedaços chega ao mesmo resultado que uma inteira.
+
+A função também se aquece ao iniciar, montando as tabelas de consulta e passando uma vez pelos caminhos mais usados, para que a primeira requisição real não pague esse custo.
+
+É um bom exemplo de como os limites da borda moldam o desenho. No plano pago o limite é de trinta segundos por requisição, e os pedaços poderiam virar uma única requisição. Escrever primeiro para caber no limite mais apertado deixou o código mais robusto, e não menos.
+
+## Quando hospedar na borda é a escolha certa
+
+- **O tráfego é pequeno ou médio**, ou irregular, e você prefere não pagar por tempo ocioso.
+- **As requisições são curtas e sem estado**: ler algo, conferir algo, gravar algo, responder.
+- **O público está espalhado**, e rodar perto de cada usuário é uma vantagem que vem de graça.
+- **A operação deve ser quase zero**: nenhum sistema operacional para atualizar, nenhum servidor para reiniciar, publicações em segundos.
+
+## Quando não é
+
+- **Trabalho longo**, como processamento de vídeo ou grandes lotes, pertence a máquinas feitas para isso.
+- **Consultas relacionais pesadas** sobre grandes volumes podem passar do ponto ideal de um banco de dados na borda.
+- **Estado compartilhado em tempo real**, como uma partida multijogador, precisa de uma coordenação que funções de requisição simples não dão, embora os provedores ofereçam peças para isso.
+
+## Três coisas que mudam a conta
+
+Se um backend na borda fica caro, quase sempre é por um de três motivos: um endpoint que queima CPU a cada chamada, um cliente que chama muito mais vezes do que precisa, ou um armazenamento que cresce para sempre porque nada é podado. Cada um é uma decisão de projeto, e cada um é barato de acertar no primeiro dia.
+
+## Em resumo
+
+Para muitos produtos pequenos, uma função e um banco de dados na borda substituem um servidor e um banco de dados gerenciado por cinco dólares por mês. O backend do nosso jogo prova pontuações repetindo as partidas e conta quem está jogando, e mil jogadores por dia cabem com folga na franquia básica. Use a borda para requisições curtas e sem estado e para públicos espalhados; use servidores para trabalho longo, consultas pesadas e estado em tempo real; e acompanhe a CPU por chamada, a frequência das chamadas e o crescimento do armazenamento. É o tipo de decisão de arquitetura que tomamos em projetos de [desenvolvimento sob medida](/pt-BR/custom-development/).

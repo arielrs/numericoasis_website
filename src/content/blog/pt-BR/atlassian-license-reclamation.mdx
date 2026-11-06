@@ -1,0 +1,65 @@
+---
+lang: pt-BR
+translationKey: atlassian-license-reclamation
+title: "Encontrando as licenças Atlassian que você paga e ninguém usa"
+metaTitle: 'As licenças Atlassian que ninguém usa'
+description: "O Atlassian Cloud cobra por toda conta com acesso ao produto, tenha a pessoa entrado este ano ou não, e os seus apps do Marketplace seguem a mesma contagem de usuários. Como encontrar as contas inativas, separá-las antes de remover alguém e tornar a recuperação de licenças um hábito, e não um projeto anual."
+metaDescription: 'O Atlassian Cloud cobra por toda conta com acesso, usada ou não, e os seus apps seguem essa contagem. Como achar usuários inativos e recuperar o custo.'
+pubDate: 2026-10-10
+tags: ["atlassian-consulting", "jira-administration", "atlassian-cloud"]
+author: team
+heroImage: ../../../assets/blog/atlassian-license-reclamation.jpg
+heroImageAlt: 'Ilustração em estilo flat: uma fileira de quadrados verde-azulados, cada um com a silhueta de uma pessoa, três deles desbotados para cinza com pequenas etiquetas de preço laranja, uma lupa azul-marinho sobre os cinza e uma pilha de moedas douradas no fim da fileira.'
+---
+
+*Pessoas saem, terceirizados terminam, contas de teste se acumulam. A contagem de licenças só diminui se alguém fizer ela diminuir.*
+
+No Atlassian Cloud você paga por quem tem acesso a um produto, e não por quem o usa. Alguém que saiu em março e ainda tem acesso ao Jira em novembro continua na conta. Também continuam o terceirizado cujo projeto terminou, a conta de teste criada para uma demonstração e o colega que entrou uma vez para aprovar algo há dois anos.
+
+Cada um é pouco. Juntos, num site que cresceu por alguns anos sem ninguém podar, costumam ser uma parte perceptível da conta. E a conta é maior do que a linha da Atlassian sugere.
+
+## Os seus apps seguem a mesma contagem
+
+Apps do Marketplace no Cloud são licenciados para o mesmo número de usuários do produto em que rodam. Um app instalado no Jira é cobrado pela contagem de usuários do Jira, seja uma equipe que o usa ou todo mundo.
+
+Ou seja, uma contagem de usuários inflada é paga várias vezes: uma vez pelo Jira, e de novo por cada app instalado nele. Recuperar cinquenta usuários inativos do Jira reduz a conta do Jira e a de cada app do Jira junto. É esse o número que vale colocar na frente de quem aprova o orçamento.
+
+## Descubra quem não está ativo, por produto
+
+O console de administração registra quando cada pessoa esteve ativa pela última vez em cada produto, e a lista de usuários pode ser exportada. Exporte, e filtre quem tem acesso ao produto e não está ativo há mais tempo do que um limite que você escolher. Noventa dias é um ponto de partida comum; um aprovador de fechamento trimestral pode precisar de um limite maior.
+
+Faça isso por produto. Alguém pode estar ativo no Confluence todos os dias e não abrir o Jira há um ano, e só uma dessas licenças está em uso.
+
+## Separe a lista antes de remover alguém
+
+A lista de inativos não é uma lista de remoção. Antes de mexer nela, coloque cada conta num destes grupos:
+
+1. **Quem saiu.** Pessoas que não trabalham mais com você. Remova o acesso ao produto.
+2. **Ausências longas.** Licença-maternidade ou paternidade, períodos sabáticos, afastamentos longos. Mantenha, e anote a data de retorno.
+3. **Usuários ocasionais.** Aprovadores, auditores e gestores que entram uma vez por trimestre. Normalmente mantenha; às vezes um caminho mais leve funciona, como receber notificações por e-mail ou usar um portal do service desk como cliente, o que não exige licença de agente.
+4. **Contas de serviço e de integração.** Confira se cada uma ainda tem uma integração viva por trás, e se precisa mesmo de acesso ao produto.
+5. **Colaboradores externos.** Decida se ainda precisam de acesso, e em quais produtos.
+
+É a separação que torna a limpeza segura de fazer sem precisar pedir desculpas depois. Remover por engano a conta de alguém em afastamento custa uma manhã de desculpas; remover a conta que uma integração usa para entrar custa uma indisponibilidade.
+
+## Remova o acesso pelos grupos, não uma pessoa por vez
+
+O acesso aos produtos é concedido por grupos. Tirar uma pessoa do grupo que concede o acesso, em vez de desativar a conta de vez, mantém a mudança reversível: o histórico dela, os itens de trabalho e as páginas continuam exatamente onde estão, e o acesso volta em segundos se a separação errou com alguém.
+
+Também mantém a mudança auditável. "Removida do grupo de acesso ao Jira nesta data, por estar inativa desde aquela data" é um registro que qualquer pessoa consegue conferir.
+
+## Acerte o momento com a cobrança
+
+A rapidez com que uma redução aparece depende de como você paga. Numa assinatura mensal, a cobrança é por usuário, então a próxima conta já reflete. Numa assinatura anual, você compra uma faixa de usuários, então a economia chega na renovação, e só se a contagem cair abaixo de um limite de faixa. Planeje a limpeza para as semanas antes da renovação, e saiba qual limite você quer alcançar.
+
+## Faça disso um hábito, não um projeto
+
+Uma limpeza pontual se desfaz em menos de um ano. O que mantém a contagem honesta é um processo pequeno:
+
+- **O desligamento remove o acesso no dia em que a pessoa sai**, pelo mesmo grupo, como um passo da checklist e não como algo lembrado depois.
+- **Uma revisão trimestral** da lista de inativos, com a separação acima, leva uma hora depois que a primeira foi feita.
+- **Um alerta automático** que lista as contas inativas além do limite, para a revisão começar de uma lista e não de uma caçada.
+
+## Em resumo
+
+Você paga pelo acesso, não pelo uso, e os seus apps do Marketplace pagam a mesma contagem de novo. Exporte as datas de última atividade por produto, separe as contas inativas antes de remover alguém, remova o acesso pelos grupos para a mudança continuar reversível e auditável, acerte o momento com a renovação, e transforme isso num hábito trimestral. Se quiser ajuda com a primeira passada, isso faz parte do trabalho de administração do nosso [time Atlassian](/pt-BR/atlassian/).

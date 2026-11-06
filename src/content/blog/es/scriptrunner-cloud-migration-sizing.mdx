@@ -1,0 +1,64 @@
+---
+lang: es
+translationKey: scriptrunner-cloud-migration-sizing
+title: "Dimensionar la migración de ScriptRunner a Cloud antes de comprometer una fecha"
+metaTitle: 'Dimensionar la migración de ScriptRunner'
+description: "ScriptRunner suele ser la app más difícil de una migración de Jira, y sus estimaciones fallan en las dos direcciones. Cómo montar una matriz de todos los scripts, quitar lo que está muerto, agrupar los duplicados, traducir un primer borrador para ver la dificultad real y presentar dos cifras honestas."
+metaDescription: 'ScriptRunner es la app más difícil de casi toda migración de Jira. Cómo inventariar scripts, quitar los muertos, agrupar duplicados y estimar con honestidad.'
+pubDate: 2026-10-06
+tags: ["atlassian-consulting", "cloud-migration", "jira-administration"]
+author: team
+heroImage: ../../../assets/blog/scriptrunner-cloud-migration-sizing.jpg
+heroImageAlt: 'Ilustración plana: una gran balanza naranja que pesa una pila de tarjetas azul marino marcadas con líneas grises de código frente a un pequeño reloj verde azulado, con una cinta métrica desenrollada en la parte inferior.'
+---
+
+*ScriptRunner en Cloud se llama igual que ScriptRunner en Data Center. No es el mismo producto, y las estimaciones que lo olvidan fallan en las dos direcciones.*
+
+En la mayoría de los sitios Jira Data Center que evaluamos, ScriptRunner es la app que decide el esfuerzo de la migración. Suele llevar años instalada, toca flujos de trabajo, campos, listeners y tareas programadas, y buena parte de lo que hace lo escribieron personas que ya no están para explicarlo.
+
+Las estimaciones que vemos para ella fallan de dos formas opuestas. "Más o menos un día por script" suena prudente y produce una cifra tan grande que la migración se aplaza. "ScriptRunner tiene versión Cloud, así que migra" suena tranquilizador y produce un fin de semana de corte lleno de transiciones rotas. Las dos vienen de saltarse el mismo trabajo.
+
+## Por qué Cloud es otro producto
+
+En Data Center, un script se ejecuta dentro de Jira, con acceso directo a la API Java interna de Jira y a su base de datos. En Cloud, ScriptRunner se ejecuta fuera de Jira y habla con él a través de la API REST pública, como cualquier otra integración.
+
+Esa sola diferencia explica la mayoría de las sorpresas. El código que llamaba a clases internas hay que reescribirlo contra endpoints REST. Algunos eventos que un listener de Data Center podía interceptar en el momento llegan en Cloud después de ocurrir, así que un script que antes impedía algo ahora tiene que reaccionar a ello. Los comportamientos de los campos en pantalla funcionan dentro de límites más estrechos. Nada de esto es un defecto; es lo que significa ejecutarse fuera del producto. Pero hace que "migra" sea falso para la mayoría de los scripts personalizados.
+
+## Una fila por script
+
+La estimación empieza con una matriz: una fila por cada elemento de ScriptRunner, sea del tipo que sea. Cada fila recoge el tipo del elemento, los spaces a los que afecta, cuándo se ejecutó por última vez, si está desactivado, una decisión, un destino en Cloud y cómo comprobar que la versión Cloud funciona.
+
+Parece pesado para un ejercicio de dimensionamiento. Es la única forma que conocemos que permite pasar después el trabajo a los desarrolladores, rehacer las cuentas cuando cambia el alcance y responder "¿por qué está esto en la estimación?" para cualquier fila.
+
+## Cuatro decisiones, no dos
+
+Cada fila recibe una de cuatro decisiones:
+
+1. **Reimplementar en ScriptRunner para Cloud.** Lo normal para todo lo que siga haciendo falta.
+2. **Sustituir por Jira Automation.** Las reglas sencillas que se disparan con un evento y rellenan un campo a menudo encajan mejor allí hoy, y son más fáciles de mantener.
+3. **Sustituir por otra app o por una pequeña app en Forge.** Cuando el trabajo se hace mejor en otro sitio.
+4. **Retirar.** Cuando no hace falta hacer nada.
+
+En los inventarios de Jira que hemos dimensionado, la reimplementación suele ser la mayoría, Automation se queda con una parte importante, y las retiradas nunca son insignificantes.
+
+## Retira primero, estima después
+
+Antes de estimar nada, quita lo que no necesita migrar: elementos desactivados, elementos que nunca se han ejecutado, elementos cuya última ejecución fue hace muchos meses, elementos que solo afectan a spaces archivados o muertos, y elementos ligados a flujos de trabajo de prueba. Cada uno es una fila que alguien habría estimado, construido y probado para nada.
+
+## Agrupa los duplicados
+
+Los grandes conjuntos de ScriptRunner están llenos de copiar y pegar. El mismo validador vive en cuarenta flujos de trabajo con una clave de space distinta en cada uno. Normaliza los espacios en blanco, calcula un hash de cada script y agrupa los idénticos. En los conjuntos que hemos medido, alrededor de una cuarta parte de las funciones de flujo de trabajo se redujo a un conjunto mucho más pequeño de fragmentos compartidos. Estimar cada copia por separado es como se duplica un dimensionamiento.
+
+## Traduce un primer borrador para ver la dificultad real
+
+La forma más rápida de saber lo difícil que es migrar un script es empezar a migrarlo. Una traducción de primer borrador de cada script restante, hecha para dimensionar y no para entregar, muestra exactamente dónde está la dificultad: llamadas a API internas sin equivalente REST, lógica que suponía ejecutarse antes de un cambio y no después, y datos que hay que convertir antes del corte. Un script que parece temible a menudo se traduce en minutos; uno de diez líneas a veces resulta no tener ningún equivalente en Cloud.
+
+## Presenta dos cifras, una al lado de la otra
+
+Damos dos totales. Una base que supone que cada elemento se reconstruye por separado, y un total asistido que refleja patrones construidos una vez y reutilizados, duplicados agrupados y funcionalidades de Cloud haciendo parte del trabajo. Después explicamos la diferencia fila por fila.
+
+Dos cifras con sus motivos aguantan mucho mejor en una reunión de presupuesto que una sola. Cuando alguien pregunta por qué la cifra asistida es menor, la respuesta está en la matriz, no en nuestra seguridad.
+
+## En resumen
+
+ScriptRunner en Cloud se ejecuta fuera de Jira, así que la mayoría de los scripts personalizados hay que reescribirlos, no solo migrarlos. Monta una matriz con una fila por elemento, decide entre reimplementar, Automation, otra app o retirar, quita los elementos muertos antes de estimar, agrupa los duplicados, traduce un primer borrador para encontrar la dificultad real, y presenta una cifra base y una asistida con la diferencia explicada. Es el dimensionamiento que hace nuestro [equipo de Atlassian](/es/atlassian/) antes de que nadie se comprometa con una fecha.

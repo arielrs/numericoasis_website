@@ -1,0 +1,65 @@
+---
+lang: es
+translationKey: confluence-macros-cloud-migration
+title: "Las macros de Confluence que no sobreviven a la migración a Cloud"
+metaTitle: 'Macros de Confluence que no sobreviven a Cloud'
+description: "En una migración de Confluence las páginas pasan sin problema. Lo que se rompe son las macros que llevan dentro. Cómo contarlas, separarlas en tres grupos, encontrar las anidadas y decidir qué reconstruir antes de que los dueños del contenido descubran los huecos por ti."
+metaDescription: 'En una migración de Confluence las páginas pasan bien y las macros se rompen. Cómo contarlas, separarlas en tres grupos y encontrar antes las anidadas.'
+pubDate: 2026-10-01
+tags: ["cloud-migration", "confluence-governance", "atlassian-consulting"]
+author: team
+heroImage: ../../../assets/blog/confluence-macros-cloud-migration.jpg
+heroImageAlt: 'Ilustración plana: páginas blancas cruzando un puente en arco desde un edificio azul marino hasta una nube verde azulada, mientras dos páginas con forma de pieza de puzle esperan detrás, junto a un pequeño triángulo de aviso naranja.'
+---
+
+*Una página que mostraba una tabla viva en Data Center puede mostrar una caja gris de "macro desconocida" en Cloud. Nadie se da cuenta hasta que la abre la persona que depende de ella.*
+
+Las migraciones de Confluence tienen fama de ser más fáciles que las de Jira, y en lo que respecta al texto es cierto. Páginas, adjuntos, comentarios y permisos pasan de forma fiable. Lo que no siempre pasa es el comportamiento incrustado en las páginas: las macros. Una macro es un pequeño programa en mitad de tu contenido, y solo funciona en Cloud si algo en Cloud sabe ejecutarla.
+
+## Por qué las macros son la parte difícil
+
+Tres tipos de macro causan la mayoría de los problemas:
+
+- **Macros de apps.** Vienen de apps del Marketplace y solo se muestran en Cloud si el proveedor tiene una app Cloud que reconozca la misma macro y un camino de migración para sus datos. Algunos proveedores tienen las dos cosas. Otros tienen una app Cloud con otra macro. Otros no tienen app Cloud.
+- **User macros.** Escritas por tus propios administradores en Data Center, normalmente como pequeñas plantillas. Cloud no tiene un equivalente directo, así que cada una necesita una decisión.
+- **Macros anidadas.** Una macro compatible dentro de una incompatible, dentro de una tabla, dentro de una sección desplegable. Si la macro exterior se rompe, se rompe todo lo que lleva dentro, incluidas macros que habrían funcionado por sí solas.
+
+## Cuenta antes de juzgar
+
+El primer trabajo es un inventario de todas las macros en uso, con cifras: cuántas páginas usan cada una, en cuántos spaces, y cuándo se editaron y se vieron esas páginas por última vez.
+
+La forma de ese inventario casi siempre es la misma. Un puñado de macros aparece en miles de páginas y marca el plan. Una larga cola aparece en pocas páginas cada una. Y una parte sorprendente de la cola está en páginas que nadie abre desde hace años. Saber cuál es cuál convierte una lista temible de doscientas macros en una lista corta de decisiones.
+
+## Sepáralas en tres grupos
+
+Cada macro va después a uno de tres grupos:
+
+1. **Grupo A: migra sola.** La app Cloud del proveedor reconoce la macro y se lleva los datos. Comprueba una muestra después de la migración y sigue adelante.
+2. **Grupo B: migra con trabajo.** Existe un equivalente en Cloud pero es distinto, o el contenido hay que convertirlo antes o después de la migración. Cada una recibe pasos por escrito.
+3. **Grupo C: sin equivalente en Cloud.** Aquí viven las apps retiradas y las user macros. Las opciones son sustituirla por una funcionalidad nativa de Cloud, reconstruirla como una pequeña app en Forge, o aceptar que el contenido cambie.
+
+El grupo C es donde se habla de presupuesto, y la conversación va mucho mejor cuando llega con datos de visitas a las páginas. Una user macro en cuatro páginas que nadie abre desde 2022 no es candidata a reconstruirse, por ingeniosa que fuera.
+
+## Dales a las macros anidadas su propio informe
+
+Los inventarios de primer nivel no ven el anidamiento, porque cuentan la macro exterior y se detienen. La única forma fiable de encontrar macros anidadas es leer el contenido almacenado de cada página y recorrer todo el árbol. Merece la pena: las macros anidadas son la fuente más habitual de sorpresas del tipo "pero esta página funcionaba en la migración de prueba", porque las páginas de prueba elegidas a mano rara vez eran las más anidadas.
+
+El informe enumera, para cada página, la cadena de macros y qué eslabón de la cadena es el débil. Eso es lo que necesita el dueño del contenido para arreglarlo.
+
+## Escribe instrucciones distintas para personas distintas
+
+Un directivo, un administrador y un dueño de contenido necesitan respuestas distintas de la misma evaluación. Las escribimos por separado:
+
+- **Para el directivo:** alcance, riesgo, plazo, presupuesto, y las decisiones que le corresponden.
+- **Para el administrador:** el plan de los grupos A, B y C, en el orden en que hay que hacerlo.
+- **Para el dueño del contenido:** para cada macro, qué cambiar antes de la migración y qué comprobar después.
+
+Una página que intenta servir a los tres acaba siendo ilegible para cada uno, y los dueños del contenido, que hacen la mayor parte del trabajo real, son los primeros en dejar de leer.
+
+## User macros: el bloqueo silencioso
+
+Las user macros merecen un aviso aparte porque es muy fácil olvidarlas. No aparecen como app, no tienen proveedor al que preguntar, y a menudo las escribió alguien que ya se fue. Haz su inventario pronto, junta cada una con los datos de visitas de sus páginas y decide una de tres cosas: una funcionalidad nativa basta, una pequeña macro en Forge basta, o el contenido cambia. Cualquiera de las tres está bien. Descubrirlas después del corte no lo está.
+
+## En resumen
+
+Las páginas pasan; lo que se rompe son las macros. Cuenta cada macro con su número de páginas y sus fechas de visita, sepáralas entre migra sola, migra con trabajo y sin equivalente, lee el contenido para encontrar las anidadas, y escribe instrucciones separadas para directivos, administradores y dueños de contenido. Mira las visitas antes de reconstruir nada. Y encuentra primero las user macros, porque nadie más lo hará. Si estás planificando una migración de Confluence, esto forma parte de lo que evalúa nuestro [equipo de Atlassian](/es/atlassian/).

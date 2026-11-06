@@ -1,0 +1,64 @@
+---
+lang: en
+translationKey: internal-tools-from-the-spreadsheet
+title: "The best internal tools start as the spreadsheet everyone is afraid to touch"
+metaTitle: 'Internal tools that start from the spreadsheet'
+description: "Every company has a spreadsheet that quietly became a system. It is not the problem to be replaced; it is the specification. How to read it, find what it cannot do, keep what people love about it, and retire it without losing a month of history."
+metaDescription: 'Every company has a spreadsheet that became a system. It is not the problem, it is the spec. How to read it, replace it, and retire it safely.'
+pubDate: 2026-10-13
+tags: ["custom-development"]
+author: team
+heroImage: ../../../assets/blog/internal-tools-from-the-spreadsheet.jpg
+heroImageAlt: 'Flat illustration: a pale grey spreadsheet grid on the left whose cells stream to the right into a clean app window with teal buttons, an orange bar chart and a navy sidebar, with a small potted plant beside it.'
+---
+
+*Forty tabs, formulas nobody dares to edit, colour codes that mean something only to the person who invented them, and one colleague who "knows how it works".*
+
+You know the one. It started as a simple list three years ago. Then it gained a status column, then a second tab for the archive, then conditional formatting, then a lookup into another sheet, then a macro. Now a real part of the business runs on it, it breaks a little whenever two people edit it at once, and the person who understands it is going on holiday.
+
+The instinct is to treat that spreadsheet as the problem. It is the opposite. It is the best specification you will ever be handed.
+
+## The spreadsheet is the specification
+
+Before interviewing anyone, read the spreadsheet carefully. It already encodes the real process, including the parts nobody would think to mention in a meeting:
+
+- **The columns are the data model.** Each one is a field someone needed badly enough to add.
+- **The colours are states.** Red, amber and the strange purple almost always map to a workflow nobody wrote down.
+- **The comments are business rules.** "Do not ship to this region before the 15th" is a validation waiting to be written.
+- **The hidden tabs are history.** They show what was tried and abandoned, which saves you from rebuilding it.
+
+Interviews then confirm and correct what the sheet says, instead of starting from a blank page and a list of wishes.
+
+## Find what the spreadsheet cannot do
+
+A spreadsheet is extraordinarily good at being flexible and terrible at five specific things. Those five are the reason to build something, and they define its first release:
+
+1. **Validation.** Anyone can type anything anywhere, so the data drifts.
+2. **History.** Who changed this value, and what was it before?
+3. **Permissions.** Access is everything or nothing, per file.
+4. **Concurrency.** Two people editing at once is where corruption begins.
+5. **Integration.** Getting data in and out means someone exporting and pasting.
+
+If none of the five is hurting, the spreadsheet may be fine as it is. If several are, you have your scope.
+
+## Keep what people love about it
+
+People do not cling to spreadsheets out of stubbornness. They love the grid: seeing everything at once, sorting, filtering, scanning down a column. A replacement that hides the data behind forms and detail pages will be quietly abandoned for an export.
+
+So keep the grid view as a first-class part of the tool, and make "export to a spreadsheet" a feature rather than a defeat. People who can still get their familiar view are far more willing to give up the parts that were hurting them.
+
+## Bring the history, not just the structure
+
+A new tool that starts empty forces everyone to keep the old sheet open for reference, which means the old sheet never dies. Import the historical data, and then reconcile: the totals, the counts per status and a handful of spot-checked rows must match the spreadsheet before anyone switches over.
+
+## Run both for one full cycle
+
+Pick the natural cycle of the work, a week, a month-end close, a quarter, and run the new tool and the spreadsheet side by side for one full turn. Compare the results at the end. Differences are almost always a business rule the sheet encoded that nobody mentioned. Once a full cycle matches, retire the spreadsheet: make it read-only, put a link to the new tool at the top, and leave it there.
+
+## Build the boring parts properly
+
+The features that make an internal tool trustworthy are the ones nobody asks for: proper sign-in, an audit log of who changed what, backups that have actually been restored once, and someone named who owns the tool. They are cheap on day one and very expensive to retrofit after the first incident.
+
+## The short version
+
+Read the spreadsheet as a specification before interviewing anyone. Build for the five things it cannot do, keep the grid view people love, import the history and reconcile it, run both for one full cycle, and only then retire the old sheet. That is how we approach [internal tools](/custom-development/) for clients, and it is why the first release is usually small.

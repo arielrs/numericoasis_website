@@ -1,0 +1,69 @@
+---
+lang: en
+translationKey: cloud-saves-that-never-lose-progress
+title: "Cloud saves that never lose progress: merge by what a field means"
+metaTitle: 'Cloud saves that never lose progress'
+description: "One account on many devices means two devices will eventually be played offline and then sync. Last writer wins deletes progress; taking the maximum of everything duplicates currency. How Kindelve merges a save field by field, according to what each field means."
+metaDescription: 'Two devices played offline will sync one day. Last writer wins deletes progress and max-of-everything duplicates currency. How we merge each field by meaning.'
+pubDate: 2026-11-03
+tags: ["game-development", "custom-development"]
+author: team
+heroImage: ../../../assets/blog/cloud-saves-that-never-lose-progress.jpg
+heroImageAlt: 'Hand-coloured engraving seen from above: an open atlas showing two copies of the same cavern map side by side, a pair of brass dividers spanning the two pages and a small brass lantern in the corner.'
+---
+
+*You catch a rare creature on your phone on the train, with no signal. That evening you play on your laptop. Tomorrow both devices sync. Whether you still have that creature depends entirely on one function.*
+
+One account across a browser, a phone and eventually Steam is a promise players care about a great deal and rarely think about. Most of the time it is easy: one device at a time, always online. The hard case is the ordinary one, two devices that were both played while out of touch with each other, and then meet. Something has to decide what the save looks like afterwards, and the two obvious answers are both wrong.
+
+## Why "last writer wins" fails
+
+The simplest rule is that the most recent save replaces the other. It deletes progress. The creature caught on the phone at noon vanishes when the laptop, played at nine, syncs a save that never knew about it. Nothing errors. The player just discovers, eventually, that something they earned is gone, and that is the review that stays at the top of the store page.
+
+## Why "take the maximum" fails
+
+The opposite instinct is to keep the larger value of everything, so nothing is ever lost. It duplicates money. Spend currency on the laptop, keep the old higher balance on the phone, sync, and the merge hands the spent currency back. It is a duplication bug with a friendly face, and once players find it, it becomes a strategy.
+
+## Merge by what each field means
+
+So Kindelve does not have one merge rule. It has a rule per field, chosen by what the field means:
+
+| Kind of field | Examples | Rule |
+| --- | --- | --- |
+| Things you collect | Creatures owned, discoveries | Keep everything from both |
+| Things that only rise | Deepest floor reached, number of descents | The larger value |
+| One-way progress | A creature's evolved form | The further-along form |
+| Things that stack | Relics, where two copies are worth more than one | Keep the larger count of each |
+| Balances that go both ways | Currency, skill ranks | The newer device's value |
+| Preferences | The skills last taken down | The newer device's choice |
+| Deadlines | A boost that expires | The later expiry |
+
+Two of those rows deserve a word.
+
+**Balances follow the newer device** because a spend has to be able to reduce a balance, and only the device that spent knows about it. This is the one place a merge can lose information, deliberately: the alternative is creating currency out of nothing.
+
+**Stacking items are a multiset, not a set.** A plain union of two lists of relics would quietly delete the second copy of a relic the player owns two of. Keeping the larger count of each preserves it.
+
+## A subtle one: counts of the same play
+
+The game counts how many of each creature you have defeated, and the Codex reveals more about a creature as that count grows. If both devices synced recently, both already contain the kills from the play they shared. Adding the two counts would double them. So the merge takes the larger count per creature, never the sum.
+
+That can undercount when the two devices played genuinely separate sessions. We accept that on purpose: an undercount delays a Codex page by a few fights, while a sum inflates progress that was never earned. When a merge must be wrong in some direction, choose the direction that is harmless.
+
+## The property that actually matters
+
+The test we care most about is not any single rule. It is that the merge is order-independent: merging the phone into the laptop gives exactly the same result as merging the laptop into the phone. If that holds, two devices that sync in either order converge on the same save, and no sequence of syncs can lose anything the rules are meant to keep. The test asserts it directly.
+
+## One function, on both sides
+
+Each save travels in an envelope with three things besides the save itself: which account it belongs to, which device wrote it, and when. The account says it is the same player; the device tells a genuine conflict from an echo of your own last write; the time decides the fields where newer wins.
+
+The merge is written once and runs on the device today. When the server arrives, it will run the same function, not a reimplementation of it. Two implementations of a merge rule will eventually disagree, and the disagreement will be discovered by a player.
+
+## Not only for games
+
+Every offline-first application has this problem: field service apps, inventory counts, note-taking, anything used on a phone in a basement. The method transfers unchanged. Classify each field by what it means, choose the rule that cannot lose what that field is for, make the merge order-independent, and test that property directly.
+
+## The short version
+
+Last writer wins deletes progress, and taking the maximum duplicates currency. Merge each field by its meaning: keep collections, take the larger of what only rises, keep stacks as multisets, let the newer device decide balances and preferences, take the later deadline, and never sum counts of the same play. Make the merge order-independent, test it, and run the same function on every side. More about the game on our [Game Studio](/studio/) page.

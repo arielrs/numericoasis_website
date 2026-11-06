@@ -1,0 +1,53 @@
+---
+lang: es
+translationKey: money-buys-time-never-power
+title: "El dinero compra tiempo, nunca poder: una regla de juego limpio garantizada por una prueba"
+metaTitle: 'El dinero compra tiempo, nunca poder'
+description: "Kindelve es gratis, y todavía no hay nada que comprar en él. Cuando lo haya, una regla decide qué: el dinero compra tiempo y vanidad, nunca poder ni acceso. Por qué escribimos esa regla en el código y en las pruebas, y no en una política, y qué permite y qué prohíbe."
+metaDescription: 'Kindelve es gratis, y cuando haya algo a la venta, el dinero comprará tiempo y vanidad, nunca poder. Por qué la regla está en el código y en las pruebas.'
+pubDate: 2026-11-06
+tags: ["game-development"]
+author: team
+heroImage: ../../../assets/blog/money-buys-time-never-power.jpg
+heroImageAlt: 'Grabado coloreado a mano: un antiguo reloj de arena de latón junto a un pequeño montón de monedas de oro sobre un mostrador de madera, y en la pared de piedra del fondo una sencilla espada de hierro cerrada tras una pequeña reja de hierro.'
+---
+
+*Todo juego gratuito tiene que decidir algún día qué vende. La mayoría decide oferta a oferta, bajo presión, y se va desviando. Nosotros lo decidimos una vez, antes de que hubiera nada que vender, y lo escribimos donde no puede desviarse.*
+
+Kindelve es gratis, y a día de hoy no hay nada que comprar en él. Los botones que algún día aceptarán dinero existen, están desactivados y lo dicen: un botón que finge aceptar dinero es peor que uno que reconoce que no puede. Cuando haya algo que comprar, una regla decidirá qué puede ser.
+
+**El dinero compra tiempo y vanidad, nunca poder ni acceso.**
+
+Un jugador que paga puede llegar antes al mismo sitio, o tener otro aspecto por el camino. Un jugador que paga nunca puede llegar a un sitio al que no llegue un jugador gratuito, y nunca puede jugar un descenso más fácil que el de un jugador gratuito.
+
+## Qué significa "tiempo", con precisión
+
+Lo único pensado para venderse es una mejora temporal: durante un periodo de horas, la moneda que guarda un descenso terminado se multiplica. Se aplica una vez, cuando el descenso ha terminado, sobre lo que ganó el descenso. Nunca se aplica durante el descenso.
+
+Esa frontera es estructural, no una cuestión de disciplina. La simulación que ejecuta un descenso no recibe ni reloj ni mejoras. No puede ver si el jugador pagó. El descenso de un jugador que paga es, por tanto, exactamente igual de difícil que el de cualquier otro, criatura a criatura y golpe a golpe, porque es la misma función con las mismas entradas. El dinero solo toca lo que pasa después.
+
+## Cada oferta se puede ganar
+
+Cada oferta tiene dos precios: un precio en dinero, y un precio en la moneda del propio juego, que cualquier jugador gana jugando. Los dos precios aparecen en la misma tarjeta, con el mismo peso. No hay nada a la venta que un jugador gratuito no pueda conseguir también jugando.
+
+Una prueba lo garantiza. Si alguna vez se añade una oferta sin precio en el juego, el build falla, y esa oferta no puede publicarse. Una segunda prueba fija exactamente lo que puede contener una oferta: si una oferta ganara algún campo que lea la simulación, la prueba fallaría antes de que la oferta pudiera cambiar lo que pasa dentro de un descenso.
+
+## Las mejoras no se acumulan
+
+Si hay dos mejoras activas, vale la mejor, no el producto de las dos. Acumularlas es como una tienda se convierte en una carrera armamentística: tres mejoras pequeñas se multiplican en algo a lo que ningún jugador gratuito se acerca, y "más rápido" se vuelve, sin hacer ruido, "necesario". Sin acumulación, lo máximo que puede tener quien paga es un multiplicador, el mismo que puede ganar un jugador gratuito.
+
+## Hay un techo
+
+Las reliquias, los hallazgos de la cuenta que hacen más fuerte a cada criatura, solo se acumulan hasta un tope. Ese tope es el techo en el que se apoya la regla: comprar tiempo te lleva antes hasta él, y nunca más allá, porque más allá no queda nada que el dinero pueda comprar.
+
+## Sin anuncios en Steam
+
+El plan para una versión de Steam es un juego gratuito sin ninguna publicidad de terceros, porque la plataforma no lo permite y porque los jugadores de allí no la quieren. Lo que un jugador en el navegador podría recibir por ver un anuncio llegará, en su lugar, como un pequeño regalo diario. Un jugador de Steam nunca estará en desventaja frente a un jugador del navegador que vea todos los anuncios.
+
+## Por qué escribir una regla como código
+
+Una promesa de juego limpio escrita en un documento se cumple hasta el trimestre en que faltan ingresos y una oferta marcaría la diferencia. Entonces se reinterpreta, una vez, de forma razonable, y la siguiente excepción es más fácil. Una regla que exige el build no se reinterpreta bajo presión. Cambiarla significa borrar una prueba cuyo nombre dice lo que protege, en un cambio que alguien tiene que revisar y firmar. No es imposible, pero es visible, y con visible basta.
+
+## En resumen
+
+El dinero compra tiempo y vanidad, nunca poder ni acceso. Lo único pensado para venderse multiplica lo que guarda un descenso terminado, se aplica después del descenso, y la simulación no puede verlo. Cada oferta también se puede ganar, las mejoras no se acumulan, el progreso tiene un techo, y la versión prevista para Steam no tiene anuncios. Las pruebas garantizan lo que importa, para que la regla sobreviva al día en que resulte incómoda. Puedes jugar a [Kindelve](/es/studio/) gratis hoy.

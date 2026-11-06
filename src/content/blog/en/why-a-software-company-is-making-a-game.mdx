@@ -1,0 +1,54 @@
+---
+lang: en
+translationKey: why-a-software-company-is-making-a-game
+title: "Why a software company is making a game"
+description: "For fifteen years we have built software for other people's work. This week we started a game. Why a company that ships Jira apps and custom software is opening a game studio, and the rules we set for it on the first day."
+metaDescription: 'For fifteen years we built software for other people. This week we started a game. Why we opened a game studio, and the rules we set on day one.'
+pubDate: 2026-10-26
+tags: ["game-development"]
+author: team
+heroImage: ../../../assets/blog/why-a-software-company-is-making-a-game.jpg
+heroImageAlt: 'Hand-coloured engraving: a writing desk in a vaulted stone chamber with an open journal, a quill in an inkwell and a brass lantern, and through an arched window a rift split open in a rocky hillside.'
+---
+
+*Our work has always been software for other people's work: budgets, migrations, integrations, the tools a team uses all day. This week we started something for people's evenings.*
+
+Numeric Oasis has built software since 2011. Today most of it is either custom work for clients or apps on the Atlassian Marketplace. This week we started a third line of work, a game studio, and the first thing it is making is a game called Kindelve.
+
+It is a reasonable thing to be asked why. Here is the honest answer, and the rules we wrote down before anyone drew a single creature.
+
+## Because a game is the hardest test of the same discipline
+
+Business software is forgiven a great deal. A report that takes four seconds to load is annoying; a dashboard with an awkward filter is used anyway, because the work requires it. A game is forgiven nothing. A dropped frame is felt. A rule that behaves differently twice is noticed, discussed and resented. A player who loses an evening of progress does not file a ticket; they leave.
+
+That makes a game an unusually honest test of engineering discipline. The habits we rely on for client work, small releases, a test for every fix, a build that refuses known mistakes, either hold up under that pressure or they do not. We would rather find out on our own product than on someone else's.
+
+## Because the techniques travel both ways
+
+Much of what a good game needs is what good business software needs, with the volume turned up. A simulation that gives exactly the same answer on every device is also how you build an audit trail you can replay. Saving progress across a phone and a laptop that were both offline is the same problem as an offline-first field service app. Fitting a rich experience into a mid-range phone's budget is the same discipline as keeping an internal tool fast for the colleague on an old laptop.
+
+We expect the studio to make our client work better, not to distract from it.
+
+## What Kindelve is
+
+Kindelve is a creature-collection dungeon descent. You are the Warden of a rift in the ground. You send creatures down it; they fight their way deeper on their own; and your decisions are what goes down, what it carries, and when to stop. A single descent lasts minutes. What it leaves behind, stronger creatures and a record of how deep you reached, lasts much longer.
+
+The question at the heart of it is a simple one, repeated: how deep is deep enough? One floor further is always worth more, and always more likely to end the descent with nothing.
+
+## The rules we set on the first day
+
+Before any art or any balance numbers, we wrote down the constraints the game has to live inside. They are easier to keep when they come first:
+
+1. **It runs in a browser, on a mid-range phone.** Nothing to install. The phone is the design target and the desktop gets the surplus.
+2. **The simulation is deterministic.** Whole numbers instead of decimals for anything that accumulates, a seeded random generator, and no clock inside the rules. The same descent gives the same result on every device, which is what will let a leaderboard prove a score instead of trusting it.
+3. **One account, every device, eventually.** The save is designed from the start to be merged between devices without losing anything, even though the server comes later.
+4. **Free to play, and money buys time and vanity, never power.** Nothing that affects how a descent plays out will ever be for sale.
+5. **Small releases to real players, early.** Testers get a build that works, and then a better one, rather than a finished game in a year.
+
+## What it means if you are a client
+
+Nothing changes in how we work with you. It is the same team, and the studio is a separate line of work alongside custom development and our Atlassian practice. If anything, it gives you a public, playable example of how we build software, which is more than most portfolios can offer. You can follow it on our [Game Studio](/studio/) page.
+
+## The short version
+
+We started a game studio because a game is the most demanding test of the engineering habits we already rely on, and because what we learn there travels straight back into client work. Kindelve is a creature-collection descent for the browser, built to five rules set on day one: a mid-range phone first, a deterministic simulation, saves designed for many devices, money that never buys power, and small releases to real players.

@@ -1,0 +1,65 @@
+---
+lang: en
+translationKey: confluence-macros-cloud-migration
+title: "The Confluence macros that do not survive the move to Cloud"
+metaTitle: 'Confluence macros that do not survive Cloud'
+description: "In a Confluence migration the pages move fine. The macros inside them are what break. How to count them, sort them into three groups, find the nested ones, and decide what to rebuild before content owners discover the gaps for you."
+metaDescription: 'In a Confluence migration the pages move fine and the macros break. How to count them, sort them into three groups and find the nested ones first.'
+pubDate: 2026-10-01
+tags: ["cloud-migration", "confluence-governance", "atlassian-consulting"]
+author: team
+heroImage: ../../../assets/blog/confluence-macros-cloud-migration.jpg
+heroImageAlt: 'Flat illustration: white document pages crossing an arched bridge from a navy building to a teal cloud, while two pages shaped like puzzle pieces wait behind beside a small orange warning triangle.'
+---
+
+*A page that showed a live table on Data Center can show a grey "unknown macro" box on Cloud. Nobody notices until the person who relies on it opens it.*
+
+Confluence migrations have a reputation for being easier than Jira ones, and for the text that is true. Pages, attachments, comments and permissions move reliably. What does not always move is the behaviour embedded inside the pages: the macros. A macro is a small program sitting in the middle of your content, and it only works on Cloud if something on Cloud knows how to run it.
+
+## Why macros are the hard part
+
+Three kinds of macro cause most of the trouble:
+
+- **App macros.** They come from Marketplace apps, and they render on Cloud only if the vendor has a Cloud app that recognises the same macro and a migration path for its data. Some vendors have both. Some have a Cloud app with a different macro. Some have no Cloud app at all.
+- **User macros.** Written by your own administrators on Data Center, usually as small templates. Cloud has no direct equivalent, so every one of them needs a decision.
+- **Nested macros.** A supported macro inside an unsupported one, inside a table, inside an expand section. If the outer macro breaks, everything inside it breaks with it, including macros that would have been fine on their own.
+
+## Count before you judge
+
+The first job is an inventory of every macro in use, with numbers: how many pages use it, in how many spaces, and when those pages were last edited and last viewed.
+
+The shape of that inventory is almost always the same. A handful of macros appear on thousands of pages and drive the plan. A long tail appears on a few pages each. And a surprising share of the tail sits on pages nobody has opened in years. Knowing which is which turns a frightening list of two hundred macros into a short list of decisions.
+
+## Sort them into three groups
+
+Every macro then goes into one of three groups:
+
+1. **Group A: migrates on its own.** The vendor's Cloud app recognises the macro and carries its data across. Verify a sample after the move and move on.
+2. **Group B: migrates with work.** A Cloud equivalent exists but differs, or the content needs converting before or after the move. Each of these gets written steps.
+3. **Group C: no Cloud equivalent.** Retired apps and user macros live here. The choices are to replace it with a native Cloud feature, rebuild it as a small Forge app, or accept that the content changes.
+
+Group C is where the budget conversation happens, and it goes much better when it comes with page view data. A user macro on four pages that nobody has opened since 2022 is not a rebuild candidate, however clever it was.
+
+## Give nested macros their own report
+
+Top-level inventories miss nesting, because they count the outer macro and stop. The only reliable way to find nested macros is to parse each page's stored content and walk the whole tree. It is worth doing: nested macros are the most common source of "but this page worked in the test migration" surprises, because the test pages chosen by hand were rarely the deeply nested ones.
+
+The report lists, for each page, the chain of macros and which link in the chain is the weak one. That is what a content owner needs to fix it.
+
+## Write different instructions for different people
+
+An executive, an administrator and a content owner need different answers from the same assessment. We write them separately:
+
+- **For the executive:** scope, risk, deadline, budget, and the decisions that are theirs to make.
+- **For the administrator:** the group A, B and C playbook, in the order to do it.
+- **For the content owner:** per macro, what to change before the move and what to check after it.
+
+One page that tries to serve all three ends up unreadable for each of them, and the content owners, who do most of the actual work, are the ones who stop reading first.
+
+## User macros: the quiet blocker
+
+User macros deserve a separate warning because they are so easy to forget. They do not show up as an app, they have no vendor to ask, and they were often written by someone who has since left. Inventory them early, pair each one with its page view data, and decide one of three things: a native feature does the job, a small Forge macro does it, or the content changes. Each of those is fine. Discovering them after the cutover is not.
+
+## The short version
+
+Pages move; macros are what break. Count every macro with its page counts and view dates, sort them into migrates-alone, migrates-with-work and no-equivalent, parse the content to find the nested ones, and write separate instructions for executives, administrators and content owners. Look at page views before rebuilding anything. And find the user macros first, because nobody else will. If you are planning a Confluence move, this is part of what our [Atlassian team](/atlassian/) assesses.

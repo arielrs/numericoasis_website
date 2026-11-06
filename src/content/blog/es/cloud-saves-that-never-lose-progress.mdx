@@ -1,0 +1,69 @@
+---
+lang: es
+translationKey: cloud-saves-that-never-lose-progress
+title: "Partidas en la nube que nunca pierden progreso: fusionar según lo que significa cada campo"
+metaTitle: 'Partidas en la nube que nunca pierden progreso'
+description: "Una cuenta en varios aparatos significa que algún día dos aparatos se jugarán sin conexión y luego se sincronizarán. Que gane el último que escribe borra progreso; quedarse con el mayor de todo duplica moneda. Cómo Kindelve fusiona una partida campo a campo, según lo que significa cada campo."
+metaDescription: 'Dos aparatos jugados sin conexión se sincronizarán. El último que escribe borra progreso y el máximo duplica moneda. Cómo fusionamos cada campo por su sentido.'
+pubDate: 2026-11-03
+tags: ["game-development", "custom-development"]
+author: team
+heroImage: ../../../assets/blog/cloud-saves-that-never-lose-progress.jpg
+heroImageAlt: 'Grabado coloreado a mano visto desde arriba: un atlas abierto con dos copias del mismo mapa de una caverna una al lado de la otra, un compás de latón que cruza las dos páginas y un pequeño farol de latón en la esquina.'
+---
+
+*Atrapas una criatura rara en el móvil, en el metro, sin cobertura. Por la noche juegas en el portátil. Mañana los dos aparatos se sincronizan. Que sigas teniendo esa criatura depende por completo de una función.*
+
+Una sola cuenta en el navegador, el móvil y algún día Steam es una promesa que a los jugadores les importa mucho y en la que rara vez piensan. Casi siempre es fácil: un aparato cada vez, siempre conectado. El caso difícil es el corriente: dos aparatos que se jugaron mientras no se veían entre sí, y luego se encuentran. Algo tiene que decidir cómo queda la partida después, y las dos respuestas obvias están mal.
+
+## Por qué falla "gana el último que escribe"
+
+La regla más sencilla es que la partida más reciente sustituya a la otra. Borra progreso. La criatura atrapada en el móvil a mediodía desaparece cuando el portátil, jugado a las nueve, sincroniza una partida que nunca supo de ella. No salta ningún error. El jugador simplemente descubre, tarde o temprano, que algo que se ganó ha desaparecido, y esa es la reseña que se queda arriba del todo en la tienda.
+
+## Por qué falla "quedarse con el máximo"
+
+El instinto contrario es quedarse con el valor mayor de todo, para no perder nunca nada. Duplica el dinero. Gasta moneda en el portátil, conserva el saldo antiguo y mayor en el móvil, sincroniza, y la fusión te devuelve la moneda gastada. Es un error de duplicación con cara amable, y cuando los jugadores lo descubren, se convierte en una estrategia.
+
+## Fusiona según lo que significa cada campo
+
+Por eso Kindelve no tiene una regla de fusión. Tiene una regla por campo, elegida según lo que significa el campo:
+
+| Tipo de campo | Ejemplos | Regla |
+| --- | --- | --- |
+| Cosas que coleccionas | Criaturas que tienes, descubrimientos | Se queda todo lo de los dos |
+| Cosas que solo suben | Piso más profundo, número de descensos | El valor mayor |
+| Progreso de un solo sentido | La forma evolucionada de una criatura | La forma más avanzada |
+| Cosas que se acumulan | Reliquias, donde dos copias valen más que una | La cantidad mayor de cada una |
+| Saldos que suben y bajan | Moneda, rangos de habilidad | El valor del aparato más reciente |
+| Preferencias | Las habilidades llevadas en el último descenso | La elección del aparato más reciente |
+| Plazos | Una mejora temporal que caduca | La caducidad más tardía |
+
+Dos de esas filas merecen un comentario.
+
+**Los saldos siguen al aparato más reciente** porque un gasto tiene que poder reducir un saldo, y solo el aparato que gastó lo sabe. Es el único sitio en el que una fusión puede perder información, a propósito: la alternativa es crear moneda de la nada.
+
+**Los objetos que se acumulan son un multiconjunto, no un conjunto.** Una unión simple de dos listas de reliquias borraría en silencio la segunda copia de una reliquia que el jugador tiene dos veces. Quedarse con la cantidad mayor de cada una la conserva.
+
+## Una sutil: recuentos de la misma partida
+
+El juego cuenta cuántas criaturas de cada tipo has derrotado, y el Códice revela más de una criatura a medida que crece ese recuento. Si los dos aparatos se sincronizaron hace poco, los dos contienen ya las victorias de la partida que compartieron. Sumar los dos recuentos los duplicaría. Así que la fusión se queda con el recuento mayor por criatura, nunca con la suma.
+
+Eso puede contar de menos cuando los dos aparatos jugaron sesiones de verdad separadas. Lo aceptamos a propósito: contar de menos retrasa una página del Códice unos pocos combates, mientras que sumar infla un progreso que nunca se ganó. Cuando una fusión tiene que equivocarse hacia algún lado, elige el lado inofensivo.
+
+## La propiedad que de verdad importa
+
+La prueba que más nos importa no trata de ninguna regla en concreto. Trata de que la fusión no dependa del orden: fusionar el móvil en el portátil da exactamente el mismo resultado que fusionar el portátil en el móvil. Si eso se cumple, dos aparatos que se sincronizan en cualquier orden llegan a la misma partida, y ninguna secuencia de sincronizaciones puede perder nada que las reglas deban conservar. La prueba lo comprueba directamente.
+
+## Una sola función, en los dos lados
+
+Cada partida viaja en un sobre con tres cosas además de la propia partida: a qué cuenta pertenece, qué aparato la escribió y cuándo. La cuenta dice que es el mismo jugador; el aparato distingue un conflicto de verdad del eco de tu propia última escritura; la hora decide los campos en los que gana el más reciente.
+
+La fusión se escribe una vez y hoy se ejecuta en el aparato. Cuando llegue el servidor, ejecutará la misma función, no una reimplementación suya. Dos implementaciones de una regla de fusión acabarán discrepando, y quien descubrirá la discrepancia será un jugador.
+
+## No solo para juegos
+
+Cualquier aplicación que funcione sin conexión tiene este problema: apps de trabajo de campo, recuentos de inventario, notas, cualquier cosa que se use en un móvil en un sótano. El método se traslada sin cambios. Clasifica cada campo según lo que significa, elige la regla que no pueda perder aquello para lo que existe el campo, haz que la fusión no dependa del orden y comprueba esa propiedad directamente.
+
+## En resumen
+
+Que gane el último que escribe borra progreso, y quedarse con el máximo duplica moneda. Fusiona cada campo según su significado: conserva las colecciones, quédate con el mayor de lo que solo sube, trata lo que se acumula como multiconjuntos, deja que el aparato más reciente decida saldos y preferencias, quédate con el plazo más tardío, y nunca sumes recuentos de la misma partida. Haz que la fusión no dependa del orden, compruébalo y ejecuta la misma función en todos los lados. Más sobre el juego en la página de nuestro [Estudio de Juegos](/es/studio/).

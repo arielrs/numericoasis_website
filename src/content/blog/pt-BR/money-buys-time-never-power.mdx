@@ -1,0 +1,53 @@
+---
+lang: pt-BR
+translationKey: money-buys-time-never-power
+title: "Dinheiro compra tempo, nunca poder: uma regra de jogo limpo garantida por um teste"
+metaTitle: 'Dinheiro compra tempo, nunca poder'
+description: "Kindelve é de graça, e ainda não há nada para comprar nele. Quando houver, uma regra decide o quê: dinheiro compra tempo e vaidade, nunca poder ou acesso. Por que escrevemos essa regra no código e nos testes, e não numa política, e o que ela permite e proíbe."
+metaDescription: 'Kindelve é de graça, e quando houver algo à venda, dinheiro vai comprar tempo e vaidade, nunca poder. Por que a regra está no código e nos testes.'
+pubDate: 2026-11-06
+tags: ["game-development"]
+author: team
+heroImage: ../../../assets/blog/money-buys-time-never-power.jpg
+heroImageAlt: 'Gravura colorida à mão: uma ampulheta antiga de latão ao lado de uma pequena pilha de moedas de ouro num balcão de madeira, e na parede de pedra atrás uma espada de ferro simples trancada atrás de uma pequena grade de ferro.'
+---
+
+*Todo jogo gratuito um dia precisa decidir o que vende. A maioria decide uma oferta de cada vez, sob pressão, e vai se desviando. Nós decidimos uma vez, antes de existir qualquer coisa para vender, e escrevemos isso onde não pode se desviar.*
+
+Kindelve é gratuito, e até hoje não há nada nele para comprar. Os botões que um dia vão aceitar dinheiro existem, estão desativados e dizem isso: um botão que finge aceitar dinheiro é pior do que um que admite que não pode. Quando houver algo para comprar, uma regra decide o que pode ser.
+
+**Dinheiro compra tempo e vaidade, nunca poder ou acesso.**
+
+Um jogador que paga pode chegar ao mesmo lugar mais cedo, ou ter uma aparência diferente no caminho. Um jogador que paga nunca pode chegar a um lugar aonde um jogador gratuito não chega, e nunca pode jogar uma descida mais fácil do que a de um jogador gratuito.
+
+## O que "tempo" significa, com precisão
+
+A única coisa pensada para ser vendida é um bônus: por um período de horas, a moeda que uma descida terminada guarda é multiplicada. Ele é aplicado uma vez, depois que a descida acaba, sobre o que a descida rendeu. Nunca é aplicado durante a descida.
+
+Essa fronteira é estrutural, e não uma questão de disciplina. A simulação que roda uma descida não recebe relógio nem bônus. Ela não consegue ver se o jogador pagou. A descida de um jogador pagante é, portanto, exatamente tão difícil quanto a de qualquer outro, criatura por criatura e golpe por golpe, porque é a mesma função com as mesmas entradas. O dinheiro só toca o que acontece depois.
+
+## Toda oferta pode ser conquistada
+
+Toda oferta tem dois preços: um preço em dinheiro, e um preço na moeda do próprio jogo, que qualquer jogador conquista jogando. Os dois preços aparecem no mesmo cartão, com o mesmo destaque. Nada está à venda que um jogador gratuito não consiga também jogando.
+
+Um teste garante isso. Se uma oferta for acrescentada sem preço no jogo, o build falha, e aquela oferta não pode sair. Um segundo teste define exatamente o que uma oferta pode conter: se uma oferta ganhasse algum campo que a simulação lê, o teste falharia antes de a oferta conseguir mudar o que acontece dentro de uma descida.
+
+## Bônus não se acumulam
+
+Se dois bônus estão ativos, vale o melhor, e não o produto dos dois. Acumular é como uma loja vira uma corrida armamentista: três bônus pequenos se multiplicam em algo de que nenhum jogador gratuito chega perto, e "mais rápido" vira, em silêncio, "necessário". Sem acúmulo, o máximo que um pagante pode ter é um multiplicador, o mesmo que um jogador gratuito pode conquistar.
+
+## Existe um teto
+
+As relíquias, os achados da conta que deixam toda criatura mais forte, só se acumulam até um limite. Esse limite é o teto em que a regra se apoia: comprar tempo leva você até ele mais cedo, e nunca além dele, porque além dele não sobra nada para o dinheiro comprar.
+
+## Sem anúncios na Steam
+
+O plano para uma versão na Steam é um jogo gratuito sem nenhuma publicidade de terceiros, porque a plataforma não permite e porque os jogadores de lá não querem. O que um jogador no navegador poderia receber por assistir a um anúncio virá, em vez disso, como um pequeno presente diário. Um jogador na Steam nunca vai estar em desvantagem em relação a um jogador no navegador que assiste a todos os anúncios.
+
+## Por que escrever uma regra como código
+
+Uma promessa de jogo limpo escrita num documento é honrada até o trimestre em que a receita fica curta e uma oferta faria a diferença. Aí ela é reinterpretada, uma vez, de forma razoável, e a próxima exceção fica mais fácil. Uma regra garantida pelo build não é reinterpretada sob pressão. Mudá-la significa apagar um teste cujo nome diz o que ele protege, numa mudança que alguém precisa revisar e assinar. Não é impossível, mas é visível, e visível basta.
+
+## Em resumo
+
+Dinheiro compra tempo e vaidade, nunca poder ou acesso. A única coisa pensada para ser vendida multiplica o que uma descida terminada guarda, aplicada depois da descida, e a simulação não consegue vê-la. Toda oferta também pode ser conquistada, bônus não se acumulam, o progresso tem um teto, e a versão planejada para a Steam não tem anúncios. Testes garantem as partes que importam, para a regra sobreviver ao dia em que ficar inconveniente. Você pode jogar [Kindelve](/pt-BR/studio/) de graça hoje.

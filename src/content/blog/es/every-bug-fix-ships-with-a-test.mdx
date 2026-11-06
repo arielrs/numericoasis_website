@@ -1,0 +1,59 @@
+---
+lang: es
+translationKey: every-bug-fix-ships-with-a-test
+title: "Por qué cada corrección de un error que entregamos trae una prueba que la demuestra"
+metaTitle: 'Cada corrección trae una prueba que la demuestra'
+description: "Nuestra regla es sencilla: una corrección de un error entra con una prueba que falla sin la corrección. Cómo la aplicamos, cómo hacemos que sea difícil saltársela sin hacerlo imposible, y por qué es la práctica de calidad más barata que conocemos."
+metaDescription: 'Una corrección entra con una prueba que falla sin ella. Cómo aplicamos la regla, cómo hacemos difícil saltársela, y por qué es el hábito de calidad más barato.'
+pubDate: 2026-10-08
+tags: ["custom-development"]
+author: team
+heroImage: ../../../assets/blog/every-bug-fix-ships-with-a-test.jpg
+heroImageAlt: 'Ilustración plana: un pequeño escarabajo naranja clavado en una tarjeta bajo una campana de cristal, sobre un pedestal azul marino, junto a un gran escudo verde azulado con una marca de verificación y una pila de tarjetas azul marino.'
+---
+
+*Un error que se ha corregido una vez nunca debería poder volver sin que una prueba se ponga en rojo. Esa es toda la regla.*
+
+Todos los equipos dicen que valoran la calidad. La cuestión es cuánto les cuesta esa palabra un martes por la tarde, cuando la corrección está lista, el cliente espera y escribir la prueba parece un trámite. Nuestra respuesta es una regla sin margen de interpretación: cada corrección de un error entra con una prueba que falla sin la corrección. No "debería", no "cuando sea práctico". Todas.
+
+## Reprodúcelo primero como una prueba que falla
+
+El orden importa. Antes de tocar el código, escribimos una prueba que reproduce el error y la vemos fallar. Solo entonces corregimos el código y vemos pasar la prueba.
+
+Si no conseguimos que la prueba falle, todavía no entendemos el error, y cualquier corrección sería una suposición. Esto pasa más de lo que parece: el síntoma notificado tiene una causa distinta de la evidente, y es la prueba que falla la que lo revela. Una corrección aplicada a la causa evidente habría cerrado la incidencia y dejado el error donde estaba.
+
+## Ponle a la prueba el nombre del error
+
+Cada prueba de regresión lleva el nombre del error que vigila y apunta a su descripción: qué pasó, qué lo causó, cómo se encontró. Un año después, cuando alguien se pregunte por qué existe una prueba de aspecto raro, la respuesta está a un clic. Sin ese vínculo, las pruebas raras se borran como si fueran basura, y así es exactamente como vuelven los errores antiguos.
+
+## Nunca reescribas una prueba de regresión para que acepte el comportamiento nuevo
+
+A veces el comportamiento previsto cambia de verdad, y una prueba de regresión empieza a fallar por un buen motivo. La tentación es editar la prueba hasta que pase. No lo hacemos. La prueba antigua se renombra para decir qué contrato documentaba, y se escribe una prueba nueva para el comportamiento nuevo, que la sustituye de forma explícita.
+
+Parece burocrático. En la práctica es la diferencia entre "cambiamos el comportamiento a propósito" y "se ajustó una prueba en silencio hasta que el build se puso en verde", y solo una de las dos es segura de entregar.
+
+## Haz que la regla sea difícil de saltar, pero no imposible
+
+Una regla que no se puede romper acaba sorteándose. Una regla que se puede romper en silencio acaba ignorándose. Así que la comprobamos en el build: un commit que dice corregir algo y toca el código sin tocar ninguna prueba hace fallar el pipeline.
+
+Hay una forma de pasar la comprobación, a propósito. El commit puede llevar una nota explícita que diga por qué no era posible ninguna prueba, y esa nota queda registrada y se revisa. Algunas correcciones de verdad no se pueden probar con sentido. Lo que importa es que saltarse la regla sea visible, raro y explicado, y no invisible y rutinario.
+
+## Lo que aporta
+
+Tres cosas, por orden de lo que valen:
+
+1. **El mismo error no vuelve.** Solo esto ya paga la práctica. Las regresiones son los errores más caros, porque rompen la confianza además del software: "esto ya nos lo habíais arreglado" es una frase que ningún cliente debería tener que escribir.
+2. **Las pruebas se acumulan donde el código es frágil.** Un conjunto de pruebas nacido de errores reales se concentra justo en los sitios que ya se rompieron, que son los que tienen más probabilidades de volver a romperse.
+3. **Las notas de versión se vuelven honestas.** Cuando cada corrección tiene su prueba, "corregido" significa demostradamente corregido, no "creemos que corregido".
+
+## Lo que cuesta
+
+Normalmente entre diez y treinta minutos por corrección, la mayor parte dedicada a entender el error lo bastante como para reproducirlo, que es un tiempo que la corrección necesitaba de todos modos. Comparado con una sola regresión que llegue a un cliente, no hay color.
+
+## Donde toman el relevo otras barreras
+
+No todos los defectos son errores de lógica. Una palabra equivocada en una página, un color que no pasa el contraste, un enlace roto tras un cambio de nombre: eso lo vigilan otras comprobaciones del build, como comparaciones de capturas de pantalla y comprobaciones de contenido, y no una prueba unitaria por corrección. El principio es el mismo: un error que ha pasado una vez debería atraparlo una máquina la segunda.
+
+## En resumen
+
+Reproduce el error como una prueba que falla antes de corregirlo. Ponle a la prueba el nombre del error. Sustituye las pruebas de regresión en lugar de editarlas. Haz que el build exija la regla, con una salida registrada para la rara excepción honesta. Cuesta minutos por corrección y ahorra la conversación más cara del software. Es como construimos nuestros propios productos y el [software a medida](/es/custom-development/) que hacemos para clientes.

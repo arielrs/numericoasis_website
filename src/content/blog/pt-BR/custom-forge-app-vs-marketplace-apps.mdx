@@ -1,0 +1,61 @@
+---
+lang: pt-BR
+translationKey: custom-forge-app-vs-marketplace-apps
+title: "Quando um app em Forge sob medida vale mais do que três assinaturas do Marketplace"
+metaTitle: 'Um app em Forge no lugar de três assinaturas'
+description: "Apps do Marketplace são cobrados pela contagem de usuários do site inteiro, então um app comprado para uma equipe é pago para todo mundo. Quando faz sentido substituir vários deles por um pequeno app em Forge sob medida, o que isso custa em troca, e quando continuar comprando."
+metaDescription: 'Apps do Marketplace são cobrados por todos os usuários. Quando um app em Forge sob medida deve substituir vários, o que custa e quando seguir comprando.'
+pubDate: 2026-10-15
+tags: ["forge", "marketplace", "atlassian-consulting"]
+author: team
+heroImage: ../../../assets/blog/custom-forge-app-vs-marketplace-apps.jpg
+heroImageAlt: 'Ilustração em estilo flat: três pequenos quadrados de apps, um laranja, um cinza e um azul-marinho, passando por um funil verde-azulado até um único app maior e brilhante, verde-azulado, com uma chave inglesa e uma peça de quebra-cabeça ao lado.'
+---
+
+*Construir ou comprar é uma pergunta antiga. No Atlassian Cloud ela tem uma pegadinha: o que você compra é cobrado de todo mundo, mesmo quando só uma equipe usa.*
+
+Publicamos apps no Atlassian Marketplace, então não vamos sair por aí defendendo que ninguém compre apps. Na maioria das vezes comprar é o certo: outra pessoa mantém o app, entrega melhorias e responde o suporte, e o custo é previsível. Mas existe um padrão que vemos em quase todo site que revisamos, e vale dar nome a ele, porque custa em silêncio mais do que alguém já somou. Escrevemos sobre o lado da auditoria em [Pague pelos 20% que você realmente usa](/pt-BR/blog/atlassian-app-footprint-reduction/); este é o lado da construção.
+
+## O padrão
+
+Uma equipe precisava de um recurso. Ele não era nativo, então alguém achou um app que o tinha e instalou. O app faz outras quarenta coisas, mas aquela equipe usa uma. Dois anos depois, o site tem vários apps assim, cada um comprado por um único recurso, cada um usado por uma ou duas equipes, e cada um cobrado pela contagem total de usuários do produto em que roda.
+
+Como os apps Cloud são licenciados para o mesmo número de usuários do produto hospedeiro, um site Jira com mil usuários paga preço de mil usuários por um app que trinta pessoas usam para uma coisa.
+
+## Comece por um inventário, não por uma opinião
+
+Antes de decidir qualquer coisa, liste cada app instalado com quatro fatos:
+
+1. **Para que é usado**, em uma frase, dita por quem usa.
+2. **Quantas pessoas o usam**, a partir de logs de auditoria, uso de campos e uso de macros, e não da memória.
+3. **Quais recursos dele são usados.** Muitas vezes são um ou dois.
+4. **Quanto custa** na sua faixa atual.
+
+Depois faça três perguntas a cada um. O recurso já é nativo? A Atlassian continua lançando coisas, e recursos que precisavam de um app há alguns anos às vezes não precisam mais. É usado por um grupo pequeno de pessoas? É um recurso entre muitos de um app grande?
+
+## O que é um app em Forge sob medida
+
+Forge é a plataforma da própria Atlassian para construir apps. Um app em Forge roda na infraestrutura da Atlassian, dentro do seu site, e um app feito para a sua organização pode ser instalado de forma privada, sem nunca aparecer no Marketplace.
+
+Isso importa por três motivos. A sua análise de segurança cobre uma plataforma que você já aprovou, do mesmo jeito que acontece com os apps do Marketplace feitos em Forge. Não há preço por usuário: você não paga uma faixa de mil usuários por trinta. E o app faz exatamente o que as suas equipes precisam e nada além, então são quarenta recursos a menos para configurar, explicar e manter seguros.
+
+Quando três apps de um recurso só giram em torno do mesmo tema, um único app pequeno em Forge com três módulos muitas vezes substitui todos.
+
+## O que ele custa em troca
+
+Um app sob medida não é de graça, e fingir o contrário é como esses projetos decepcionam:
+
+- **Construí-lo.** Um app pequeno e focado leva dias ou semanas de trabalho, não meses, mas é trabalho de verdade.
+- **Mantê-lo.** A Atlassian evolui a plataforma, descontinua APIs e muda requisitos. Alguém precisa manter o app em dia, um compromisso pequeno e contínuo.
+- **Rodá-lo.** O Forge tem a sua própria cobrança por uso. Um app interno pequeno costuma usar pouco, mas ele entra no orçamento.
+- **Dar suporte a ele.** Não há fornecedor para abrir chamado. Esse papel é seu, ou de um parceiro.
+
+A comparação honesta é o custo das assinaturas em três anos contra a construção mais três anos de manutenção. Às vezes o sob medida ganha com folga. Às vezes não.
+
+## Quando continuar comprando
+
+Mantenha o app do Marketplace quando o conjunto de recursos dele é profundo e você usa boa parte, gestão de testes e relatórios avançados são bons exemplos; quando ele é muito usado em todo o site; quando o fornecedor tem certificações ou compromissos de conformidade de que você precisa; ou quando o app é barato o bastante na sua faixa para que a conversa nem valha a pena.
+
+## Em resumo
+
+Apps do Marketplace são cobrados pela contagem total de usuários, então um app comprado para uma equipe é pago para todos. Faça o inventário de para que cada app é usado, por quantas pessoas e quais recursos, e depois pergunte se o recurso já é nativo, se um grupo pequeno o usa e se é um recurso de um app grande. Onde vários apps de um recurso só se agrupam, um app em Forge sob medida pode substituí-los, ao custo de uma construção e de um compromisso contínuo modesto. Esse inventário e essa recomendação fazem parte do que o nosso [time Atlassian](/pt-BR/atlassian/) faz.

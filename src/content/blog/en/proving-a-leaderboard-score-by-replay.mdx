@@ -1,0 +1,64 @@
+---
+lang: en
+translationKey: proving-a-leaderboard-score-by-replay
+title: "Proving a leaderboard score by replaying it"
+description: "Every online leaderboard gets cheated, and most of them try to detect it. Kindelve's daily Trial does not detect anything: the game sends its inputs, the server plays the descent again, and a score appears only if the replay reaches the same floor, tick and hash."
+metaDescription: 'Most leaderboards try to detect cheating. Ours does not need to: the game sends its inputs, the server replays the descent, and only a matching result counts.'
+pubDate: 2026-11-05
+tags: ["game-development"]
+author: team
+heroImage: ../../../assets/blog/proving-a-leaderboard-score-by-replay.jpg
+heroImageAlt: 'Hand-coloured engraving: two identical brass balance scales standing side by side on a long oak table, each holding the same coloured spheres in the same positions in its pans.'
+---
+
+*A leaderboard that takes the player's word for a score will be topped by someone who edited a number. The only question is how soon.*
+
+Kindelve has a daily Trial: one five-minute descent, the same for every player that day, ranked on a public board. A public ranking is exactly the kind of thing worth cheating for, so from the start the board was built not to trust any score at all. It does not try to detect cheating. It proves each score instead, by playing the descent again.
+
+## Send the inputs, not the result
+
+The game does not send the server a number. It sends the descent's input log: every choice the player made, each stamped with the tick it happened on. Upgrades bought, skills used, caches opened, the moment the descent was ended. Along with the log it sends its claim: the deepest floor reached, the tick it was first reached, and a short fingerprint of the final state.
+
+The seed is not sent at all. It comes from the date, so everyone's Trial that day starts from exactly the same deep.
+
+## Play it again on the server
+
+The server runs the same simulation package the game runs, not a copy or a port of it. It starts the day's descent from the day's seed and applies the inputs at the ticks they are stamped with, in exactly the order the game applied them. The order rule is strict: an input stamped for a tick is applied before that tick's step runs, and inputs that share a tick are applied in one fixed order. Any other order would produce a different fingerprint, and every honest score would be refused.
+
+When the replay ends, the server compares. Same floor, same tick, same fingerprint: the score is accepted and appears on the board. Anything else is refused, and nothing from the request is kept.
+
+## Why that is proof rather than a guess
+
+This only works because the simulation is deterministic: whole numbers instead of decimals, a seeded random generator, no clock inside the rules. We wrote about how in [No floating point](/blog/game-simulation-without-floating-point/). Because the same inputs always produce the same result on every machine, a replay that disagrees can only mean the claim was false. There are no heuristics to tune, no thresholds to argue about, and no false positives to apologise for.
+
+## Fitting a five-minute replay into ten milliseconds
+
+The backend runs on edge functions, and on the plan it started on, each request may use ten milliseconds of processor time. Replaying a whole five-minute Trial takes longer than that. So the replay is done in chunks. Each request replays a few hundred ticks, saves the paused simulation to the database, and the next request continues from exactly that point. Saving and restoring is exact to the tick, so a chunked replay reaches the same fingerprint as an uncut one, which a test checks against odd chunk boundaries.
+
+The game simply asks the server to keep checking until the answer is final, which takes a few seconds and shows the player a progress bar rather than a spinner.
+
+## Bounds on everything
+
+A server that replays whatever it is sent needs firm limits on what it will accept:
+
+- **The size of the request is capped**, and the body is read in pieces so an enormous one is refused before it is ever held whole.
+- **The number of inputs is capped** at what a Trial could possibly contain, and every input's fields are checked: the tick within the Trial, the kind of input known, every value in range.
+- **The check is fast.** A general validation library took most of a request's time budget to read a long log, so the input reader is written by hand, and a test holds it to exactly the same rules as the formal schema over every mix of good and bad fields.
+
+A request that fails any check is refused whole, and nothing from it is kept.
+
+## Refusals that are not accusations
+
+Not every mismatch is a cheat, and the board says so:
+
+- **Version.** A descent played on an older build of the game ran on slightly different rules, so it would replay differently. It is refused as "version", not as a forgery, and the player is told to reload.
+- **Duplicate.** One entry per device per day. A second send is answered as a duplicate, which also makes resending safe.
+- **Offline.** A network failure is never treated as an error. The game keeps the score and sends it again later.
+
+## What it does not stop
+
+Replay proves that a set of inputs produces a score. It does not prove that a person produced the inputs. A program that plays the Trial well would pass, because its score would be real. That is a narrower problem, and an honest one: the board never shows a score that did not happen.
+
+## The short version
+
+Do not send scores; send inputs. Replay them on the server with the same simulation, in the same order, from a seed the server chooses, and accept only an exact match. Fit the replay into your platform's limits by chunking it with exact save and restore. Bound every request, refuse invalid ones whole, and treat version and network problems as what they are rather than as cheating. The Trial is live in [Kindelve](/studio/) today.

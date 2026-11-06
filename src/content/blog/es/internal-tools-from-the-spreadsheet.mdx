@@ -1,0 +1,64 @@
+---
+lang: es
+translationKey: internal-tools-from-the-spreadsheet
+title: "Las mejores herramientas internas empiezan por la hoja de cálculo que nadie se atreve a tocar"
+metaTitle: 'Herramientas internas que nacen de la hoja'
+description: "Toda empresa tiene una hoja de cálculo que se convirtió en un sistema sin que nadie se diera cuenta. No es el problema que hay que sustituir; es la especificación. Cómo leerla, descubrir lo que no puede hacer, conservar lo que la gente aprecia de ella y retirarla sin perder un mes de historial."
+metaDescription: 'Toda empresa tiene una hoja de cálculo que se volvió un sistema. No es el problema, es la especificación. Cómo leerla, sustituirla y retirarla sin riesgo.'
+pubDate: 2026-10-13
+tags: ["custom-development"]
+author: team
+heroImage: ../../../assets/blog/internal-tools-from-the-spreadsheet.jpg
+heroImageAlt: 'Ilustración plana: una cuadrícula de hoja de cálculo gris clara a la izquierda cuyas celdas fluyen hacia la derecha hasta una ventana de aplicación limpia, con botones verde azulados, un gráfico de barras naranja y una barra lateral azul marino, junto a una pequeña maceta.'
+---
+
+*Cuarenta pestañas, fórmulas que nadie se atreve a editar, colores que solo significan algo para quien los inventó, y un compañero que "sabe cómo funciona".*
+
+Ya sabes cuál es. Empezó como una lista sencilla hace tres años. Después ganó una columna de estado, luego una segunda pestaña para el archivo, luego formato condicional, luego una búsqueda en otra hoja, luego una macro. Ahora una parte real del negocio funciona sobre ella, se rompe un poco cada vez que dos personas la editan a la vez, y quien la entiende se va de vacaciones.
+
+El instinto es tratar esa hoja como el problema. Es lo contrario. Es la mejor especificación que te van a dar nunca.
+
+## La hoja de cálculo es la especificación
+
+Antes de entrevistar a nadie, lee la hoja con atención. Ya contiene el proceso real, incluidas las partes que a nadie se le ocurriría mencionar en una reunión:
+
+- **Las columnas son el modelo de datos.** Cada una es un campo que alguien necesitó lo bastante como para añadirlo.
+- **Los colores son estados.** El rojo, el ámbar y ese morado extraño casi siempre corresponden a un flujo que nadie escribió.
+- **Los comentarios son reglas de negocio.** "No enviar a esta región antes del día 15" es una validación esperando a escribirse.
+- **Las pestañas ocultas son historia.** Muestran lo que se intentó y se abandonó, lo que te ahorra reconstruirlo.
+
+Las entrevistas sirven después para confirmar y corregir lo que dice la hoja, en lugar de partir de una página en blanco y una lista de deseos.
+
+## Descubre lo que la hoja no puede hacer
+
+Una hoja de cálculo es extraordinariamente buena siendo flexible y pésima en cinco cosas concretas. Esas cinco son el motivo para construir algo, y definen la primera entrega:
+
+1. **Validación.** Cualquiera escribe cualquier cosa en cualquier sitio, así que los datos se van desviando.
+2. **Historial.** ¿Quién cambió este valor, y cuál era antes?
+3. **Permisos.** El acceso es todo o nada, por archivo.
+4. **Concurrencia.** Dos personas editando a la vez es donde empieza la corrupción.
+5. **Integración.** Meter y sacar datos significa que alguien exporta y pega.
+
+Si ninguna de las cinco duele, puede que la hoja esté bien como está. Si duelen varias, ya tienes tu alcance.
+
+## Conserva lo que la gente aprecia de ella
+
+La gente no se aferra a las hojas de cálculo por cabezonería. Le gusta la cuadrícula: verlo todo a la vez, ordenar, filtrar, recorrer una columna con la vista. Un sustituto que esconde los datos detrás de formularios y páginas de detalle acabará abandonado en silencio a cambio de una exportación.
+
+Así que conserva la vista de cuadrícula como parte central de la herramienta, y haz que "exportar a una hoja de cálculo" sea una funcionalidad y no una derrota. Quien sigue teniendo su vista de siempre está mucho más dispuesto a renunciar a lo que le hacía daño.
+
+## Trae el historial, no solo la estructura
+
+Una herramienta nueva que empieza vacía obliga a todos a tener la hoja antigua abierta para consultarla, lo que significa que la hoja antigua nunca muere. Importa los datos históricos y después concilia: los totales, los recuentos por estado y un puñado de filas comprobadas al azar tienen que coincidir con la hoja antes de que nadie se cambie.
+
+## Usa las dos durante un ciclo completo
+
+Elige el ciclo natural del trabajo, una semana, un cierre de mes, un trimestre, y usa la herramienta nueva y la hoja en paralelo durante una vuelta completa. Compara los resultados al final. Las diferencias casi siempre son una regla de negocio que la hoja contenía y nadie mencionó. Cuando un ciclo completo coincida, retira la hoja: déjala en solo lectura, pon un enlace a la herramienta nueva arriba del todo, y déjala ahí.
+
+## Construye bien las partes aburridas
+
+Las funcionalidades que hacen que una herramienta interna merezca confianza son las que nadie pide: un inicio de sesión de verdad, un registro de auditoría de quién cambió qué, copias de seguridad que se han restaurado al menos una vez, y una persona designada como responsable de la herramienta. Son baratas el primer día y muy caras de añadir después del primer incidente.
+
+## En resumen
+
+Lee la hoja de cálculo como una especificación antes de entrevistar a nadie. Construye para las cinco cosas que no puede hacer, conserva la vista de cuadrícula que la gente aprecia, importa el historial y concílialo, usa las dos durante un ciclo completo, y solo entonces retira la hoja antigua. Así abordamos las [herramientas internas](/es/custom-development/) para clientes, y por eso la primera entrega suele ser pequeña.

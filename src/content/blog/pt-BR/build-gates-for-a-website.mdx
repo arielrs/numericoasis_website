@@ -1,0 +1,57 @@
+---
+lang: pt-BR
+translationKey: build-gates-for-a-website
+title: "Barreiras no build: como o nosso site se recusa a publicar os próprios erros"
+metaTitle: 'Barreiras no build contra erros publicados'
+description: "Este site sai em três idiomas a partir de Markdown e TypeScript, e os erros que antes chegavam à produção agora derrubam o build. As verificações que rodamos, da paridade das traduções à acessibilidade num navegador de verdade, e o que elas de propósito não tentam fazer."
+metaDescription: 'Nosso site sai em três idiomas, e os erros que antes chegavam à produção agora derrubam o build. As verificações que rodamos, e o que elas não tentam fazer.'
+pubDate: 2026-10-20
+tags: ["custom-development"]
+author: team
+heroImage: ../../../assets/blog/build-gates-for-a-website.jpg
+heroImageAlt: 'Ilustração em estilo flat: um cartão de página web branco com três portões altos em arco, azul-marinho, verde-azulado e laranja, cada um com uma pequena luz redonda no topo, e uma página amassada caída ao lado do primeiro portão.'
+---
+
+*Uma página em inglês que faltava em espanhol. Um link que quebrou quando uma página foi renomeada. Um trecho de busca cortado no meio da palavra. Cada um desses chegou à produção uma vez. Nenhum deles consegue mais.*
+
+Este site é construído a partir de Markdown, MDX e TypeScript, publicado em inglês, português e espanhol, e implantado automaticamente a cada push. Esse pipeline é rápido, e o problema é exatamente esse: um pipeline rápido publica erros tão depressa quanto publica correções. Então, em vez de depender de uma revisão cuidadosa, fizemos o próprio build recusar os erros que já cometemos de verdade. É isto que ele verifica.
+
+## Toda página existe em todos os idiomas
+
+A primeira barreira conta. Todo post do blog, página de app e landing page carrega uma chave de tradução, e o build confere se cada chave existe exatamente uma vez em cada um dos três idiomas. Um post publicado em inglês e esquecido em português antes passava verde e mostrava uma lista menor para dois terços dos visitantes. Agora ele falha antes de qualquer implantação.
+
+## Uma tradução desatualizada é detectada
+
+A paridade pega páginas faltando; não pega uma tradução que existe mas não corresponde mais. Então o build guarda uma impressão digital do texto em inglês contra o qual cada tradução foi revisada pela última vez. Quando o inglês muda, o build falha até alguém confirmar que o português e o espanhol também foram revisados. É um pouco de atrito, colocado exatamente onde as traduções costumavam se desviar em silêncio.
+
+## Um glossário, cobrado no código
+
+Algumas palavras precisam ser traduzidas sempre do mesmo jeito, e algumas não podem ser traduzidas. O nosso espanhol é o da Espanha, então uma grafia regional de "custo" é rejeitada onde quer que apareça. Termos de produto que administradores digitam em inglês numa caixa de busca continuam em inglês em todos os idiomas. Essas regras ficam num arquivo que o build lê, então uma edição bem-intencionada não reintroduz em silêncio uma inconsistência que já corrigimos.
+
+## O estilo da casa, cobrado no código
+
+O nosso estilo proíbe um sinal de pontuação, e o build o rejeita em qualquer lugar do conteúdo. Parece pedantismo. É também o exemplo mais claro do princípio: uma regra de estilo escrita num documento é seguida até o dia em que alguém está com pressa, e uma regra de estilo cobrada pelo build é seguida todos os dias.
+
+## Os trechos de busca cabem
+
+Títulos para resultados de busca têm limite de 50 caracteres e descrições, de 160, e os limites são conferidos em todos os idiomas. Português e espanhol são mais longos do que o inglês, então os trechos traduzidos eram justamente os cortados no meio da frase. Agora um trecho longo demais derruba o build no idioma em que passou do limite.
+
+## Todo link interno funciona
+
+Depois que o site é gerado, um script percorre o HTML e confere se cada link interno aponta para uma página que existe. Renomear uma página sem atualizar os links para ela é o jeito mais comum de um site apodrecer, e essa verificação torna impossível implantar isso.
+
+## Acessibilidade, conferida num navegador de verdade
+
+O site é aberto num navegador de verdade, uma página representativa de cada tipo é carregada numa largura de computador e numa de celular, e um verificador automático de acessibilidade roda em cada uma contra os critérios WCAG 2.1 AA. Falhas de contraste, rótulos faltando e hierarquia de títulos quebrada derrubam a execução. Aprendemos o valor disso do jeito direto: uma cor da nossa própria paleta de marca ficava bem abaixo do contraste mínimo em tamanhos pequenos, e a verificação pegou antes de um visitante.
+
+## Uma lista fechada de temas
+
+Tags do blog são páginas indexáveis, então um erro de digitação numa tag publicaria uma página de tema nova e quase vazia em três idiomas. Por isso as tags são uma lista fechada, e um post só pode usar tags dela. Criar um tema novo é uma mudança deliberada, feita quando há posts suficientes para merecer uma página.
+
+## O que as barreiras não fazem
+
+Nada disso torna o texto bom. As barreiras não julgam se um argumento se sustenta, se uma tradução soa natural ou se uma página merece ser publicada. Elas existem para barrar, de forma mecânica, os erros que já cometemos, para que o tempo que as pessoas passam revisando vá para o que só pessoas conseguem julgar.
+
+## Em resumo
+
+Conte cada página em cada idioma. Guarde a impressão digital do texto de origem para pegar traduções desatualizadas. Coloque o glossário e o estilo da casa no código. Limite os trechos de busca. Confira cada link interno depois do build. Rode verificações de acessibilidade num navegador de verdade em duas larguras. Mantenha os temas numa lista fechada. Cada barreira existe porque o erro que ela bloqueia aconteceu uma vez. Colocamos o mesmo tipo de proteção nos [sites e ferramentas que fazemos para clientes](/pt-BR/custom-development/).

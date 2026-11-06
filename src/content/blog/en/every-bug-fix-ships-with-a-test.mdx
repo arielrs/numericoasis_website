@@ -1,0 +1,59 @@
+---
+lang: en
+translationKey: every-bug-fix-ships-with-a-test
+title: "Why every bug fix we ship comes with a test that proves it"
+metaTitle: 'Every bug fix ships with a test that proves it'
+description: "Our rule is simple: a bug fix lands with a test that fails without the fix. How we apply it, how we make it hard to skip without making it impossible, and why it is the cheapest quality practice we know."
+metaDescription: 'A bug fix lands with a test that fails without the fix. How we apply the rule, how we make it hard to skip, and why it is the cheapest quality habit we know.'
+pubDate: 2026-10-08
+tags: ["custom-development"]
+author: team
+heroImage: ../../../assets/blog/every-bug-fix-ships-with-a-test.jpg
+heroImageAlt: 'Flat illustration: a small orange beetle pinned to a card under a glass dome on a navy pedestal, beside a large teal shield with a check mark and a stack of navy cards.'
+---
+
+*A bug that has been fixed once should never be able to come back without a test going red. That is the whole rule.*
+
+Every team says it values quality. The question is what the word costs them on a Tuesday afternoon, when a fix is ready, the customer is waiting, and writing the test feels like a formality. Our answer is a rule with no judgement call in it: every bug fix lands with a test that fails without the fix. Not "should", not "where practical". Every one.
+
+## Reproduce it as a failing test first
+
+The order matters. Before touching the code, we write a test that reproduces the bug and watch it fail. Only then do we fix the code and watch the test pass.
+
+If we cannot make the test fail, we do not understand the bug yet, and any fix would be a guess. This happens more often than you would think: the reported symptom has a different cause than the obvious one, and the failing test is what reveals it. A fix applied to the obvious cause would have closed the ticket and left the bug in place.
+
+## Name the test after the bug
+
+Each regression test is named for the bug it guards and points at the write-up: what happened, what caused it, how it was found. A year later, when someone wonders why a strange-looking test exists, the answer is one click away. Without that link, odd tests get deleted as clutter, which is exactly how old bugs come back.
+
+## Never rewrite a regression test to match new behaviour
+
+Sometimes the intended behaviour genuinely changes, and a regression test starts failing for a good reason. The temptation is to edit the test until it passes. We do not. The old test is renamed to say which contract it documented, and a new test is written for the new behaviour, explicitly superseding it.
+
+It sounds bureaucratic. In practice it is the difference between "we changed the behaviour on purpose" and "a test was quietly adjusted until the build went green", and only one of those is safe to ship.
+
+## Make the rule hard to skip, but not impossible
+
+A rule that cannot be broken gets worked around. A rule that can be broken silently gets ignored. So we check it in the build: a commit that says it fixes something and touches the code without touching any test fails the pipeline.
+
+There is a way past the check, on purpose. The commit can carry an explicit note saying why no test was possible, and that note is logged and reviewed. Some fixes really cannot be tested sensibly. What matters is that skipping the rule is visible, rare and explained, rather than invisible and routine.
+
+## What it buys
+
+Three things, in order of how much they are worth:
+
+1. **The same bug does not come back.** This alone pays for the practice. Regressions are the most expensive bugs, because they break trust as well as software: "you fixed this already" is a sentence no client should have to write.
+2. **The tests accumulate where the code is fragile.** A test suite grown from real bugs is concentrated exactly in the places that broke before, which are the places most likely to break again.
+3. **Release notes become honest.** When every fix has a test, "fixed" means proven fixed, not believed fixed.
+
+## What it costs
+
+Usually between ten and thirty minutes per fix, most of it spent understanding the bug well enough to reproduce it, which is time the fix needed anyway. Measured against a single regression reaching a client, it is not close.
+
+## Where other gates take over
+
+Not every defect is a logic bug. A wrong word on a page, a colour that fails contrast, a broken link after a rename: these are guarded by other checks in the build, such as screenshot comparisons and content checks, rather than by a unit test per fix. The principle is the same: a mistake that happened once should be caught by a machine the second time.
+
+## The short version
+
+Reproduce the bug as a failing test before fixing it. Name the test after the bug. Supersede regression tests instead of editing them. Enforce the rule in the build, with a logged way past it for the rare honest exception. It costs minutes per fix and saves the most expensive conversation in software. It is how we build our own products and the [custom software](/custom-development/) we build for clients.

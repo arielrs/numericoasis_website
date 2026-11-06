@@ -1,0 +1,57 @@
+---
+lang: es
+translationKey: a-game-in-five-languages-from-day-one
+title: "Un juego en cinco idiomas desde la primera versión"
+metaTitle: 'Un juego en cinco idiomas desde la primera versión'
+description: "Kindelve se puede jugar en inglés, portugués, español, francés y japonés, y cada texto que lee el jugador se escribe en los cinco en el mismo cambio. Por qué lo hicimos desde el principio, y las pruebas que hacen imposible olvidarse de un idioma."
+metaDescription: 'Kindelve se juega en cinco idiomas, y cada texto nuevo sale en los cinco a la vez. Por qué lo hicimos desde el primer día, y las pruebas que lo garantizan.'
+pubDate: 2026-11-01
+tags: ["game-development"]
+author: team
+heroImage: ../../../assets/blog/a-game-in-five-languages-from-day-one.jpg
+heroImageAlt: 'Grabado coloreado a mano: libros antiguos abiertos, de distintos tamaños, repartidos en abanico sobre una mesa alrededor de un pequeño globo terráqueo en un soporte de latón, con dos plumas de ganso de pie entre ellos.'
+---
+
+*Añadir idiomas a un juego terminado significa encontrar cada frase que alguien escribió directamente en el código. Empezar con cinco significa que nunca hay frases que encontrar.*
+
+Kindelve se puede jugar en inglés, portugués (Brasil), español, francés y japonés. No fue un proyecto de localización añadido antes del lanzamiento. Desde la semana en que llegaron los idiomas, cada texto nuevo que un jugador puede leer se escribe en los cinco en el mismo cambio, o el build falla.
+
+## Por qué desde el principio
+
+Añadir idiomas a posteriori es uno de los trabajos más caros del software, y casi todo el coste está en encontrar cosas. Un juego escrito en inglés durante un año tiene inglés tecleado en botones, ayudas, mensajes de error, registros de combate y etiquetas de accesibilidad, en cientos de sitios que nadie recuerda. Hay que encontrar cada uno, extraerlo y sustituirlo, y las maquetas construidas alrededor de palabras cortas en inglés se rompen cuando el portugués es un tercio más largo.
+
+Hacerlo desde el principio invierte el coste. Cada frase nueva cuesta unos minutos de traducción cuando se escribe, y nunca hay un atasco que desenterrar.
+
+## Nada escrito directamente en la interfaz
+
+La regla es que nada que lea el jugador se puede escribir directamente en el código de la interfaz. Cada palabra en pantalla pasa por una única función de traducción, por clave.
+
+Una prueba lo garantiza. Lee todos los componentes de la interfaz y falla ante cualquier cosa que parezca inglés escrito directamente: texto entre etiquetas, un título, una etiqueta de accesibilidad, un placeholder, una descripción de imagen, o un texto que empieza con una palabra en mayúscula. El raro texto que de verdad no es para leerse, el nombre de una fuente, por ejemplo, se marca en su propia línea como excepción, así que cada excepción es visible y deliberada.
+
+## Mensajes que entienden de gramática
+
+Las frases se guardan como mensajes con marcadores, y el formato entiende de plurales, porque "1 piso" y "2 pisos" son frases distintas, y cada idioma tiene reglas distintas para ellas. Una segunda prueba compara cada traducción con el inglés y falla si una traducción aplanó un plural en una sola forma, que es el error más habitual de quien traduce cuando un mensaje parece una etiqueta sencilla.
+
+## Traducciones que saben cuándo se han quedado viejas
+
+Cada idioma guarda dos archivos: sus traducciones, y una copia del inglés a partir del que se hizo cada traducción. Cuando cambia el inglés de un mensaje, la diferencia muestra exactamente qué traducciones necesitan otro vistazo. Una traducción que describe en silencio el comportamiento antiguo es peor que una que falta, porque nadie se da cuenta.
+
+## Números que se leen como en cada idioma
+
+Los juegos idle producen números enormes, así que los recuentos se abrevian: 1.2k, 34k, 5.6M. Los sufijos son iguales en todos los idiomas, porque los jugadores de todas partes los leen, pero el separador decimal es el del idioma, así que un jugador en portugués ve 1,2k. Detalle pequeño, efecto grande: un número con el separador decimal equivocado se lee como otro número.
+
+## Los nombres siguen siendo nombres
+
+Los nombres de criaturas y de lugares no se traducen. Un Shieldback es un Shieldback en todos los idiomas. Son nombres y no palabras, y un jugador que lee una guía o habla con un amigo en otro idioma necesita reconocer la misma criatura. Todo lo que rodea a los nombres, descripciones, habilidades y la historia, sí se traduce.
+
+## Cada idioma tiene su lista de términos
+
+Una palabra que cambia de una pantalla a otra confunde al jugador: si el descenso se llama de una forma en el botón y de otra en el registro, la gente da por hecho que son dos cosas distintas. Por eso cada idioma tiene una lista de términos. Dice cómo dirigirse al jugador, qué palabras del juego se quedan en inglés, y la traducción única que recibe cada una de las demás, en todas partes. El texto nuevo se escribe siguiendo la lista, y es con la lista con lo que lo comprueba quien revisa.
+
+## Solo se carga el idioma que usas
+
+Un jugador que lee en japonés no descarga otros cuatro idiomas. Las traducciones se cargan solo para el idioma elegido, lo que mantiene pequeña la primera carga en un móvil, y cambiar de idioma carga el nuevo cuando hace falta.
+
+## En resumen
+
+Cinco idiomas desde la primera versión cuestan unos minutos por frase y ahorran la adaptación más cara del software. Saca del código de la interfaz cada palabra que lee el jugador y comprueba esa regla con una prueba, guarda los mensajes en un formato que entiende de plurales y prueba las traducciones contra él, conserva el origen de cada traducción para que se vean las desactualizadas, formatea los números como se leen en cada idioma, deja los nombres sin traducir, y mantén una lista de términos por idioma. El juego está en la página de nuestro [Estudio de Juegos](/es/studio/).

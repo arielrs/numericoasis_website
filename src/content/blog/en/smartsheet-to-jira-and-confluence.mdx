@@ -1,0 +1,62 @@
+---
+lang: en
+translationKey: smartsheet-to-jira-and-confluence
+title: "Moving off Smartsheet to Jira and Confluence: what lands where"
+metaTitle: 'Moving off Smartsheet to Jira and Confluence'
+description: "Move everything to Jira is the wrong plan. A Smartsheet estate is many kinds of things wearing the same grid. How to sort sheets by what they really are, migrate only the live ones, use templates instead of one-offs, and handle the formulas, automations and forms that never move on their own."
+metaDescription: 'A Smartsheet estate is many things wearing one grid. How to sort sheets by what they are, migrate the live ones, and handle formulas, automations and forms.'
+pubDate: 2026-10-17
+tags: ["atlassian-consulting", "cloud-migration"]
+author: team
+heroImage: ../../../assets/blog/smartsheet-to-jira-and-confluence.jpg
+heroImageAlt: 'Flat illustration: a pale grey spreadsheet grid on the left whose rows peel away and settle on the right into a board of navy and orange task cards and a neat stack of white document pages.'
+---
+
+*A tracker, a project plan, an intake form, a status report and a budget model can all look like the same grid. They are not the same thing, and they do not belong in the same place.*
+
+Organisations that move off Smartsheet onto Atlassian usually start with the same plan: put everything in Jira. It is a reasonable instinct, because Jira is where the work already lives, and it is the wrong plan, because a Smartsheet estate is not one kind of thing. It is dozens of kinds of things that happen to share a grid, and each kind has a different natural home.
+
+## Sort the sheets by what they are
+
+The first job is a disposition model: what each kind of sheet becomes. The one we work from looks like this:
+
+| A sheet that is... | Lands in | Notes |
+| --- | --- | --- |
+| A tracker, task list or register | A Jira space | Each row becomes a work item |
+| A project plan with dependencies | Jira Plans | Dependencies become work item links |
+| An intake queue with a form | Jira Service Management | Request types, with agents licensed |
+| A status report or risk log | A Confluence page | Narrative, not rows |
+| A rollup of other sheets | A shared Jira space | Filled by automation from the source spaces |
+| A budget or financial model | A spreadsheet tool | Some things should stay spreadsheets |
+
+The last row matters as much as the others. A financial model with a hundred interlocking formulas is not a Jira problem, and forcing it into one produces something worse than what you started with.
+
+## Migrate the live sheets, archive the rest
+
+A large Smartsheet estate is mostly history. Before planning any migration, measure which sheets are actually used: opened, edited, shared recently. The activity data is available, and it typically shows that a minority of sheets carry nearly all the live work.
+
+Migrate the live ones. Export the rest, every sheet with its attachments, into an archive that can be searched and reopened. Nobody loses anything, and the migration shrinks to the part that matters.
+
+## Use templates, not one-offs
+
+Hand-migrating sheets one at a time does not scale past a few dozen. The approach that scales is a small set of target templates, derived from the sheets themselves: most trackers look alike, most intake queues look alike.
+
+Each template is built once, tested by the owners of a few real sheets on a test site, and signed off. Then every sheet of that kind is loaded through it. When an owner finds a gap, fixing the template fixes every sheet that uses it, instead of one at a time.
+
+## The things that never move on their own
+
+Rows and attachments move with tooling. Five things do not, and each needs its own line in the plan:
+
+1. **Formulas.** The value of a cell moves; the formula behind it does not. Jira formula fields can calculate within a single work item. Totals across many rows need automation or Jira Plans. Read each formula before the cut, because afterwards only the values remain.
+2. **Automations.** Smartsheet workflows become Jira Automation rules, rebuilt deliberately rather than copied.
+3. **Forms.** Public intake forms become Jira Service Management request forms, and the old link has to be replaced everywhere it was published, from intranet pages to email signatures.
+4. **Integrations.** Anything feeding a sheet from outside is rebuilt against Jira, and anything reading from a sheet is pointed somewhere new.
+5. **Reminders and update requests.** These become scheduled automation rules.
+
+## Prove every row landed
+
+The migration is not done when the loader finishes. It is done when a reconciliation shows that every row of every live sheet arrived: counts per sheet against counts per Jira space, attachments matched, and a sample of rows compared field by field. That report is also what lets owners sign off with confidence.
+
+## The short version
+
+Do not put everything in Jira. Sort the sheets by what they are, and send trackers to Jira, plans to Jira Plans, intake to Jira Service Management, reports to Confluence, and financial models to a spreadsheet tool. Migrate the live sheets, export and archive the rest, build a small set of tested templates, plan separately for formulas, automations, forms, integrations and reminders, and reconcile every row. Moving teams off other tools is part of the consulting our [Atlassian team](/atlassian/) does.

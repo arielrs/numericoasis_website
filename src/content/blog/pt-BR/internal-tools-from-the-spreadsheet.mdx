@@ -1,0 +1,64 @@
+---
+lang: pt-BR
+translationKey: internal-tools-from-the-spreadsheet
+title: "As melhores ferramentas internas começam pela planilha que todo mundo tem medo de mexer"
+metaTitle: 'Ferramentas internas que nascem da planilha'
+description: "Toda empresa tem uma planilha que virou sistema sem ninguém perceber. Ela não é o problema a ser substituído; é a especificação. Como lê-la, descobrir o que ela não faz, manter o que as pessoas gostam nela e aposentá-la sem perder um mês de histórico."
+metaDescription: 'Toda empresa tem uma planilha que virou sistema. Ela não é o problema, é a especificação. Como lê-la, substituí-la e aposentá-la com segurança.'
+pubDate: 2026-10-13
+tags: ["custom-development"]
+author: team
+heroImage: ../../../assets/blog/internal-tools-from-the-spreadsheet.jpg
+heroImageAlt: 'Ilustração em estilo flat: uma grade de planilha cinza-clara à esquerda cujas células escorrem para a direita até uma janela de aplicativo limpa, com botões verde-azulados, um gráfico de barras laranja e uma barra lateral azul-marinho, ao lado de um pequeno vaso de planta.'
+---
+
+*Quarenta abas, fórmulas que ninguém ousa editar, cores que só significam algo para quem as inventou, e um colega que "sabe como funciona".*
+
+Você sabe qual é. Começou como uma lista simples há três anos. Depois ganhou uma coluna de status, depois uma segunda aba para o arquivo morto, depois formatação condicional, depois uma busca em outra planilha, depois uma macro. Agora uma parte real do negócio roda nela, ela quebra um pouco toda vez que duas pessoas editam ao mesmo tempo, e quem a entende vai sair de férias.
+
+O instinto é tratar essa planilha como o problema. É o contrário. É a melhor especificação que você vai receber na vida.
+
+## A planilha é a especificação
+
+Antes de entrevistar qualquer pessoa, leia a planilha com cuidado. Ela já codifica o processo real, inclusive as partes que ninguém pensaria em mencionar numa reunião:
+
+- **As colunas são o modelo de dados.** Cada uma é um campo que alguém precisou o bastante para criar.
+- **As cores são estados.** Vermelho, amarelo e aquele roxo estranho quase sempre correspondem a um fluxo que ninguém escreveu.
+- **Os comentários são regras de negócio.** "Não enviar para esta região antes do dia 15" é uma validação esperando para ser escrita.
+- **As abas ocultas são histórico.** Mostram o que foi tentado e abandonado, o que evita reconstruir isso.
+
+As entrevistas então confirmam e corrigem o que a planilha diz, em vez de partir de uma página em branco e uma lista de desejos.
+
+## Descubra o que a planilha não faz
+
+Uma planilha é extraordinariamente boa em ser flexível e péssima em cinco coisas específicas. Essas cinco são o motivo para construir algo, e definem a primeira entrega:
+
+1. **Validação.** Qualquer pessoa digita qualquer coisa em qualquer lugar, então os dados vão se desviando.
+2. **Histórico.** Quem mudou este valor, e qual era antes?
+3. **Permissões.** O acesso é tudo ou nada, por arquivo.
+4. **Concorrência.** Duas pessoas editando ao mesmo tempo é onde a corrupção começa.
+5. **Integração.** Fazer os dados entrarem e saírem significa alguém exportando e colando.
+
+Se nenhuma das cinco dói, a planilha talvez esteja bem como está. Se várias doem, você tem o seu escopo.
+
+## Mantenha o que as pessoas gostam nela
+
+As pessoas não se agarram às planilhas por teimosia. Elas gostam da grade: ver tudo de uma vez, ordenar, filtrar, percorrer uma coluna com os olhos. Uma substituta que esconde os dados atrás de formulários e páginas de detalhe vai ser abandonada em silêncio em troca de uma exportação.
+
+Então mantenha a visão em grade como parte central da ferramenta, e faça de "exportar para planilha" um recurso, e não uma derrota. Quem continua tendo a visão familiar aceita muito mais facilmente abrir mão das partes que doíam.
+
+## Traga o histórico, não só a estrutura
+
+Uma ferramenta nova que começa vazia obriga todo mundo a manter a planilha antiga aberta para consulta, o que significa que a planilha antiga nunca morre. Importe os dados históricos e depois concilie: os totais, as contagens por status e um punhado de linhas conferidas por amostragem precisam bater com a planilha antes de alguém trocar.
+
+## Rode as duas por um ciclo completo
+
+Escolha o ciclo natural do trabalho, uma semana, um fechamento de mês, um trimestre, e rode a ferramenta nova e a planilha lado a lado por uma volta completa. Compare os resultados no fim. As diferenças quase sempre são uma regra de negócio que a planilha codificava e ninguém mencionou. Quando um ciclo completo bater, aposente a planilha: deixe-a somente leitura, coloque um link para a ferramenta nova no topo, e deixe-a ali.
+
+## Construa as partes chatas direito
+
+Os recursos que tornam uma ferramenta interna confiável são os que ninguém pede: login de verdade, um registro de auditoria de quem mudou o quê, backups que já foram restaurados pelo menos uma vez, e uma pessoa nomeada como responsável pela ferramenta. São baratos no primeiro dia e muito caros de encaixar depois do primeiro incidente.
+
+## Em resumo
+
+Leia a planilha como especificação antes de entrevistar alguém. Construa para as cinco coisas que ela não faz, mantenha a visão em grade que as pessoas adoram, importe o histórico e concilie, rode as duas por um ciclo completo e só então aposente a planilha antiga. É assim que tratamos [ferramentas internas](/pt-BR/custom-development/) para clientes, e é por isso que a primeira entrega costuma ser pequena.

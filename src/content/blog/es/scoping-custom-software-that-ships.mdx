@@ -1,0 +1,63 @@
+---
+lang: es
+translationKey: scoping-custom-software-that-ships
+title: "Cómo acotar un proyecto de software a medida para que se entregue de verdad"
+metaTitle: 'Acotar software a medida para que se entregue'
+description: "Los proyectos de software a medida rara vez fallan en el código. Fallan en el alcance: demasiado grandes para terminarlos antes de que cambien las prioridades. Cómo ponemos el trabajo por escrito, encontramos la entrega más pequeña que merece la pena y mantenemos una lista de lo que no vamos a construir."
+metaDescription: 'El software a medida rara vez falla en el código. Falla en el alcance. Cómo encontrar la entrega mínima que merece la pena y lo que no vamos a construir.'
+pubDate: 2026-09-29
+tags: ["custom-development"]
+author: team
+heroImage: ../../../assets/blog/scoping-custom-software-that-ships.jpg
+heroImageAlt: 'Ilustración plana: una carretera azul marino que sube entre colinas verde azuladas, con pequeñas banderas naranjas a lo largo y una brújula y una regla sobre la carretera, en primer plano.'
+---
+
+*La mayor parte del software a medida que nunca se entrega no estaba mal escrito. Estaba mal acotado: lo bastante grande como para que el mundo cambiara antes de terminarlo.*
+
+Cuando un proyecto a medida se atasca, el análisis posterior suele culpar al código, a las personas o al proveedor. En nuestra experiencia es el alcance, casi siempre. El proyecto se definió como todo lo que la empresa podía imaginar que necesitaría, la primera entrega útil quedaba a seis meses vista, y en el cuarto mes las prioridades habían cambiado, y el presupuesto con ellas.
+
+El alcance es el sitio más barato para evitarlo, porque todavía no se ha construido nada y cada decisión cuesta una frase. Así lo hacemos.
+
+## Escribe el trabajo, no las funcionalidades
+
+Una lista de funcionalidades es el primer documento equivocado. "Un panel, roles de usuario, un flujo de aprobación, exportar a Excel" describe un producto y no dice nada de por qué alguien lo necesita.
+
+Empieza por el trabajo, en una o dos frases que un desconocido pueda comprobar:
+
+> Cada viernes alguien exporta los pedidos abiertos de la tienda, corrige a mano los códigos de envío y los pega en el sistema del almacén. Lleva cuatro horas y sale mal unas dos veces al mes.
+
+Esa frase es la especificación. Dice quién hace el trabajo, con qué frecuencia, cuánto tarda y cómo falla. Cualquier decisión posterior se puede contrastar con ella: ¿esta funcionalidad acorta el viernes, o hace que falle menos? Si no, no entra en la primera entrega.
+
+## Encuentra la versión más pequeña que merezca la pena
+
+La primera entrega es lo más pequeño que quita un dolor real por sí solo, aunque después no se construya nada más. Para el trabajo del viernes, puede ser un pequeño servicio que lee la exportación, aplica las correcciones que la persona hacía a mano y marca las filas de las que no está seguro. Sin panel. Sin roles. Cuatro horas se convierten en veinte minutos revisando marcas.
+
+La prueba que aplicamos es directa: si paráramos después de la primera entrega, ¿alguien la echaría de menos? Si la respuesta es no, eso es un hito, no una entrega, y tiene que encogerse hasta que la respuesta sea sí.
+
+## Mantén una lista de lo que no vas a construir
+
+Todo alcance que escribimos tiene una lista de lo que queda fuera, y a menudo es más larga que la de lo que entra. En ella están las funcionalidades que salieron y no están en la primera entrega, cada una con una línea que explica por qué.
+
+Esa lista hace tres trabajos. Protege la fecha, porque una petición que ya está en la lista ya tiene respuesta. Guarda las ideas sin perderlas, así que nadie se siente ignorado. Y se relee después de la primera entrega, cuando el uso real ha mostrado qué elementos importan. La mayoría, en nuestra experiencia, acaba sin importar.
+
+## Fija la fecha, mueve el alcance
+
+Entregas pequeñas a un ritmo constante son la columna vertebral. Cuando algo resulta más difícil de lo previsto, y pasará, cambia el alcance de esa entrega y no la fecha. La alternativa, mantener el alcance y retrasar la fecha, es como un proyecto de seis semanas se convierte en uno de nueve meses, un retraso razonable cada vez.
+
+Esto solo funciona si el alcance está escrito en piezas lo bastante pequeñas como para que quitar una no rompa las demás. Es otro motivo para empezar por el trabajo: piezas que acortan el trabajo cada una por su lado se pueden entregar de forma independiente.
+
+## Haz que la primera entrega sea aburrida de publicar
+
+La primera semana de un proyecto es el momento de montar las partes que nadie enseña en una demo: el pipeline que compila y publica, un entorno de preproducción, pruebas automáticas que se ejecutan con cada cambio y una monitorización básica. Hacerlo primero convierte cada entrega posterior en algo sin importancia. Dejarlo para el final significa que la primera entrega es también la primera vez que se publica algo, que es cuando los proyectos descubren sus peores sorpresas.
+
+## Pregunta quién se ocupa después
+
+Un alcance está incompleto mientras no diga quién mantiene el software cuando ya se ha entregado. ¿Quién lo arregla cuando se rompe a las dos de la madrugada? ¿Quién añade el siguiente campo cuando el almacén cambia un código? Si la respuesta es "quien lo construyó", la documentación y el traspaso tienen que estar en el alcance desde el principio, y no añadidos al final.
+
+## Estima como un rango, con supuestos
+
+Una cifra única para un proyecto a medida es una suposición con falsa precisión. Damos un rango para la primera entrega y una lista escrita de los supuestos que hay detrás: el formato de la exportación no cambia, el sistema del almacén tiene una API que podemos usar, alguien de tu lado puede responder dudas en un día. Cuando un supuesto se cae, todo el mundo ve por qué se movió la estimación.
+
+## En resumen
+
+Escribe el trabajo antes que las funcionalidades. Entrega la versión más pequeña que quita un dolor real por sí sola. Mantén una lista de lo que no vas a construir y reléela después del uso real. Mantén la fecha y mueve el alcance. Monta la publicación la primera semana, decide quién se ocupa del software después y estima como un rango, con los supuestos por escrito. Eso es casi todo lo que separa el software que se entrega del software que siempre está a punto de estar listo. Es también como hacemos [desarrollo a medida](/es/custom-development/) para clientes.

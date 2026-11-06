@@ -1,0 +1,64 @@
+---
+lang: en
+translationKey: scriptrunner-cloud-migration-sizing
+title: "Sizing a ScriptRunner migration to Cloud before you commit to a date"
+metaTitle: 'Sizing a ScriptRunner migration to Cloud'
+description: "ScriptRunner is usually the hardest app in a Jira migration, and its estimates go wrong in both directions. How to build a matrix of every script, drop what is dead, collapse the duplicates, translate a first draft to see the real difficulty, and present two honest numbers."
+metaDescription: 'ScriptRunner is the hardest app in most Jira migrations. How to inventory every script, drop the dead ones, collapse duplicates and size it honestly.'
+pubDate: 2026-10-06
+tags: ["atlassian-consulting", "cloud-migration", "jira-administration"]
+author: team
+heroImage: ../../../assets/blog/scriptrunner-cloud-migration-sizing.jpg
+heroImageAlt: 'Flat illustration: a large orange balance scale weighing a stack of navy cards marked with grey lines of code against a small teal clock, with a measuring tape unrolled along the bottom.'
+---
+
+*ScriptRunner on Cloud carries the same name as ScriptRunner on Data Center. It is not the same product, and estimates that forget that go wrong in both directions.*
+
+In most Jira Data Center sites we assess, ScriptRunner is the app that decides the migration's effort. It has usually been there for years, it touches workflows, fields, listeners and scheduled jobs, and much of what it does was written by people who are no longer around to explain it.
+
+The estimates we see for it fail in two opposite ways. "About a day per script" sounds prudent and produces a number so large that the migration gets postponed. "ScriptRunner has a Cloud version, so it migrates" sounds reassuring and produces a cutover weekend full of broken transitions. Both come from skipping the same work.
+
+## Why Cloud is a different product
+
+On Data Center, a script runs inside Jira, with direct access to Jira's internal Java API and its database. On Cloud, ScriptRunner runs outside Jira and talks to it through the public REST API, like any other integration.
+
+That one difference explains most of the surprises. Code that called internal classes has to be rewritten against REST endpoints. Some events that a Data Center listener could intercept as they happened are delivered on Cloud after the fact, so a script that used to stop something now has to react to it. Field behaviours on screens work within narrower limits. None of this is a defect; it is what running outside the product means. But it makes "it migrates" untrue for most custom scripts.
+
+## One row per script
+
+The estimate starts with a matrix: one row for every ScriptRunner item, whatever its kind. Each row records the item's type, the spaces it affects, when it last ran, whether it is disabled, a decision, a Cloud target, and how to verify the Cloud version works.
+
+It feels heavy for a sizing exercise. It is the only shape we know that lets you hand the work to developers afterwards, re-run the numbers when scope changes, and answer "why is this in the estimate?" for any single line.
+
+## Four decisions, not two
+
+Every row gets one of four decisions:
+
+1. **Re-implement in ScriptRunner for Cloud.** The default for anything still needed.
+2. **Replace with Jira Automation.** Simple rules that fire on an event and set a field often belong there now, and are easier to maintain.
+3. **Replace with another app or a small Forge app.** When the job is better done elsewhere.
+4. **Drop.** When nothing needs doing at all.
+
+In the Jira inventories we have sized, re-implementation is usually the majority, Automation takes a meaningful slice, and the drops are never trivial.
+
+## Drop first, then estimate
+
+Before estimating anything, remove what does not need to move: disabled items, items that have never run, items whose last run was many months ago, items scoped only to archived or dead spaces, and items attached to test workflows. Each of these is a line someone would otherwise have estimated, built and tested for nothing.
+
+## Collapse the duplicates
+
+Large ScriptRunner estates are full of copy and paste. The same validator lives in forty workflows with a different space key in each. Normalise the whitespace, hash each script, and group the identical ones. In the estates we have measured, around a quarter of the workflow functions collapsed into a much smaller set of shared fragments. Estimating each copy separately is how a sizing doubles.
+
+## Translate a first draft to see the real difficulty
+
+The fastest way to know how hard a script is to move is to start moving it. A first-draft translation of each remaining script, done for sizing rather than for delivery, shows exactly where the difficulty is: calls to internal APIs with no REST equivalent, logic that assumed it ran before a change rather than after, and data that has to be converted before the cutover. A script that looks frightening often translates in minutes; a ten-line one occasionally turns out to have no Cloud equivalent at all.
+
+## Present two numbers, side by side
+
+We give two totals. A baseline that assumes each item is rebuilt individually, and an assisted total that reflects patterns built once and reused, duplicates collapsed, and Cloud features doing part of the work. Then we explain the gap line by line.
+
+Two numbers with their reasons hold up in a budget meeting much better than one. When someone asks why the assisted number is lower, the answer is in the matrix, not in our confidence.
+
+## The short version
+
+ScriptRunner on Cloud runs outside Jira, so most custom scripts need rewriting rather than moving. Build a matrix with one row per item, decide among re-implement, Automation, another app or drop, remove the dead items before estimating, collapse the duplicates, translate a first draft to find the real difficulty, and present a baseline and an assisted number with the gap explained. That is the sizing our [Atlassian team](/atlassian/) does before anyone commits to a date.

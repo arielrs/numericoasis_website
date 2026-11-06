@@ -1,0 +1,65 @@
+---
+lang: es
+translationKey: proving-a-leaderboard-score-by-replay
+title: "Demostrar una puntuación de la clasificación volviendo a jugar la partida"
+metaTitle: 'Demostrar una puntuación volviendo a jugarla'
+description: "Todas las clasificaciones en línea sufren trampas, y la mayoría intenta detectarlas. El Trial diario de Kindelve no detecta nada: el juego envía sus entradas, el servidor vuelve a jugar el descenso, y una puntuación solo aparece si la repetición llega al mismo piso, tick y hash."
+metaDescription: 'Casi todas las clasificaciones intentan detectar trampas. La nuestra no: el juego envía sus entradas, el servidor repite el descenso y solo vale lo idéntico.'
+pubDate: 2026-11-05
+tags: ["game-development"]
+author: team
+heroImage: ../../../assets/blog/proving-a-leaderboard-score-by-replay.jpg
+heroImageAlt: 'Grabado coloreado a mano: dos balanzas de latón idénticas una al lado de la otra sobre una larga mesa de roble, cada una con las mismas esferas de colores en las mismas posiciones en sus platillos.'
+---
+
+*Una clasificación que se fía de la palabra del jugador acabará encabezada por alguien que editó un número. La única duda es cuándo.*
+
+Kindelve tiene un Trial diario: un descenso de cinco minutos, igual para todos los jugadores ese día, con una clasificación pública. Una clasificación pública es justo el tipo de cosa por la que merece la pena hacer trampas, así que desde el principio se construyó para no fiarse de ninguna puntuación. No intenta detectar trampas. En su lugar, demuestra cada puntuación volviendo a jugar el descenso.
+
+## Envía las entradas, no el resultado
+
+El juego no le envía un número al servidor. Le envía el registro de entradas del descenso: cada decisión que tomó el jugador, cada una marcada con el tick en que ocurrió. Mejoras compradas, habilidades usadas, cofres abiertos, el momento en que se terminó el descenso. Junto al registro envía lo que afirma: el piso más profundo alcanzado, el tick en que se alcanzó por primera vez, y una huella corta del estado final.
+
+La semilla ni siquiera se envía. Sale de la fecha, así que el Trial de todo el mundo ese día empieza exactamente en la misma profundidad.
+
+## Vuelve a jugarlo en el servidor
+
+El servidor ejecuta el mismo paquete de simulación que ejecuta el juego, no una copia ni una adaptación. Empieza el descenso del día a partir de la semilla del día y aplica las entradas en los ticks en que están marcadas, exactamente en el orden en que las aplicó el juego. La regla del orden es estricta: una entrada marcada para un tick se aplica antes de que se ejecute el paso de ese tick, y las entradas que comparten tick se aplican en un orden fijo. Cualquier otro orden produciría otra huella, y todas las puntuaciones honestas se rechazarían.
+
+Cuando termina la repetición, el servidor compara. Mismo piso, mismo tick, misma huella: la puntuación se acepta y aparece en la clasificación. Cualquier otra cosa se rechaza, y no se guarda nada de la petición.
+
+## Por qué eso es una prueba y no una suposición
+
+Esto solo funciona porque la simulación es determinista: números enteros en lugar de decimales, un generador aleatorio con semilla, ningún reloj dentro de las reglas. Contamos cómo en [Sin coma flotante](/es/blog/game-simulation-without-floating-point/). Como las mismas entradas producen siempre el mismo resultado en cualquier máquina, una repetición que no coincide solo puede significar que lo afirmado era falso. No hay heurísticas que ajustar, ni umbrales que discutir, ni falsos positivos por los que disculparse.
+
+## Una repetición de cinco minutos en diez milisegundos
+
+El backend funciona con funciones en el borde, y en el plan con el que empezó, cada petición puede usar diez milisegundos de procesador. Volver a jugar un Trial completo de cinco minutos lleva más que eso. Así que la repetición se hace por trozos. Cada petición repite unos cientos de ticks, guarda la simulación en pausa en la base de datos, y la petición siguiente continúa exactamente desde ese punto. Guardar y restaurar es exacto al tick, así que una repetición troceada llega a la misma huella que una entera, cosa que una prueba comprueba con cortes en puntos raros.
+
+El juego simplemente le pide al servidor que siga comprobando hasta que la respuesta sea definitiva, lo que lleva unos segundos y le muestra al jugador una barra de progreso en lugar de un icono girando.
+
+## Límites en todo
+
+Un servidor que vuelve a jugar lo que le envían necesita límites firmes sobre lo que acepta:
+
+- **El tamaño de la petición tiene un límite**, y el cuerpo se lee por partes, así que una enorme se rechaza antes de tenerla entera.
+- **El número de entradas tiene un límite**, el máximo que podría contener un Trial, y se comprueban los campos de cada entrada: el tick dentro del Trial, el tipo de entrada conocido, cada valor dentro de rango.
+- **La comprobación es rápida.** Una biblioteca de validación genérica gastaba la mayor parte del tiempo de una petición en leer un registro largo, así que el lector de entradas está escrito a mano, y una prueba lo mantiene fiel exactamente a las mismas reglas que el esquema formal, con todas las combinaciones de campos buenos y malos.
+
+Una petición que falla cualquier comprobación se rechaza entera, y no se guarda nada de ella.
+
+## Rechazos que no son acusaciones
+
+No toda discrepancia es una trampa, y la clasificación lo dice:
+
+- **Versión.** Un descenso jugado con una versión más antigua del juego se ejecutó con reglas algo distintas, así que se repetiría de otra manera. Se rechaza como "versión", no como falsificación, y se le dice al jugador que recargue.
+- **Duplicada.** Una entrada por aparato y día. Un segundo envío se responde como duplicado, lo que además hace seguro reenviar.
+- **Sin conexión.** Un fallo de red nunca se trata como un error. El juego guarda la puntuación y la vuelve a enviar más tarde.
+
+## Lo que no impide
+
+La repetición demuestra que un conjunto de entradas produce una puntuación. No demuestra que esas entradas las produjera una persona. Un programa que jugara bien el Trial pasaría, porque su puntuación sería real. Es un problema más estrecho, y honesto: la clasificación nunca muestra una puntuación que no ocurrió.
+
+## En resumen
+
+No envíes puntuaciones; envía entradas. Vuelve a jugarlas en el servidor con la misma simulación, en el mismo orden, a partir de una semilla que elige el servidor, y acepta solo una coincidencia exacta. Haz que la repetición quepa en los límites de tu plataforma troceándola, con un guardado y una restauración exactos. Pon límite a cada petición, rechaza enteras las inválidas, y trata los problemas de versión y de red como lo que son, no como trampas. El Trial ya funciona en [Kindelve](/es/studio/).

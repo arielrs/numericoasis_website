@@ -1,0 +1,55 @@
+---
+lang: pt-BR
+translationKey: game-simulation-without-floating-point
+title: "Sem ponto flutuante: uma simulação de jogo que nunca se desvia"
+metaTitle: 'Uma simulação de jogo sem ponto flutuante'
+description: "A simulação de Kindelve dá o mesmo resultado, bit a bit, num celular, num notebook e num servidor. Como chegamos lá: números inteiros para tudo o que se acumula, porcentagens com divisão arredondada para baixo, um gerador aleatório com semente em aritmética pura de 32 bits, e nenhum relógio dentro das regras."
+metaDescription: 'Nosso jogo dá o mesmo resultado bit a bit num celular, num notebook e num servidor. Inteiros, arredondamento para baixo, sorteio com semente e sem relógio.'
+pubDate: 2026-10-28
+tags: ["game-development"]
+author: team
+heroImage: ../../../assets/blog/game-simulation-without-floating-point.jpg
+heroImageAlt: 'Gravura colorida à mão: uma máquina de calcular mecânica de latão, com engrenagens dentadas entrelaçadas e uma manivela, sobre uma mesa de carvalho, ao lado de uma pilha alta de livros-razão encadernados e de um compasso de latão.'
+---
+
+*Rode a mesma descida, com as mesmas escolhas nos mesmos momentos, num celular com Safari, num notebook com Chrome e num servidor com Node. O resultado é o mesmo. Não um resultado parecido. O mesmo, até o último bit.*
+
+Essa propriedade é a fundação de Kindelve, e a decidimos antes de escrever qualquer jogabilidade. É ela que vai permitir a um ranking provar uma pontuação repetindo a partida, em vez de confiar no aparelho do jogador. É ela que torna testável uma mudança de balanceamento: muda-se um número, repetem-se mil descidas gravadas, compara-se. E é surpreendentemente fácil de perder, porque o jeito óbvio de escrever um jogo usa números decimais em todo lugar.
+
+## De onde vem o desvio
+
+Em JavaScript, as quatro operações básicas com números decimais são definidas com precisão e dão a mesma resposta em todo lugar. O problema é todo o resto. Funções como `Math.pow`, `Math.sin` e `Math.exp` são aproximações, e cada motor de JavaScript é livre para aproximá-las do seu jeito, então o último bit de um resultado pode mudar entre o motor do Chrome, o do Safari e o do Firefox.
+
+Um bit diferente parece inofensivo. Numa simulação que roda vinte vezes por segundo e alimenta o próximo passo com cada resultado, não é. O dano arredonda um fio diferente, uma criatura sobrevive com um ponto de vida em vez de zero, a luta toma outro rumo, e dois minutos depois as duas execuções não têm mais nada em comum. Nada trava e nenhum teste numa única máquina percebe. O ranking simplesmente para de concordar consigo mesmo.
+
+## Números inteiros para tudo o que se acumula
+
+Por isso a simulação não usa decimais para nada que se soma ao longo do tempo. Posições, vida, dano, a moeda do jogo e o próprio tempo são todos números inteiros:
+
+- **A distância** é contada em milésimos da profundidade de um andar, então o movimento é suave sem frações.
+- **O tempo** é contado em ticks, vinte por segundo, e nunca em milissegundos lidos de um relógio.
+- **As porcentagens** são aplicadas por uma única função que multiplica e depois divide arredondando para baixo, então "150 por cento" sempre significa o mesmo inteiro em qualquer aparelho.
+
+Arredondar sempre para baixo introduz um pequeno viés, e isso é proposital. Um viés uniforme é igual em todo lugar. Um arredondamento esperto, que desempata de jeitos diferentes em situações diferentes, é exatamente o tipo de coisa que cria divergências.
+
+## Crescimento sem `Math.pow`
+
+Os custos de melhoria crescem de forma exponencial, e o jeito natural de escrever isso é uma função de potência. Não fazemos assim. Os custos são calculados por multiplicações inteiras repetidas, um nível de cada vez, cada passo arredondado para baixo. Os níveis são poucos, então o laço não custa nada, e o resultado é idêntico em todo lugar porque nunca sai da aritmética de inteiros.
+
+## Aleatoriedade que pode ser repetida
+
+`Math.random` é proibido na simulação. Ele não aceita semente, então uma execução baseada nele nunca pode ser repetida, e cada motor o implementa de um jeito.
+
+Em vez disso, a simulação usa um gerador pseudoaleatório pequeno e bem conhecido, o xoshiro128**, escrito de forma que toda operação fique dentro da aritmética de inteiros de 32 bits. Ele recebe a semente por meio de um segundo gerador pequeno, para que sementes simples, como o número de um dia, ainda produzam sequências bem misturadas. Sortear um número inteiro numa faixa usa amostragem por rejeição, o que mantém a distribuição exatamente uniforme sem introduzir decimais. E o estado inteiro do gerador pode ser salvo e restaurado, então uma execução pode ser pausada, guardada e retomada sem mudar o que acontece em seguida.
+
+## Nenhum relógio dentro das regras
+
+A simulação nunca pergunta que horas são. O tempo dentro de uma descida é um contador de ticks que a própria simulação avança. Qualquer coisa que dependa de verdade do relógio do mundo real, uma recompensa que expira à meia-noite, por exemplo, é aplicada fora da simulação, depois que a descida termina. Essa fronteira mantém as regras puras: as mesmas entradas sempre produzem as mesmas saídas, quando e onde quer que rodem.
+
+## Garantido por testes, não por boas intenções
+
+Regras assim são fáceis de quebrar por acidente com pressa, então testes as garantem. Um teste vasculha o código da simulação atrás das chamadas proibidas. Outros rodam sementes fixas com entradas fixas e comparam o estado final com uma impressão digital gravada, então qualquer mudança que altere um resultado, por menor que seja, é pega no momento em que é feita, e precisa ser assumida como intencional.
+
+## Em resumo
+
+A aritmética decimal é precisa nas operações básicas e depende do motor em todo o resto, e uma simulação que acumula resultados tick após tick transforma um bit diferente num jogo diferente. Por isso Kindelve conta tudo o que se acumula em números inteiros, aplica porcentagens com divisão arredondada para baixo, faz os custos crescerem por multiplicação repetida, tira a aleatoriedade de um gerador inteiro com semente, mantém o relógio fora das regras e deixa os testes garantirem tudo isso. É um pouco menos cômodo de escrever, e é o que torna possível um ranking que pode ser provado. Mais sobre o jogo na página do nosso [Estúdio de Jogos](/pt-BR/studio/).

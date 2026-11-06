@@ -1,0 +1,57 @@
+---
+lang: en
+translationKey: a-game-in-five-languages-from-day-one
+title: "Shipping a game in five languages from the first release"
+metaTitle: 'A game in five languages from the first release'
+description: "Kindelve plays in English, Portuguese, Spanish, French and Japanese, and every piece of player text is written in all five in the same change. Why we did it from the start, and the tests that make it impossible to forget a language."
+metaDescription: 'Kindelve plays in five languages, and every new line of player text ships in all five at once. Why we did it from day one, and the tests that keep it true.'
+pubDate: 2026-11-01
+tags: ["game-development"]
+author: team
+heroImage: ../../../assets/blog/a-game-in-five-languages-from-day-one.jpg
+heroImageAlt: 'Hand-coloured engraving: old open books of different sizes fanned out on a table around a small terrestrial globe on a brass stand, with two goose quills standing among them.'
+---
+
+*Adding languages to a finished game means finding every sentence someone typed straight into the code. Starting with five means there is never a sentence to find.*
+
+Kindelve can be played in English, Portuguese (Brazil), Spanish, French and Japanese. That was not a localisation project bolted on before launch. From the week the languages arrived, every new piece of text a player can read has been written in all five in the same change, or the build fails.
+
+## Why from the start
+
+Retrofitting languages is one of the most expensive jobs in software, and the expense is almost all in finding things. A game written in English for a year has English typed into buttons, tooltips, error messages, combat logs and accessibility labels, in hundreds of places nobody remembers. Every one has to be found, extracted and replaced, and the layouts built around short English words then break when the Portuguese is a third longer.
+
+Doing it from the start inverts the cost. Each new sentence costs a few minutes of translation when it is written, and there is never a backlog to dig out.
+
+## Nothing typed straight into the interface
+
+The rule is that nothing a player reads may be written directly into the interface code. Every word on screen goes through a single translation function, by key.
+
+A test enforces it. It reads every interface component and fails on anything that looks like English typed in directly: text between tags, a title, an accessibility label, a placeholder, an image description, or a string that starts with a capitalised word. The rare string that genuinely is not for reading, a font name for example, is marked on its line as an exception, so every exception is visible and deliberate.
+
+## Messages that know about grammar
+
+Sentences are stored as messages with placeholders, and the format understands plurals, because "1 floor" and "2 floors" are different sentences, and different languages have different rules for them. A second test compares each translation against the English and fails if a translation flattened a plural into a single form, which is the most common mistake a translator makes when a message looks like a simple label.
+
+## Translations that know when they are stale
+
+Each language keeps two files: its translations, and a copy of the English each translation was made from. When the English for a message changes, the mismatch shows exactly which translations need another look. A translation that silently describes the old behaviour is worse than a missing one, because nobody notices it.
+
+## Numbers read the way each language reads them
+
+Idle games produce enormous numbers, so counts are shortened: 1.2k, 34k, 5.6M. The suffixes are the same in every language, because players everywhere read them, but the decimal mark is the language's own, so a Portuguese player sees 1,2k. Small detail, large effect: a number with the wrong decimal mark reads as a different number.
+
+## Names stay names
+
+Creature and place names are not translated. A Shieldback is a Shieldback in every language. They are names rather than words, and a player who reads a guide or talks to a friend in another language still needs to recognise the same creature. Everything around the names, descriptions, abilities and the story, is translated.
+
+## Each language has its own term list
+
+A word that changes between screens confuses players: if the descent is called one thing on the button and another in the log, people assume they are two different things. So each language has a term list. It says how to address the player (Brazilian Portuguese uses "você" and never mixes in "tu"), which game words stay in English, and the one translation every other game word gets, everywhere. New text is written against the list, and the list is what a reviewer checks it against.
+
+## Only the language you use is loaded
+
+A player who reads Japanese does not download four other languages. Translations are loaded only for the language selected, which keeps the first load small on a phone, and switching languages loads the new one on demand.
+
+## The short version
+
+Five languages from the first release costs a few minutes per sentence and saves the most expensive retrofit in software. Keep every player-facing word out of the interface code and test that rule, store messages in a format that understands plurals and test the translations against it, keep the source each translation came from so stale ones are visible, format numbers the way each language reads them, leave names untranslated, and keep one term list per language. The game itself is on our [Game Studio](/studio/) page.

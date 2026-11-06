@@ -1,0 +1,65 @@
+---
+lang: pt-BR
+translationKey: proving-a-leaderboard-score-by-replay
+title: "Provando uma pontuação do ranking jogando a partida de novo"
+metaTitle: 'Provando uma pontuação jogando a partida de novo'
+description: "Todo ranking online é trapaceado, e a maioria tenta detectar a trapaça. O Trial diário de Kindelve não detecta nada: o jogo envia as entradas, o servidor joga a descida de novo, e uma pontuação só aparece se a repetição chegar ao mesmo andar, tick e hash."
+metaDescription: 'A maioria dos rankings tenta detectar trapaça. O nosso não precisa: o jogo envia as entradas, o servidor repete a descida, e só um resultado idêntico conta.'
+pubDate: 2026-11-05
+tags: ["game-development"]
+author: team
+heroImage: ../../../assets/blog/proving-a-leaderboard-score-by-replay.jpg
+heroImageAlt: 'Gravura colorida à mão: duas balanças de latão idênticas lado a lado numa longa mesa de carvalho, cada uma com as mesmas esferas coloridas nas mesmas posições nos pratos.'
+---
+
+*Um ranking que acredita na palavra do jogador vai ter no topo alguém que editou um número. A única dúvida é quando.*
+
+Kindelve tem um Trial diário: uma descida de cinco minutos, igual para todos os jogadores naquele dia, num quadro público. Um ranking público é exatamente o tipo de coisa pela qual vale a pena trapacear, então desde o começo o quadro foi construído para não confiar em pontuação nenhuma. Ele não tenta detectar trapaça. Em vez disso, prova cada pontuação, jogando a descida de novo.
+
+## Envie as entradas, não o resultado
+
+O jogo não manda um número para o servidor. Manda o registro de entradas da descida: cada escolha que o jogador fez, cada uma marcada com o tick em que aconteceu. Melhorias compradas, habilidades usadas, baús abertos, o momento em que a descida foi encerrada. Junto com o registro vai a alegação: o andar mais fundo alcançado, o tick em que ele foi alcançado pela primeira vez, e uma impressão digital curta do estado final.
+
+A semente nem é enviada. Ela vem da data, então o Trial de todo mundo naquele dia começa exatamente das mesmas profundezas.
+
+## Jogue de novo no servidor
+
+O servidor roda o mesmo pacote de simulação que o jogo roda, e não uma cópia ou uma adaptação dele. Ele começa a descida do dia a partir da semente do dia e aplica as entradas nos ticks em que foram marcadas, exatamente na ordem em que o jogo as aplicou. A regra de ordem é rígida: uma entrada marcada para um tick é aplicada antes de o passo daquele tick rodar, e entradas que dividem um tick são aplicadas numa ordem fixa. Qualquer outra ordem produziria outra impressão digital, e toda pontuação honesta seria recusada.
+
+Quando a repetição termina, o servidor compara. Mesmo andar, mesmo tick, mesma impressão digital: a pontuação é aceita e aparece no quadro. Qualquer outra coisa é recusada, e nada da requisição é guardado.
+
+## Por que isso é prova e não palpite
+
+Isso só funciona porque a simulação é determinística: números inteiros em vez de decimais, um gerador aleatório com semente, nenhum relógio dentro das regras. Escrevemos como em [Sem ponto flutuante](/pt-BR/blog/game-simulation-without-floating-point/). Como as mesmas entradas sempre produzem o mesmo resultado em qualquer máquina, uma repetição que discorda só pode significar que a alegação era falsa. Não há heurística para ajustar, limites para discutir nem falsos positivos para pedir desculpas.
+
+## Uma repetição de cinco minutos em dez milissegundos
+
+O backend roda em funções na borda, e no plano em que começou, cada requisição pode usar dez milissegundos de processamento. Repetir um Trial inteiro de cinco minutos leva mais do que isso. Então a repetição é feita em pedaços. Cada requisição repete algumas centenas de ticks, salva a simulação pausada no banco de dados, e a requisição seguinte continua exatamente daquele ponto. Salvar e restaurar é exato até o tick, então uma repetição em pedaços chega à mesma impressão digital que uma inteira, o que um teste confere com cortes em pontos estranhos.
+
+O jogo só pede ao servidor que continue conferindo até a resposta ser definitiva, o que leva alguns segundos e mostra ao jogador uma barra de progresso em vez de um ícone girando.
+
+## Limites em tudo
+
+Um servidor que repete o que recebe precisa de limites firmes sobre o que aceita:
+
+- **O tamanho da requisição tem limite**, e o corpo é lido em pedaços, então uma enorme é recusada antes de ser guardada inteira.
+- **O número de entradas tem limite**, no máximo do que um Trial poderia conter, e cada campo de cada entrada é conferido: o tick dentro do Trial, o tipo de entrada conhecido, cada valor dentro da faixa.
+- **A conferência é rápida.** Uma biblioteca de validação genérica gastava a maior parte do orçamento de tempo de uma requisição para ler um registro longo, então o leitor de entradas é escrito à mão, e um teste o mantém fiel exatamente às mesmas regras do schema formal, em toda combinação de campos bons e ruins.
+
+Uma requisição que falha em qualquer conferência é recusada inteira, e nada dela é guardado.
+
+## Recusas que não são acusações
+
+Nem toda diferença é trapaça, e o quadro deixa isso claro:
+
+- **Versão.** Uma descida jogada numa versão mais antiga do jogo rodou com regras um pouco diferentes, então se repetiria de outro jeito. Ela é recusada como "versão", e não como falsificação, e o jogador é orientado a recarregar.
+- **Duplicada.** Uma entrada por aparelho por dia. Um segundo envio é respondido como duplicado, o que também torna seguro reenviar.
+- **Offline.** Uma falha de rede nunca é tratada como erro. O jogo guarda a pontuação e a envia de novo mais tarde.
+
+## O que isso não impede
+
+A repetição prova que um conjunto de entradas produz uma pontuação. Não prova que foi uma pessoa que produziu as entradas. Um programa que jogasse bem o Trial passaria, porque a pontuação dele seria real. É um problema mais estreito, e honesto: o quadro nunca mostra uma pontuação que não aconteceu.
+
+## Em resumo
+
+Não envie pontuações; envie entradas. Repita-as no servidor com a mesma simulação, na mesma ordem, a partir de uma semente que o servidor escolhe, e aceite só um resultado idêntico. Faça a repetição caber nos limites da sua plataforma dividindo-a em pedaços, com salvar e restaurar exatos. Limite toda requisição, recuse as inválidas inteiras, e trate problemas de versão e de rede como o que são, e não como trapaça. O Trial está no ar hoje em [Kindelve](/pt-BR/studio/).

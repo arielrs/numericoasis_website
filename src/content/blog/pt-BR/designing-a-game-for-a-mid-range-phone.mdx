@@ -1,0 +1,60 @@
+---
+lang: pt-BR
+translationKey: designing-a-game-for-a-mid-range-phone
+title: "Projetando um jogo primeiro para um celular intermediário"
+metaTitle: 'Um jogo pensado primeiro para o celular'
+description: "Seis andares de criaturas animadas, efeitos e números é fácil num computador e realmente difícil no navegador de um celular. Como Kindelve é feito primeiro para o celular: a simulação na própria thread, a arte agrupada para a placa de vídeo, animação a partir dos próprios pixels das criaturas e controles feitos para o polegar."
+metaDescription: 'Uma tela de jogo cheia é fácil no computador e difícil no celular. Como Kindelve é feito para o celular: simulação à parte, arte agrupada, controles no polegar.'
+pubDate: 2026-11-02
+tags: ["game-development"]
+author: team
+heroImage: ../../../assets/blog/designing-a-game-for-a-mid-range-phone.jpg
+heroImageAlt: 'Gravura colorida à mão: uma pequena lousa numa moldura de madeira com uma procissão de besouros e salamandras minúsculos atravessando-a, sobre uma mesa, ao lado de uma lupa e de um relógio de bolso aberto.'
+---
+
+*A maioria das pessoas que um dia vai jogar Kindelve vai jogar num celular de alguns anos atrás, no navegador, dentro de um ônibus. Esse celular é o alvo do projeto. O computador fica com o que sobrar.*
+
+É tentador construir um jogo de navegador num notebook rápido, conferir num celular no fim e descobrir que o celular não acompanha. Fizemos o contrário desde a primeira semana: o aparelho de referência é um celular intermediário, e um computador é um celular com folga. Estas são as decisões que vêm daí.
+
+## O orçamento de cada quadro
+
+Uma tela fluida se redesenha sessenta vezes por segundo, o que deixa cerca de dezesseis milissegundos por quadro para tudo: rodar as regras do jogo, desenhar seis andares de criaturas e efeitos, atualizar os números e ainda deixar tempo para o próprio trabalho do navegador. Num computador isso é generoso. Num celular intermediário é apertado, e um único quadro lento aparece como um engasgo que o jogador sente no polegar.
+
+## A simulação roda na própria thread
+
+As regras do jogo não rodam na thread que desenha. Elas rodam num worker separado, a vinte ticks fixos por segundo, e depois de cada tick publicam um retrato pequeno e plano do que a tela precisa mostrar. A thread de desenho lê o retrato mais recente e desenha na velocidade da própria tela.
+
+Essa separação faz duas coisas. Uma pausa dentro da simulação, como a memória sendo limpa, não derruba um quadro desenhado, porque o desenho nunca espera por ela. E o estado da própria simulação nunca atravessa a fronteira, só o retrato, o que mantém a passagem barata.
+
+## Um celular lento mostra menos quadros, nunca outra luta
+
+Como a simulação avança em ticks fixos, não importa a velocidade com que a tela desenha, um celular lento e um computador rápido rodam exatamente a mesma luta. O celular lento só a mostra com menos quadros. Isso importa para a justiça e importa para a honestidade: a mesma descida precisa dar o mesmo resultado em qualquer aparelho, ou o progresso e o ranking diário dependeriam do celular que você tem.
+
+## Arte agrupada para a placa de vídeo
+
+Cada criatura, objeto e sprite da interface fica agrupado num pequeno número de imagens grandes, os atlas. Desenhar muitos sprites a partir de uma imagem só é muito mais barato para a placa de vídeo de um celular do que alternar entre centenas de imagens pequenas, e também significa um punhado de downloads em vez de centenas.
+
+## Animação a partir dos próprios pixels das criaturas
+
+Um sprite animado tradicional traz um desenho separado para cada quadro de cada movimento, multiplicado por cada criatura. As criaturas de Kindelve são animadas movendo os próprios pixels sobre um esqueleto simples: pernas, caudas e asas são posicionadas pelo código enquanto o corpo fica exatamente como o artista o desenhou. O resultado é movimento fluido para centenas de formas de criaturas sem um download que cresce a cada quadro de cada ciclo de caminhada.
+
+## Controles feitos para o polegar
+
+A tela foi pensada para ser segurada com uma mão:
+
+- **Todo controle tem pelo menos 44 pixels**, em qualquer aparelho, para o polegar acertar.
+- **O layout respeita as áreas seguras do celular**, então nada importante fica debaixo do entalhe da câmera ou da barra de gestos.
+- **Nada depende de passar o mouse por cima**, porque um dedo não paira. Tudo o que o mouse descobre, um toque também descobre.
+- **O layout se abre em colunas no computador**, em vez de o layout do celular ser um remendo espremido a partir do de computador.
+
+## Carregue só o necessário
+
+O primeiro carregamento é o que um celular com dados móveis paga antes de o jogador ver qualquer coisa, então ele é mantido pequeno. As traduções são carregadas só para o idioma que o jogador usa. A arte vem em páginas e não num arquivo enorme. Os sons só são baixados depois do primeiro toque do jogador na tela, que os navegadores exigem de qualquer forma antes de tocar áudio.
+
+## Confira na tela estreita, sempre
+
+Toda rodada de mudanças termina com uma passada pelo jogo numa largura de celular e numa de computador, num navegador de verdade. Problemas de layout quase sempre aparecem primeiro na tela estreita, e encontrá-los ali antes dos jogadores é mais barato do que qualquer quantidade de raciocínio sobre eles.
+
+## Em resumo
+
+Projete para o celular e deixe a folga para o computador. Rode as regras na própria thread, num tick fixo, e entregue à tela um retrato pequeno. Deixe aparelhos lentos mostrarem menos quadros, nunca um resultado diferente. Agrupe a arte em atlas, anime as criaturas a partir dos próprios pixels, dimensione cada controle para o polegar, respeite as áreas seguras, carregue só o necessário e confira cada mudança na largura de um celular. O jogo está na página do nosso [Estúdio de Jogos](/pt-BR/studio/).

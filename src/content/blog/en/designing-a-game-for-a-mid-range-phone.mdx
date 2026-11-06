@@ -1,0 +1,59 @@
+---
+lang: en
+translationKey: designing-a-game-for-a-mid-range-phone
+title: "Designing a game for a mid-range phone first"
+description: "Six floors of animated creatures, effects and numbers is easy on a desktop and genuinely hard in a phone browser. How Kindelve is built for the phone first: the simulation in its own thread, art packed for the GPU, animation from the creatures' own pixels, and controls made for a thumb."
+metaDescription: 'A busy game screen is easy on a desktop and hard in a phone browser. How Kindelve is built phone first: its own sim thread, packed art, thumb-sized controls.'
+pubDate: 2026-11-02
+tags: ["game-development"]
+author: team
+heroImage: ../../../assets/blog/designing-a-game-for-a-mid-range-phone.jpg
+heroImageAlt: 'Hand-coloured engraving: a small slate in a wooden frame with a procession of tiny beetles and newts crossing it, lying on a table beside a magnifying glass and an open pocket watch.'
+---
+
+*Most people who will ever play Kindelve will do it on a phone that is a few years old, in a browser, on a train. That phone is the design target. The desktop gets whatever is left over.*
+
+It is tempting to build a browser game on a fast laptop, check it on a phone at the end, and discover that the phone cannot keep up. We went the other way round from the first week: the reference device is a mid-range phone, and a desktop is a phone with headroom. These are the decisions that follow from it.
+
+## The frame budget
+
+A smooth display redraws sixty times a second, which leaves about sixteen milliseconds per frame for everything: running the game's rules, drawing six floors of creatures and effects, updating the numbers, and leaving the browser enough time for its own work. On a desktop that is generous. On a mid-range phone it is tight, and a single slow frame shows up as a stutter the player feels in their thumb.
+
+## The simulation runs in its own thread
+
+The rules of the game do not run on the thread that draws. They run in a separate worker at a fixed twenty ticks a second, and after each tick they post a small, flat snapshot of what the screen needs to show. The drawing thread reads the latest snapshot and draws at the display's own rate.
+
+That separation does two things. A pause inside the simulation, such as memory being cleaned up, cannot drop a drawn frame, because drawing never waits for it. And the simulation's own state never crosses the boundary, only the snapshot, which keeps the hand-over cheap.
+
+## A slow phone shows fewer frames, never a different fight
+
+Because the simulation advances in fixed ticks regardless of how fast the screen draws, a slow phone and a fast desktop run exactly the same fight. The slow phone simply shows it with fewer frames. This matters for fairness and it matters for honesty: the same descent must produce the same result on every device, or progress and the daily leaderboard would depend on which phone you own.
+
+## Art packed for the graphics chip
+
+Every creature, prop and interface sprite is packed into a small number of large atlas images. Drawing many sprites from one image is far cheaper for a phone's graphics chip than switching between hundreds of small images, and it also means a handful of downloads instead of hundreds.
+
+## Animation from the creatures' own pixels
+
+A traditional animated sprite ships a separate drawing for every frame of every movement, multiplied by every creature. Kindelve's creatures are animated by moving their own pixels on a simple skeleton: legs, tails and wings are posed by the code while the body stays exactly as the artist drew it. The result is fluid movement for hundreds of creature forms without a download that grows with every frame of every walk cycle.
+
+## Controls made for a thumb
+
+The screen is designed to be held in one hand:
+
+- **Every control is at least 44 pixels square**, on every device, so a thumb can hit it.
+- **The layout respects the phone's safe areas**, so nothing important sits under a notch or the gesture bar.
+- **Nothing depends on hovering**, because a finger cannot hover. Anything a mouse can discover, a tap can too.
+- **The layout widens on a desktop** into columns, rather than the phone layout being an afterthought squeezed out of a desktop one.
+
+## Load only what is needed
+
+The first load is what a phone on mobile data pays before the player sees anything, so it is kept small. Translations load only for the language the player uses. Art comes in pages rather than as one enormous file. Sounds are fetched only after the player first touches the screen, which browsers require before playing audio anyway.
+
+## Check it on the narrow screen, every time
+
+Every round of changes ends with a pass through the game at a phone width and at a desktop width, in a real browser. Layout problems almost always appear first on the narrow screen, and finding them there before players do is cheaper than any amount of reasoning about them.
+
+## The short version
+
+Design for the phone and let the desktop have the surplus. Run the rules in their own thread at a fixed tick and hand the screen a small snapshot. Let slow devices show fewer frames, never a different result. Pack art into atlases, animate creatures from their own pixels, size every control for a thumb, respect the safe areas, load only what is needed, and check every change at a phone's width. The game itself is on our [Game Studio](/studio/) page.

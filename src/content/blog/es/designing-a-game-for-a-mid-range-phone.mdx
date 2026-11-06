@@ -1,0 +1,60 @@
+---
+lang: es
+translationKey: designing-a-game-for-a-mid-range-phone
+title: "Diseñar un juego pensando primero en un móvil de gama media"
+metaTitle: 'Un juego pensado primero para el móvil'
+description: "Seis pisos de criaturas animadas, efectos y números es fácil en un ordenador y de verdad difícil en el navegador de un móvil. Cómo Kindelve está hecho primero para el móvil: la simulación en su propio hilo, el arte agrupado para la tarjeta gráfica, la animación a partir de los propios píxeles de las criaturas y controles hechos para el pulgar."
+metaDescription: 'Una pantalla de juego llena es fácil en el ordenador y difícil en el móvil. Kindelve, hecho para el móvil: simulación aparte, arte agrupado, botones grandes.'
+pubDate: 2026-11-02
+tags: ["game-development"]
+author: team
+heroImage: ../../../assets/blog/designing-a-game-for-a-mid-range-phone.jpg
+heroImageAlt: 'Grabado coloreado a mano: una pequeña pizarra en un marco de madera con una procesión de escarabajos y tritones diminutos que la cruza, sobre una mesa, junto a una lupa y un reloj de bolsillo abierto.'
+---
+
+*La mayoría de las personas que jugarán a Kindelve lo harán en un móvil de hace unos años, en el navegador, en el autobús. Ese móvil es el objetivo del diseño. El ordenador se queda con lo que sobre.*
+
+Es tentador construir un juego de navegador en un portátil rápido, comprobarlo en un móvil al final y descubrir que el móvil no da abasto. Nosotros lo hicimos al revés desde la primera semana: el aparato de referencia es un móvil de gama media, y un ordenador es un móvil con margen. Estas son las decisiones que se derivan de ello.
+
+## El presupuesto de cada fotograma
+
+Una pantalla fluida se redibuja sesenta veces por segundo, lo que deja unos dieciséis milisegundos por fotograma para todo: ejecutar las reglas del juego, dibujar seis pisos de criaturas y efectos, actualizar los números y dejarle al navegador tiempo para su propio trabajo. En un ordenador es generoso. En un móvil de gama media es justo, y un solo fotograma lento aparece como un tirón que el jugador nota en el pulgar.
+
+## La simulación va en su propio hilo
+
+Las reglas del juego no se ejecutan en el hilo que dibuja. Se ejecutan en un worker aparte, a veinte ticks fijos por segundo, y después de cada tick publican una instantánea pequeña y plana de lo que la pantalla tiene que mostrar. El hilo de dibujo lee la instantánea más reciente y dibuja al ritmo de la propia pantalla.
+
+Esa separación hace dos cosas. Una pausa dentro de la simulación, como la liberación de memoria, no puede hacer perder un fotograma dibujado, porque el dibujo nunca la espera. Y el estado propio de la simulación nunca cruza la frontera, solo la instantánea, lo que mantiene barato el traspaso.
+
+## Un móvil lento muestra menos fotogramas, nunca otro combate
+
+Como la simulación avanza en ticks fijos, sea cual sea la velocidad a la que dibuja la pantalla, un móvil lento y un ordenador rápido ejecutan exactamente el mismo combate. El móvil lento simplemente lo muestra con menos fotogramas. Eso importa por justicia y por honestidad: el mismo descenso tiene que dar el mismo resultado en cualquier aparato, o el progreso y la clasificación diaria dependerían del móvil que tengas.
+
+## Arte agrupado para la tarjeta gráfica
+
+Cada criatura, objeto y sprite de la interfaz está agrupado en un número pequeño de imágenes grandes, los atlas. Dibujar muchos sprites a partir de una sola imagen es mucho más barato para la tarjeta gráfica de un móvil que ir cambiando entre cientos de imágenes pequeñas, y además supone un puñado de descargas en lugar de cientos.
+
+## Animación a partir de los propios píxeles de las criaturas
+
+Un sprite animado tradicional trae un dibujo distinto para cada fotograma de cada movimiento, multiplicado por cada criatura. Las criaturas de Kindelve se animan moviendo sus propios píxeles sobre un esqueleto sencillo: patas, colas y alas las coloca el código mientras el cuerpo se queda exactamente como lo dibujó el artista. El resultado es un movimiento fluido para cientos de formas de criaturas sin una descarga que crezca con cada fotograma de cada ciclo de paso.
+
+## Controles hechos para el pulgar
+
+La pantalla está pensada para sujetarse con una mano:
+
+- **Cada control mide al menos 44 píxeles**, en cualquier aparato, para que el pulgar acierte.
+- **La maqueta respeta las zonas seguras del móvil**, así que nada importante queda bajo la muesca de la cámara o la barra de gestos.
+- **Nada depende de pasar el ratón por encima**, porque un dedo no flota. Todo lo que descubre un ratón, lo descubre también un toque.
+- **La maqueta se abre en columnas en el ordenador**, en lugar de que la del móvil sea un apaño exprimido a partir de la de escritorio.
+
+## Carga solo lo necesario
+
+La primera carga es lo que paga un móvil con datos móviles antes de que el jugador vea nada, así que se mantiene pequeña. Las traducciones se cargan solo para el idioma que usa el jugador. El arte llega en páginas y no en un archivo enorme. Los sonidos solo se descargan después del primer toque del jugador en la pantalla, que los navegadores exigen de todos modos antes de reproducir audio.
+
+## Compruébalo en la pantalla estrecha, siempre
+
+Cada ronda de cambios termina con un repaso del juego a un ancho de móvil y a uno de ordenador, en un navegador real. Los problemas de maquetación casi siempre aparecen primero en la pantalla estrecha, y encontrarlos ahí antes que los jugadores es más barato que cualquier cantidad de razonamiento sobre ellos.
+
+## En resumen
+
+Diseña para el móvil y deja el margen para el ordenador. Ejecuta las reglas en su propio hilo, a un tick fijo, y dale a la pantalla una instantánea pequeña. Deja que los aparatos lentos muestren menos fotogramas, nunca un resultado distinto. Agrupa el arte en atlas, anima las criaturas a partir de sus propios píxeles, dimensiona cada control para el pulgar, respeta las zonas seguras, carga solo lo necesario y comprueba cada cambio al ancho de un móvil. El juego está en la página de nuestro [Estudio de Juegos](/es/studio/).

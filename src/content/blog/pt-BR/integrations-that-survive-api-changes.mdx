@@ -1,0 +1,61 @@
+---
+lang: pt-BR
+translationKey: integrations-that-survive-api-changes
+title: "Integrações que sobrevivem à próxima mudança de API do fornecedor"
+metaTitle: 'Integrações que sobrevivem à próxima API'
+description: "A integração funcionou no dia em que saiu. Oito meses depois parou em silêncio, porque um fornecedor renomeou um campo. Sete hábitos que fazem uma integração entre dois sistemas sobreviver às mudanças que nenhum dos lados avisa."
+metaDescription: 'A integração funcionou no primeiro dia e parou em silêncio oito meses depois. Sete hábitos para ela sobreviver quando o fornecedor muda a API.'
+pubDate: 2026-10-03
+tags: ["custom-development"]
+author: team
+heroImage: ../../../assets/blog/integrations-that-survive-api-changes.jpg
+heroImageAlt: 'Ilustração em estilo flat: duas caixas arredondadas azul-marinho ligadas por um cabo grosso verde-azulado que passa por um adaptador laranja robusto, com alguns plugues sobressalentes de formatos diferentes flutuando ao redor.'
+---
+
+*Integrações raramente falham no dia em que saem. Falham oito meses depois, em silêncio, numa terça-feira, porque algo do outro lado mudou.*
+
+Uma integração entre dois sistemas é a promessa de que um deles vai continuar entendendo o outro. O problema é que nenhum dos lados fez essa promessa a você. O fornecedor do CRM renomeia um campo, o provedor de pagamentos aposenta um endpoint, o ERP aperta o limite de requisições, e a integração que estava correta no dia em que saiu começa a não gravar nada, ou pior, a gravar bobagem.
+
+Você não consegue impedir os fornecedores de mudarem as APIs deles. Consegue construir integrações que percebem, falham alto e se recuperam. Estes são os hábitos que colocamos desde a primeira versão.
+
+## 1. Ponha um adaptador entre o modelo deles e o seu
+
+A decisão mais importante é onde o vocabulário do fornecedor termina. Se os nomes de campo e os formatos de dados dele vazam pelo seu código inteiro, cada mudança do lado dele vira uma mudança em todo lugar do seu.
+
+Então traduzimos na borda. Um adaptador fino transforma a resposta do fornecedor no seu próprio modelo de dados, e todo o resto do seu código fala só o seu modelo. Quando o fornecedor muda algo, muda um arquivo. Quando você troca de fornecedor, troca-se um arquivo.
+
+## 2. Valide o que chega, sempre
+
+Não confie numa resposta só porque ela voltou com status de sucesso. Confira o formato dela contra um schema antes de usá-la: os campos de que você precisa estão lá, os tipos são os esperados, os valores estão dentro da faixa.
+
+Quando a validação falhar, pare e avise. Uma falha barulhenta na primeira resposta inesperada custa uma hora. Uma silenciosa que grava um nulo na sua tabela de clientes por três semanas custa um projeto de conciliação.
+
+## 3. Torne as gravações idempotentes e as novas tentativas seguras
+
+Redes falham no meio do caminho. Uma requisição expira e você não sabe se o outro lado a recebeu. Se tentar de novo puder criar uma segunda fatura, ninguém vai ter coragem de tentar de novo, e as falhas se acumulam à mão.
+
+Dê a cada gravação uma chave que a identifique, para que enviá-la duas vezes tenha o mesmo efeito que enviá-la uma. Assim as novas tentativas ficam seguras, e você pode repetir automaticamente com intervalos crescentes, em vez de acordar alguém.
+
+## 4. Concilie, não apenas sincronize
+
+Uma sincronização move dados; uma conciliação confere se os dois lados concordam. Rode uma em horário fixo: conte os pedidos de ontem nos dois lados, some os totais, compare. Quando discordarem, informe exatamente quais registros diferem.
+
+É o hábito que pega as falhas que os outros deixam passar, inclusive as causadas por gente editando dados à mão de um dos lados.
+
+## 5. Registre a troca que você precisaria repetir
+
+Quando algo dá errado, a pergunta é sempre "o que eles nos mandaram, e o que nós mandamos para eles?". Guarde o suficiente de cada troca, sem os campos sensíveis, para repetir uma troca que falhou contra um ambiente de teste. Uma integração que você consegue repetir é uma que você depura em minutos, e não em dias.
+
+## 6. Leia o changelog do fornecedor como se fosse o seu
+
+A maioria das mudanças de API é anunciada. É anunciada num changelog que ninguém da sua equipe lê, meses antes de valer. Alguém precisa ser responsável por ler. Fixe a versão da API que você usa quando o fornecedor permitir, e teste contra o sandbox dele antes de um prazo, e não depois.
+
+## 7. Alerte quando houver silêncio
+
+A falha mais perigosa de uma integração é não haver falha nenhuma: a rotina roda, não encontra nada e informa sucesso. Um webhook para de chegar porque o fornecedor mudou o método de assinatura, e os seus logs ficam perfeitamente quietos.
+
+Então alerte pelo volume, e não só pelos erros. Se uma integração que normalmente trata duzentos registros por dia trata zero, isso é um incidente, mesmo que nada tenha lançado exceção.
+
+## Em resumo
+
+Traduza o modelo do fornecedor para o seu numa única borda. Valide cada resposta e falhe alto. Torne as gravações idempotentes para que repetir seja seguro. Concilie em horário fixo. Guarde o suficiente para repetir uma troca que falhou. Leia o changelog. E alerte quando ficar quieto. Nada disso é caro no primeiro dia, e cada um desses hábitos é a diferença entre uma correção pequena e um mês perdido mais tarde. São os hábitos que levamos para toda [integração sob medida](/pt-BR/custom-development/) que construímos.

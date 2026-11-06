@@ -1,0 +1,69 @@
+---
+lang: pt-BR
+translationKey: cloud-saves-that-never-lose-progress
+title: "Saves na nuvem que nunca perdem progresso: mescle pelo que cada campo significa"
+metaTitle: 'Saves na nuvem que nunca perdem progresso'
+description: "Uma conta em vários aparelhos significa que um dia dois aparelhos vão ser jogados offline e depois sincronizar. O último a gravar vence apaga progresso; ficar com o maior de tudo duplica moeda. Como Kindelve mescla um save campo a campo, de acordo com o que cada campo significa."
+metaDescription: 'Dois aparelhos jogados offline vão sincronizar. O último a gravar apaga progresso e o maior de tudo duplica moeda. Como mesclamos cada campo pelo seu sentido.'
+pubDate: 2026-11-03
+tags: ["game-development", "custom-development"]
+author: team
+heroImage: ../../../assets/blog/cloud-saves-that-never-lose-progress.jpg
+heroImageAlt: 'Gravura colorida à mão vista de cima: um atlas aberto mostrando duas cópias do mesmo mapa de caverna lado a lado, um compasso de latão atravessando as duas páginas e uma pequena lanterna de latão no canto.'
+---
+
+*Você pega uma criatura rara no celular, no metrô, sem sinal. À noite você joga no notebook. Amanhã os dois aparelhos sincronizam. Se você ainda vai ter aquela criatura depende inteiramente de uma função.*
+
+Uma conta só, no navegador, no celular e um dia na Steam, é uma promessa que os jogadores levam muito a sério e em que raramente pensam. Na maior parte do tempo é fácil: um aparelho por vez, sempre online. O caso difícil é o comum: dois aparelhos que foram jogados enquanto estavam sem contato um com o outro, e depois se encontram. Algo precisa decidir como fica o save depois, e as duas respostas óbvias estão erradas.
+
+## Por que "o último a gravar vence" falha
+
+A regra mais simples é o save mais recente substituir o outro. Isso apaga progresso. A criatura pega no celular ao meio-dia some quando o notebook, jogado às nove, sincroniza um save que nunca soube dela. Nada dá erro. O jogador só descobre, mais cedo ou mais tarde, que algo que conquistou sumiu, e essa é a avaliação que fica no topo da página da loja.
+
+## Por que "ficar com o maior" falha
+
+O instinto oposto é ficar com o maior valor de tudo, para nunca perder nada. Isso duplica dinheiro. Gaste moeda no notebook, mantenha o saldo antigo e maior no celular, sincronize, e a mescla devolve a moeda gasta. É um bug de duplicação com cara simpática, e quando os jogadores o descobrem, ele vira estratégia.
+
+## Mescle pelo que cada campo significa
+
+Por isso Kindelve não tem uma regra de mescla. Tem uma regra por campo, escolhida pelo que o campo significa:
+
+| Tipo de campo | Exemplos | Regra |
+| --- | --- | --- |
+| Coisas que você coleciona | Criaturas que possui, descobertas | Fica tudo dos dois |
+| Coisas que só sobem | Andar mais fundo, número de descidas | O maior valor |
+| Progresso de mão única | A forma evoluída de uma criatura | A forma mais avançada |
+| Coisas que se acumulam | Relíquias, em que duas cópias valem mais do que uma | A maior quantidade de cada |
+| Saldos que vão e voltam | Moeda, níveis de habilidade | O valor do aparelho mais novo |
+| Preferências | As habilidades levadas na última descida | A escolha do aparelho mais novo |
+| Prazos | Um bônus que expira | O vencimento mais tarde |
+
+Duas dessas linhas merecem uma palavra.
+
+**Os saldos seguem o aparelho mais novo** porque um gasto precisa poder reduzir um saldo, e só o aparelho que gastou sabe disso. É o único lugar em que uma mescla pode perder informação, de propósito: a alternativa é criar moeda do nada.
+
+**Itens que se acumulam são um multiconjunto, não um conjunto.** Uma união simples de duas listas de relíquias apagaria em silêncio a segunda cópia de uma relíquia que o jogador tem duas vezes. Ficar com a maior quantidade de cada uma a preserva.
+
+## Uma sutil: contagens da mesma partida
+
+O jogo conta quantas criaturas de cada tipo você derrotou, e o Códice revela mais sobre uma criatura conforme essa contagem cresce. Se os dois aparelhos sincronizaram há pouco, os dois já contêm as vitórias da partida que compartilharam. Somar as duas contagens as dobraria. Então a mescla fica com a maior contagem por criatura, nunca com a soma.
+
+Isso pode contar a menos quando os dois aparelhos jogaram sessões de fato separadas. Aceitamos isso de propósito: contar a menos atrasa uma página do Códice em algumas lutas, enquanto somar infla um progresso que nunca foi conquistado. Quando uma mescla precisa errar para algum lado, escolha o lado inofensivo.
+
+## A propriedade que realmente importa
+
+O teste que mais nos importa não é sobre nenhuma regra isolada. É que a mescla não depende da ordem: mesclar o celular no notebook dá exatamente o mesmo resultado que mesclar o notebook no celular. Se isso vale, dois aparelhos que sincronizam em qualquer ordem chegam ao mesmo save, e nenhuma sequência de sincronizações consegue perder algo que as regras deveriam manter. O teste verifica isso diretamente.
+
+## Uma função só, dos dois lados
+
+Cada save viaja num envelope com três coisas além do próprio save: a qual conta pertence, qual aparelho o gravou e quando. A conta diz que é o mesmo jogador; o aparelho distingue um conflito de verdade do eco da sua própria última gravação; o horário decide os campos em que o mais novo vence.
+
+A mescla é escrita uma vez e hoje roda no aparelho. Quando o servidor chegar, ele vai rodar a mesma função, e não uma reimplementação dela. Duas implementações de uma regra de mescla um dia vão discordar, e quem vai descobrir a discordância é um jogador.
+
+## Não só para jogos
+
+Todo aplicativo que funciona offline tem esse problema: apps de atendimento em campo, contagens de estoque, anotações, qualquer coisa usada num celular num subsolo. O método vale sem mudança. Classifique cada campo pelo que ele significa, escolha a regra que não consegue perder aquilo para que o campo existe, faça a mescla não depender da ordem e teste essa propriedade diretamente.
+
+## Em resumo
+
+O último a gravar vence apaga progresso, e ficar com o maior duplica moeda. Mescle cada campo pelo que ele significa: mantenha as coleções, fique com o maior do que só sobe, trate acúmulos como multiconjuntos, deixe o aparelho mais novo decidir saldos e preferências, fique com o prazo mais tarde, e nunca some contagens da mesma partida. Faça a mescla não depender da ordem, teste isso e rode a mesma função em todos os lados. Mais sobre o jogo na página do nosso [Estúdio de Jogos](/pt-BR/studio/).

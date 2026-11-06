@@ -1,0 +1,55 @@
+---
+lang: es
+translationKey: game-simulation-without-floating-point
+title: "Sin coma flotante: una simulación de juego que nunca se desvía"
+metaTitle: 'Una simulación de juego sin coma flotante'
+description: "La simulación de Kindelve da el mismo resultado, bit a bit, en un móvil, un portátil y un servidor. Cómo lo conseguimos: números enteros para todo lo que se acumula, porcentajes con división redondeada hacia abajo, un generador aleatorio con semilla en aritmética pura de 32 bits, y ningún reloj dentro de las reglas."
+metaDescription: 'Nuestro juego da el mismo resultado bit a bit en un móvil, un portátil y un servidor. Enteros, redondeo hacia abajo, azar con semilla y sin reloj.'
+pubDate: 2026-10-28
+tags: ["game-development"]
+author: team
+heroImage: ../../../assets/blog/game-simulation-without-floating-point.jpg
+heroImageAlt: 'Grabado coloreado a mano: una calculadora mecánica de latón, con engranajes dentados entrelazados y una manivela, sobre una mesa de roble, junto a una pila alta de libros de contabilidad encuadernados y un compás de latón.'
+---
+
+*Ejecuta el mismo descenso, con las mismas decisiones en los mismos momentos, en un móvil con Safari, en un portátil con Chrome y en un servidor con Node. El resultado es el mismo. No un resultado parecido. El mismo, hasta el último bit.*
+
+Esa propiedad es el cimiento de Kindelve, y la decidimos antes de escribir nada de jugabilidad. Es lo que permitirá que una clasificación demuestre una puntuación volviendo a jugar la partida, en lugar de fiarse del aparato del jugador. Es lo que hace comprobable un cambio de equilibrio: cambias un número, vuelves a ejecutar mil descensos grabados y comparas. Y es sorprendentemente fácil de perder, porque la forma obvia de escribir un juego usa números decimales por todas partes.
+
+## De dónde viene la deriva
+
+En JavaScript, las cuatro operaciones básicas con números decimales están definidas con precisión y dan la misma respuesta en todas partes. El problema es todo lo demás. Funciones como `Math.pow`, `Math.sin` y `Math.exp` son aproximaciones, y cada motor de JavaScript puede aproximarlas a su manera, así que el último bit de un resultado puede cambiar entre el motor de Chrome, el de Safari y el de Firefox.
+
+Un bit distinto parece inofensivo. En una simulación que se ejecuta veinte veces por segundo y alimenta el siguiente paso con cada resultado, no lo es. El daño se redondea un pelo distinto, una criatura sobrevive con un punto de vida en lugar de cero, el combate toma otro rumbo, y dos minutos después las dos ejecuciones ya no tienen nada en común. Nada se cuelga y ninguna prueba en una sola máquina se da cuenta. La clasificación simplemente deja de estar de acuerdo consigo misma.
+
+## Números enteros para todo lo que se acumula
+
+Por eso la simulación no usa decimales para nada que se vaya sumando con el tiempo. Posiciones, vida, daño, la moneda del juego y el propio tiempo son todos números enteros:
+
+- **La distancia** se cuenta en milésimas de la profundidad de un piso, así que el movimiento es suave sin fracciones.
+- **El tiempo** se cuenta en ticks, veinte por segundo, nunca en milisegundos leídos de un reloj.
+- **Los porcentajes** se aplican con una única función que multiplica y después divide redondeando hacia abajo, así que "150 por ciento" significa siempre el mismo entero en cualquier aparato.
+
+Redondear siempre hacia abajo introduce un pequeño sesgo, y es a propósito. Un sesgo uniforme es igual en todas partes. Un redondeo ingenioso que desempata de formas distintas en situaciones distintas es justo el tipo de cosa que crea desacuerdos.
+
+## Crecimiento sin `Math.pow`
+
+Los costes de las mejoras crecen de forma exponencial, y la forma natural de escribirlo es una función de potencia. Nosotros no lo hacemos así. Los costes se calculan con multiplicaciones enteras repetidas, un nivel cada vez, redondeando hacia abajo en cada paso. Los niveles son pocos, así que el bucle no cuesta nada, y el resultado es idéntico en todas partes porque nunca sale de la aritmética entera.
+
+## Azar que se puede repetir
+
+`Math.random` está prohibido en la simulación. No admite semilla, así que una ejecución basada en él nunca se puede repetir, y cada motor lo implementa de una forma.
+
+En su lugar, la simulación usa un generador pseudoaleatorio pequeño y conocido, xoshiro128**, escrito de modo que cada operación se quede dentro de la aritmética entera de 32 bits. Recibe la semilla a través de un segundo generador pequeño, para que semillas sencillas, como el número de un día, sigan produciendo secuencias bien mezcladas. Elegir un número entero al azar dentro de un rango usa muestreo por rechazo, lo que mantiene la distribución exactamente uniforme sin meter decimales. Y todo el estado del generador se puede guardar y restaurar, así que una ejecución se puede pausar, almacenar y reanudar sin cambiar lo que pasa después.
+
+## Ningún reloj dentro de las reglas
+
+La simulación nunca pregunta qué hora es. El tiempo dentro de un descenso es un contador de ticks que la propia simulación hace avanzar. Cualquier cosa que de verdad dependa del reloj del mundo real, una recompensa que caduca a medianoche, por ejemplo, se aplica fuera de la simulación, cuando el descenso ya ha terminado. Esa frontera mantiene puras las reglas: las mismas entradas producen siempre las mismas salidas, cuando sea y donde sea que se ejecuten.
+
+## Garantizado por pruebas, no por buenas intenciones
+
+Reglas como estas son fáciles de romper sin querer cuando hay prisa, así que las garantizan las pruebas. Una prueba revisa el código de la simulación en busca de las llamadas prohibidas. Otras ejecutan semillas fijas con entradas fijas y comparan el estado final con una huella grabada, así que cualquier cambio que altere un resultado, por poco que sea, se detecta en el momento en que se hace, y hay que reconocerlo como intencionado.
+
+## En resumen
+
+La aritmética decimal es precisa en las operaciones básicas y depende del motor en todo lo demás, y una simulación que acumula resultados tick tras tick convierte un bit distinto en un juego distinto. Por eso Kindelve cuenta en números enteros todo lo que se acumula, aplica los porcentajes con división redondeada hacia abajo, hace crecer los costes por multiplicación repetida, saca el azar de un generador entero con semilla, deja el reloj fuera de las reglas y deja que las pruebas lo garanticen todo. Es un poco menos cómodo de escribir, y es lo que hace posible una clasificación demostrable. Más sobre el juego en la página de nuestro [Estudio de Juegos](/es/studio/).

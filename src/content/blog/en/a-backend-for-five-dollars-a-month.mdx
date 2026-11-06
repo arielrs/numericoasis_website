@@ -1,0 +1,63 @@
+---
+lang: en
+translationKey: a-backend-for-five-dollars-a-month
+title: "A backend for five dollars a month: when edge hosting is the right call"
+metaTitle: 'A backend for five dollars a month'
+description: "The default backend for a new product is a server, a managed database and a bill that starts in the tens of dollars. For many small products, edge functions with an edge database do the same job for a fraction of it. Our game's backend as a worked example, with the numbers, the constraints and when not to do it."
+metaDescription: 'Many small products need a server and a database. Edge functions with an edge database can do it for five dollars a month. A worked example, numbers included.'
+pubDate: 2026-11-04
+tags: ["custom-development"]
+author: team
+heroImage: ../../../assets/blog/a-backend-for-five-dollars-a-month.jpg
+heroImageAlt: 'Flat illustration: a small softly glowing teal globe with thin orange lines connecting tiny nodes across its surface, and a single gold coin resting on a navy plinth in front of it.'
+---
+
+*Most small products do not need a server that runs all day waiting for requests. They need a few hundred lines of code that wake up when someone calls, do their job in milliseconds, and go back to sleep.*
+
+When a new product needs a backend, the default plan is familiar: a virtual server or a managed container, a managed database, a monitoring service, and a monthly bill that starts in the tens of dollars before anyone has used it and grows from there. For a lot of products that is the right plan. For many small ones it is paying to keep a machine idle.
+
+Edge functions are the alternative: small pieces of code that run on a provider's network close to the user, only when a request arrives, with a database that lives on the same network. Our game's backend runs this way, and it makes a useful worked example, because its numbers are small and real.
+
+## What the backend does
+
+The game itself is static files: the page, the code, the art. Those are served straight from the provider's content network and never touch our code at all. A small function answers only the requests under one path, and today it does two jobs:
+
+- **The daily Trial board.** A player sends the inputs of their descent, and the backend replays it to prove the score before it appears on the board.
+- **Who is playing now.** While the game is open, it says so every couple of minutes, and the backend counts the devices heard from recently.
+
+The data lives in an edge SQL database: a table of Trial entries and a table of who was seen when.
+
+## The numbers
+
+On the provider's paid plan, five US dollars a month buys ten million requests and thirty million milliseconds of CPU time, plus a database allowance of twenty-five billion rows read, fifty million rows written and five gigabytes of storage. There is no charge for data transfer. Past the allowance, requests cost thirty cents a million.
+
+Model a thousand players who each play every day, with a busy pattern of presence pings, Trial entries and checks, and you land at around three million requests a month. That is under a third of the allowance, with no overage anywhere. The bill is five dollars, and it stays five dollars until the game has tens of thousands of daily players. The requests for the game's files never wake the function, so they are not in that count at all.
+
+## The constraint that shaped the code
+
+The free plan allows ten milliseconds of CPU per request. Replaying a whole five-minute Trial takes longer than that. So the replay is cut into chunks: each request replays a few hundred ticks, saves the paused simulation to the database, and the next request picks up exactly where it left off. Saving and restoring the simulation is exact to the tick, so a chunked replay reaches the same result as an uncut one.
+
+The function also warms itself up when it starts, building its lookup tables and exercising the hot paths once, so that the first real request does not pay that cost.
+
+It is a good example of how edge limits shape design. On the paid plan the limit is thirty seconds per request, and the chunking could collapse into a single request. Writing it to fit the stricter limit first made the code more robust, not less.
+
+## When edge hosting is the right call
+
+- **Traffic is small to medium**, or spiky, and you would rather not pay for idle time.
+- **Requests are short and stateless**: read something, check something, write something, answer.
+- **The audience is spread out**, and running close to every user is worth having for free.
+- **Operations should be close to zero**: no operating system to patch, no server to restart, deploys in seconds.
+
+## When it is not
+
+- **Long-running work**, such as video processing or large batch jobs, belongs on machines built for it.
+- **Heavy relational queries** across large datasets can outgrow an edge database's sweet spot.
+- **Real-time shared state**, such as a multiplayer match, needs coordination that plain request handlers do not give you, though providers offer building blocks for it.
+
+## Three things that change the bill
+
+If an edge backend does get expensive, it is almost always for one of three reasons: an endpoint that burns CPU on every call, a client that calls far more often than it needs to, or storage that grows forever because nothing is ever pruned. Each is a design decision, and each is cheap to get right on day one.
+
+## The short version
+
+For many small products, an edge function and an edge database replace a server and a managed database for five dollars a month. Our game's backend proves scores by replaying them and counts who is playing, and a thousand daily players fits comfortably inside the base allowance. Use edge hosting for short, stateless requests and spread-out audiences; use servers for long-running work, heavy queries and real-time state; and watch CPU per call, call frequency and storage growth. This is the kind of architecture call we make on [custom development](/custom-development/) projects.

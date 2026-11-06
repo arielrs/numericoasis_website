@@ -1,0 +1,63 @@
+---
+lang: pt-BR
+translationKey: scoping-custom-software-that-ships
+title: "Como definir o escopo de um software sob medida para ele sair de verdade"
+metaTitle: 'Escopo de software sob medida que sai do papel'
+description: "Projetos de software sob medida raramente falham no código. Falham no escopo: grandes demais para terminar antes de as prioridades mudarem. Como escrevemos o trabalho, encontramos a menor entrega que vale a pena e mantemos uma lista do que não vamos construir."
+metaDescription: 'Software sob medida raramente falha no código. Falha no escopo. Como achar a menor entrega que vale a pena e manter a lista do que não vamos construir.'
+pubDate: 2026-09-29
+tags: ["custom-development"]
+author: team
+heroImage: ../../../assets/blog/scoping-custom-software-that-ships.jpg
+heroImageAlt: 'Ilustração em estilo flat: uma estrada azul-marinho subindo entre colinas verde-azuladas, com pequenas bandeiras laranja ao longo dela e uma bússola e uma régua na estrada, em primeiro plano.'
+---
+
+*A maior parte do software sob medida que nunca sai não foi mal escrita. Foi mal delimitada: grande o bastante para o mundo mudar antes de ela terminar.*
+
+Quando um projeto sob medida trava, o post-mortem costuma culpar o código, as pessoas ou o fornecedor. Na nossa experiência, é o escopo, quase sempre. O projeto foi definido como tudo o que a empresa conseguia imaginar precisar, a primeira entrega útil ficou a seis meses de distância, e no quarto mês as prioridades tinham mudado, e o orçamento junto.
+
+O escopo é o lugar mais barato para evitar isso, porque nada foi construído ainda e cada decisão custa uma frase. É assim que fazemos.
+
+## Escreva o trabalho, não os recursos
+
+Uma lista de recursos é o primeiro artefato errado. "Um painel, perfis de usuário, um fluxo de aprovação, exportar para Excel" descreve um produto e não diz nada sobre por que alguém precisa dele.
+
+Comece pelo trabalho, em uma ou duas frases que um estranho consiga conferir:
+
+> Toda sexta-feira alguém exporta os pedidos em aberto da loja, corrige os códigos de envio à mão e cola tudo no sistema do depósito. Leva quatro horas e dá errado umas duas vezes por mês.
+
+Essa frase é a especificação. Ela diz quem faz o trabalho, com que frequência, quanto tempo leva e como falha. Toda decisão posterior pode ser testada contra ela: esse recurso deixa a sexta mais curta, ou faz falhar menos? Se não, não entra na primeira entrega.
+
+## Encontre a menor versão que vale a pena
+
+A primeira entrega é a menor coisa que tira uma dor real sozinha, mesmo que nada mais seja construído depois. Para o trabalho de sexta acima, pode ser um pequeno serviço que lê a exportação, aplica as correções que a pessoa fazia à mão e marca as linhas sobre as quais tem dúvida. Sem painel. Sem perfis. Quatro horas viram vinte minutos conferindo as marcações.
+
+O teste que usamos é direto: se parássemos depois da primeira entrega, alguém sentiria falta? Se a resposta for não, aquilo é um marco, não uma entrega, e precisa encolher até a resposta virar sim.
+
+## Mantenha uma lista do que você não vai construir
+
+Todo escopo que escrevemos tem uma lista do que fica de fora, e muitas vezes ela é maior do que a lista do que entra. Nela ficam os recursos que surgiram e não estão na primeira entrega, cada um com uma linha dizendo por quê.
+
+Essa lista faz três trabalhos. Protege a data, porque um pedido que já está na lista já tem resposta. Registra as ideias sem perdê-las, então ninguém se sente ignorado. E é relida depois da primeira entrega, quando o uso real mostrou quais itens importam. A maioria, na nossa experiência, acaba não importando.
+
+## Fixe a data, mova o escopo
+
+Entregas pequenas num ritmo constante são a espinha dorsal. Quando algo se mostra mais difícil do que o esperado, e vai se mostrar, o escopo daquela entrega muda e a data não. A alternativa, segurar o escopo e empurrar a data, é como um projeto de seis semanas vira um de nove meses, um atraso razoável de cada vez.
+
+Isso só funciona se o escopo estiver escrito em pedaços pequenos o bastante para que tirar um não quebre o resto. É mais um motivo para começar pelo trabalho: pedaços que cada um encurta o trabalho podem sair de forma independente.
+
+## Faça a primeira entrega ser chata de publicar
+
+A primeira semana de um projeto é a hora certa de montar as partes que ninguém mostra numa demonstração: o pipeline que compila e publica, um ambiente de homologação, testes automatizados que rodam a cada mudança e um monitoramento básico. Fazer isso primeiro torna cada entrega seguinte um não acontecimento. Deixar para o fim significa que a primeira entrega é também a primeira vez que algo foi publicado, que é quando os projetos descobrem as piores surpresas.
+
+## Pergunte quem cuida dele depois
+
+Um escopo está incompleto enquanto não disser quem roda o software depois que ele sai. Quem corrige quando quebra às duas da manhã? Quem acrescenta o próximo campo quando o depósito muda um código? Se a resposta for "quem construiu", a documentação e a passagem de conhecimento precisam estar no escopo desde o começo, e não penduradas no fim.
+
+## Estime como faixa, com premissas
+
+Um número único para um projeto sob medida é um palpite com precisão falsa. Damos uma faixa para a primeira entrega e uma lista escrita das premissas por trás dela: o formato da exportação não muda, o sistema do depósito tem uma API que podemos usar, alguém do seu lado consegue responder dúvidas em até um dia. Quando uma premissa cai, todo mundo vê por que a estimativa mudou.
+
+## Em resumo
+
+Escreva o trabalho antes dos recursos. Entregue a menor versão que tira uma dor real sozinha. Mantenha uma lista do que você não vai construir e releia depois do uso real. Segure a data e mova o escopo. Monte a publicação na primeira semana, decida quem cuida do software depois e estime como faixa, com as premissas por escrito. Isso é quase tudo o que separa o software que sai do software que está sempre quase pronto. É também como fazemos [desenvolvimento sob medida](/pt-BR/custom-development/) para clientes.
