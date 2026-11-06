@@ -3,16 +3,16 @@ import type { BlogCopy } from './en';
 export const ptBR = {
   meta: {
     crumb: 'Blog',
-    title: 'Custo, administração e governança no Jira',
+    title: 'Anotações sobre software, Atlassian e jogos',
     metaDescription:
-      'Anotações sobre visibilidade de custos, governança no Confluence e saúde da configuração do Jira, do time que constrói apps no Atlassian Marketplace.',
+      'Anotações sobre software sob medida, trabalho com Jira e Confluence, apps em Forge e a criação de um jogo de navegador, do time da Numeric Oasis.',
     description:
-      'Anotações sobre visibilidade de custos na Atlassian, governança no Confluence e saúde da configuração do Jira, do time que constrói apps no Atlassian Marketplace.',
+      'Anotações sobre software sob medida, migração e administração de Jira e Confluence, apps em Forge e a criação de um jogo de navegador, do time da Numeric Oasis.',
   },
   index: {
     eyebrow: 'Da oficina',
     headline: 'Anotações da oficina.',
-    lede: 'O que aprendemos construindo apps em Forge, e o que vivemos tendo que explicar duas vezes. Basicamente sobre saber quanto o seu trabalho na Atlassian custa, manter o Confluence governável, e impedir que a configuração do Jira apodreça em silêncio.',
+    lede: 'O que aprendemos construindo software em três frentes: aplicações sob medida, trabalho com Jira e Confluence e apps em Forge, e um jogo nosso. Principalmente as decisões que custam caro quando dão errado, escritas para pararmos de explicar tudo duas vezes.',
     empty: 'Nada publicado ainda.',
     allTags: 'Todos os posts',
     tagsLabel: 'Navegar por tema',
@@ -21,7 +21,7 @@ export const ptBR = {
     eyebrow: 'Tema',
     headlinePrefix: 'Posts marcados com',
     metaDescription: (label: string) =>
-      `Todos os posts com a tag ${label}. Anotações do time que constrói apps do Atlassian Marketplace para Jira e Confluence Cloud.`,
+      `Todos os posts com a tag ${label}. Anotações da Numeric Oasis sobre software sob medida, trabalho com Atlassian e desenvolvimento de jogos.`,
     backToBlog: 'Todos os posts',
     empty: 'Nada publicado sobre este tema ainda.',
   },
@@ -49,6 +49,24 @@ export const ptBR = {
         primary: 'Veja nossos apps',
         secondary: 'Fale com a gente',
       },
+      customDev: {
+        headline: 'Você também tem os seus vinte por cento?',
+        body: 'Criamos as aplicações web, as integrações e as ferramentas internas que fecham a lacuna que o produto que você comprou deixou aberta. Entregas pequenas, testadas e documentadas, em três idiomas.',
+        primary: 'Desenvolvimento sob medida',
+        secondary: 'Fale com a gente',
+      },
+      consulting: {
+        headline: 'Planejando uma migração, ou arrumando a casa depois de uma?',
+        body: 'Avaliamos migrações do Data Center para o Cloud, dimensionamos a reescrita do ScriptRunner, tiramos equipes de outras ferramentas e limpamos o que a migração deixa para trás. Você fala com quem faz o trabalho.',
+        primary: 'Serviços Atlassian',
+        secondary: 'Fale com a gente',
+      },
+      studio: {
+        headline: 'Feito pelo nosso Estúdio de Jogos.',
+        body: 'Kindelve é uma descida a masmorras com coleção de criaturas que roda em qualquer navegador, de graça, em cinco idiomas. A página do estúdio mostra o jogo, como ele é feito e o que vem a seguir.',
+        primary: 'O Estúdio de Jogos',
+        secondary: 'Fale com o estúdio',
+      },
     },
   },
   pagination: {
@@ -67,5 +85,9 @@ export const ptBR = {
     'atlassian-cloud': 'Atlassian Cloud',
     'how-to': 'Como fazer',
     'product-updates': 'Novidades dos apps',
+    'custom-development': 'Desenvolvimento sob medida',
+    'atlassian-consulting': 'Consultoria Atlassian',
+    'cloud-migration': 'Migração para o Cloud',
+    'game-development': 'Desenvolvimento de jogos',
   },
 } as const satisfies BlogCopy;

@@ -1,0 +1,194 @@
+---
+/**
+ * Atlassian, the second of the three fronts, for all three locales.
+ *
+ * Consulting, the Marketplace apps, and custom Forge apps that shrink the app
+ * bill, in that order: a reader arriving here usually has a site to move or to
+ * tidy, and the apps are the proof that we know the platform from the inside.
+ *
+ * The app grid moved here from the home page on 2026-11-06, when the home page
+ * stopped being an app vendor's and became the company's. It is the same grid,
+ * grouped by host, generated from the collection.
+ */
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import AppCard from '../../components/AppCard.astro';
+import PostCard from '../../components/PostCard.astro';
+import { localeStaticPaths, withLocale, type Locale } from '../../i18n';
+import { atlassian } from '../../i18n/pages/atlassian';
+import { appsIndex } from '../../i18n/pages/apps-index';
+
+export const getStaticPaths = localeStaticPaths;
+
+const { lang } = Astro.props as { lang: Locale };
+const t = atlassian[lang];
+const nav = appsIndex[lang];
+
+const apps = (await getCollection('apps', ({ data }) => data.lang === lang)).sort(
+  (a, b) => a.data.order - b.data.order,
+);
+const jira = apps.filter((a) => a.data.hostProducts.includes('jira'));
+const confluence = apps.filter((a) => a.data.hostProducts.includes('confluence'));
+const cardLabels = { builtFor: nav.builtFor, readMore: nav.readMore };
+
+const posts = (
+  await getCollection(
+    'blog',
+    ({ data }) =>
+      data.lang === lang &&
+      !data.draft &&
+      data.tags.some((tag) => tag === 'atlassian-consulting' || tag === 'cloud-migration'),
+  )
+)
+  .sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime())
+  .slice(0, 3);
+
+const linkClass =
+  'inline-flex items-center gap-1.5 rounded-md text-sm font-semibold text-water-700 transition hover:text-water-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sun-500';
+const arrow = '<path d="M5 12h14M13 5l7 7-7 7" />';
+---
+
+<BaseLayout
+  title={t.meta.title}
+  description={t.meta.description}
+  metaDescription={t.meta.metaDescription}
+  graph={{
+    breadcrumbs: [{ name: t.meta.crumb, path: '/atlassian/' }],
+    pageType: 'CollectionPage',
+  }}
+>
+  <!-- HERO -->
+  <section class="border-b border-sand-200 bg-sand-50 py-16 sm:py-24">
+    <div class="container-wide" data-enter>
+      <p class="eyebrow">{t.hero.eyebrow}</p>
+      <h1 class="mt-3 max-w-4xl font-display text-4xl font-bold leading-tight tracking-tight text-brand-900 sm:text-5xl md:text-6xl">
+        {t.hero.headline}
+      </h1>
+      <p class="mt-6 max-w-2xl text-lg leading-relaxed text-slate-600">{t.hero.lede}</p>
+      <div class="mt-9 flex flex-wrap gap-3">
+        <a href={withLocale(lang, '/contact/')} class="btn-cta">{t.hero.primary}</a>
+        <a href="#apps" class="btn-secondary">{t.hero.secondary}</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONSULTING: a two-by-two of hairline items, not four boxed cards -->
+  <section class="py-16 sm:py-24">
+    <div class="container-wide">
+      <div class="max-w-3xl">
+        <p class="eyebrow">{t.consulting.eyebrow}</p>
+        <h2 class="mt-3 font-display text-3xl font-bold tracking-tight text-brand-900 sm:text-4xl">
+          {t.consulting.headline}
+        </h2>
+      </div>
+      <div class="mt-12 grid gap-x-16 gap-y-10 md:grid-cols-2">
+        {t.consulting.items.map((item) => (
+          <div class="border-t border-sand-200 pt-6">
+            <h3 class="font-display text-xl font-semibold text-brand-900">{item.title}</h3>
+            <p class="mt-3 text-base leading-relaxed text-slate-600">{item.body}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- MARKETPLACE APPS, grouped by host so half is skippable at a glance -->
+  <section id="apps" class="scroll-mt-24 border-y border-sand-200 bg-sand-50 py-16 sm:py-24">
+    <div class="container-wide">
+      <div class="flex flex-wrap items-end justify-between gap-4">
+        <div class="max-w-2xl">
+          <p class="eyebrow">{t.apps.eyebrow}</p>
+          <h2 class="mt-3 font-display text-3xl font-bold tracking-tight text-brand-900 sm:text-4xl">
+            {t.apps.headline}
+          </h2>
+          <p class="mt-5 text-lg leading-relaxed text-slate-600">{t.apps.lede}</p>
+        </div>
+        <a href={withLocale(lang, '/apps/')} class={linkClass}>
+          {t.apps.link}
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" set:html={arrow} />
+        </a>
+      </div>
+
+      <h3 class="eyebrow mt-12">{nav.groups.jira}</h3>
+      <div class="mt-6 grid gap-6 md:grid-cols-2">
+        {jira.map((app) => (
+          <AppCard app={app} lang={lang} labels={cardLabels} wide={app.data.flagship} surface="atlassian" />
+        ))}
+      </div>
+
+      <h3 class="eyebrow mt-14">{nav.groups.confluence}</h3>
+      <div class="mt-6 grid gap-6 md:grid-cols-2">
+        {confluence.map((app) => (
+          <AppCard app={app} lang={lang} labels={cardLabels} surface="atlassian" />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- CUSTOM FORGE APPS -->
+  <section class="py-16 sm:py-24">
+    <div class="container-wide">
+      <div class="rounded-3xl bg-brand-900 p-8 sm:p-12">
+        <div class="grid gap-10 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-16">
+          <div>
+            <p class="text-xs font-semibold tracking-widest text-sun-400 uppercase">{t.custom.eyebrow}</p>
+            <h2 class="mt-3 font-display text-3xl font-bold tracking-tight text-white sm:text-4xl">
+              {t.custom.headline}
+            </h2>
+            <ul class="mt-8 space-y-3">
+              {t.custom.points.map((point) => (
+                <li class="flex gap-3 text-sm leading-relaxed text-brand-100">
+                  <svg class="mt-0.5 shrink-0 text-sun-400" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5" /></svg>
+                  {point}
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div>
+            {t.custom.paragraphs.map((p) => (
+              <p class="mb-5 text-base leading-relaxed text-brand-100 last:mb-0">{p}</p>
+            ))}
+            <div class="mt-8 flex flex-wrap gap-3">
+              <a href={withLocale(lang, '/contact/')} class="btn-cta">{t.hero.primary}</a>
+              <a href={withLocale(lang, '/blog/atlassian-app-footprint-reduction/')} class="btn-secondary !bg-paper">{t.custom.link}</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- POSTS -->
+  {posts.length > 0 && (
+    <section class="border-t border-sand-200 py-16 sm:py-24">
+      <div class="container-wide">
+        <div class="flex flex-wrap items-end justify-between gap-4">
+          <div>
+            <p class="eyebrow">{t.posts.eyebrow}</p>
+            <h2 class="mt-3 font-display text-3xl font-bold tracking-tight text-brand-900 sm:text-4xl">
+              {t.posts.headline}
+            </h2>
+          </div>
+          <a href={withLocale(lang, '/blog/tag/atlassian-consulting/')} class={linkClass}>
+            {t.posts.link}
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" set:html={arrow} />
+          </a>
+        </div>
+        <div class="mt-10 grid gap-6 md:grid-cols-3">
+          {posts.map((post) => <PostCard post={post} lang={lang} />)}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- CTA -->
+  <section class="border-t border-sand-200 bg-sand-50 py-16 sm:py-20">
+    <div class="container-wide max-w-3xl">
+      <h2 class="font-display text-3xl font-bold tracking-tight text-brand-900 sm:text-4xl">{t.cta.heading}</h2>
+      <p class="mt-4 text-lg leading-relaxed text-slate-600">{t.cta.body}</p>
+      <div class="mt-8">
+        <a href={withLocale(lang, '/contact/')} class="btn-cta">{t.cta.primary}</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

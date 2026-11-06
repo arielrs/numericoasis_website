@@ -3,32 +3,41 @@ import type { Shape } from './shape';
 export const en = {
   site: {
     description:
-      'Numeric Oasis is a partner in the Atlassian Marketplace. We build Forge apps for Jira and Confluence Cloud: cost and budget reporting, governance and compliance, and the administration work of keeping a growing site clean.',
+      'Numeric Oasis builds custom software, migrates and runs Jira and Confluence, publishes Forge apps on the Atlassian Marketplace, and runs a game studio. Small, finished releases, since 2011.',
     location: 'Canoas, RS, Brazil',
-    slogan: 'Apps that run inside Atlassian, not beside it.',
+    slogan: 'Small, finished software, on three fronts.',
   },
   nav: {
+    customDev: 'Custom Dev',
+    atlassian: 'Atlassian',
     apps: 'Apps',
     docs: 'Wiki',
     blog: 'Blog',
+    studio: 'Game Studio',
     about: 'About',
     contact: 'Contact',
     tryApps: 'Try our apps',
+    talkToUs: 'Talk to us',
     toggleMenu: 'Toggle menu',
     mainNavLabel: 'Main',
     homeAriaLabel: (siteName: string) => `${siteName} home`,
   },
   footer: {
     headings: {
+      fronts: 'What we do',
       apps: 'Apps',
       company: 'Company',
       connect: 'Connect',
     },
     links: {
       about: 'About',
+      customDev: 'Custom Development',
+      atlassian: 'Atlassian',
+      marketplaceApps: 'Marketplace apps',
       apps: 'Apps',
       blog: 'Blog',
       docs: 'Wiki',
+      studio: 'Game Studio',
       contact: 'Contact',
       support: 'Support portal',
       marketplace: 'Atlassian Marketplace',

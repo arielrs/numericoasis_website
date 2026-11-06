@@ -52,7 +52,7 @@ const itemList: JsonLdNode = {
 
 <DocsLayout
   title={`${group.label} documentation`}
-  description={`Setup, features, release history and policies for ${group.label}. ${group.blurb}`}
+  description={group.indexDescription ?? `Setup, features, release history and policies for ${group.label}. ${group.blurb}`}
   groups={groups}
   currentApp={group.app}
   graph={{

@@ -18,8 +18,13 @@ const groups = await docGroups();
 // Legal comes out of the card grid. docs.ts already says it is not an app, and
 // with seven cards in a two column grid it was the orphan on row four. It also
 // made a terms page look like a product.
-const appGroups = groups.filter((g) => g.app !== 'legal');
+//
+// The game comes out for the opposite reason: it is a product, but not one of
+// the Marketplace apps this grid is about, and a card with no Marketplace link
+// among six that have one reads as a broken app rather than as a game.
+const appGroups = groups.filter((g) => g.app !== 'legal' && g.app !== 'kindelve');
 const legal = groups.find((g) => g.app === 'legal');
+const game = groups.find((g) => g.app === 'kindelve');
 
 const canonical = new URL('/documentation/', SITE.url).toString();
 
@@ -42,8 +47,8 @@ const itemList: JsonLdNode = {
 ---
 
 <DocsLayout
-  title="Wiki: documentation for every app we publish"
-  description="Setup, features and policies for the Numeric Oasis apps for Jira and Confluence Cloud. Written for the administrator who has to install and defend them."
+  title="Wiki: documentation for our apps and our game"
+  description="Setup, features and policies for the Numeric Oasis apps for Jira and Confluence Cloud, and the full documentation for our game, Kindelve."
   groups={groups}
   graph={{
     breadcrumbs: [{ name: 'Wiki', path: '/documentation/' }],
@@ -60,7 +65,8 @@ const itemList: JsonLdNode = {
     <p class="mt-5 text-lg leading-relaxed text-slate-700">
       How every app works, in full: setup, features, release history and the
       policies your security review will ask for. Every app we publish on the
-      Atlassian Marketplace is documented here.
+      Atlassian Marketplace is documented here, and so is the game our Game
+      Studio is building.
     </p>
   </header>
 
@@ -127,6 +133,50 @@ const itemList: JsonLdNode = {
       );
     }))}
   </div>
+
+  {game && (
+    <section class="mt-8 grid gap-8 rounded-2xl border border-sand-200 bg-paper p-7 sm:p-9 lg:grid-cols-[minmax(0,2fr)_minmax(0,3fr)] lg:gap-12">
+      <div>
+        <p class="eyebrow">Game Studio</p>
+        <h2 class="mt-3 font-display text-2xl font-bold tracking-tight text-brand-900">
+          <a
+            href="/documentation/kindelve/"
+            class="rounded-sm transition duration-200 ease-out-soft hover:text-brand-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sun-500"
+          >{game.label}</a>
+        </h2>
+        <p class="mt-3 text-base leading-relaxed text-slate-600">
+          A creature-collection dungeon descent, in open testing. Send creatures
+          into a rift and decide how deep is deep enough.
+        </p>
+        <div class="mt-6 flex flex-wrap gap-3">
+          <a
+            href={outbound('https://play.kindelve.com', 'documentation', 'doc-index')}
+            class="btn-cta"
+            rel="noopener"
+            target="_blank"
+          >Play Kindelve</a>
+          <a href="/studio/" class="btn-secondary !bg-paper">About the studio</a>
+        </div>
+      </div>
+      <ul class="grid gap-x-8 gap-y-1.5 self-center sm:grid-cols-2">
+        {game.pages.map((page) => (
+          <li>
+            <a
+              href={docHref(page)}
+              class="group/link inline-flex items-center gap-1.5 rounded-sm text-sm text-water-700 transition duration-200 ease-out-soft hover:text-water-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sun-500"
+            >
+              {page.data.title}
+              <svg
+                class="transition duration-200 ease-out-soft group-hover/link:translate-x-0.5"
+                width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"
+              ><path d="M5 12h14M13 5l7 7-7 7" /></svg>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </section>
+  )}
 
   {legal && (
     <section class="mt-8 rounded-2xl border border-sand-200 bg-sand-50 p-7">

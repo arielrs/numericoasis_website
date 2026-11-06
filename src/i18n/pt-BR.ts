@@ -3,32 +3,41 @@ import type { Dictionary } from './en';
 export const ptBR = {
   site: {
     description:
-      'A Numeric Oasis é parceira no Atlassian Marketplace. Construímos apps em Forge para Jira e Confluence Cloud: relatórios de custo e orçamento, governança e conformidade, e o trabalho de administração que mantém um site organizado conforme ele cresce.',
+      'A Numeric Oasis cria software sob medida, migra e administra Jira e Confluence, publica apps em Forge no Atlassian Marketplace e mantém um estúdio de jogos. Entregas pequenas e terminadas, desde 2011.',
     location: 'Canoas, RS, Brasil',
-    slogan: 'Apps que rodam dentro da Atlassian, não ao lado dela.',
+    slogan: 'Software pequeno e terminado, em três frentes.',
   },
   nav: {
+    customDev: 'Sob Medida',
+    atlassian: 'Atlassian',
     apps: 'Apps',
     docs: 'Wiki',
     blog: 'Blog',
+    studio: 'Estúdio de Jogos',
     about: 'Sobre',
     contact: 'Contato',
     tryApps: 'Experimente nossos apps',
+    talkToUs: 'Fale com a gente',
     toggleMenu: 'Abrir menu',
     mainNavLabel: 'Principal',
     homeAriaLabel: (siteName: string) => `Página inicial de ${siteName}`,
   },
   footer: {
     headings: {
+      fronts: 'O que fazemos',
       apps: 'Apps',
       company: 'Empresa',
       connect: 'Conecte-se',
     },
     links: {
       about: 'Sobre',
+      customDev: 'Desenvolvimento sob medida',
+      atlassian: 'Atlassian',
+      marketplaceApps: 'Apps no Marketplace',
       apps: 'Apps',
       blog: 'Blog',
       docs: 'Wiki',
+      studio: 'Estúdio de Jogos',
       contact: 'Contato',
       support: 'Portal de suporte',
       marketplace: 'Atlassian Marketplace',

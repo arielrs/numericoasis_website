@@ -66,11 +66,22 @@ const related = relatedPosts(post, allPosts);
 
 // A post about what Jira work costs has an obvious next step. A post about a
 // conference does not, and pointing one at OnBudget would be a non sequitur.
-const wantsOnBudget = post.data.tags.some(
-  (tag: BlogTag) => tag === 'onbudget' || tag === 'jira-cost-management',
-);
-const cta = wantsOnBudget ? t.post.cta.onbudget : t.post.cta.general;
-const ctaHref = withLocale(lang, wantsOnBudget ? '/onbudget/' : '/apps/');
+//
+// The same reasoning runs across the three fronts (2026-11-06): a post about
+// the game should not end on "we build Atlassian Marketplace apps". The first
+// matching rule wins, so a cost post that also carries a consulting tag still
+// goes to OnBudget, which is the more specific next step.
+const has = (...wanted: BlogTag[]) => post.data.tags.some((tag: BlogTag) => wanted.includes(tag));
+const [cta, ctaPath] = has('onbudget', 'jira-cost-management')
+  ? [t.post.cta.onbudget, '/onbudget/']
+  : has('game-development')
+    ? [t.post.cta.studio, '/studio/']
+    : has('custom-development')
+      ? [t.post.cta.customDev, '/custom-development/']
+      : has('atlassian-consulting', 'cloud-migration')
+        ? [t.post.cta.consulting, '/atlassian/']
+        : [t.post.cta.general, '/apps/'];
+const ctaHref = withLocale(lang, ctaPath);
 
 const postUrl = new URL(withLocale(lang, `/blog/${slug}/`), SITE.url).toString();
 const blogUrl = new URL(withLocale(lang, '/blog/'), SITE.url).toString();

@@ -9,8 +9,8 @@ export const en = {
   },
   hero: {
     eyebrow: 'About Numeric Oasis',
-    headline: 'The team behind the apps.',
-    lede: 'We build and support Forge apps for Jira and Confluence Cloud. Every one runs inside your own Atlassian environment, entirely on Atlassian Forge, and is supported by the people who wrote it.',
+    headline: 'The team behind the software.',
+    lede: 'We build custom software, migrate and extend Jira and Confluence, publish Forge apps on the Atlassian Marketplace, and make a game in our own studio. This page is about who we are and how we build, and, for every app, exactly what it stores.',
   },
   standing: {
     eyebrow: 'Where we stand',

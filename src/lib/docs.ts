@@ -38,7 +38,7 @@ export type DocEntry = CollectionEntry<'docs'>;
  * in the apps collection at all. The order matches the apps collection where
  * they overlap, so OnBudget leads here as it does everywhere else.
  */
-const GROUPS: { app: string; label: string; blurb: string }[] = [
+const GROUPS: { app: string; label: string; blurb: string; indexDescription?: string }[] = [
   {
     app: 'onbudget',
     label: 'OnBudget',
@@ -70,6 +70,15 @@ const GROUPS: { app: string; label: string; blurb: string }[] = [
     blurb: 'Custom field audit for Jira.',
   },
   {
+    app: 'kindelve',
+    label: 'Kindelve',
+    blurb: 'Creature-collection dungeon descent, from Numeric Oasis Game Studio.',
+    // A game is not an app, so the per-group index cannot describe itself as
+    // "setup, features and policies" the way the six Marketplace apps do.
+    indexDescription:
+      'How Kindelve works, in full: the descent, the Kin you send into it, builds, the daily Trial, and what the game stores.',
+  },
+  {
     app: 'legal',
     label: 'Terms and policies',
     blurb: 'The agreements that cover every app we publish.',
@@ -80,6 +89,8 @@ export type DocGroup = {
   app: string;
   label: string;
   blurb: string;
+  /** Overrides the app-shaped default on /documentation/<app>/. */
+  indexDescription?: string;
   pages: DocEntry[];
 };
 

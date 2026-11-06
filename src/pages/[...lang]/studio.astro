@@ -1,0 +1,210 @@
+---
+/**
+ * The Game Studio area, for all three locales.
+ *
+ * Numeric Oasis is an Atlassian Marketplace partner everywhere else on this
+ * site, so this page has one job before it sells anything: say plainly that the
+ * games work is the same company and the same standard, then get out of the way
+ * and let the game speak.
+ *
+ * The game's own documentation is English only and lives in the docs collection
+ * at /documentation/kindelve/, which is why the links to it are absolute rather
+ * than run through withLocale: a /pt-BR/documentation/ path does not exist.
+ */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { SITE } from '../../consts';
+import { localeStaticPaths, withLocale, type Locale } from '../../i18n';
+import { studio } from '../../i18n/pages/studio';
+import { ORG_ID, WEBSITE_ID, type JsonLdNode } from '../../lib/schema';
+import { outbound } from '../../lib/outbound';
+
+export const getStaticPaths = localeStaticPaths;
+
+const { lang } = Astro.props as { lang: Locale };
+const t = studio[lang];
+
+const PLAY_URL = 'https://play.kindelve.com';
+const DOCS_PATH = '/documentation/kindelve/';
+
+/**
+ * The game as a VideoGame node rather than as prose only.
+ *
+ * One id for every locale, deliberately: the three pages describe the same
+ * game, so three @ids would claim three games exist.
+ *
+ * It is the one entity on this page that is not the organisation, and it is
+ * what a search result or an assistant should be able to name: a free browser
+ * game, in five languages, published by Numeric Oasis.
+ */
+const gameNode: JsonLdNode = {
+  '@type': 'VideoGame',
+  '@id': `${SITE.url}/studio/#kindelve`,
+  name: 'Kindelve',
+  description: t.game.tagline,
+  url: PLAY_URL,
+  publisher: { '@id': ORG_ID },
+  isPartOf: { '@id': WEBSITE_ID },
+  gamePlatform: 'Web browser',
+  applicationCategory: 'Game',
+  operatingSystem: 'Any',
+  inLanguage: ['en', 'pt-BR', 'es', 'fr', 'ja'],
+  offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+};
+
+const linkClass =
+  'font-semibold text-water-700 transition hover:text-water-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sun-500';
+---
+
+<BaseLayout
+  title={t.meta.title}
+  description={t.meta.description}
+  metaDescription={t.meta.metaDescription}
+  graph={{
+    breadcrumbs: [{ name: t.meta.crumb, path: '/studio/' }],
+    extraNodes: [gameNode],
+    primaryEntityId: `${SITE.url}/studio/#kindelve`,
+    pageType: 'CollectionPage',
+  }}
+>
+  <!-- HERO -->
+  <section class="border-b border-sand-200 bg-sand-50 py-16 sm:py-24">
+    <div class="container-wide" data-enter>
+      <p class="eyebrow">{t.hero.eyebrow}</p>
+      <h1 class="mt-3 max-w-4xl font-display text-4xl font-bold leading-tight tracking-tight text-brand-900 sm:text-5xl md:text-6xl">
+        {t.hero.headline}
+      </h1>
+      <p class="mt-6 max-w-2xl text-lg leading-relaxed text-slate-600">{t.hero.lede}</p>
+      <div class="mt-9 flex flex-wrap gap-3">
+        <a href={outbound(PLAY_URL, 'studio', 'hero')} class="btn-cta" rel="noopener" target="_blank">
+          {t.game.play}
+        </a>
+        <a href={DOCS_PATH} class="btn-secondary">{t.game.docs}</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY A STUDIO -->
+  <section class="py-16 sm:py-24">
+    <div class="container-wide grid gap-12 lg:grid-cols-[minmax(0,4fr)_minmax(0,6fr)] lg:gap-16">
+      <div>
+        <p class="eyebrow">{t.why.eyebrow}</p>
+        <h2 class="mt-3 font-display text-3xl font-bold tracking-tight text-brand-900 sm:text-4xl">
+          {t.why.headline}
+        </h2>
+      </div>
+      <div>
+        {t.why.paragraphs.map((p) => (
+          <p class="mb-5 text-base leading-relaxed text-slate-600 last:mb-0">{p}</p>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- THE GAME -->
+  <section class="border-y border-sand-200 bg-sand-50 py-16 sm:py-24">
+    <div class="container-wide grid gap-10 lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)] lg:gap-16">
+      <div>
+        <p class="eyebrow">{t.game.eyebrow}</p>
+        <h2 class="mt-3 font-display text-4xl font-bold tracking-tight text-brand-900 sm:text-5xl">
+          {t.game.name}
+        </h2>
+        <p class="mt-4 max-w-xl font-display text-xl leading-snug text-brand-800">{t.game.tagline}</p>
+        {t.game.paragraphs.map((p) => (
+          <p class="mt-5 max-w-2xl text-base leading-relaxed text-slate-600">{p}</p>
+        ))}
+        <div class="mt-8 flex flex-wrap gap-3">
+          <a href={outbound(PLAY_URL, 'studio', 'focus-section')} class="btn-cta" rel="noopener" target="_blank">
+            {t.game.play}
+          </a>
+          <a href={DOCS_PATH} class="btn-secondary !bg-paper">{t.game.docs}</a>
+        </div>
+      </div>
+
+      <div class="self-start rounded-2xl border border-sand-200 bg-paper p-7">
+        <h3 class="font-display text-sm font-semibold tracking-wide text-brand-900 uppercase">
+          {t.game.factsHeading}
+        </h3>
+        <dl class="mt-5 space-y-4">
+          {t.game.facts.map((fact) => (
+            <div class="border-t border-sand-200 pt-4 first:border-t-0 first:pt-0">
+              <dt class="text-xs font-semibold tracking-wide text-slate-500 uppercase">{fact.label}</dt>
+              <dd class="mt-1 text-sm leading-relaxed text-slate-700">{fact.value}</dd>
+            </div>
+          ))}
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRINCIPLES -->
+  <section class="py-16 sm:py-24">
+    <div class="container-wide">
+      <div class="max-w-3xl">
+        <p class="eyebrow">{t.principles.eyebrow}</p>
+        <h2 class="mt-3 font-display text-3xl font-bold tracking-tight text-brand-900 sm:text-4xl">
+          {t.principles.headline}
+        </h2>
+      </div>
+
+      <!-- Hairline-separated items rather than four cards: the content is four
+           claims of equal weight, and four bordered boxes in a grid is the
+           layout that says nobody thought about it. -->
+      <div class="mt-12 grid gap-x-16 gap-y-10 md:grid-cols-2">
+        {t.principles.items.map((item, i) => (
+          <div class="border-t border-sand-200 pt-6">
+            <div class="flex items-baseline gap-3">
+              <!-- sun-800, not the brighter sun-600 the brand uses on chips: at
+                   14px on paper that one measures about 2.6:1. -->
+              <span class="font-display text-sm font-bold text-sun-800 tabular-nums" aria-hidden="true">
+                {String(i + 1).padStart(2, '0')}
+              </span>
+              <h3 class="font-display text-xl font-semibold text-brand-900">{item.title}</h3>
+            </div>
+            <p class="mt-3 text-base leading-relaxed text-slate-600">{item.body}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- WHAT IS NEXT -->
+  <section class="pb-16 sm:pb-24">
+    <div class="container-wide">
+      <div class="rounded-3xl bg-brand-900 p-8 sm:p-12">
+        <div class="max-w-3xl">
+          <p class="text-xs font-semibold tracking-widest text-sun-400 uppercase">{t.next.eyebrow}</p>
+          <h2 class="mt-3 font-display text-2xl font-bold tracking-tight text-white sm:text-3xl">
+            {t.next.headline}
+          </h2>
+        </div>
+        <ol class="mt-8 grid gap-6 lg:grid-cols-3">
+          {t.next.items.map((item, i) => (
+            <li class="border-t border-white/15 pt-5">
+              <span class="font-display text-sm font-bold text-sun-400 tabular-nums" aria-hidden="true">
+                {String(i + 1).padStart(2, '0')}
+              </span>
+              <p class="mt-2 text-sm leading-relaxed text-brand-100">{item}</p>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="border-t border-sand-200 bg-sand-50 py-16 sm:py-20">
+    <div class="container-wide max-w-3xl">
+      <h2 class="font-display text-3xl font-bold tracking-tight text-brand-900 sm:text-4xl">
+        {t.cta.heading}
+      </h2>
+      <p class="mt-4 text-lg leading-relaxed text-slate-600">{t.cta.body}</p>
+      <div class="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3">
+        <a href={outbound(PLAY_URL, 'studio', 'footer-cta')} class="btn-cta" rel="noopener" target="_blank">
+          {t.cta.play}
+        </a>
+        <a href={DOCS_PATH} class={linkClass}>{t.cta.docs}</a>
+        <a href={withLocale(lang, '/contact/')} class={linkClass}>{t.cta.contact}</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

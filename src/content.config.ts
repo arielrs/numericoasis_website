@@ -22,6 +22,12 @@ export const BLOG_TAGS = [
   'atlassian-cloud',
   'how-to',
   'product-updates',
+  // The three fronts (2026-11-06). Each one carries at least four posts on the
+  // day it was added, so none of these ships as a one-post archive.
+  'custom-development',
+  'atlassian-consulting',
+  'cloud-migration',
+  'game-development',
 ] as const;
 
 export type BlogTag = (typeof BLOG_TAGS)[number];

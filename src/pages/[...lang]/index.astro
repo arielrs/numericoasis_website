@@ -2,6 +2,15 @@
 /**
  * The home page for all three locales.
  *
+ * The company leads, then its three fronts, then the app we are pushing.
+ * Until 2026-11-06 this was an app vendor's home page, opening on the six app
+ * icons and closing on the app grid. The company now works on three fronts
+ * (custom development, Atlassian, the Game Studio), so the hero indexes those
+ * instead and the app grid moved to /atlassian/. OnBudget keeps its section:
+ * it is still where the paid attention goes.
+ *
+ * History, kept for the reasoning:
+ *
  * The company leads, then the app we are currently pushing, then the range.
  * An earlier version opened with an OnBudget headline and an OnBudget
  * screenshot, which read as a product landing page with a company footer. The
@@ -12,28 +21,28 @@
 import { Image } from 'astro:assets';
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import AppCard from '../../components/AppCard.astro';
 import CapabilityStrip from '../../components/CapabilityStrip.astro';
 import { outbound } from '../../lib/outbound';
 import HeroCanvas from '../../components/HeroCanvas.astro';
 import PostCard from '../../components/PostCard.astro';
-import { localeStaticPaths, contentSlug, withLocale, type Locale } from '../../i18n';
+import { localeStaticPaths, withLocale, type Locale } from '../../i18n';
 import { home } from '../../i18n/pages/home';
 import { words, wordDelay } from '../../lib/words';
-import { appsIndex } from '../../i18n/pages/apps-index';
 
 export const getStaticPaths = localeStaticPaths;
 
 const { lang } = Astro.props as { lang: Locale };
 const t = home[lang];
-const nav = appsIndex[lang];
 
 const apps = (await getCollection('apps', ({ data }) => data.lang === lang)).sort(
   (a, b) => a.data.order - b.data.order,
 );
 const focusApp = apps.find((a) => a.data.flagship);
-const jira = apps.filter((a) => a.data.hostProducts.includes('jira'));
-const confluence = apps.filter((a) => a.data.hostProducts.includes('confluence'));
+
+/** The three fronts, in the order of the nav and of the copy's `fronts` list. */
+const FRONT_PATHS = ['/custom-development/', '/atlassian/', '/studio/'] as const;
+/** One accent per front, so the hero index and the section markers agree. */
+const FRONT_ACCENTS = ['bg-brand-900', 'bg-water-600', 'bg-sun-500'] as const;
 
 // Two shots, not one. The portfolio grid says "many budgets"; the report view
 // is the only frame on the page that shows what OnBudget actually produces,
@@ -74,10 +83,6 @@ const posts = (
   .sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime())
   .slice(0, 3);
 
-const cardLabels = { builtFor: nav.builtFor, readMore: nav.readMore };
-
-const appHref = (app: (typeof apps)[number]) =>
-  withLocale(lang, app.data.landingPath ?? `/apps/${contentSlug(app.id)}/`);
 
 const arrow =
   '<path d="M5 12h14M13 5l7 7-7 7" />';
@@ -119,7 +124,7 @@ const arrow =
         </h1>
         <p class="mt-6 max-w-2xl text-lg leading-relaxed text-slate-600">{t.hero.lede}</p>
         <div class="mt-9 flex flex-wrap gap-3">
-          <a href={withLocale(lang, '/apps/')} class="btn-cta">
+          <a href={withLocale(lang, '/contact/')} class="btn-cta">
             {t.hero.primary}
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" set:html={arrow} />
           </a>
@@ -127,25 +132,22 @@ const arrow =
         </div>
       </div>
 
-      <!-- The range at a glance. Our own products, so this is not a borrowed
-           trust signal, and it says "app vendor" rather than "one app". -->
-      <nav class="enter" style="--enter-delay: 1650ms" aria-label={t.hero.iconsLabel}>
-        <ul class="grid grid-cols-3 gap-3 sm:gap-4">
-          {apps.map((app, i) => (
-            <li class="animate-float" style={`animation-delay: ${i * 620}ms`}>
+      <!-- The three fronts at a glance. A list of links, not three cards: it is
+           an index of the page and of the site, and it reads as one. -->
+      <nav class="enter" style="--enter-delay: 1650ms" aria-label={t.hero.frontsLabel}>
+        <ul class="divide-y divide-sand-200 overflow-hidden rounded-2xl border border-sand-200 bg-paper">
+          {t.fronts.map((front, i) => (
+            <li>
               <a
-                href={appHref(app)}
-                class="group flex aspect-square items-center justify-center rounded-2xl border border-sand-200 bg-paper p-4 transition duration-200 ease-out-soft hover:-translate-y-1 hover:border-water-400 hover:shadow-[var(--shadow-soft)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sun-500"
+                href={withLocale(lang, FRONT_PATHS[i])}
+                class="group flex items-center gap-4 p-5 transition duration-200 ease-out-soft hover:bg-sand-50 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-sun-500 sm:p-6"
               >
-                {app.data.icon && (
-                  <Image
-                    src={app.data.icon}
-                    alt={app.data.name}
-                    width={96}
-                    class="h-full w-full rounded-xl object-cover"
-                    loading="eager"
-                  />
-                )}
+                <span class:list={['h-10 w-1.5 shrink-0 rounded-full', FRONT_ACCENTS[i]]} aria-hidden="true"></span>
+                <span class="min-w-0 flex-1">
+                  <span class="block font-display text-lg font-semibold text-brand-900">{front.name}</span>
+                  <span class="mt-0.5 block text-sm leading-relaxed text-slate-600">{front.line}</span>
+                </span>
+                <svg class="shrink-0 text-water-700 transition duration-200 ease-out-soft group-hover:translate-x-1" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" set:html={arrow} />
               </a>
             </li>
           ))}
@@ -160,7 +162,58 @@ const arrow =
        what our own Marketplace listings say over the same facts. -->
   <CapabilityStrip items={t.proof.items} label={t.proof.label} reveal />
 
-  <!-- 3. ONBUDGET: the app we lead with, given the room to actually sell.
+  <!-- 3. THE THREE FRONTS: one row each, heading left and substance right,
+       separated by rules. Three identical cards would have been the easy
+       layout and the wrong one: these are not three products on a shelf. -->
+  <section class="py-16 sm:py-24">
+    <div class="container-wide">
+      <div class="reveal max-w-3xl">
+        <p class="eyebrow">{t.detail.eyebrow}</p>
+        <h2 class="mt-3 font-display text-3xl font-bold tracking-tight text-brand-900 sm:text-4xl">
+          {t.detail.headline}
+        </h2>
+        <p class="mt-5 text-lg leading-relaxed text-slate-600">{t.detail.lede}</p>
+      </div>
+
+      <div class="mt-14 space-y-14" data-reveal-group>
+        {t.detail.sections.map((section, i) => (
+          <article class="reveal grid gap-8 border-t border-sand-200 pt-10 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-16">
+            <div>
+              <div class="flex items-center gap-3">
+                <span class:list={['h-2.5 w-2.5 rounded-full', FRONT_ACCENTS[i]]} aria-hidden="true"></span>
+                <p class="eyebrow">{section.eyebrow}</p>
+              </div>
+              <h3 class="mt-3 font-display text-2xl font-bold tracking-tight text-brand-900 sm:text-3xl">
+                {section.headline}
+              </h3>
+            </div>
+            <div>
+              <p class="text-base leading-relaxed text-slate-600">{section.body}</p>
+              <ul class="mt-6 space-y-2.5">
+                {section.points.map((point) => (
+                  <li class="flex gap-3 text-sm leading-relaxed text-slate-700">
+                    <svg class="mt-0.5 shrink-0 text-water-700" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5" /></svg>
+                    {point}
+                  </li>
+                ))}
+              </ul>
+              <p class="mt-7">
+                <a
+                  href={withLocale(lang, FRONT_PATHS[i])}
+                  class="inline-flex items-center gap-1.5 rounded-md text-sm font-semibold text-water-700 transition hover:text-water-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sun-500"
+                >
+                  {section.link}
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" set:html={arrow} />
+                </a>
+              </p>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. ONBUDGET: the app we lead with, given the room to actually sell.
        This used to be one screenshot, two hedged paragraphs and a text link.
        It now shows what a report looks like and closes with a real CTA. -->
   <section class="bg-sand-50 py-16 sm:py-24">
@@ -263,33 +316,6 @@ const arrow =
     </div>
   </section>
 
-  <!-- 4. THE RANGE: grouped by host, so half is skippable at a glance -->
-  <section class="border-y border-sand-200 bg-sand-50 py-16 sm:py-24">
-    <div class="container-wide">
-      <div class="reveal max-w-2xl">
-        <p class="eyebrow">{t.portfolio.eyebrow}</p>
-        <h2 class="mt-3 font-display text-3xl font-bold tracking-tight text-brand-900 sm:text-4xl">
-          {t.portfolio.headline}
-        </h2>
-        <p class="mt-5 text-lg leading-relaxed text-slate-600">{t.portfolio.lede}</p>
-      </div>
-
-      <h3 class="eyebrow mt-12">{nav.groups.jira}</h3>
-      <div class="mt-6 grid gap-6 md:grid-cols-2" data-reveal-group>
-        {jira.map((app) => (
-          <AppCard app={app} lang={lang} labels={cardLabels} wide={app.data.flagship} surface="home" reveal />
-        ))}
-      </div>
-
-      <h3 class="eyebrow mt-14">{nav.groups.confluence}</h3>
-      <div class="mt-6 grid gap-6 md:grid-cols-2" data-reveal-group>
-        {confluence.map((app) => (
-          <AppCard app={app} lang={lang} labels={cardLabels} surface="home" reveal />
-        ))}
-      </div>
-    </div>
-  </section>
-
   <!-- 5. HOW WE WORK: prose, not cards -->
   <section class="py-16 sm:py-24">
     <div class="container-wide grid gap-12 lg:grid-cols-[minmax(0,4fr)_minmax(0,6fr)] lg:gap-16">
@@ -353,8 +379,8 @@ const arrow =
           </h2>
           <p class="mt-4 text-lg leading-relaxed text-brand-100">{t.cta.body}</p>
           <div class="mt-8 flex flex-wrap gap-3">
-            <a href={withLocale(lang, '/apps/')} class="btn-cta">{t.cta.primary}</a>
-            <a href={withLocale(lang, '/contact/')} class="btn-secondary !bg-paper">{t.cta.secondary}</a>
+            <a href={withLocale(lang, '/contact/')} class="btn-cta">{t.cta.primary}</a>
+            <a href={withLocale(lang, '/apps/')} class="btn-secondary !bg-paper">{t.cta.secondary}</a>
           </div>
         </div>
       </div>

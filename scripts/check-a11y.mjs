@@ -63,6 +63,17 @@ const PAGES = [
   '/pt-BR/privacy/',
   '/pt-BR/onbudget/',
   '/es/apps/atelier/',
+  // The Game Studio page: a shape of its own, with a definition list, a dark
+  // band and numbered items, and a locale whose copy runs longer.
+  '/studio/',
+  '/pt-BR/studio/',
+  // The three fronts (2026-11-06): two new page shapes, and the longest
+  // translated headline of the set.
+  '/custom-development/',
+  '/atlassian/',
+  '/es/atlassian/',
+  // A post with an engraved hero: a different image treatment on the post shape.
+  '/blog/proving-a-leaderboard-score-by-replay/',
   '/404.html',
 ];
 
