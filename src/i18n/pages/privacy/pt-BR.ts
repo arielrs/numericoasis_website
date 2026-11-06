@@ -15,14 +15,18 @@ export const ptBR = {
     lede: 'Resumo: nenhuma conta, nenhum formulário, nenhum perfil. Analytics sem cookies sempre, e medição de anúncios sob o seu controle.',
   },
   updated: 'Última atualização',
-  updatedDate: '2026-09-01',
+  updatedDate: '2026-11-06',
   scope: {
     heading: 'O que esta política cobre',
-    body: 'Esta política cobre o numericoasis.com, o site que você está lendo. Ela não cobre o que os nossos apps fazem dentro do seu site Atlassian. Cada app guarda coisas diferentes e é avaliado separadamente, então cada um publica a sua própria política de privacidade.',
+    body: 'Esta política cobre o numericoasis.com, o site que você está lendo. Ela não cobre o que os nossos apps fazem dentro do seu site Atlassian. Cada app guarda coisas diferentes e é avaliado separadamente, então cada um publica a sua própria política de privacidade. Kindelve, o nosso jogo, também tem a sua, em play.kindelve.com/privacy/pt-BR/.',
     linkLabel: 'Políticas de privacidade dos apps',
     linkHref: '/documentation/',
   },
   sections: [
+    {
+      heading: 'Quem é o responsável',
+      body: 'Este site é mantido pela Numeric Oasis, nome fantasia da A&S Consultoria e Tecnologia Ltda, sociedade inscrita no CNPJ sob o nº 47.129.177/0001-56, com sede em Canoas, Rio Grande do Sul. É essa empresa que decide o que acontece com os poucos dados que este site envolve. Escreva para contact@numericoasis.com sobre qualquer um deles.',
+    },
     {
       heading: 'Não pedimos nada a você',
       body: 'Não há conta para criar, newsletter para assinar nem formulário de contato. O site é um conjunto de arquivos estáticos. Se quiser falar com a gente, você manda um e-mail ou abre um chamado, e nos dois casos é você que decide o que contar.',

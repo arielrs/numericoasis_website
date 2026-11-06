@@ -8,11 +8,11 @@ sourcePageId: "493420545"
 sourceTitle: "Terms of Service"
 ---
 
-**Terms of Service**, *Last Updated: 2026-02-11*
+**Terms of Service**, *Last Updated: 2026-11-06*
 
 ## 1. Acceptance of Terms
 
-By installing, accessing, or using any application ("App") developed and published by Numeric Oasis Ltda. ("Numeric Oasis", "we", "us", or "our") through the Atlassian Marketplace, you ("Customer", "you", or "your") agree to be bound by these Terms of Service ("Terms"). If you are accepting these Terms on behalf of an organization, you represent and warrant that you have the authority to bind that organization.
+By installing, accessing, or using any application ("App") developed and published by A&S Consultoria e Tecnologia Ltda, a company registered in Brazil under CNPJ 47.129.177/0001-56 and trading as Numeric Oasis ("Numeric Oasis", "we", "us", or "our") through the Atlassian Marketplace, you ("Customer", "you", or "your") agree to be bound by these Terms of Service ("Terms"). If you are accepting these Terms on behalf of an organization, you represent and warrant that you have the authority to bind that organization.
 
 If you do not agree to these Terms, do not install or use the App.
 
@@ -118,7 +118,7 @@ Any third-party claim resulting from your use of the App.
 
 These Terms shall be governed by and construed in accordance with the laws of the Federative Republic of Brazil, without regard to its conflict of laws provisions.
 
-Any disputes arising out of or in connection with these Terms shall be submitted to the exclusive jurisdiction of the courts of the city where Numeric Oasis Ltda. is registered, Brazil, unless otherwise required by mandatory consumer protection law applicable to the Customer's jurisdiction.
+Any disputes arising out of or in connection with these Terms shall be submitted to the exclusive jurisdiction of the courts of Canoas, Rio Grande do Sul, Brazil, where A&S Consultoria e Tecnologia Ltda is registered, unless otherwise required by mandatory consumer protection law applicable to the Customer's jurisdiction.
 
 ## 14. Modifications to These Terms
 
@@ -138,7 +138,7 @@ These Terms, together with any applicable Service Level Agreement and the Atlass
 
 For questions, concerns, or notices regarding these Terms, please contact:
 
-**Numeric Oasis Ltda.** Email: [contact@numericoasis.com](mailto:contact@numericoasis.com) Support Portal: [https://numericoasis.atlassian.net/servicedesk/customer/portal/39](https://numericoasis.atlassian.net/servicedesk/customer/portal/39)
+**A&S Consultoria e Tecnologia Ltda (Numeric Oasis)**, CNPJ 47.129.177/0001-56, Canoas, RS, Brazil. Email: [contact@numericoasis.com](mailto:contact@numericoasis.com) Support Portal: [https://numericoasis.atlassian.net/servicedesk/customer/portal/39](https://numericoasis.atlassian.net/servicedesk/customer/portal/39)
 
 ---
 
