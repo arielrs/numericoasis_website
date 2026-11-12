@@ -77,5 +77,6 @@ export const ptBR = {
     play: 'Jogar Kindelve',
     docs: 'Ler a documentação',
     contact: 'Falar com o estúdio',
+    support: 'Ajuda com um jogo',
   },
 } as const satisfies StudioCopy;

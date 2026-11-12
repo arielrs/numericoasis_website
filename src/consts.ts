@@ -20,6 +20,12 @@ export const SITE = {
     'Numeric Oasis builds custom software, migrates and runs Jira and Confluence, publishes Forge apps on the Atlassian Marketplace, and runs a game studio. From Canoas, Brazil, since 2011.',
   email: 'contact@numericoasis.com',
   supportUrl: 'https://numericoasis.atlassian.net/servicedesk/customer/portal/39',
+  /**
+   * Players, not Marketplace customers. The games desk is its own portal so a
+   * bug in Kindelve does not land in the same queue as a Forge app incident,
+   * and it asks which game the request is about on every form.
+   */
+  gameSupportUrl: 'https://numericoasis.atlassian.net/servicedesk/customer/portal/105',
   marketplaceUrl: 'https://marketplace.atlassian.com/vendors/1064627585/numeric-oasis',
   twitter: '',
   linkedin: 'https://www.linkedin.com/company/numeric-oasis/',

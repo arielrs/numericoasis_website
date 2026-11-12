@@ -203,6 +203,17 @@ const linkClass =
           {t.cta.play}
         </a>
         <a href={DOCS_PATH} class={linkClass}>{t.cta.docs}</a>
+        <!-- The players' desk, not the Marketplace one: it asks which game the
+             request is about, and it is where a bug, a purchase or a lost save
+             goes. English only for now, which the portal says on arrival. -->
+        <a
+          href={outbound(SITE.gameSupportUrl, 'studio', 'support')}
+          class={linkClass}
+          rel="noopener"
+          target="_blank"
+        >
+          {t.cta.support}
+        </a>
         <a href={withLocale(lang, '/contact/')} class={linkClass}>{t.cta.contact}</a>
       </div>
     </div>

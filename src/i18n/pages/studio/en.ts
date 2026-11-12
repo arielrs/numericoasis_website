@@ -75,6 +75,7 @@ export const en = {
     play: 'Play Kindelve',
     docs: 'Read the documentation',
     contact: 'Talk to the studio',
+    support: 'Get help with a game',
   },
 } as const;
 
