@@ -26,14 +26,18 @@ export const en = {
     tagline: 'Pour creatures into a rift and decide how deep is deep enough.',
     paragraphs: [
       'You are the Warden of a rift in the ground. You send creatures down it, they fight their way deeper on their own, and you decide what goes down, what it carries, and when to stop. A delve lasts minutes. What it leaves behind lasts for weeks.',
-      'Underneath, there are around nine hundred creatures to meet, lines that evolve as the deep rewrites them, twenty-two keystones that change what a creature is doing rather than how much of it, and a daily Trial where every Warden descends into the same deep and the board is settled by proof rather than by trust.',
+      'Underneath, there are around nine hundred creatures to meet, lines that evolve as the deep rewrites them, twenty-seven keystones that change what a creature is doing rather than how much of it, and a daily Trial where every Warden descends into the same deep and the board is settled by proof rather than by trust.',
     ],
     factsHeading: 'At a glance',
     facts: [
       { label: 'Where', value: 'Any modern browser, phone or desktop. Nothing to install' },
       { label: 'Status', value: 'Open testing, updated most weeks' },
       { label: 'Languages', value: 'English, Portuguese, Spanish, French, Japanese' },
-      { label: 'Price', value: 'Free, with no advertising and nothing to buy' },
+      {
+        label: 'Saves',
+        value: 'Play without an account, or sign in by email link or Google to keep one game on every device',
+      },
+      { label: 'Price', value: 'Free to play, with no ads. Purchases save time or change looks, never power' },
     ],
     play: 'Play Kindelve',
     docs: 'Read the documentation',
@@ -48,7 +52,7 @@ export const en = {
       },
       {
         title: 'Money buys time and vanity, never power',
-        body: 'Nothing can be bought today. When something can, it will shorten a road you could already walk, and it will never be a road a paying player gets and you do not. The rule is checked by a test, not kept in a document.',
+        body: 'The shop sells time and looks: a shortcut down a road you could already walk, or a new look for the game. It never sells a road a paying player gets and you do not, and almost everything in it can also be bought with echoes, which you earn by playing. The rule is checked by a test, not kept in a document.',
       },
       {
         title: 'Built for a mid-range phone',
@@ -62,11 +66,11 @@ export const en = {
   },
   next: {
     eyebrow: 'What is next',
-    headline: 'Being built now.',
+    headline: 'Coming next.',
     items: [
-      'One account and one save across every device, with an email link or Google sign-in, and a name for your Warden. Your current save is adopted rather than replaced.',
-      'A server that holds progress and proves a delve by replaying it, so a lost browser stops costing a month and a ladder is worth trusting.',
+      'Seasons, the first from 16 November 2026: eight weeks with four goals beside the game, all optional, and nothing taken back when a season ends.',
       'Mobile apps, then Steam, from the same build. The game is written once and each platform is a thin shell over it.',
+      'One account everywhere: the account you sign in with in the browser today is the one the apps and Steam will open.',
     ],
   },
   cta: {

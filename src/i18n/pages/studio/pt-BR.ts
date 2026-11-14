@@ -28,14 +28,18 @@ export const ptBR = {
     tagline: 'Despeje criaturas em uma fenda e decida o quanto fundo é fundo o suficiente.',
     paragraphs: [
       'Você é o Warden de uma fenda no chão. Você manda criaturas para baixo, elas lutam sozinhas para descer mais, e você decide o que desce, o que ele leva e quando parar. Uma descida dura minutos. O que ela deixa para trás dura semanas.',
-      'Por baixo disso há cerca de novecentas criaturas para conhecer, linhagens que evoluem conforme a profundeza as reescreve, vinte e duas keystones que mudam o que a criatura está fazendo em vez de quanto ela faz, e um Trial diário em que todo Warden desce na mesma profundeza e o quadro é resolvido por prova, não por confiança.',
+      'Por baixo disso há cerca de novecentas criaturas para conhecer, linhagens que evoluem conforme a profundeza as reescreve, vinte e sete keystones que mudam o que a criatura está fazendo em vez de quanto ela faz, e um Trial diário em que todo Warden desce na mesma profundeza e o quadro é resolvido por prova, não por confiança.',
     ],
     factsHeading: 'Em resumo',
     facts: [
       { label: 'Onde', value: 'Qualquer navegador atual, celular ou computador. Nada para instalar' },
       { label: 'Situação', value: 'Teste aberto, com novidades quase toda semana' },
       { label: 'Idiomas', value: 'Inglês, português, espanhol, francês e japonês' },
-      { label: 'Preço', value: 'De graça, sem publicidade e sem nada para comprar' },
+      {
+        label: 'Progresso',
+        value: 'Jogue sem conta, ou entre por link de e-mail ou pelo Google para ter o mesmo jogo em todos os aparelhos',
+      },
+      { label: 'Preço', value: 'De graça, sem publicidade. O que se compra poupa tempo ou muda a aparência, nunca dá poder' },
     ],
     play: 'Jogar Kindelve',
     docs: 'Ler a documentação',
@@ -50,7 +54,7 @@ export const ptBR = {
       },
       {
         title: 'Dinheiro compra tempo e vaidade, nunca poder',
-        body: 'Hoje não há nada para comprar. Quando houver, vai encurtar um caminho que você já podia andar, e nunca vai ser um caminho que só quem paga recebe. A regra é verificada por um teste, não guardada em um documento.',
+        body: 'A loja vende tempo e aparência: um atalho num caminho que você já podia andar, ou um visual novo para o jogo. Ela nunca vende um caminho que só quem paga recebe, e quase tudo nela também pode ser comprado com ecos, que você ganha jogando. A regra é verificada por um teste, não guardada em um documento.',
       },
       {
         title: 'Feito para um celular intermediário',
@@ -64,11 +68,11 @@ export const ptBR = {
   },
   next: {
     eyebrow: 'O que vem agora',
-    headline: 'Sendo construído agora.',
+    headline: 'Vem a seguir.',
     items: [
-      'Uma conta e um save em todos os aparelhos, com entrada por link de e-mail ou pelo Google, e um nome para o seu Warden. O save que você já tem é adotado, não substituído.',
-      'Um servidor que guarda o progresso e prova uma descida rodando ela de novo, para que um navegador perdido pare de custar um mês e um ranking valha a confiança.',
+      'Temporadas, a primeira a partir de 16 de novembro de 2026: oito semanas com quatro metas ao lado do jogo, todas opcionais, e nada é tirado de volta quando uma temporada acaba.',
       'Aplicativos para celular e depois Steam, a partir da mesma versão. O jogo é escrito uma vez e cada plataforma é uma casca fina em volta dele.',
+      'Uma conta em todo lugar: a conta com que você entra no navegador hoje é a mesma que os aplicativos e a Steam vão abrir.',
     ],
   },
   cta: {
