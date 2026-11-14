@@ -86,6 +86,10 @@ const xDefaultHref = new URL(urls[DEFAULT_LOCALE], Astro.site).toString();
     content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1"
   />
 )}
+<!-- Google Search Console's proof that the site is ours: the property
+     https://numericoasis.com/, under contact@numericoasis.com, added
+     2026-11-14. Keep it, or the property stops being verified. -->
+<meta name="google-site-verification" content="Il6aOH81lsMuFra0DpL-00cwfhEeRMSIZnggn3ZOc7w" />
 
 <meta property="og:type" content={article ? 'article' : 'website'} />
 <meta property="og:title" content={fullTitle} />
