@@ -2,14 +2,14 @@
 lang: en
 translationKey: configuration-monitor
 name: Configuration Monitor
-tagline: A project audit log for Jira. See what changed, when, and who did it.
-description: Configuration Monitor gives Jira project administrators full visibility into their project configuration. Thirteen sections tracked automatically, including JSM queues and request types, with hourly syncing, change attribution, and CSV export. No escalation to Site Admin needed.
+tagline: "A configuration audit log for every Jira space. See what changed, when, and who did it."
+description: "Configuration Monitor is a Jira Cloud app that keeps a configuration audit log inside every space. It takes an hourly snapshot of 13 configuration sections, from permission schemes and workflows to sprints and Jira Service Management queues, and shows space admins what changed, when, and who did it, with before and after values and CSV export."
 listingName: "Configuration Monitor - Project Audit Log for Jira"
-metaTitle: 'Configuration Monitor: project audit log for Jira'
-descriptor: "Project audit log for Jira"
-metaDescription: "See what changed in a Jira project, when, and who did it. Configuration Monitor keeps a searchable audit log with a one year retention window."
-version: "4.0.0"
-dateModified: 2026-04-07
+metaTitle: "Jira audit log for space configuration changes"
+descriptor: "Configuration audit log for Jira spaces"
+metaDescription: "See who changed a Jira space's permissions, workflows, screens or sprints, and what each setting was before, right in space settings. Try it free."
+version: "4.2.0"
+dateModified: 2026-09-25
 marketplaceUrl: https://marketplace.atlassian.com/apps/3948220256/configuration-monitor-project-audit-log-for-jira
 documentationUrl: /documentation/configuration-monitor/overview/
 supportUrl: https://numericoasis.atlassian.net/servicedesk/customer/portal/39
@@ -17,48 +17,147 @@ products: ["jira", "jsm"]
 hostProducts: ["jira"]
 order: 4
 icon: ../../../assets/logos/configuration-monitor.jpg
+ogImage: ../../../assets/og/configuration-monitor.jpg
 priceModel: paid
 storesPersonalData: true
-dataStatement: >-
-  An audit log that does not name who made the change is not an audit log, so Configuration Monitor
-  records the account behind each configuration change alongside the before and after values. That
-  attribution is the personal data it holds. It is kept for one year and then purged automatically,
-  and site admins get a GDPR panel for export and anonymisation requests. Everything runs inside
-  Atlassian, and nothing is sent anywhere else.
+dataStatement: "An audit log that does not say who made a change is not much of an audit log, so Configuration Monitor records the Atlassian account ID and display name of the person behind each configuration change, and of anyone who runs a manual sync. That is the personal data it holds: no email addresses, no IP addresses and no work item content. Records are kept for one year and then purged automatically, site admins handle export and anonymization requests from a GDPR Admin Panel, and everything stays in Forge storage on Atlassian's infrastructure."
+answerFirst: "Jira's built-in audit log sits under Settings, then System, and only people with the Administer Jira global permission can open it. Configuration Monitor adds a configuration audit log to every space's settings, so space admins see what changed in permissions, workflows, screens, roles, sprints and eight more sections, when, and who did it, with before and after values."
 audiences:
-  - Project Administrators
-  - Jira Site Administrators
-  - Compliance and Audit Teams
-  - Operations and Platform Teams
+  - "Space admins"
+  - "Jira site admins"
+  - "Compliance and audit teams"
+  - "Platform and operations teams"
+problem:
+  heading: "Something changed in your space, and the record is in a log you cannot open."
+  body: "A transition disappears, notifications stop, a group loses access. Jira does log configuration changes, but its audit log is a site-wide view for people with the Administer Jira global permission. The space admin who owns the fallout files a ticket, waits for someone who can look, and then works out which of the site's events belong to their space."
+  questions:
+    - "Who changed our permission scheme, and when?"
+    - "What did this workflow look like before the change?"
+    - "Why did our notifications stop on Tuesday?"
 valueProps:
-  - title: Stop filing tickets to find what changed
-    body: Project Admins get full change visibility right inside their project settings. No Site Admin needed.
+  - title: "Space admins answer it themselves"
+    body: "The change log sits in each space's settings sidebar. Any space admin can see who changed what in their space, without the Administer Jira permission and without a ticket to a site admin."
     icon: "🔎"
-  - title: Cover every setting that matters
-    body: 13 sections tracked automatically, including permissions, workflows, screens, JSM queues and request types, and sprints.
+  - title: "Before and after, for every change"
+    body: "Each entry shows the section, the type of change, the entity, the old and new values, and who made it, so you know exactly what to put back."
     icon: "📋"
-  - title: Audit ready in one click
-    body: CSV export with before and after values, change attribution, and a full year of retained history.
+  - title: "Thirteen sections, checked every hour"
+    body: "Permissions, notifications, workflows, screens, work item security, roles, work types, components, versions, general settings, sprints, and JSM queues and request types, snapshotted every hour or on demand."
     icon: "📊"
+steps:
+  - title: "A site admin installs it from the Marketplace"
+    body: "Configuration Monitor is a Forge app, installed from the Atlassian Marketplace. On install it takes a first snapshot of each space's configuration, and that snapshot becomes the baseline later changes are compared against."
+  - title: "It compares snapshots every hour"
+    body: "Every hour a new snapshot is compared with the last one, and each addition, removal and modification is recorded with its before and after values. Each change is then matched against Jira's audit log to find who made it. Space admins can also select Refresh Now."
+  - title: "Open the space settings and filter"
+    body: "Space admins open Configuration Monitor from the space settings sidebar, filter by section, date range or change type, and export the filtered changes as CSV for a review or an auditor."
+featureGroups:
+  - name: "What it tracks"
+    blurb: "Thirteen sections, adapted to the type of space."
+    items:
+      - "Permission scheme and individual permission grants"
+      - "Workflow scheme, statuses, transitions and transition rules"
+      - "Screen schemes, notification rules and work item security levels"
+      - "Role membership, work types, components and versions"
+      - "Space name, description, lead, default assignee and category"
+      - "Sprints on Scrum boards, plus JSM queues and request types"
+  - name: "Who made the change"
+    blurb: "Attribution comes from matching each change against Jira's own audit log."
+    items:
+      - "The account behind each change, linked to its Jira profile"
+      - "Every contributor listed when several admins changed one setting"
+      - "Lead changes compared by account, so a renamed user is not a change"
+      - "A sync log of scheduled and manual syncs, with empty syncs hidden"
+  - name: "Find and export"
+    blurb: "Filters and counts cover the whole history, not only the page on screen."
+    items:
+      - "Filter by section, date range, or Added, Removed and Modified"
+      - "Select the Total, Added, Removed or Modified count to filter"
+      - "25, 50 or 100 changes per page"
+      - "CSV export with date, section, entity, changed by, and before and after values"
+      - "Links to the matching Jira configuration page, opened in a new tab"
+  - name: "Privacy controls for site admins"
+    blurb: "A GDPR Admin Panel that works across every tracked space."
+    items:
+      - "Export one person's change records as CSV, with space context"
+      - "Anonymize a person's earlier records while new changes stay attributed"
+      - "An audit trail of every export and anonymization, filterable by action"
+      - "Records older than one year purged automatically"
+comparison:
+  heading: "Jira's built-in audit log vs Configuration Monitor"
+  intro: "Jira Cloud already logs configuration changes across the whole site, including custom fields, plans and global permissions that no single space owns. For a Jira admin reviewing the site, it is the right place to look. Configuration Monitor works one level down: a change history inside each space, for the people who run that space."
+  nativeLabel: "Jira's built-in audit log"
+  rows:
+    - need: "Where to find it"
+      native: "Settings, then System, then Audit Log, in Jira's admin settings."
+      app: "The settings sidebar of every space."
+    - need: "Who can open it"
+      native: "Only people with the Administer Jira global permission. It isn't available if all of the site's Jira Cloud apps are on the Free plan."
+      app: "Any admin of the space, for that space, plus site admins. The GDPR Admin Panel is for site admins only."
+    - need: "What it records"
+      native: "Site-wide configuration events: spaces, permission, workflow, notification and screen schemes, custom fields, plans, sprints, work types, field schemes and deleted work items."
+      app: "Thirteen sections of one space's configuration, including role membership, components, versions, work item security, and JSM queues and request types."
+    - need: "Who made each change"
+      native: "Each event has an author, though Atlassian notes the username can be missing for some user management changes."
+      app: "Matched from Jira's audit log, with every contributor listed when several admins changed one setting. Bulk and multi-space scheme edits may stay unattributed."
+    - need: "How long history is kept"
+      native: "A Jira admin chooses the retention period in Audit Log Settings."
+      app: "One year, then purged automatically, with up to 1,000 change records per space."
+    - need: "Filtering and export"
+      native: "Search and filter on screen, with no sorting. CSV export of up to 100,000 events, which includes all events even when the screen is filtered. Also available through the REST API."
+      app: "Filter by section, date range and change type. The CSV export contains the filtered changes, with before and after values."
 keyFeatures:
-  - 13 configuration sections tracked
-  - Hourly automatic syncing
-  - Change attribution via audit log
-  - CSV export with before and after values
-  - JSM queues and request types
-  - Sprint tracking on Scrum boards
-  - 1 year retention with auto purge
-  - GDPR Admin Panel for site admins
+  - "13 configuration sections tracked"
+  - "Hourly snapshots, plus Refresh Now"
+  - "Change attribution from Jira's audit log"
+  - "Before and after values"
+  - "CSV export of filtered changes"
+  - "JSM queues and request types"
+  - "Sprint history on Scrum boards"
+  - "One year retention, purged automatically"
+  - "GDPR Admin Panel for site admins"
 trustSignals:
-  - Audit ready in one export
-  - GDPR ready
-  - Who changed what, and when
-  - Built on Atlassian Forge
+  - "Audit ready in one export"
+  - "GDPR ready"
+  - "Who changed what, and when"
+  - "Built on Atlassian Forge"
+useCases:
+  - persona: "Space admin"
+    job: "Work out why a transition disappeared from the space's workflow overnight."
+    outcome: "The Modified entry under Workflows, with the old and new transitions and the admin who made the change."
+  - persona: "Compliance lead"
+    job: "Show an auditor who changed access to a regulated space during the quarter."
+    outcome: "A CSV of Permissions and Roles changes for the date range, with names, account IDs and before and after values."
+  - persona: "Jira site admin"
+    job: "Stop fielding \"who changed this?\" tickets from every space on the site."
+    outcome: "Space admins check their own change log, and GDPR requests are handled from one panel."
+faq:
+  - q: "Can space admins view the Jira audit log?"
+    a: "Not unless they also hold the Administer Jira global permission, which Jira's built-in audit log requires. Configuration Monitor puts a change log in each space's settings sidebar instead, so any admin of a space can see what changed there, when, and who made the change, without a ticket to a site admin. People who cannot open the space settings do not see it."
+  - q: "What configuration changes does Configuration Monitor track?"
+    a: "Thirteen sections of each space's configuration: permissions, notifications, workflows, screens, work item security, roles, work types, components, versions, general settings such as name and lead, sprints on Scrum boards, and Jira Service Management queues and request types. Team-managed spaces skip components and versions, Kanban boards skip sprints, and field changes on team-managed work type screens cannot be tracked. It reads configuration, not the content of work items."
+  - q: "How does Configuration Monitor know who changed a setting?"
+    a: "It matches each detected change against Jira's own audit log records, by entity name and by section. When several admins changed the same setting in one period, all of them are listed. Some changes may stay unattributed: bulk operations, scheme edits that affect several spaces at once, and changes made through third-party integrations may not leave a matching audit record."
+  - q: "Does the Atlassian Guard audit log show Jira configuration changes?"
+    a: "It can, at organization level. With Atlassian Guard, organization admins get an audit log in Atlassian Administration that keeps activity for 365 days. Jira's app admin log, which tracks configuration and permission changes, appears there with Guard Standard plus Jira Premium, with Jira Enterprise, or with Guard Premium. It is built for organization, unit and site admins. Configuration Monitor answers the same question inside one space, for that space's admins."
+  - q: "What personal data does it store, and how are GDPR requests handled?"
+    a: "The only personal data it keeps is Atlassian account IDs and display names, recorded for change attribution and for manual syncs. Site admins handle requests in the GDPR Admin Panel: export a person's records as CSV for a right of access request, or anonymize them for erasure. Anonymizing replaces the display name with \"Anonymized User\" in every earlier record and keeps the account ID for audit purposes. Changes the person makes afterwards are attributed normally."
+  - q: "How long does Configuration Monitor keep change history?"
+    a: "One year. Change records older than a year are purged automatically, and each space keeps at most 1,000 change records. History starts at installation, because the first snapshot is the baseline, so changes made before you install it do not appear. A space's history can also be cleared from the app, and all stored data is deleted when the app is uninstalled."
+  - q: "Where does Configuration Monitor store its data?"
+    a: "In Forge storage on Atlassian's own infrastructure. The app is built on Atlassian Forge and is eligible for the Runs on Atlassian program, so its data stays on the Atlassian platform and Atlassian is its only sub-processor. Forge encrypts the data at rest and in transit. The app reads configuration such as schemes, workflows, roles and sprints, not the content of your work items."
+  - q: "How do I install Configuration Monitor, and what does it cost?"
+    a: "A Jira site admin installs it from the Atlassian Marketplace, where the current pricing and a free trial are listed. It is a Jira Cloud app with no Data Center version, and it works in company-managed and team-managed spaces in Jira and Jira Service Management. The first snapshot runs on install and hourly syncs start on their own, so changes appear within an hour."
+relatedPosts:
+  - "jira-cloud-permission-audit"
+  - "jira-sandboxes-and-release-tracks"
+  - "after-the-cloud-migration-cleanup"
 screenshots:
-  - image: ../../../assets/screenshots/configuration-monitor/01-change-log.png
-    caption: "Project change log with user attribution, date filters, and section grouping."
-  - image: ../../../assets/screenshots/configuration-monitor/02-sprint-audit.png
-    caption: "Sprint audit trail showing creation, modification, and removal events with timestamps and user attribution."
-  - image: ../../../assets/screenshots/configuration-monitor/03-gdpr-panel.png
-    caption: "Admin panel with GDPR user data export, anonymization controls, and the admin action audit trail."
+  - image: ../../../assets/screenshots/configuration-monitor/cm-01-change-log.webp
+    caption: "The change log for one Jira space: totals for added, removed and modified settings, filters by type and section, and each change with its time and the person who made it."
+    slot: hero
+  - image: ../../../assets/screenshots/configuration-monitor/cm-02-before-after.webp
+    caption: "Show details opens a before and after view of a change, here a new space description. Workflow changes list every transition added or removed."
+  - image: ../../../assets/screenshots/configuration-monitor/cm-03-permissions.webp
+    caption: "Filtered to Permissions: every permission grant added to the space's scheme, with the permission and the role that received it."
 ---

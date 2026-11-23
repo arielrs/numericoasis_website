@@ -2,12 +2,12 @@
 lang: en
 translationKey: atelier
 name: Atelier
-tagline: Page design and content formatting macros for Confluence Cloud.
-description: Atelier is a visual customization toolkit for Confluence Cloud. Eight macros that bring branded colors, 64 patterns, and rich formatting to your pages with no custom CSS or HTML. Per space color palettes, theme presets, font management, and clean PDF and Word export.
+tagline: "Page design and content formatting macros for Confluence Cloud."
+description: "Atelier is a Confluence Cloud app for page design. Eight macros add patterned backgrounds, banners, cards, buttons, info panels, dividers, spacers and colored text, with 64 background patterns and no CSS or HTML. Space admins set brand colors, theme presets and suggested fonts once, and every author picks from them."
 listingName: "Atelier - Page Design & Content Formatting Macros"
-metaTitle: 'Atelier: page design macros for Confluence'
-descriptor: "Page design and formatting macros for Confluence"
-metaDescription: "Layout, callout and formatting macros for Confluence Cloud pages. Build readable, consistent documentation without touching HTML or CSS."
+metaTitle: "Confluence page design: banners and backgrounds"
+descriptor: "Confluence page design: backgrounds, banners and brand colors"
+metaDescription: "Patterned backgrounds, banners, cards and hex colors for Confluence Cloud pages, with a brand palette set once per space. Try Atelier free on the Marketplace."
 version: "2.3.0"
 dateModified: 2026-04-15
 marketplaceUrl: https://marketplace.atlassian.com/apps/2683700690/atelier-page-design-content-formatting-macros
@@ -17,40 +17,155 @@ products: ["confluence"]
 hostProducts: ["confluence"]
 order: 5
 icon: ../../../assets/logos/atelier.png
+ogImage: ../../../assets/og/atelier.jpg
 priceModel: paid
 storesPersonalData: false
+dataStatement: "Atelier keeps each space's design settings (brand colors, theme presets and suggested fonts) and nothing about the content of your pages. The settings sit in encrypted Forge storage inside Atlassian, the app has no external servers, and uninstalling removes them automatically. A page embedded in a Background macro follows each reader's own Confluence permissions."
+
+answerFirst: "Confluence page design starts with the Cloud editor: layouts, panels, header images and text colors. Atelier adds eight macros on top for patterned backgrounds, banners, cards, buttons, callouts, dividers, spacers and colored text in your own colors, plus brand palettes, theme presets and fonts that a space admin sets once for every author."
+
 audiences:
-  - Confluence Authors
-  - Space Administrators
-  - Documentation Teams
-  - Internal Communications
-  - Brand and Design Teams
+  - "Confluence Authors"
+  - "Space Administrators"
+  - "Documentation Teams"
+  - "Internal Communications"
+  - "Brand and Design Teams"
+
+problem:
+  heading: "Confluence gives every page structure. It does not give it your brand."
+  body: "Layouts, panels and a header image make a page tidy. They do not make a launch page, a team homepage or an onboarding guide look like your company. Text colors come from the editor's palette, panels from a set of 20, and each author picks their own, so pages in one space drift apart and the ones meant to be read first look like everything else."
+  questions:
+    - "How do I add a background color to part of a page?"
+    - "Can we use our brand hex colors in Confluence?"
+    - "How do I put a banner at the top of a page?"
+
 valueProps:
-  - title: Turn generic Confluence pages into branded surfaces
-    body: 64 patterns, custom colors, and reusable theme presets, all without writing a single line of CSS.
+  - title: "Designed pages, built in the editor you already use"
+    body: "Pick one of 64 patterns, set up to three colors, type the content and check the live preview. Backgrounds, banners, cards and buttons go on the page like any other macro, with no CSS or HTML to write or maintain."
     icon: "🎨"
-  - title: Eight macros, one consistent look
-    body: Backgrounds, banners, callouts, dividers, and more, designed to play nicely together and export cleanly to PDF and Word.
+  - title: "Your colors, beyond the editor's palette"
+    body: "Type any hex code into the Text Color macro, or pick from up to 50 named brand colors, with opacity, that a space admin saved for every macro."
     icon: "🧩"
-  - title: Curate brand at the space level
-    body: Color palettes, theme presets, and font picks set once by space admins, available to every author.
+  - title: "One brand look across a space"
+    body: "Space admins save brand colors, up to 50 theme presets and up to 30 suggested fonts in space settings. Authors pick from them in each macro's config panel, so pages written by different people still match."
     icon: "🪶"
+
+steps:
+  - title: "Install Atelier from the Atlassian Marketplace"
+    body: "A site or organization admin installs the app from its Marketplace listing, with a free trial to start. The eight Atelier macros then appear in the Confluence macro browser for anyone who can edit a page."
+  - title: "Set the brand once in space settings"
+    body: "A space admin saves named brand colors with hex codes and opacity, theme presets that an author applies in one step, and the fonts to suggest at the top of every font picker. Each space keeps its own set."
+  - title: "Design the page with a live preview"
+    body: "Insert a Background, Banner, Card or Button, pick a pattern and colors, and write the content. The config panel previews the result as you go, and the design carries into PDF and Word exports."
+
+featureGroups:
+  - name: "Sections, headers and cards"
+    blurb: "The macros that shape a page. All eight keep their design in PDF and Word exports."
+    items:
+      - "Background: full sections with patterns, rich text and an embedded page"
+      - "Banner: a decorative header with centered text and a pattern fill"
+      - "Card: a content card with a patterned header and a link"
+      - "Spacer: adjustable whitespace with an optional background"
+  - name: "Text, callouts and buttons"
+    blurb: "The macros that carry the message inside a section."
+    items:
+      - "Text Color: any color from a full palette or a hex code, with smaller sizes for fine print"
+      - "Info Panel: 13 icons, 7 border styles and accent colors"
+      - "Button: a call-to-action link in 4 shapes, with emoji and pattern fills"
+      - "Divider: solid, dashed, dotted, gradient or pattern lines"
+  - name: "64 background patterns"
+    blurb: "Four families, each pattern drawn in up to three custom colors."
+    items:
+      - "Gradients"
+      - "Geometric"
+      - "Organic"
+      - "Technical"
+      - "Live preview in the config panel"
+  - name: "Brand settings per space"
+    blurb: "Set in space settings by a space admin and offered to every author in that space."
+    items:
+      - "Up to 50 named brand colors, with hex codes and opacity"
+      - "Up to 50 theme presets, applied in one step"
+      - "Up to 30 suggested fonts at the top of every font picker"
+      - "A separate palette, preset list and font list for each space"
+
+comparison:
+  heading: "Confluence page design: what the editor does, and what Atelier adds"
+  intro: "The Cloud editor covers more than it used to: layouts of two to five columns, panels in 20 colors, header images, text highlights, a small text size and, on Premium and Enterprise, the Spotlight block. Use those first. Atelier is for the pages that need patterns, your own hex colors and one brand look across a space."
+  nativeLabel: "Confluence Cloud editor"
+  rows:
+    - need: "A background color behind a section"
+      native: "Panels take one of 20 background colors and an emoji. Company Hub sections take a palette or custom background color, but sections exist only in Company Hub, not on pages."
+      app: "Background macro: up to three custom colors over any of 64 patterns, with rich text and an embedded page inside."
+    - need: "A banner at the top of a page"
+      native: "A header image above the title, from Unsplash or your own upload, and an emoji in the title. On Premium and Enterprise, a Spotlight adds a large image, a custom-color background and a button."
+      app: "Banner macro: a decorative header with centered text and a pattern fill, in your brand colors."
+    - need: "Text color and size"
+      native: "Text and highlight colors from the editor palette, and six heading levels. Rolling out now: both colors on the same text, with readability indicators, and a Small text size."
+      app: "Text Color macro: any color from a full palette or a hex code, with smaller sizes for notes, disclaimers and fine print."
+    - need: "Columns and spacing"
+      native: "Layouts with two to five columns, left or right sidebars, and centered, wide or full width. Column widths can be dragged (rolling out). Dividers draw a horizontal line."
+      app: "Leaves columns to Confluence layouts. Divider adds solid, dashed, dotted, gradient or pattern lines, and Spacer adds whitespace with an optional background."
+    - need: "Callouts and calls to action"
+      native: "Info, note, success, warning and error panels, or a custom panel in one of 20 colors with any emoji. Status labels, quotes and expands. Spotlight buttons on Premium and Enterprise."
+      app: "Info Panel with 13 icons, 7 border styles and accent colors. Button with 4 shapes, emoji and pattern fills. Card with a patterned header and a link."
+    - need: "One brand look across a space"
+      native: "Space admins build page templates in space settings, with variables, placeholder text and labels, so new pages start from the same structure."
+      app: "Space admins save up to 50 brand colors, 50 theme presets and 30 suggested fonts in space settings, and authors pick them in every macro."
+
 keyFeatures:
-  - 8 design macros
-  - 64 background patterns
-  - Per space color palettes
-  - Reusable theme presets
-  - Curated suggested fonts
-  - Page embedding with permissions
-  - Clean PDF and Word export
+  - "8 design macros"
+  - "64 background patterns"
+  - "Hex color codes"
+  - "Up to 50 brand colors per space"
+  - "Up to 50 theme presets"
+  - "Up to 30 suggested fonts"
+  - "Page embedding with permissions"
+  - "PDF and Word export"
+
 trustSignals:
-  - Brand control without CSS
-  - Eight design macros in one app
-  - Encrypted storage inside Atlassian
-  - Built on Atlassian Forge
+  - "Brand control without CSS"
+  - "Eight design macros in one app"
+  - "Encrypted storage inside Atlassian"
+  - "Built on Atlassian Forge"
+
+useCases:
+  - persona: "Internal communications lead"
+    job: "Make the company news page look like the rest of the brand."
+    outcome: "A patterned banner, cards and buttons in brand colors, built in the Confluence editor by the person who writes the news."
+  - persona: "Space admin"
+    job: "Keep pages from many authors in one space on brand."
+    outcome: "Brand colors, theme presets and suggested fonts saved once in space settings and offered in every macro."
+  - persona: "Documentation lead"
+    job: "Make notes, warnings and fine print easy to spot in long guides."
+    outcome: "Info panels with icons and border styles, small-print text and dividers between sections, kept in PDF and Word exports."
+
+faq:
+  - q: "How do I add a background color to a section of a Confluence page?"
+    a: "Wrap the section in Atelier's Background macro, choose one of 64 patterns and up to three colors, and write the content inside it with headings, lists, links and emoji. Without an app, the closest built-in option is a panel in one of 20 background colors. Company Hub sections also take a custom background color, but sections are available only in Company Hub, not on regular pages."
+  - q: "How do I add a banner to a Confluence page?"
+    a: "Insert Atelier's Banner macro for a decorative header with centered text and a pattern fill in your brand colors. Confluence also has two built-in options: a header image above the page title, from Unsplash or your own upload, and on Premium and Enterprise plans, a Spotlight block with a large image, a colored background and a button. Atelier's Card and Button macros add links below a banner."
+  - q: "Can I use custom hex colors in Confluence Cloud?"
+    a: "Yes, with Atelier: the Text Color macro accepts any hex code, and a space admin can save up to 50 named brand colors, with hex codes and opacity, for every Atelier macro to offer. In the built-in editor, text and panels take their colors from Confluence's own palettes, while the Spotlight block on Premium and Enterprise accepts custom HEX, RGB or HSL values."
+  - q: "What data does Atelier store, and is it secure?"
+    a: "Atelier stores each space's design settings, meaning brand colors, theme presets and suggested fonts, and nothing about the content of your pages. The app is built on Atlassian Forge and runs inside Atlassian with no external servers, so the settings stay in encrypted Forge storage. Uninstalling removes them automatically, and Atelier holds no personal data."
+  - q: "Can a reader see an embedded page they do not have permission to open?"
+    a: "No. Page embedding in the Background macro follows each reader's own Confluence permissions, so the embedded content appears only for people who can open the source page. Page restrictions and space permissions apply exactly as they do elsewhere in Confluence, and Atelier does not widen anyone's access."
+  - q: "Does Atelier work on Confluence Data Center?"
+    a: "No. Atelier is a Confluence Cloud app built on Atlassian Forge, and its Marketplace listing covers Cloud only. Teams moving from Data Center can rebuild their styled pages with its macros once they are on Cloud, using brand colors, theme presets and fonts set in each space's settings."
+  - q: "How much does Atelier cost, and is there a free trial?"
+    a: "Pricing is on the Atlassian Marketplace listing, and you can start a free trial there before you buy. Atelier is a paid app billed through Atlassian alongside your other Marketplace apps. Use the trial to design one real page, such as a space homepage or a team news page, before you decide."
+  - q: "Who can install Atelier, and how long does setup take?"
+    a: "A site or organization admin installs Atelier from the Atlassian Marketplace, and anyone else can request it from the listing. Authors can add the macros to pages as soon as it is installed. Brand colors, theme presets and suggested fonts are set later by a space admin in space settings, once per space, whenever that space wants a shared look."
+
+relatedPosts:
+  - "confluence-macros-cloud-migration"
+  - "approving-a-marketplace-app-security-review"
+
 screenshots:
   - image: ../../../assets/screenshots/atelier/01-confluence-page.png
     caption: "Confluence page styled with patterned banner, custom background, gradient divider, and content cards."
+    slot: hero
   - image: ../../../assets/screenshots/atelier/02-text-blocks.png
     caption: "Text blocks in custom colors and small font disclaimers, with unlimited color and size options."
   - image: ../../../assets/screenshots/atelier/03-color-palette.png

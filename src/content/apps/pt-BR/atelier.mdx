@@ -2,12 +2,12 @@
 lang: pt-BR
 translationKey: atelier
 name: Atelier
-tagline: Macros de design de página e formatação de conteúdo para o Confluence Cloud.
-description: O Atelier é um kit visual de customização para o Confluence Cloud. Oito macros que trazem cores da marca, 64 padrões e formatação rica para suas páginas, sem CSS ou HTML customizados. Paletas de cor por espaço, predefinições de tema, gerenciamento de fontes e exportação limpa para PDF e Word.
+tagline: "Macros de design de página e formatação de conteúdo para o Confluence Cloud."
+description: "O Atelier é um app do Confluence Cloud para design de páginas. Oito macros acrescentam fundos com padrões, banners, cards, botões, painéis de informação, divisores, espaçadores e texto colorido, com 64 padrões de fundo e sem CSS nem HTML. Os administradores do espaço definem uma vez as cores da marca, as predefinições de tema e as fontes sugeridas, e todo autor escolhe a partir delas."
 listingName: "Atelier - Page Design & Content Formatting Macros"
-metaTitle: 'Atelier: macros de design de página no Confluence'
-descriptor: "Macros de design de página e formatação para o Confluence"
-metaDescription: "Macros de layout, destaque e formatação para páginas do Confluence Cloud. Documentação legível e consistente, sem mexer em HTML ou CSS."
+metaTitle: "Design de páginas no Confluence: banners e fundos"
+descriptor: "Design de páginas no Confluence: fundos, banners e cores da marca"
+metaDescription: "Fundos com padrões, banners, cards e cores hex para páginas do Confluence Cloud, com a paleta da marca por espaço. Teste o Atelier grátis no Marketplace."
 version: "2.3.0"
 dateModified: 2026-04-15
 marketplaceUrl: https://marketplace.atlassian.com/apps/2683700690/atelier-page-design-content-formatting-macros
@@ -17,40 +17,155 @@ products: ["confluence"]
 hostProducts: ["confluence"]
 order: 5
 icon: ../../../assets/logos/atelier.png
+ogImage: ../../../assets/og/atelier.jpg
 priceModel: paid
 storesPersonalData: false
+dataStatement: "O Atelier guarda as configurações de design de cada espaço (cores da marca, predefinições de tema e fontes sugeridas) e nada sobre o conteúdo das suas páginas. Essas configurações ficam no armazenamento criptografado do Forge, dentro da Atlassian, o app não tem servidores externos e, ao desinstalar, elas são removidas automaticamente. Uma página incorporada numa macro Background segue as permissões do Confluence de cada leitor."
+
+answerFirst: "O design de páginas no Confluence começa pelo editor do Cloud: layouts, painéis, imagens de cabeçalho e cores de texto. O Atelier acrescenta oito macros para fundos com padrões, banners, cards, botões, divisores, espaçadores e texto nas suas cores, além de paletas da marca, predefinições de tema e fontes que o administrador do espaço define uma vez para todos."
+
 audiences:
-  - Autores no Confluence
-  - Administradores de espaço
-  - Times de Documentação
-  - Comunicação Interna
-  - Times de Brand e Design
+  - "Autores no Confluence"
+  - "Administradores de espaço"
+  - "Times de documentação"
+  - "Comunicação interna"
+  - "Times de marca e design"
+
+problem:
+  heading: "O Confluence dá estrutura a toda página. Não dá a sua marca."
+  body: "Layouts, painéis e uma imagem de cabeçalho deixam a página organizada. Não fazem uma página de lançamento, a home de um time ou um guia de integração parecer da sua empresa. As cores do texto vêm da paleta do editor, os painéis de um conjunto de 20, e cada autor escolhe as suas, então as páginas de um mesmo espaço vão se distanciando e as que deveriam ser lidas primeiro ficam iguais a todas as outras."
+  questions:
+    - "Como coloco uma cor de fundo em parte de uma página?"
+    - "Dá para usar as cores hex da nossa marca no Confluence?"
+    - "Como coloco um banner no topo da página?"
+
 valueProps:
-  - title: Transforme páginas genéricas do Confluence em superfícies de marca
-    body: 64 padrões, cores customizadas e predefinições de tema reaproveitáveis, sem escrever uma linha de CSS.
+  - title: "Páginas com design, feitas no editor que você já usa"
+    body: "Escolha um dos 64 padrões, defina até três cores, escreva o conteúdo e confira a pré-visualização ao vivo. Fundos, banners, cards e botões entram na página como qualquer outra macro, sem CSS ou HTML para escrever ou manter."
     icon: "🎨"
-  - title: Oito macros, um único visual consistente
-    body: Backgrounds, banners, callouts, dividers e mais, desenhados para combinar entre si e exportar limpos para PDF e Word.
+  - title: "As suas cores, além da paleta do editor"
+    body: "Digite qualquer código hex na macro Text Color ou escolha entre até 50 cores da marca com nome e opacidade, que um administrador do espaço salvou para todas as macros."
     icon: "🧩"
-  - title: Curadoria de marca no nível do espaço
-    body: Paletas de cor, predefinições de tema e escolhas de fonte definidos uma vez pelos administradores do espaço, disponíveis para todo autor.
+  - title: "Um só visual de marca no espaço inteiro"
+    body: "Os administradores do espaço salvam cores da marca, até 50 predefinições de tema e até 30 fontes sugeridas nas configurações do espaço. Os autores escolhem entre elas no painel de configuração de cada macro, e páginas escritas por pessoas diferentes continuam combinando."
     icon: "🪶"
+
+steps:
+  - title: "Instale o Atelier pelo Atlassian Marketplace"
+    body: "Um administrador do site ou da organização instala o app pela página dele no Marketplace, começando com um teste grátis. As oito macros do Atelier passam a aparecer no macro browser do Confluence para quem pode editar uma página."
+  - title: "Defina a marca uma vez nas configurações do espaço"
+    body: "Um administrador do espaço salva cores da marca com nome, código hex e opacidade, predefinições de tema que o autor aplica em um passo e as fontes que aparecem sugeridas no topo de cada seletor de fonte. Cada espaço mantém o seu próprio conjunto."
+  - title: "Monte a página com pré-visualização ao vivo"
+    body: "Insira um Background, Banner, Card ou Button, escolha um padrão e as cores e escreva o conteúdo. O painel de configuração mostra o resultado enquanto você edita, e o design é mantido nas exportações para PDF e Word."
+
+featureGroups:
+  - name: "Seções, cabeçalhos e cards"
+    blurb: "As macros que dão forma à página. As oito mantêm o design nas exportações para PDF e Word."
+    items:
+      - "Background: seções inteiras com padrões, texto formatado e uma página incorporada"
+      - "Banner: cabeçalho decorativo com texto centralizado e preenchimento com padrão"
+      - "Card: card de conteúdo com cabeçalho estampado e um link"
+      - "Spacer: espaço em branco ajustável, com fundo opcional"
+  - name: "Texto, destaques e botões"
+    blurb: "As macros que levam a mensagem dentro de uma seção."
+    items:
+      - "Text Color: qualquer cor de uma paleta completa ou por código hex, com tamanhos menores para letras miúdas"
+      - "Info Panel: 13 ícones, 7 estilos de borda e cores de destaque"
+      - "Button: link de chamada para ação em 4 formatos, com emoji e preenchimento com padrão"
+      - "Divider: linhas sólidas, tracejadas, pontilhadas, em gradiente ou com padrão"
+  - name: "64 padrões de fundo"
+    blurb: "Quatro famílias, cada padrão desenhado em até três cores personalizadas."
+    items:
+      - "Gradients"
+      - "Geometric"
+      - "Organic"
+      - "Technical"
+      - "Pré-visualização ao vivo no painel de configuração"
+  - name: "Configurações de marca por espaço"
+    blurb: "Definidas por um administrador do espaço nas configurações do espaço e oferecidas a todos os autores daquele espaço."
+    items:
+      - "Até 50 cores da marca com nome, código hex e opacidade"
+      - "Até 50 predefinições de tema, aplicadas em um passo"
+      - "Até 30 fontes sugeridas no topo de cada seletor de fonte"
+      - "Paleta, predefinições e fontes próprias para cada espaço"
+
+comparison:
+  heading: "Design de páginas no Confluence: o que o editor faz e o que o Atelier acrescenta"
+  intro: "O editor do Cloud cobre mais do que cobria: layouts de duas a cinco colunas, painéis em 20 cores, imagens de cabeçalho, realce de texto, um tamanho de texto pequeno e, nos planos Premium e Enterprise, o bloco Spotlight. Use esses recursos primeiro. O Atelier é para as páginas que precisam de padrões, das suas próprias cores hex e de um só visual de marca no espaço."
+  nativeLabel: "Editor do Confluence Cloud"
+  rows:
+    - need: "Cor de fundo atrás de uma seção"
+      native: "Painéis aceitam uma de 20 cores de fundo e um emoji. As seções do Company Hub aceitam uma cor da paleta ou personalizada, mas só existem no Company Hub, não em páginas."
+      app: "Macro Background: até três cores personalizadas sobre qualquer um dos 64 padrões, com texto formatado e uma página incorporada dentro."
+    - need: "Um banner no topo da página"
+      native: "Uma imagem de cabeçalho acima do título, do Unsplash ou enviada por você, e um emoji no título. No Premium e no Enterprise, o Spotlight acrescenta uma imagem grande, fundo em cor personalizada e um botão."
+      app: "Macro Banner: cabeçalho decorativo com texto centralizado e preenchimento com padrão, nas cores da sua marca."
+    - need: "Cor e tamanho do texto"
+      native: "Cores de texto e de realce da paleta do editor, e seis níveis de título. Em liberação gradual: as duas cores no mesmo trecho, com indicadores de legibilidade, e um tamanho de texto pequeno."
+      app: "Macro Text Color: qualquer cor de uma paleta completa ou por código hex, com tamanhos menores para notas, avisos legais e letras miúdas."
+    - need: "Colunas e espaçamento"
+      native: "Layouts de duas a cinco colunas, barras laterais à esquerda ou à direita, e largura centralizada, ampla ou total. A largura das colunas pode ser ajustada arrastando o divisor (em liberação gradual). Divisores traçam uma linha horizontal."
+      app: "Deixa as colunas para os layouts do Confluence. O Divider acrescenta linhas sólidas, tracejadas, pontilhadas, em gradiente ou com padrão, e o Spacer acrescenta espaço em branco com fundo opcional."
+    - need: "Destaques e chamadas para ação"
+      native: "Painéis de informação, nota, sucesso, aviso e erro, ou um painel personalizado em uma de 20 cores com qualquer emoji. Status, citações e expansões. Botões do Spotlight no Premium e no Enterprise."
+      app: "Info Panel com 13 ícones, 7 estilos de borda e cores de destaque. Button com 4 formatos, emoji e preenchimento com padrão. Card com cabeçalho estampado e um link."
+    - need: "Um só visual de marca no espaço"
+      native: "Administradores do espaço criam modelos de página nas configurações do espaço, com variáveis, texto de espaço reservado e etiquetas, para que novas páginas comecem da mesma estrutura."
+      app: "Administradores do espaço salvam até 50 cores da marca, 50 predefinições de tema e 30 fontes sugeridas nas configurações do espaço, e os autores as escolhem em todas as macros."
+
 keyFeatures:
-  - 8 macros de design
-  - 64 padrões de fundo
-  - Paletas de cor por espaço
-  - Predefinições de tema reaproveitáveis
-  - Sugestões curadas de fonte
-  - Embed de página com permissões
-  - Exportação limpa para PDF e Word
+  - "8 macros de design"
+  - "64 padrões de fundo"
+  - "Cores em código hex"
+  - "Até 50 cores da marca por espaço"
+  - "Até 50 predefinições de tema"
+  - "Até 30 fontes sugeridas"
+  - "Página incorporada com permissões"
+  - "Exportação para PDF e Word"
+
 trustSignals:
-  - Controle de marca sem CSS
-  - Oito macros de design em um app
-  - Armazenamento criptografado dentro da Atlassian
-  - Construído em Atlassian Forge
+  - "Controle de marca sem CSS"
+  - "Oito macros de design em um app"
+  - "Armazenamento criptografado dentro da Atlassian"
+  - "Construído no Atlassian Forge"
+
+useCases:
+  - persona: "Líder de comunicação interna"
+    job: "Fazer a página de notícias da empresa ter a cara do resto da marca."
+    outcome: "Banner com padrão, cards e botões nas cores da marca, montados no editor do Confluence por quem escreve as notícias."
+  - persona: "Administrador do espaço"
+    job: "Manter dentro da marca as páginas de muitos autores em um mesmo espaço."
+    outcome: "Cores da marca, predefinições de tema e fontes sugeridas salvas uma vez nas configurações do espaço e oferecidas em todas as macros."
+  - persona: "Líder de documentação"
+    job: "Deixar notas, avisos e letras miúdas fáceis de achar em guias longos."
+    outcome: "Painéis de informação com ícones e estilos de borda, texto em tamanho menor e divisores entre seções, mantidos nas exportações para PDF e Word."
+
+faq:
+  - q: "Como colocar cor de fundo em uma seção de uma página do Confluence?"
+    a: "Envolva a seção com a macro Background do Atelier, escolha um dos 64 padrões e até três cores, e escreva o conteúdo dentro dela com títulos, listas, links e emoji. Sem app, a opção nativa mais próxima é um painel em uma de 20 cores de fundo. As seções do Company Hub também aceitam cor de fundo personalizada, mas só existem no Company Hub, não em páginas comuns."
+  - q: "Como colocar um banner em uma página do Confluence?"
+    a: "Insira a macro Banner do Atelier para ter um cabeçalho decorativo com texto centralizado e preenchimento com padrão nas cores da sua marca. O Confluence também tem duas opções nativas: uma imagem de cabeçalho acima do título, do Unsplash ou enviada por você, e, nos planos Premium e Enterprise, um bloco Spotlight com imagem grande, fundo colorido e botão. As macros Card e Button do Atelier acrescentam links abaixo do banner."
+  - q: "Dá para usar cores hex personalizadas no Confluence Cloud?"
+    a: "Sim, com o Atelier: a macro Text Color aceita qualquer código hex, e um administrador do espaço pode salvar até 50 cores da marca com nome, código hex e opacidade para todas as macros do Atelier oferecerem. No editor nativo, texto e painéis usam as paletas do próprio Confluence, enquanto o bloco Spotlight do Premium e do Enterprise aceita valores HEX, RGB ou HSL personalizados."
+  - q: "Que dados o Atelier guarda, e ele é seguro?"
+    a: "O Atelier guarda as configurações de design de cada espaço, ou seja, cores da marca, predefinições de tema e fontes sugeridas, e nada sobre o conteúdo das suas páginas. O app é construído no Atlassian Forge e roda dentro da Atlassian, sem servidores externos, então as configurações ficam no armazenamento criptografado do Forge. Ao desinstalar, elas são removidas automaticamente, e o Atelier não guarda dados pessoais."
+  - q: "Um leitor consegue ver uma página incorporada que ele não tem permissão para abrir?"
+    a: "Não. A página incorporada na macro Background segue as permissões do Confluence de cada leitor, então o conteúdo incorporado aparece somente para quem consegue abrir a página de origem. Restrições de página e permissões de espaço valem exatamente como no resto do Confluence, e o Atelier não amplia o acesso de ninguém."
+  - q: "O Atelier funciona no Confluence Data Center?"
+    a: "Não. O Atelier é um app do Confluence Cloud construído no Atlassian Forge, e a página dele no Marketplace cobre apenas o Cloud. Times que estão migrando do Data Center podem refazer as páginas estilizadas com as macros dele depois que chegarem ao Cloud, usando cores da marca, predefinições de tema e fontes definidas nas configurações de cada espaço."
+  - q: "Quanto custa o Atelier, e tem teste grátis?"
+    a: "Os preços estão na página do app no Atlassian Marketplace, onde você pode começar um teste grátis antes de comprar. O Atelier é um app pago, cobrado pela Atlassian junto com os seus outros apps do Marketplace. Use o teste para montar uma página de verdade, como a home de um espaço ou a página de notícias do time, antes de decidir."
+  - q: "Quem pode instalar o Atelier, e quanto tempo leva a configuração?"
+    a: "Um administrador do site ou da organização instala o Atelier pelo Atlassian Marketplace, e qualquer outra pessoa pode solicitar o app pela página dele. Os autores podem usar as macros nas páginas assim que ele é instalado. Cores da marca, predefinições de tema e fontes sugeridas são definidas depois por um administrador do espaço, nas configurações do espaço, uma vez por espaço, quando aquele espaço quiser um visual comum."
+
+relatedPosts:
+  - "confluence-macros-cloud-migration"
+  - "approving-a-marketplace-app-security-review"
+
 screenshots:
   - image: ../../../assets/screenshots/atelier/01-confluence-page.png
     caption: "Página do Confluence com banner padronizado, fundo customizado, divider em gradiente e cards de conteúdo."
+    slot: hero
   - image: ../../../assets/screenshots/atelier/02-text-blocks.png
     caption: "Blocos de texto em cores customizadas e disclaimers em fonte pequena, com opções ilimitadas de cor e tamanho."
   - image: ../../../assets/screenshots/atelier/03-color-palette.png

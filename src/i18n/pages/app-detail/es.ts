@@ -7,6 +7,23 @@ export const es = {
   installShort: 'Instalar desde el Marketplace',
   docs: 'Documentación',
   talkToUs: 'Hacernos una pregunta',
+  heroCue: {
+    free: 'Gratis en el Atlassian Marketplace. Se ejecuta dentro de tu sitio de Atlassian.',
+    paid: 'Prueba gratuita en el Atlassian Marketplace. Se ejecuta dentro de tu sitio de Atlassian.',
+  },
+  problem: { eyebrow: 'El problema' },
+  steps: {
+    eyebrow: 'Cómo funciona',
+    headline: 'Tres pasos de la instalación a la respuesta.',
+  },
+  comparison: {
+    eyebrow: 'Comparado con lo que ya trae el producto',
+    needLabel: 'Lo que necesitas',
+  },
+  related: {
+    eyebrow: 'Guías',
+    headline: 'Guías relacionadas de nuestro blog.',
+  },
   valueProps: {
     eyebrow: 'Por qué',
     headline: 'Lo que los equipos realmente obtienen.',

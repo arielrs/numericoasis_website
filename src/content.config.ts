@@ -225,6 +225,30 @@ const apps = defineCollection({
           .array(z.object({ persona: z.string(), job: z.string(), outcome: z.string() }))
           .default([]),
         relatedApps: z.array(z.string()).default([]),
+        /**
+         * "Built in vs this app" table on a detail page. Most searches for an
+         * app's category start from the native feature ("jira audit log",
+         * "confluence page status"), so the page answers how the two differ.
+         * Every native cell must be checkable against Atlassian's own docs.
+         */
+        comparison: z
+          .object({
+            heading: z.string(),
+            intro: z.string().optional(),
+            /** Column label for the built-in side, e.g. "Jira's audit log". */
+            nativeLabel: z.string(),
+            rows: z
+              .array(z.object({ need: z.string(), native: z.string(), app: z.string() }))
+              .min(3),
+          })
+          .optional(),
+        /** Blog translationKeys shown as related guides, in this order. */
+        relatedPosts: z.array(z.string()).default([]),
+        /**
+         * 1200x630 share card for og:image. Falls back to the hero screenshot,
+         * then the icon. Language neutral, so one file serves all locales.
+         */
+        ogImage: image().optional(),
 
         // --- Bookkeeping ----------------------------------------------------
         lang: langEnum,

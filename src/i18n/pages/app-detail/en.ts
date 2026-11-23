@@ -5,6 +5,23 @@ export const en = {
   installShort: 'Install from the Marketplace',
   docs: 'Documentation',
   talkToUs: 'Ask us a question',
+  heroCue: {
+    free: 'Free on the Atlassian Marketplace. Runs inside your Atlassian site.',
+    paid: 'Free trial on the Atlassian Marketplace. Runs inside your Atlassian site.',
+  },
+  problem: { eyebrow: 'The problem' },
+  steps: {
+    eyebrow: 'How it works',
+    headline: 'Three steps from install to answer.',
+  },
+  comparison: {
+    eyebrow: 'Compared with what is built in',
+    needLabel: 'What you need',
+  },
+  related: {
+    eyebrow: 'Guides',
+    headline: 'Related guides from our blog.',
+  },
   valueProps: {
     eyebrow: 'Why',
     headline: 'What teams actually get out of it.',

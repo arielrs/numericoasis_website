@@ -2,14 +2,14 @@
 lang: pt-BR
 translationKey: configuration-monitor
 name: Configuration Monitor
-tagline: Audit log de projeto para o Jira. Veja o que mudou, quando e quem fez.
-description: O Configuration Monitor dá aos administradores de projeto do Jira visibilidade completa sobre a configuração do projeto. Treze seções monitoradas automaticamente, incluindo filas e request types do JSM, com sincronização de hora em hora, atribuição de mudança e exportação em CSV. Sem precisar escalar para o Site Admin.
+tagline: "Um log de auditoria de configuração para cada espaço do Jira. Veja o que mudou, quando e quem mudou."
+description: "O Configuration Monitor é um app para o Jira Cloud que mantém um log de auditoria de configuração dentro de cada espaço. A cada hora ele tira um snapshot de 13 seções de configuração, dos esquemas de permissão e workflows aos sprints e às filas do Jira Service Management, e mostra aos administradores do espaço o que mudou, quando e quem mudou, com os valores de antes e depois e exportação em CSV."
 listingName: "Configuration Monitor - Project Audit Log for Jira"
-metaTitle: 'Configuration Monitor: audit log de projeto'
-descriptor: "Audit log de projeto para o Jira"
-metaDescription: "Veja o que mudou em um projeto do Jira, quando e quem fez. O Configuration Monitor mantém um audit log pesquisável com retenção de um ano."
-version: "4.0.0"
-dateModified: 2026-04-07
+metaTitle: "Log de auditoria de configuração do Jira"
+descriptor: "Log de auditoria de configuração para espaços do Jira"
+metaDescription: "Veja quem mudou permissões, workflows, telas ou sprints de um espaço do Jira e como cada configuração estava antes, nas configurações do espaço. Teste grátis."
+version: "4.2.0"
+dateModified: 2026-09-25
 marketplaceUrl: https://marketplace.atlassian.com/apps/3948220256/configuration-monitor-project-audit-log-for-jira
 documentationUrl: /documentation/configuration-monitor/overview/
 supportUrl: https://numericoasis.atlassian.net/servicedesk/customer/portal/39
@@ -17,48 +17,147 @@ products: ["jira", "jsm"]
 hostProducts: ["jira"]
 order: 4
 icon: ../../../assets/logos/configuration-monitor.jpg
+ogImage: ../../../assets/og/configuration-monitor.jpg
 priceModel: paid
 storesPersonalData: true
-dataStatement: >-
-  Uma trilha de auditoria que não diz quem fez a mudança não é uma trilha de auditoria, então o
-  Configuration Monitor registra a conta por trás de cada mudança de configuração, junto com os
-  valores antes e depois. Essa atribuição é o dado pessoal que ele guarda. Fica retida por um ano e
-  depois é apagada automaticamente, e os administradores do site têm um painel de GDPR para pedidos
-  de exportação e anonimização. Tudo roda dentro da Atlassian, e nada é enviado para fora.
+dataStatement: "Um log de auditoria que não diz quem fez a mudança serve para pouca coisa, então o Configuration Monitor registra o ID da conta Atlassian e o nome de exibição de quem fez cada mudança de configuração e de quem roda uma sincronização manual. Esse é o dado pessoal que ele mantém: nada de e-mails, endereços IP ou conteúdo de itens de trabalho. Os registros ficam por um ano e depois são apagados automaticamente, os administradores do site atendem pedidos de exportação e anonimização no GDPR Admin Panel, e tudo fica no armazenamento do Forge, na infraestrutura da Atlassian."
+answerFirst: "O log de auditoria do Jira fica em Settings, depois System, e só abre com a permissão global Administer Jira. O Configuration Monitor põe um log de auditoria de configuração em cada espaço: os administradores veem o que mudou em permissões, workflows, telas, papéis, sprints e outras oito seções, quando e quem fez, com o antes e o depois."
 audiences:
-  - Administradores de Projeto
-  - Site Administrators do Jira
-  - Times de Compliance e Auditoria
-  - Times de Operações e Plataforma
+  - "Administradores de espaço"
+  - "Administradores de site do Jira"
+  - "Times de compliance e auditoria"
+  - "Times de plataforma e operações"
+problem:
+  heading: "Algo mudou no seu espaço, e o registro está num log que você não consegue abrir."
+  body: "Uma transição some, as notificações param, um grupo perde o acesso. O Jira registra mudanças de configuração, mas o log de auditoria dele é uma visão do site inteiro para quem tem a permissão global Administer Jira. O administrador do espaço, que é quem lida com o estrago, abre um chamado, espera alguém com acesso olhar e ainda precisa descobrir quais eventos do site são do espaço dele."
+  questions:
+    - "Quem mudou nosso esquema de permissões, e quando?"
+    - "Como era este workflow antes da mudança?"
+    - "Por que nossas notificações pararam na terça?"
 valueProps:
-  - title: Pare de abrir ticket para descobrir o que mudou
-    body: Os Project Admins têm visibilidade total das mudanças direto nas configurações do projeto. Sem precisar de Site Admin.
+  - title: "O administrador do espaço resolve sozinho"
+    body: "O registro de mudanças fica na barra lateral das configurações de cada espaço. Qualquer administrador do espaço vê quem mudou o quê, sem a permissão Administer Jira e sem abrir chamado para o administrador do site."
     icon: "🔎"
-  - title: Cubra todas as configurações que importam
-    body: 13 seções monitoradas automaticamente, incluindo permissões, workflows, telas, filas e request types do JSM, e sprints.
+  - title: "Antes e depois, em cada mudança"
+    body: "Cada registro mostra a seção, o tipo de mudança, a entidade, os valores antigo e novo e quem fez, para você saber exatamente o que precisa voltar ao que era."
     icon: "📋"
-  - title: Pronto para auditoria em um clique
-    body: Exportação em CSV com valores antes e depois, atribuição de mudança e um ano inteiro de histórico retido.
+  - title: "Treze seções, verificadas a cada hora"
+    body: "Permissões, notificações, workflows, telas, segurança de itens de trabalho, papéis, tipos de trabalho, componentes, versões, configurações gerais, sprints e as filas e tipos de solicitação do JSM, com snapshot a cada hora ou quando você pedir."
     icon: "📊"
+steps:
+  - title: "Um administrador do site instala pelo Marketplace"
+    body: "O Configuration Monitor é um app Forge, instalado pelo Atlassian Marketplace. Na instalação ele tira o primeiro snapshot da configuração de cada espaço, e esse snapshot vira a base de comparação para as mudanças seguintes."
+  - title: "Ele compara snapshots a cada hora"
+    body: "A cada hora, um snapshot novo é comparado com o anterior, e cada inclusão, remoção e modificação é registrada com os valores de antes e depois. Em seguida, cada mudança é cruzada com o log de auditoria do Jira para descobrir quem a fez. Os administradores do espaço também podem clicar em Refresh Now."
+  - title: "Abra as configurações do espaço e filtre"
+    body: "Os administradores do espaço abrem o Configuration Monitor na barra lateral das configurações do espaço, filtram por seção, período ou tipo de mudança e exportam as mudanças filtradas em CSV para uma revisão ou para o auditor."
+featureGroups:
+  - name: "O que ele acompanha"
+    blurb: "Treze seções, ajustadas ao tipo de espaço."
+    items:
+      - "Esquema de permissões e cada concessão de permissão"
+      - "Esquema de workflow, status, transições e regras de transição"
+      - "Esquemas de tela, regras de notificação e níveis de segurança de itens de trabalho"
+      - "Membros dos papéis, tipos de trabalho, componentes e versões"
+      - "Nome, descrição, líder, responsável padrão e categoria do espaço"
+      - "Sprints em boards Scrum, além de filas e tipos de solicitação do JSM"
+  - name: "Quem fez a mudança"
+    blurb: "A atribuição vem do cruzamento de cada mudança com o próprio log de auditoria do Jira."
+    items:
+      - "A conta por trás de cada mudança, com link para o perfil no Jira"
+      - "Todos os autores listados quando vários administradores mexeram na mesma configuração"
+      - "Trocas de líder comparadas pela conta, então renomear um usuário não conta como mudança"
+      - "Um log de sincronizações agendadas e manuais, sem as que não encontraram nada"
+  - name: "Encontrar e exportar"
+    blurb: "Filtros e contagens valem para o histórico inteiro, não só para a página na tela."
+    items:
+      - "Filtro por seção, período ou Added, Removed e Modified"
+      - "Clique nas contagens Total, Added, Removed ou Modified para filtrar"
+      - "25, 50 ou 100 mudanças por página"
+      - "Exportação em CSV com data, seção, entidade, autor e valores de antes e depois"
+      - "Links para a página de configuração do Jira correspondente, abertos em outra aba"
+  - name: "Controles de privacidade para administradores do site"
+    blurb: "Um GDPR Admin Panel que vale para todos os espaços acompanhados."
+    items:
+      - "Exportar em CSV os registros de uma pessoa, com o espaço de cada um"
+      - "Anonimizar os registros anteriores de uma pessoa, mantendo a atribuição das mudanças novas"
+      - "Uma trilha de auditoria de cada exportação e anonimização, filtrável por ação"
+      - "Registros com mais de um ano apagados automaticamente"
+comparison:
+  heading: "Log de auditoria nativo do Jira vs Configuration Monitor"
+  intro: "O Jira Cloud já registra mudanças de configuração no site inteiro, inclusive custom fields, planos e permissões globais que não pertencem a nenhum espaço. Para um administrador do Jira revisando o site, é o lugar certo para olhar. O Configuration Monitor trabalha um nível abaixo: um histórico de mudanças dentro de cada espaço, para quem cuida daquele espaço."
+  nativeLabel: "Log de auditoria nativo do Jira"
+  rows:
+    - need: "Onde fica"
+      native: "Em Settings, depois System, depois Audit Log, nas configurações de administração do Jira."
+      app: "Na barra lateral das configurações de cada espaço."
+    - need: "Quem pode abrir"
+      native: "Só quem tem a permissão global Administer Jira. Não fica disponível se todos os apps do Jira Cloud do site estiverem no plano Free."
+      app: "Qualquer administrador do espaço, para aquele espaço, e os administradores do site. O GDPR Admin Panel é só para administradores do site."
+    - need: "O que registra"
+      native: "Eventos de configuração do site inteiro: espaços, esquemas de permissão, workflow, notificação e tela, custom fields, planos, sprints, tipos de trabalho, esquemas de campo e itens de trabalho excluídos."
+      app: "Treze seções da configuração de um espaço, incluindo membros dos papéis, componentes, versões, segurança de itens de trabalho e as filas e tipos de solicitação do JSM."
+    - need: "Quem fez cada mudança"
+      native: "Cada evento tem um autor, mas a Atlassian avisa que o nome de usuário pode faltar em algumas mudanças de gerenciamento de usuários."
+      app: "Cruzado com o log de auditoria do Jira, com todos os autores listados quando vários administradores mexeram na mesma configuração. Edições em massa e em esquemas usados por vários espaços podem ficar sem autor."
+    - need: "Por quanto tempo o histórico fica guardado"
+      native: "Um administrador do Jira escolhe o período de retenção em Audit Log Settings."
+      app: "Um ano, depois é apagado automaticamente, com até 1.000 registros de mudança por espaço."
+    - need: "Filtro e exportação"
+      native: "Busca e filtro na tela, sem ordenação. Exportação em CSV de até 100.000 eventos, que traz todos os eventos mesmo com a tela filtrada. Também disponível pela REST API."
+      app: "Filtro por seção, período e tipo de mudança. O CSV traz as mudanças filtradas, com os valores de antes e depois."
 keyFeatures:
-  - 13 seções de configuração monitoradas
-  - Sincronização automática de hora em hora
-  - Atribuição de mudança via audit log
-  - Exportação em CSV com valores antes e depois
-  - Filas e request types do JSM
-  - Acompanhamento de sprints em boards Scrum
-  - 1 ano de retenção com expurgo automático
-  - Painel GDPR Admin para site admins
+  - "13 seções de configuração acompanhadas"
+  - "Snapshots a cada hora, mais o Refresh Now"
+  - "Autor de cada mudança pelo log de auditoria do Jira"
+  - "Valores de antes e depois"
+  - "Exportação em CSV das mudanças filtradas"
+  - "Filas e tipos de solicitação do JSM"
+  - "Histórico de sprints em boards Scrum"
+  - "Retenção de um ano, com limpeza automática"
+  - "GDPR Admin Panel para administradores do site"
 trustSignals:
-  - Pronto para auditoria em uma exportação
-  - Pronto para GDPR
-  - Quem mudou o quê, e quando
-  - Construído em Atlassian Forge
+  - "Pronto para auditoria em uma exportação"
+  - "Pronto para GDPR"
+  - "Quem mudou o quê, e quando"
+  - "Construído no Atlassian Forge"
+useCases:
+  - persona: "Administrador do espaço"
+    job: "Descobrir por que uma transição sumiu do workflow do espaço de um dia para o outro."
+    outcome: "O registro Modified em Workflows, com as transições antigas e novas e o administrador que fez a mudança."
+  - persona: "Responsável por compliance"
+    job: "Mostrar ao auditor quem mudou o acesso a um espaço regulado durante o trimestre."
+    outcome: "Um CSV das mudanças nas seções Permissions e Roles no período, com nomes, IDs de conta e valores de antes e depois."
+  - persona: "Administrador do site Jira"
+    job: "Parar de receber chamados de \"quem mudou isso?\" de todos os espaços do site."
+    outcome: "Os administradores de espaço consultam o próprio registro de mudanças, e os pedidos de GDPR são atendidos num painel só."
+faq:
+  - q: "Administradores de espaço conseguem ver o log de auditoria do Jira?"
+    a: "Só se também tiverem a permissão global Administer Jira, que o log de auditoria nativo exige. O Configuration Monitor coloca um registro de mudanças na barra lateral das configurações de cada espaço, então qualquer administrador do espaço vê o que mudou ali, quando e quem fez, sem abrir chamado para o administrador do site. Quem não consegue abrir as configurações do espaço não vê o registro."
+  - q: "Quais mudanças de configuração o Configuration Monitor acompanha?"
+    a: "Treze seções da configuração de cada espaço: permissões, notificações, workflows, telas, segurança de itens de trabalho, papéis, tipos de trabalho, componentes, versões, configurações gerais como nome e líder, sprints em boards Scrum e as filas e tipos de solicitação do Jira Service Management. Em espaços gerenciados pela equipe ele pula componentes e versões, em boards Kanban pula sprints, e mudanças de campos nas telas de tipos de trabalho desses espaços não são rastreáveis. Ele lê a configuração, não o conteúdo dos itens de trabalho."
+  - q: "Como o Configuration Monitor sabe quem mudou uma configuração?"
+    a: "Ele cruza cada mudança detectada com os registros do log de auditoria do próprio Jira, pelo nome da entidade e pela seção. Quando vários administradores mexeram na mesma configuração no mesmo período, todos aparecem. Algumas mudanças podem ficar sem autor: operações em massa, edições de esquemas que afetam vários espaços de uma vez e mudanças feitas por integrações de terceiros podem não deixar um registro correspondente."
+  - q: "O log de auditoria do Atlassian Guard mostra mudanças de configuração do Jira?"
+    a: "Pode mostrar, no nível da organização. Com o Atlassian Guard, os administradores da organização têm um log de auditoria no Atlassian Administration que guarda a atividade por 365 dias. O log de administração do Jira, que registra mudanças de configuração e de permissão, aparece ali com Guard Standard mais Jira Premium, com Jira Enterprise ou com Guard Premium. Ele é feito para administradores da organização, de unidade e do site. O Configuration Monitor responde à mesma pergunta dentro de um espaço, para os administradores dele."
+  - q: "Que dados pessoais ele guarda, e como ficam os pedidos de GDPR?"
+    a: "Os únicos dados pessoais são IDs de conta Atlassian e nomes de exibição, registrados para atribuir mudanças e sincronizações manuais. Os administradores do site atendem os pedidos no GDPR Admin Panel: exportam em CSV os registros de uma pessoa, para o direito de acesso, ou os anonimizam, para o direito ao apagamento. A anonimização troca o nome de exibição por \"Anonymized User\" em todos os registros anteriores e mantém o ID da conta para fins de auditoria. Mudanças que a pessoa fizer depois são atribuídas normalmente."
+  - q: "Por quanto tempo o Configuration Monitor guarda o histórico de mudanças?"
+    a: "Um ano. Registros de mudança com mais de um ano são apagados automaticamente, e cada espaço mantém no máximo 1.000 registros. O histórico começa na instalação, porque o primeiro snapshot é a base de comparação, então mudanças feitas antes de instalar não aparecem. O histórico de um espaço também pode ser limpo pelo app, e todos os dados guardados são excluídos quando o app é desinstalado."
+  - q: "Onde o Configuration Monitor guarda os dados?"
+    a: "No armazenamento do Forge, na própria infraestrutura da Atlassian. O app é construído no Atlassian Forge e é elegível para o programa Runs on Atlassian, então os dados ficam na plataforma da Atlassian e a Atlassian é o único subprocessador. O Forge criptografa os dados em repouso e em trânsito. O app lê configurações como esquemas, workflows, papéis e sprints, e não o conteúdo dos seus itens de trabalho."
+  - q: "Como instalo o Configuration Monitor, e quanto custa?"
+    a: "Um administrador do site Jira instala pelo Atlassian Marketplace, onde estão o preço atual e um teste grátis. É um app para o Jira Cloud, sem versão para Data Center, e funciona em espaços gerenciados pela empresa e pela equipe no Jira e no Jira Service Management. O primeiro snapshot roda na instalação e as sincronizações de hora em hora começam sozinhas, então as mudanças aparecem em até uma hora."
+relatedPosts:
+  - "jira-cloud-permission-audit"
+  - "jira-sandboxes-and-release-tracks"
+  - "after-the-cloud-migration-cleanup"
 screenshots:
-  - image: ../../../assets/screenshots/configuration-monitor/01-change-log.png
-    caption: "Change log do projeto com atribuição de usuário, filtros de data e agrupamento por seção."
-  - image: ../../../assets/screenshots/configuration-monitor/02-sprint-audit.png
-    caption: "Trilha de auditoria de sprint mostrando criação, modificação e remoção com timestamps e atribuição de usuário."
-  - image: ../../../assets/screenshots/configuration-monitor/03-gdpr-panel.png
-    caption: "Admin panel com exportação de dados GDPR de usuário, controles de anonimização e a trilha de auditoria de ações de admin."
+  - image: ../../../assets/screenshots/configuration-monitor/cm-01-change-log.webp
+    caption: "O registro de mudanças de um espaço do Jira: totais de configurações adicionadas, removidas e modificadas, filtros por tipo e seção, e cada mudança com o horário e quem a fez."
+    slot: hero
+  - image: ../../../assets/screenshots/configuration-monitor/cm-02-before-after.webp
+    caption: "Show details abre a comparação de antes e depois de uma mudança, aqui uma nova descrição do espaço. Mudanças de workflow listam cada transição adicionada ou removida."
+  - image: ../../../assets/screenshots/configuration-monitor/cm-03-permissions.webp
+    caption: "Filtrado por Permissions: cada concessão de permissão adicionada ao esquema do espaço, com a permissão e o papel que a recebeu."
 ---

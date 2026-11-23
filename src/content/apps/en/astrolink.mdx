@@ -2,12 +2,12 @@
 lang: en
 translationKey: astrolink
 name: Astrolink
-tagline: Map every dependency and blocker in Jira as an interactive graph.
-description: Astrolink turns the web of links between your Jira work items into a navigable star map. Every blocker, dependency, hierarchy, and Confluence connection rendered as a force-directed graph in the work item panel. Cross-project, permission-aware, and built on Forge.
+tagline: "Map every dependency and blocker in Jira as an interactive graph."
+description: "Astrolink is a Jira Cloud app that draws the links between work items as an interactive dependency map. Blockers, dependencies, epics, subtasks, linked Confluence pages and web links appear as connected nodes across spaces, in the issue panel or on a full page built from JQL, a saved filter or a space. It runs on Atlassian Forge with read-only access and respects each viewer's Jira permissions."
 listingName: "Astrolink - Work Item Link Graph for Jira"
-metaTitle: 'Astrolink: Jira dependency and issue link map'
-descriptor: "Dependency and issue link map for Jira"
-metaDescription: "See every dependency in Jira. Astrolink maps blockers, dependencies, epics and Confluence links as an interactive graph you can filter and explore."
+metaTitle: "Jira dependency map and link graph: Astrolink"
+descriptor: "Dependency map and link graph for Jira"
+metaDescription: "See Jira dependencies as a map: blockers, epics and links across spaces, with Confluence pages as nodes. Try Astrolink free on the Atlassian Marketplace."
 version: "3.1.0"
 dateModified: 2026-07-09
 marketplaceUrl: https://marketplace.atlassian.com/apps/2775238726/astrolink-work-item-link-graph-for-jira
@@ -17,49 +17,147 @@ products: ["jira", "jsm"]
 hostProducts: ["jira"]
 order: 2
 icon: ../../../assets/logos/astrolink.jpg
+ogImage: ../../../assets/og/astrolink.jpg
 priceModel: paid
 storesPersonalData: false
+dataStatement: "Astrolink has read-only access to Jira and makes every request with the viewer's own permissions. It keeps your saved presets, maps and layouts in Atlassian's Forge storage, sandboxed to your site, and uninstalling deletes all of it."
+answerFirst: "Astrolink is a Jira Cloud app that draws a dependency map from the work item links your teams already create. Open any work item and its blockers, parents, subtasks and linked Confluence pages appear as an interactive graph in the issue panel, across spaces. Or map a JQL query, a saved filter or a whole space on a full page."
+problem:
+  heading: "Jira records every dependency. Seeing the chain is the hard part."
+  body: "Each work item lists its own links, one hop at a time. The blocker behind the blocker often sits in another team's space, and the space timeline draws Blocks links inside a single space. So the dependency map ends up on a whiteboard, redrawn before every planning session."
+  questions:
+    - "What is actually blocking this work item?"
+    - "If this slips, what else slips with it?"
+    - "Which of our dependencies sit in other teams' spaces?"
 audiences:
-  - Developers
-  - Project Managers
-  - Scrum Masters
-  - Product Owners
-  - Product Discovery Teams
+  - "Developers"
+  - "Project managers"
+  - "Scrum Masters"
+  - "Product owners"
+  - "Jira Product Discovery teams"
 valueProps:
-  - title: See every connection at a glance
-    body: Up to five levels deep, across projects, with Confluence pages and external links rendered as nodes.
+  - title: "The whole dependency chain, not one hop"
+    body: "Astrolink follows links, parents and subtasks outward from a work item, level by level and across spaces. Linked Confluence pages and web links appear as nodes too, so the spec sits next to the work it describes."
     icon: "✨"
-  - title: Find the blocker behind the blocker
-    body: Color coded link types make critical paths obvious in two clicks.
+  - title: "Find the blocker behind the blocker"
+    body: "Every link type has its own color. Apply the Blockers Only preset, or right-click a work item and choose Find Path To for the shortest chain of links between two work items."
     icon: "🎯"
-  - title: Present with confidence
-    body: Five themes including High Contrast, fullscreen mode, and timeline replay built in.
+  - title: "Ready for the planning meeting"
+    body: "Five themes including High Contrast, fullscreen mode, timeline replay, and PNG, SVG or JPG export of the current view or the full graph."
     icon: "🎬"
+steps:
+  - title: "Install it from the Atlassian Marketplace"
+    body: "A Jira site admin installs Astrolink and starts the free trial. It works from the work item links, parents and subtasks your teams already keep in Jira, with the link types your site already uses."
+  - title: "Turn it on for a space"
+    body: "Open any work item, select the View App Actions icon (the puzzle piece) in the issue panel area and choose Astrolink. From the three-dot menu on the Astrolink panel, pick Show for all work items, and the map appears on every work item in that space."
+  - title: "Read the map"
+    body: "The work item you opened sits at the center, with its linked work items around it and each link colored by its type. Click a node for its details, or open Astrolink from the Jira app launcher to map a JQL query, a saved filter or a space on a full page."
+featureGroups:
+  - name: "See every dependency"
+    blurb: "A force-directed graph in the issue panel or on a full page."
+    items:
+      - "Links, parents, epics and subtasks, followed across spaces"
+      - "Linked Confluence pages and web links as their own nodes"
+      - "Ten node color modes, including status, priority, assignee and sprint"
+      - "Clusters by space, epic, assignee, sprint or status"
+      - "Work items dimmed after 7, 14, 30 or 90 days without an update"
+  - name: "Analyze the chain"
+    blurb: "Right-click any work item to ask the graph a question."
+    items:
+      - "Find Path To: the shortest chain of links between two work items"
+      - "Show Impact: a heat map of every work item downstream"
+      - "Dependency Health: at-risk links flagged with a red border"
+      - "Stats panel: work items by type and status, connections by type, orphan count"
+  - name: "Focus the view"
+    blurb: "Filters, presets and search, all combinable."
+    items:
+      - "Filters by work type, status, assignee, label, space, sprint, version, component and link type"
+      - "Five built-in presets, including Blockers Only and Work Breakdown"
+      - "Custom presets saved per user"
+      - "Search that highlights matching nodes as you type"
+      - "Confluence pages and web links shown or hidden separately"
+  - name: "Share and present"
+    blurb: "For planning sessions and stakeholder reviews."
+    items:
+      - "Five themes, including High Contrast for projectors"
+      - "Fullscreen mode and a minimap for large graphs"
+      - "PNG, SVG and JPG export of the view or the full graph"
+      - "Timeline replay at 1x, 2x or 4x speed"
+      - "Saved Maps for the JQL, filter and space views you reuse"
+comparison:
+  heading: "Jira's built-in dependency tools and Astrolink"
+  intro: "Jira already records dependencies as work item links, and Premium and Enterprise add a dependencies view in Plans. Here is what each built-in tool does well and where a graph adds to it. Every cell in the Jira column is checked against Atlassian's support documentation."
+  nativeLabel: "Built into Jira"
+  rows:
+    - need: "See what a work item is linked to"
+      native: "Each work item shows its linked work items in the detail view, with the link type (blocks, is blocked by, relates to and others), including links to work items in other spaces."
+      app: "The same links drawn as a graph in the issue panel and followed past the first hop, with parents, subtasks, Confluence pages and web links as nodes."
+    - need: "See dependencies on a schedule"
+      native: "The space timeline draws dependencies as lines between schedule bars and turns a dependency red when the dates overlap. It shows the Blocks link type, within a single space."
+      app: "Astrolink is a link map, not a schedule. It shows every link type, across spaces, without needing dates on the work items."
+    - need: "Map dependencies across spaces and teams"
+      native: "Plans, on Jira Premium and Enterprise, combine spaces, boards and filters. Their dependencies view lays work items out as tiles with arrows, filterable by space, sprint or link type and grouped by team, sprint, space or epic."
+      app: "A graph from any work item, JQL query, saved filter or space, on Jira Standard as well as Premium. Cluster it by space, epic, assignee, sprint or status."
+    - need: "Find blocked work items"
+      native: "JQL returns them as a list: workItemLinkType = \"is blocked by\" finds work items that have a blocker, and linkedWorkItems() lists the work items linked to one work item, optionally by link type."
+      app: "Paste the same JQL into Astrolink's full-page view to draw the results and their links as a graph, or apply the Blockers Only preset to any work item's map."
+    - need: "Spot a dependency at risk"
+      native: "On the timeline and in Plans, a dependency turns red when the dates of the two work items overlap or conflict."
+      app: "Dependency Health reads status: a blocker still in To Do while the work item it blocks is already Done gets a red border."
+    - need: "Trace a chain and its impact"
+      native: "The linked work items section shows direct links, so a longer chain is followed by opening each work item in turn. In Plans, the dependencies view shows the arrows between the work items in the plan."
+      app: "Find Path To highlights the shortest chain of links between two work items, and Show Impact heat-maps every work item downstream of the one you pick."
 keyFeatures:
-  - Cross project link traversal
-  - Real time search and filtering
-  - Jira Product Discovery support
-  - 5 themes, 5 node styles
-  - Timeline playback
-  - Permission aware nodes
-  - Confluence pages as connected nodes
+  - "Dependency map in the issue panel"
+  - "Full-page maps from JQL, filters or spaces"
+  - "Cross-space link traversal"
+  - "Path Finder and Impact Analysis"
+  - "Dependency Health"
+  - "Confluence pages as connected nodes"
+  - "Jira Product Discovery support"
+  - "Timeline replay"
+  - "Permission-aware nodes"
 trustSignals:
-  - Every dependency in one view
-  - Restricted work items stay locked
-  - Built on Atlassian Forge
+  - "Every dependency in one view"
+  - "Restricted work items stay locked"
+  - "Built on Atlassian Forge"
+useCases:
+  - persona: "Developer"
+    job: "Know what blocks a work item before picking it up."
+    outcome: "The Blockers Only preset on the work item's own panel, with every blocker one click away, whichever space it lives in."
+  - persona: "Scrum Master"
+    job: "Surface cross-team dependencies before sprint planning."
+    outcome: "The sprint's JQL mapped on a full page, clustered by space, with at-risk links flagged by Dependency Health."
+  - persona: "Project manager"
+    job: "Explain to stakeholders why a release date moved."
+    outcome: "Show Impact on the late work item, in the High Contrast theme, exported as an image for the status report."
+faq:
+  - q: "How do I see a dependency map in Jira?"
+    a: "Install Astrolink and open any work item: its links, parents, subtasks and linked Confluence pages appear as a graph in the issue panel. To map more than one work item, open Astrolink from the Jira app launcher and start from a JQL query, a saved filter or a space. Without an app, Jira Premium and Enterprise include a dependencies view in Plans, and each work item lists its own linked work items."
+  - q: "Can Astrolink show dependencies across Jira spaces?"
+    a: "Yes. Astrolink follows work item links into any space, and clicking a node takes you to that work item wherever it lives. Color the nodes or cluster them by space to see which dependencies leave your team. Linked work items in spaces you cannot open appear as locked nodes with no details shown."
+  - q: "Will people see work items they do not have permission to view?"
+    a: "No. Every Jira request Astrolink makes runs as the person viewing the map, with their own permissions. A linked work item they cannot open appears as a locked node with no metadata, so the shape of the graph stays visible without exposing a summary, a status or an assignee. Astrolink has read-only access and cannot change any work item."
+  - q: "What data does Astrolink read and store?"
+    a: "It reads work item details such as key, summary, type, status, assignee and links to draw the map, and holds them in memory for that request. It saves your presets, saved maps and locked layouts in Atlassian's Forge storage, sandboxed to your site, and display preferences in your browser. Locked layouts expire after 30 days, and uninstalling deletes everything the app stored."
+  - q: "Is Astrolink secure, and does data leave Atlassian?"
+    a: "Astrolink runs entirely on Atlassian Forge, and no data leaves your Atlassian site. It makes no external network calls, uses the read:jira-work, read:jira-user and storage:app scopes, and never logs account IDs or work item keys. The Marketplace listing shows the Runs on Atlassian badge and the completed privacy and security questionnaire for your review."
+  - q: "Does Astrolink work with Jira Data Center?"
+    a: "No. Astrolink is a Jira Cloud app built on Forge, with no Data Center or Server version. It works in software, service and business spaces, and with Jira Product Discovery: ideas linked to delivery work appear in the graph, and you see an idea's own map by opening it in the standard Jira issue view."
+  - q: "How long does setup take, and who can install Astrolink?"
+    a: "Setup is one install and one setting per space. A Jira site or organization admin installs Astrolink from the Atlassian Marketplace, and other users can request it from the listing. A Jira admin then opens a work item, adds Astrolink from the View App Actions icon in the issue panel area and chooses Show for all work items, and the map appears on every work item in that space."
+  - q: "How much does Astrolink cost?"
+    a: "Astrolink is a paid app sold through the Atlassian Marketplace, with a free trial so you can map your own dependencies before you buy. Current pricing is on the Marketplace listing, which is where it stays accurate, and you pay through your Atlassian account like any other Marketplace app."
+relatedPosts:
+  - "atlassian-cloud-editions-compared"
+  - "jira-jql-queries-for-administrators"
+  - "smartsheet-to-jira-and-confluence"
 screenshots:
-  - image: ../../../assets/screenshots/astrolink/01-star-map.png
-    caption: "Astrolink centered on epic AST-11 with 15 connected work items. Confluence pages and external URLs render as nodes alongside Jira issues."
-  - image: ../../../assets/screenshots/astrolink/02-layout-panel.png
-    caption: "Layout panel with theme picker, node styles, spread and size controls, and stale threshold settings."
-  - image: ../../../assets/screenshots/astrolink/03-timeline.png
-    caption: "Timeline replay scrubbed to a point in time. Only work items created by that date are shown, with a speed selector."
-  - image: ../../../assets/screenshots/astrolink/04-issue-panel.png
-    caption: "Astrolink rendered directly in the Jira work item panel alongside Assignee, Labels, Priority, and comments."
-  - image: ../../../assets/screenshots/astrolink/05-launch.png
-    caption: "Launch screen with four entry points: work item, JQL, saved filter, or project. Saved Maps panel shows recent views."
-  - image: ../../../assets/screenshots/astrolink/06-jql-filter.png
-    caption: "Apply saved Jira filters or raw JQL to focus the graph, with filtering and color node options."
-  - image: ../../../assets/screenshots/astrolink/07-themes.png
-    caption: "Astrolink in five themes: Dark, Light, Sky, High Contrast, and Sunset."
+  - image: ../../../assets/screenshots/astrolink/ast-01-panel-graph.webp
+    caption: "Astrolink inside a Jira work item: AST-1 at the centre with two levels of linked work items around it, plus Confluence pages and web links as nodes. Color shows the work type and the glow shows the status."
+    slot: hero
+  - image: ../../../assets/screenshots/astrolink/ast-02-timeline.webp
+    caption: "Timeline replay: drag the slider to see how the dependency graph grew, with each work item appearing at its creation date."
+  - image: ../../../assets/screenshots/astrolink/ast-03-layout.webp
+    caption: "Layout options: five themes (Dark, High Contrast, Light, Sky and Sunset), five node styles, grouping, node size and a stale threshold that highlights work not updated in 7 to 90 days."
 ---

@@ -2,12 +2,12 @@
 lang: pt-BR
 translationKey: astrolink
 name: Astrolink
-tagline: Mapeie cada dependência e bloqueio do Jira em um grafo interativo.
-description: O Astrolink transforma a rede de relações entre os itens de trabalho do seu Jira em um mapa estelar navegável. Cada bloqueador, dependência, hierarquia e conexão com o Confluence é renderizado como um grafo de força no painel do item de trabalho. Cross-project, ciente de permissões e construído em Forge.
+tagline: "Mapeie cada dependência e bloqueio do Jira em um grafo interativo."
+description: "O Astrolink é um app para o Jira Cloud que desenha os vínculos entre itens de trabalho como um mapa de dependências interativo. Bloqueios, dependências, epics, subtarefas, páginas do Confluence e links da web vinculados aparecem como nós conectados entre espaços, no painel do item de trabalho ou em página cheia, a partir de JQL, de um filtro salvo ou de um espaço. Ele roda no Atlassian Forge com acesso somente leitura e respeita as permissões do Jira de quem está vendo."
 listingName: "Astrolink - Work Item Link Graph for Jira"
-metaTitle: 'Astrolink: mapa de dependências e vínculos do Jira'
-descriptor: "Mapa de dependências e vínculos do Jira"
-metaDescription: "Veja cada dependência do Jira. O Astrolink mapeia bloqueios, dependências, epics e vínculos com o Confluence em um grafo interativo."
+metaTitle: "Mapa de dependências no Jira: Astrolink"
+descriptor: "Mapa de dependências e grafo de vínculos para Jira"
+metaDescription: "Veja as dependências do Jira num mapa: bloqueios, epics e vínculos entre espaços, com páginas do Confluence como nós. Teste o Astrolink grátis no Marketplace."
 version: "3.1.0"
 dateModified: 2026-07-09
 marketplaceUrl: https://marketplace.atlassian.com/apps/2775238726/astrolink-work-item-link-graph-for-jira
@@ -17,49 +17,147 @@ products: ["jira", "jsm"]
 hostProducts: ["jira"]
 order: 2
 icon: ../../../assets/logos/astrolink.jpg
+ogImage: ../../../assets/og/astrolink.jpg
 priceModel: paid
 storesPersonalData: false
+dataStatement: "O Astrolink tem acesso somente leitura ao Jira e faz cada consulta com as permissões de quem está vendo. Ele guarda seus presets, mapas e layouts salvos no armazenamento do Atlassian Forge, isolado no seu site, e a desinstalação apaga tudo isso."
+answerFirst: "O Astrolink é um app para Jira Cloud que desenha um mapa de dependências com os vínculos que seus times já criam. Abra um item de trabalho e os bloqueios, itens pai, subtarefas e páginas do Confluence vinculadas aparecem como grafo interativo no painel, entre espaços. Ou mapeie uma consulta JQL, um filtro salvo ou um espaço em página cheia."
+problem:
+  heading: "O Jira registra cada dependência. Difícil é enxergar a cadeia."
+  body: "Cada item de trabalho lista os próprios vínculos, um salto por vez. O bloqueio por trás do bloqueio costuma estar no espaço de outro time, e a linha do tempo do espaço desenha vínculos Blocks dentro de um único espaço. Aí o mapa de dependências acaba num quadro branco, redesenhado antes de cada planejamento."
+  questions:
+    - "O que está bloqueando este item de trabalho, de verdade?"
+    - "Se isto atrasar, o que atrasa junto?"
+    - "Quais das nossas dependências estão nos espaços de outros times?"
 audiences:
-  - Desenvolvedores
-  - Gerentes de projeto
-  - Scrum Masters
-  - Product Owners
-  - Times de Product Discovery
+  - "Desenvolvedores"
+  - "Gerentes de projeto"
+  - "Scrum Masters"
+  - "Product Owners"
+  - "Times de Jira Product Discovery"
 valueProps:
-  - title: Veja todas as conexões de relance
-    body: Até cinco níveis de profundidade, entre projetos, com páginas do Confluence e links externos renderizados como nós.
+  - title: "A cadeia inteira de dependências, não só um salto"
+    body: "O Astrolink segue vínculos, itens pai e subtarefas a partir de um item de trabalho, nível por nível e entre espaços. Páginas do Confluence e links da web vinculados também viram nós, e a especificação fica ao lado do trabalho que ela descreve."
     icon: "✨"
-  - title: Encontre o bloqueador por trás do bloqueador
-    body: Tipos de relação com cores diferentes deixam os caminhos críticos óbvios em dois cliques.
+  - title: "Encontre o bloqueio por trás do bloqueio"
+    body: "Cada tipo de vínculo tem sua própria cor. Aplique o preset Blockers Only, ou clique com o botão direito em um item de trabalho e escolha Find Path To para ver a cadeia de vínculos mais curta entre dois itens."
     icon: "🎯"
-  - title: Apresente com confiança
-    body: Cinco temas, incluindo Alto Contraste, modo fullscreen e replay de timeline já integrados.
+  - title: "Pronto para a reunião de planejamento"
+    body: "Cinco temas, incluindo High Contrast, modo tela cheia, replay da timeline e exportação em PNG, SVG ou JPG da visão atual ou do grafo inteiro."
     icon: "🎬"
+steps:
+  - title: "Instale pelo Atlassian Marketplace"
+    body: "Um admin do site Jira instala o Astrolink e inicia o período de teste grátis. Ele trabalha com os vínculos, itens pai e subtarefas que seus times já mantêm no Jira, com os tipos de vínculo que o seu site já usa."
+  - title: "Ative em um espaço"
+    body: "Abra qualquer item de trabalho, selecione o ícone de apps (a peça de quebra-cabeça) na área do painel e escolha Astrolink. No menu de três pontos do painel do Astrolink, escolha a opção de mostrá-lo em todos os itens de trabalho, e o mapa passa a aparecer em todos os itens daquele espaço."
+  - title: "Leia o mapa"
+    body: "O item de trabalho que você abriu fica no centro, com os itens vinculados ao redor e cada vínculo colorido conforme o tipo. Clique em um nó para ver os detalhes, ou abra o Astrolink pelo menu de apps do Jira para mapear uma consulta JQL, um filtro salvo ou um espaço em página cheia."
+featureGroups:
+  - name: "Veja cada dependência"
+    blurb: "Um grafo de forças no painel do item de trabalho ou em página cheia."
+    items:
+      - "Vínculos, itens pai, epics e subtarefas, seguidos entre espaços"
+      - "Páginas do Confluence e links da web vinculados como nós próprios"
+      - "Dez modos de cor para os nós, incluindo status, prioridade, responsável e sprint"
+      - "Agrupamento por espaço, epic, responsável, sprint ou status"
+      - "Itens de trabalho esmaecidos após 7, 14, 30 ou 90 dias sem atualização"
+  - name: "Analise a cadeia"
+    blurb: "Clique com o botão direito em qualquer item de trabalho para fazer uma pergunta ao grafo."
+    items:
+      - "Find Path To: a cadeia de vínculos mais curta entre dois itens de trabalho"
+      - "Show Impact: um mapa de calor de todos os itens que dependem dele"
+      - "Dependency Health: vínculos em risco marcados com borda vermelha"
+      - "Painel de estatísticas: itens por tipo e status, conexões por tipo, contagem de itens órfãos"
+  - name: "Foque a visão"
+    blurb: "Filtros, presets e busca, todos combináveis."
+    items:
+      - "Filtros por tipo de trabalho, status, responsável, etiqueta, espaço, sprint, versão, componente e tipo de vínculo"
+      - "Cinco presets prontos, incluindo Blockers Only e Work Breakdown"
+      - "Presets personalizados salvos por usuário"
+      - "Busca que destaca os nós correspondentes enquanto você digita"
+      - "Páginas do Confluence e links da web exibidos ou ocultos separadamente"
+  - name: "Compartilhe e apresente"
+    blurb: "Para sessões de planejamento e reuniões com stakeholders."
+    items:
+      - "Cinco temas, incluindo High Contrast para projetores"
+      - "Modo tela cheia e minimapa para grafos grandes"
+      - "Exportação em PNG, SVG e JPG da visão atual ou do grafo inteiro"
+      - "Replay da timeline em velocidade 1x, 2x ou 4x"
+      - "Saved Maps para as visões de JQL, filtro e espaço que você reutiliza"
+comparison:
+  heading: "As ferramentas de dependência nativas do Jira e o Astrolink"
+  intro: "O Jira já registra dependências como vínculos entre itens de trabalho, e os planos Premium e Enterprise somam uma visão de dependências no Jira Plans. Veja o que cada recurso nativo faz bem e o que um grafo acrescenta. Cada célula da coluna do Jira foi conferida na documentação de suporte da Atlassian."
+  nativeLabel: "Nativo do Jira"
+  rows:
+    - need: "Ver a que um item de trabalho está vinculado"
+      native: "Cada item de trabalho mostra seus itens de trabalho vinculados na visualização de detalhes, com o tipo de vínculo (blocks, is blocked by, relates to e outros), incluindo vínculos com itens de outros espaços."
+      app: "Os mesmos vínculos desenhados como grafo no painel do item de trabalho e seguidos além do primeiro salto, com itens pai, subtarefas, páginas do Confluence e links da web como nós."
+    - need: "Ver dependências num cronograma"
+      native: "A linha do tempo do espaço desenha as dependências como linhas entre as barras e deixa a dependência vermelha quando as datas se sobrepõem. Ela mostra o tipo de vínculo Blocks, dentro de um único espaço."
+      app: "O Astrolink é um mapa de vínculos, não um cronograma. Ele mostra todos os tipos de vínculo, entre espaços, sem precisar de datas nos itens de trabalho."
+    - need: "Mapear dependências entre espaços e times"
+      native: "O Jira Plans, nos planos Premium e Enterprise, combina espaços, quadros e filtros. A visão de dependências mostra os itens de trabalho como blocos ligados por setas, com filtro por espaço, sprint ou tipo de vínculo e agrupamento por time, sprint, espaço ou epic."
+      app: "Um grafo a partir de qualquer item de trabalho, consulta JQL, filtro salvo ou espaço, no Jira Standard e também no Premium. Agrupe por espaço, epic, responsável, sprint ou status."
+    - need: "Encontrar itens de trabalho bloqueados"
+      native: "A JQL devolve uma lista: workItemLinkType = \"is blocked by\" encontra itens de trabalho que têm um bloqueio, e linkedWorkItems() lista os itens vinculados a um item de trabalho, com filtro opcional por tipo de vínculo."
+      app: "Cole a mesma JQL na visão em página cheia do Astrolink para desenhar os resultados e seus vínculos como grafo, ou aplique o preset Blockers Only ao mapa de qualquer item de trabalho."
+    - need: "Perceber uma dependência em risco"
+      native: "Na linha do tempo e no Jira Plans, uma dependência fica vermelha quando as datas dos dois itens de trabalho se sobrepõem ou entram em conflito."
+      app: "O Dependency Health olha o status: um bloqueio ainda em To Do enquanto o item que ele bloqueia já está em Done ganha uma borda vermelha."
+    - need: "Rastrear uma cadeia e o seu impacto"
+      native: "A seção de itens de trabalho vinculados mostra os vínculos diretos, então uma cadeia mais longa é seguida abrindo um item de cada vez. No Jira Plans, a visão de dependências mostra as setas entre os itens de trabalho do plano."
+      app: "O Find Path To destaca a cadeia de vínculos mais curta entre dois itens de trabalho, e o Show Impact mostra num mapa de calor todos os itens que dependem do item escolhido."
 keyFeatures:
-  - Travessia de links entre projetos
-  - Busca e filtragem em tempo real
-  - Suporte ao Jira Product Discovery
-  - 5 temas, 5 estilos de nó
-  - Reprodução de timeline
-  - Nós que respeitam permissões
-  - Páginas do Confluence como nós conectados
+  - "Mapa de dependências no painel do item de trabalho"
+  - "Mapas em página cheia a partir de JQL, filtros ou espaços"
+  - "Vínculos seguidos entre espaços"
+  - "Path Finder e Impact Analysis"
+  - "Dependency Health"
+  - "Páginas do Confluence como nós conectados"
+  - "Suporte ao Jira Product Discovery"
+  - "Replay da timeline"
+  - "Nós que respeitam permissões"
 trustSignals:
-  - Todas as dependências em uma visão
-  - Itens de trabalho restritos ficam bloqueados
-  - Construído em Atlassian Forge
+  - "Todas as dependências em uma visão"
+  - "Itens de trabalho restritos ficam bloqueados"
+  - "Construído em Atlassian Forge"
+useCases:
+  - persona: "Desenvolvedor"
+    job: "Saber o que bloqueia um item de trabalho antes de pegá-lo."
+    outcome: "O preset Blockers Only no painel do próprio item, com cada bloqueio a um clique, seja qual for o espaço em que ele está."
+  - persona: "Scrum Master"
+    job: "Descobrir dependências entre times antes do planejamento da sprint."
+    outcome: "A JQL da sprint mapeada em página cheia, agrupada por espaço, com os vínculos em risco marcados pelo Dependency Health."
+  - persona: "Gerente de projeto"
+    job: "Explicar aos stakeholders por que a data de uma release mudou."
+    outcome: "O Show Impact sobre o item atrasado, no tema High Contrast, exportado como imagem para o relatório de status."
+faq:
+  - q: "Como ver um mapa de dependências no Jira?"
+    a: "Instale o Astrolink e abra qualquer item de trabalho: os vínculos, itens pai, subtarefas e páginas do Confluence vinculadas aparecem como grafo no painel. Para mapear vários itens, abra o Astrolink pelo menu de apps do Jira e comece por uma consulta JQL, um filtro salvo ou um espaço. Sem um app, os planos Premium e Enterprise do Jira trazem uma visão de dependências no Jira Plans, e cada item de trabalho lista os próprios itens vinculados."
+  - q: "O Astrolink mostra dependências entre espaços do Jira?"
+    a: "Sim. O Astrolink segue os vínculos para qualquer espaço, e clicar em um nó leva você ao item de trabalho, onde quer que ele esteja. Pinte os nós ou agrupe-os por espaço para ver quais dependências saem do seu time. Itens vinculados em espaços que você não pode abrir aparecem como nós bloqueados, sem nenhum detalhe."
+  - q: "As pessoas vão ver itens de trabalho que não têm permissão para ver?"
+    a: "Não. Cada consulta que o Astrolink faz ao Jira roda como a pessoa que está vendo o mapa, com as permissões dela. Um item vinculado que ela não pode abrir aparece como um nó bloqueado, sem metadados: o formato do grafo continua visível sem expor resumo, status ou responsável. O Astrolink tem acesso somente leitura e não consegue alterar nenhum item de trabalho."
+  - q: "Quais dados o Astrolink lê e armazena?"
+    a: "Ele lê detalhes dos itens de trabalho, como chave, resumo, tipo, status, responsável e vínculos, para desenhar o mapa, e os mantém em memória durante aquela requisição. Ele salva seus presets, mapas salvos e layouts travados no armazenamento do Atlassian Forge, isolado no seu site, e as preferências de exibição no seu navegador. Layouts travados expiram em 30 dias, e a desinstalação apaga tudo o que o app armazenou."
+  - q: "O Astrolink é seguro? Algum dado sai da Atlassian?"
+    a: "Nenhum dado sai do seu site Atlassian: o Astrolink roda inteiramente no Atlassian Forge. Ele não faz chamadas de rede externas, usa os escopos read:jira-work, read:jira-user e storage:app e nunca registra em log IDs de conta nem chaves de itens de trabalho. A listagem no Marketplace mostra o selo Runs on Atlassian e o questionário de privacidade e segurança preenchido, para a sua análise."
+  - q: "O Astrolink funciona no Jira Data Center?"
+    a: "Não. O Astrolink é um app para o Jira Cloud construído em Forge, sem versão para Data Center ou Server. Ele funciona em espaços de software, de serviço e de negócios, e com o Jira Product Discovery: ideias vinculadas ao trabalho de entrega aparecem no grafo, e o mapa da própria ideia aparece quando você a abre na visualização padrão de item de trabalho do Jira."
+  - q: "Quanto tempo leva a configuração, e quem pode instalar o Astrolink?"
+    a: "A configuração é uma instalação e um ajuste por espaço. Um admin do site ou da organização instala o Astrolink pelo Atlassian Marketplace, e os demais usuários podem solicitá-lo pela listagem. Depois, um admin do Jira abre um item de trabalho, adiciona o Astrolink pelo ícone de apps na área do painel e escolhe a opção de mostrá-lo em todos os itens de trabalho, e o mapa aparece em todos os itens daquele espaço."
+  - q: "Quanto custa o Astrolink?"
+    a: "O Astrolink é um app pago, vendido pelo Atlassian Marketplace, com período de teste grátis para você mapear as suas próprias dependências antes de comprar. O preço atual está na listagem do Marketplace, que é onde ele se mantém correto, e o pagamento passa pela sua conta Atlassian, como em qualquer outro app do Marketplace."
+relatedPosts:
+  - "atlassian-cloud-editions-compared"
+  - "jira-jql-queries-for-administrators"
+  - "smartsheet-to-jira-and-confluence"
 screenshots:
-  - image: ../../../assets/screenshots/astrolink/01-star-map.png
-    caption: "Astrolink centrado no épico AST-11 com 15 itens de trabalho conectados. Páginas do Confluence e URLs externas aparecem como nós ao lado dos itens de trabalho do Jira."
-  - image: ../../../assets/screenshots/astrolink/02-layout-panel.png
-    caption: "Painel de layout com seletor de tema, estilos de nó, controles de espaçamento e tamanho, e configuração de threshold de stale."
-  - image: ../../../assets/screenshots/astrolink/03-timeline.png
-    caption: "Replay de timeline parado em um ponto no tempo. Só aparecem os itens de trabalho criados até aquela data, com seletor de velocidade."
-  - image: ../../../assets/screenshots/astrolink/04-issue-panel.png
-    caption: "Astrolink renderizado direto no painel do item de trabalho do Jira, ao lado de Assignee, Labels, Priority e comentários."
-  - image: ../../../assets/screenshots/astrolink/05-launch.png
-    caption: "Tela inicial com quatro pontos de entrada: item de trabalho, JQL, filtro salvo ou projeto. Painel de Saved Maps mostra visualizações recentes."
-  - image: ../../../assets/screenshots/astrolink/06-jql-filter.png
-    caption: "Aplique filtros salvos do Jira ou JQL puro para focar o grafo, com opções de filtragem e coloração de nó."
-  - image: ../../../assets/screenshots/astrolink/07-themes.png
-    caption: "Astrolink nos cinco temas: Dark, Light, Sky, High Contrast e Sunset."
+  - image: ../../../assets/screenshots/astrolink/ast-01-panel-graph.webp
+    caption: "O Astrolink dentro de um item de trabalho do Jira: o AST-1 no centro, com dois níveis de itens vinculados em volta, além de páginas do Confluence e links da web como nós. A cor mostra o tipo de trabalho e o brilho, o status."
+    slot: hero
+  - image: ../../../assets/screenshots/astrolink/ast-02-timeline.webp
+    caption: "Replay da linha do tempo: arraste o controle para ver como o grafo de dependências cresceu, com cada item de trabalho aparecendo na data em que foi criado."
+  - image: ../../../assets/screenshots/astrolink/ast-03-layout.webp
+    caption: "Opções de layout: cinco temas (Dark, High Contrast, Light, Sky e Sunset), cinco estilos de nó, agrupamento, tamanho dos nós e um limite de inatividade que destaca o que não é atualizado há 7 a 90 dias."
 ---

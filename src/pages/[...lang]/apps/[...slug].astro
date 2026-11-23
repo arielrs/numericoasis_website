@@ -10,6 +10,7 @@ import { Image } from 'astro:assets';
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import CapabilityStrip from '../../../components/CapabilityStrip.astro';
+import PostCard from '../../../components/PostCard.astro';
 import { SITE, PRODUCT_LABELS } from '../../../consts';
 import {
   LOCALES,
@@ -57,6 +58,27 @@ const d = app.data;
 const pageUrl = new URL(withLocale(lang, `/apps/${slug}/`), SITE.url).toString();
 const appId = `${pageUrl}#software`;
 const isFree = d.priceModel === 'free';
+
+/**
+ * Screenshot placement. The hero takes the shot marked `hero`, else the first
+ * one: a visitor deciding whether to install should see the product before the
+ * first scroll, not twelve sections down. Shots placed in the hero, the problem
+ * section or a step are left out of the gallery so no image appears twice.
+ */
+const shot = (slot: string) => d.screenshots.find((s) => s.slot === slot);
+const heroShot = shot('hero') ?? d.screenshots[0];
+const problemShot = d.problem ? shot('problem') : undefined;
+const placed = new Set(
+  [heroShot, problemShot, ...d.steps.map((s) => (s.shot ? shot(s.shot) : undefined))].filter(Boolean),
+);
+const galleryShots = d.screenshots.filter((s) => !placed.has(s));
+
+/** Guides that cover the problem this app solves, in the order the entry lists them. */
+const relatedPosts = d.relatedPosts.length
+  ? (await getCollection('blog', ({ data }) => data.lang === lang && !data.draft))
+      .filter((p) => d.relatedPosts.includes(p.data.translationKey))
+      .sort((a, b) => d.relatedPosts.indexOf(a.data.translationKey) - d.relatedPosts.indexOf(b.data.translationKey))
+  : [];
 
 const softwareNode: JsonLdNode = {
   '@type': 'SoftwareApplication',
@@ -146,7 +168,7 @@ const faqNode: JsonLdNode | undefined =
   title={d.metaTitle ?? d.name}
   description={d.description}
   metaDescription={d.metaDescription}
-  image={d.icon}
+  image={d.ogImage ?? heroShot?.image ?? d.icon}
   graph={{
     breadcrumbs: [
       { name: nav.meta.crumb, path: '/apps/' },
@@ -168,58 +190,117 @@ const faqNode: JsonLdNode | undefined =
         {t.backToApps}
       </a>
 
-      <div class="mt-8 grid gap-10 lg:grid-cols-[auto_1fr] lg:items-start lg:gap-14">
-        {d.icon && (
-          <Image
-            src={d.icon}
-            alt=""
-            width={140}
-            class="h-28 w-28 shrink-0 rounded-3xl object-cover ring-1 ring-sand-200 sm:h-32 sm:w-32"
-            priority
-          />
-        )}
+      <!-- Text on the left, the product on the right: the same split as the
+           flagship's hero. One primary action; the docs are the only
+           secondary, and "ask us" waits for the final CTA. -->
+      <div class="mt-8 grid gap-12 lg:grid-cols-[minmax(0,11fr)_minmax(0,13fr)] lg:items-center lg:gap-14">
         <div data-enter>
-          <p class="eyebrow">{t.eyebrow}</p>
-          <h1 class="mt-3 font-display text-4xl font-bold leading-tight tracking-tight text-brand-900 sm:text-5xl md:text-6xl">
+          <div class="flex items-center gap-4">
+            {d.icon && (
+              <Image
+                src={d.icon}
+                alt=""
+                width={64}
+                class="h-16 w-16 shrink-0 rounded-2xl object-cover ring-1 ring-sand-200"
+                priority
+              />
+            )}
+            <div>
+              <p class="eyebrow">{t.eyebrow}</p>
+              <p class="mt-1.5 inline-block rounded-full bg-water-50 px-2.5 py-1 text-xs font-semibold text-water-700">
+                {isFree ? chrome.apps.priceFree : chrome.apps.priceTrial}
+              </p>
+            </div>
+          </div>
+          <h1 class="mt-6 font-display text-4xl font-bold leading-tight tracking-tight text-brand-900 sm:text-5xl">
             {d.name}
             {d.descriptor && (
-              <span class="mt-3 block font-display text-xl font-semibold leading-snug text-brand-700 sm:text-2xl md:text-3xl">
+              <span class="mt-3 block font-display text-xl font-semibold leading-snug text-brand-700 sm:text-2xl">
                 {d.descriptor}
               </span>
             )}
           </h1>
-          <p class="mt-6 max-w-2xl text-lg leading-relaxed text-slate-700">{d.description}</p>
+          <p class="mt-6 text-lg leading-relaxed text-slate-700">{d.answerFirst ?? d.description}</p>
 
-          <div class="mt-7 flex flex-wrap items-center gap-2">
+          <div class="mt-6 flex flex-wrap items-center gap-2">
             {d.products.map((p) => (
               <span class="rounded-full bg-brand-50 px-3 py-1 text-xs font-semibold text-brand-700">
                 {PRODUCT_LABELS[p] ?? p}
               </span>
             ))}
-            <span class="rounded-full bg-water-100 px-3 py-1 text-xs font-semibold text-water-700">
-              {isFree ? chrome.apps.priceFree : chrome.apps.priceTrial}
-            </span>
           </div>
 
-          <div class="mt-9 flex flex-wrap items-center gap-3">
+          <div class="mt-8 flex flex-wrap items-center gap-3">
             {d.marketplaceUrl && (
               <a href={outbound(d.marketplaceUrl, slug, 'hero')} class="btn-cta" rel="noopener" target="_blank">
                 {t.install}
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7M7 7h10v10" /></svg>
               </a>
             )}
-            <a href={withLocale(lang, '/contact/')} class="btn-secondary">{t.talkToUs}</a>
             {d.documentationUrl && (
               <a href={d.documentationUrl} class="btn-secondary">{t.docs}</a>
             )}
           </div>
+          <p class="mt-4 text-sm leading-relaxed text-slate-600">{isFree ? t.heroCue.free : t.heroCue.paid}</p>
         </div>
+
+        {heroShot && (
+          <figure class="lg:-mr-10">
+            <Image
+              src={heroShot.image}
+              alt={heroShot.alt ?? heroShot.caption}
+              width={1280}
+              sizes="(min-width: 1024px) 720px, 100vw"
+              class="w-full rounded-2xl border border-sand-200 bg-paper"
+              priority
+            />
+          </figure>
+        )}
       </div>
     </div>
   </section>
 
   <!-- TRUST SIGNALS -->
   <CapabilityStrip items={d.trustSignals} />
+
+  <!-- THE PROBLEM: in the visitor's words, before any feature -->
+  {d.problem && (
+    <section class="py-16 sm:py-24">
+      <div
+        class:list={[
+          'container-wide grid gap-12 lg:items-center lg:gap-16',
+          problemShot ? 'lg:grid-cols-[minmax(0,4fr)_minmax(0,6fr)]' : 'max-w-3xl',
+        ]}
+        data-reveal-group
+      >
+        <div>
+          <p class="eyebrow">{t.problem.eyebrow}</p>
+          <h2 class="mt-3 font-display text-3xl font-bold tracking-tight text-brand-900 sm:text-4xl">
+            {d.problem.heading}
+          </h2>
+          <p class="mt-5 text-base leading-relaxed text-slate-600">{d.problem.body}</p>
+          <ul class="mt-8 space-y-3">
+            {d.problem.questions.map((q) => (
+              <li class="rounded-xl bg-sand-100 px-4 py-3 text-base font-medium text-brand-900">{q}</li>
+            ))}
+          </ul>
+        </div>
+        {problemShot && (
+          <figure>
+            <Image
+              src={problemShot.image}
+              alt={problemShot.alt ?? problemShot.caption}
+              width={1280}
+              sizes="(min-width: 1024px) 640px, 100vw"
+              class="w-full rounded-2xl border border-sand-200 bg-paper"
+              loading="lazy"
+            />
+            <figcaption class="mt-3 text-sm leading-relaxed text-slate-600">{problemShot.caption}</figcaption>
+          </figure>
+        )}
+      </div>
+    </section>
+  )}
 
   <!-- VALUE PROPS: first one wide, so this is not three identical cards -->
   {d.valueProps.length > 0 && (
@@ -253,6 +334,46 @@ const faqNode: JsonLdNode | undefined =
     </section>
   )}
 
+  <!-- HOW IT WORKS: alternating rows, each step beside the screen it describes -->
+  {d.steps.length > 0 && (
+    <section id="how-it-works" class="scroll-mt-24 border-y border-sand-200 py-16 sm:py-24">
+      <div class="container-wide">
+        <div class="reveal max-w-2xl">
+          <p class="eyebrow">{t.steps.eyebrow}</p>
+          <h2 class="mt-3 font-display text-3xl font-bold tracking-tight text-brand-900 sm:text-4xl">
+            {t.steps.headline}
+          </h2>
+        </div>
+        <ol class="mt-14 space-y-16" data-reveal-group>
+          {d.steps.map((step, i) => {
+            const image = step.shot ? shot(step.shot) : undefined;
+            return (
+              <li class:list={['grid gap-8 lg:items-center lg:gap-14', image && 'lg:grid-cols-2']}>
+                <div class:list={[i % 2 === 1 && image && 'lg:order-2', !image && 'max-w-3xl']}>
+                  <p class="font-mono text-sm font-semibold text-water-700">{String(i + 1).padStart(2, '0')}</p>
+                  <h3 class="mt-2 font-display text-2xl font-semibold tracking-tight text-brand-900">{step.title}</h3>
+                  <p class="mt-4 text-base leading-relaxed text-slate-600">{step.body}</p>
+                </div>
+                {image && (
+                  <figure class:list={[i % 2 === 1 && 'lg:order-1']}>
+                    <Image
+                      src={image.image}
+                      alt={image.alt ?? image.caption}
+                      width={1280}
+                      sizes="(min-width: 1024px) 560px, 100vw"
+                      class="w-full rounded-2xl border border-sand-200 bg-paper"
+                      loading="lazy"
+                    />
+                  </figure>
+                )}
+              </li>
+            );
+          })}
+        </ol>
+      </div>
+    </section>
+  )}
+
   <!-- FEATURE GROUPS -->
   {d.featureGroups.length > 0 && (
     <section class="py-16 sm:py-24">
@@ -271,6 +392,41 @@ const faqNode: JsonLdNode | undefined =
             </ul>
           </div>
         ))}
+      </div>
+    </section>
+  )}
+
+  <!-- BUILT IN VS THE APP: most searches start from the native feature -->
+  {d.comparison && (
+    <section class="border-t border-sand-200 bg-sand-50 py-16 sm:py-24">
+      <div class="container-wide reveal max-w-5xl">
+        <p class="eyebrow">{t.comparison.eyebrow}</p>
+        <h2 class="mt-3 font-display text-3xl font-bold tracking-tight text-brand-900 sm:text-4xl">
+          {d.comparison.heading}
+        </h2>
+        {d.comparison.intro && (
+          <p class="mt-5 max-w-3xl text-base leading-relaxed text-slate-600">{d.comparison.intro}</p>
+        )}
+        <div class="mt-10 overflow-x-auto rounded-2xl border border-sand-200 bg-paper">
+          <table class="w-full min-w-[40rem] border-collapse text-left text-sm">
+            <thead>
+              <tr class="border-b border-sand-300">
+                <th scope="col" class="w-1/4 px-5 py-4 text-xs font-semibold uppercase tracking-[0.1em] text-brand-700">{t.comparison.needLabel}</th>
+                <th scope="col" class="px-5 py-4 text-xs font-semibold uppercase tracking-[0.1em] text-brand-700">{d.comparison.nativeLabel}</th>
+                <th scope="col" class="bg-water-50 px-5 py-4 text-xs font-semibold uppercase tracking-[0.1em] text-water-700">{d.name}</th>
+              </tr>
+            </thead>
+            <tbody>
+              {d.comparison.rows.map((row) => (
+                <tr class="border-b border-sand-200 last:border-b-0">
+                  <th scope="row" class="px-5 py-4 align-top font-semibold text-brand-900">{row.need}</th>
+                  <td class="px-5 py-4 align-top leading-relaxed text-slate-600">{row.native}</td>
+                  <td class="bg-water-50/60 px-5 py-4 align-top leading-relaxed text-brand-900">{row.app}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </section>
   )}
@@ -310,7 +466,7 @@ const faqNode: JsonLdNode | undefined =
   )}
 
   <!-- SCREENSHOT GALLERY -->
-  {d.screenshots.length > 0 && (
+  {galleryShots.length > 0 && (
     <section class="bg-sand-50 py-16 sm:py-24">
       <div class="container-wide">
         <div class="max-w-2xl">
@@ -320,22 +476,22 @@ const faqNode: JsonLdNode | undefined =
           </h2>
         </div>
         <ul class="mt-12 grid gap-6 md:grid-cols-2" data-reveal-group>
-          {d.screenshots.map((shot, i) => (
-            <li class:list={[i === 0 && d.screenshots.length > 1 ? 'md:col-span-2' : '']}>
+          {galleryShots.map((item, i) => (
+            <li class:list={[i === 0 && galleryShots.length > 1 ? 'md:col-span-2' : '']}>
               <button
                 type="button"
                 class="group block w-full overflow-hidden rounded-2xl border border-sand-200 bg-paper text-left transition duration-150 hover:-translate-y-0.5 hover:shadow-[var(--shadow-soft)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sun-500"
                 data-lightbox-trigger
-                data-caption={shot.caption}
-                data-full={shot.image.src}
-                aria-label={`${t.gallery.openLabel}: ${shot.alt ?? shot.caption}`}
+                data-caption={item.caption}
+                data-full={item.image.src}
+                aria-label={`${t.gallery.openLabel}: ${item.alt ?? item.caption}`}
               >
                 <div class="relative">
                   <Image
-                    src={shot.image}
-                    alt={shot.alt ?? shot.caption}
+                    src={item.image}
+                    alt={item.alt ?? item.caption}
                     width={1280}
-                    sizes={i === 0 && d.screenshots.length > 1
+                    sizes={i === 0 && galleryShots.length > 1
                       ? '(min-width: 1280px) 1200px, 100vw'
                       : '(min-width: 768px) 50vw, 100vw'}
                     class="block w-full"
@@ -346,7 +502,7 @@ const faqNode: JsonLdNode | undefined =
                   </span>
                 </div>
               </button>
-              <p class="mt-3 px-1 text-sm leading-relaxed text-slate-600">{shot.caption}</p>
+              <p class="mt-3 px-1 text-sm leading-relaxed text-slate-600">{item.caption}</p>
             </li>
           ))}
         </ul>
@@ -413,6 +569,23 @@ const faqNode: JsonLdNode | undefined =
     </section>
   )}
 
+  <!-- RELATED GUIDES: the blog posts that cover the problem this app solves -->
+  {relatedPosts.length > 0 && (
+    <section class="py-16 sm:py-24">
+      <div class="container-wide">
+        <div class="reveal max-w-2xl">
+          <p class="eyebrow">{t.related.eyebrow}</p>
+          <h2 class="mt-3 font-display text-3xl font-bold tracking-tight text-brand-900 sm:text-4xl">
+            {t.related.headline}
+          </h2>
+        </div>
+        <div class="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {relatedPosts.map((post) => <PostCard post={post} lang={lang as Locale} />)}
+        </div>
+      </div>
+    </section>
+  )}
+
   <!-- FINAL CTA -->
   <section class="pb-16 sm:pb-24">
     <div class="container-wide">
@@ -438,7 +611,7 @@ const faqNode: JsonLdNode | undefined =
   </section>
 
   <!-- LIGHTBOX -->
-  {d.screenshots.length > 0 && (
+  {galleryShots.length > 0 && (
     <dialog
       id="screenshot-lightbox"
       class="m-auto w-[min(92vw,1400px)] max-w-none rounded-3xl border-0 bg-transparent p-0 backdrop:bg-brand-950/80 backdrop:backdrop-blur-sm"

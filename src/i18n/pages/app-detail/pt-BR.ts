@@ -7,6 +7,23 @@ export const ptBR = {
   installShort: 'Instalar pelo Marketplace',
   docs: 'Documentação',
   talkToUs: 'Tirar uma dúvida',
+  heroCue: {
+    free: 'Grátis no Atlassian Marketplace. Roda dentro do seu site Atlassian.',
+    paid: 'Teste grátis no Atlassian Marketplace. Roda dentro do seu site Atlassian.',
+  },
+  problem: { eyebrow: 'O problema' },
+  steps: {
+    eyebrow: 'Como funciona',
+    headline: 'Três passos da instalação à resposta.',
+  },
+  comparison: {
+    eyebrow: 'Comparado ao que já vem no produto',
+    needLabel: 'O que você precisa',
+  },
+  related: {
+    eyebrow: 'Guias',
+    headline: 'Guias relacionados no nosso blog.',
+  },
   valueProps: {
     eyebrow: 'Por que',
     headline: 'O que os times realmente ganham com isso.',

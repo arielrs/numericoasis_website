@@ -1,13 +1,13 @@
 ---
 lang: es
 translationKey: field-scout
-name: Field Scout
-tagline: Auditoría de custom fields para Jira. Mantente bajo el límite de 700 fields por space, encuentra duplicados y limpia con seguridad.
-description: Field Scout es una app Atlassian Forge gratuita que da a los administradores de Jira Cloud un dashboard centralizado para auditar y limpiar custom fields. Field Health Score, clasificación automática en Active, Stale, Likely Unused o Unused, detección de posibles duplicados, desglose por proyecto y exportación a CSV. Hecho para la realidad de los 700 fields por space.
+name: "Field Scout"
+tagline: "Encuentra campos personalizados sin uso y duplicados en Jira, mira qué spaces están cerca del límite de 700 campos y exporta una lista de limpieza."
+description: "Field Scout es una app Atlassian Forge gratuita que encuentra campos personalizados sin uso, obsoletos y duplicados en Jira Cloud. Clasifica cada campo personalizado por sus pantallas, sus contextos y su fecha de último uso, cuenta los campos de cada space frente al límite de 700, identifica el producto o la app que creó cada campo y exporta la auditoría a CSV en cuatro modos."
 listingName: "Field Scout - Custom Field Audit for Jira"
-metaTitle: 'Field Scout: auditoría de custom fields en Jira'
-descriptor: "Auditoría de custom fields para Jira"
-metaDescription: "Audita los custom fields de Jira antes de que un space llegue a 700. Encuentra duplicados y campos sin uso, limpia con seguridad. Gratis en el Marketplace."
+metaTitle: "Encuentra campos personalizados sin uso en Jira"
+descriptor: "Encuentra campos personalizados sin uso en Jira"
+metaDescription: "Encuentra campos personalizados sin uso y duplicados en Jira Cloud, mira qué spaces rozan el límite de 700 y exporta la limpieza. Gratis en el Marketplace."
 version: "2.30.0"
 dateModified: 2026-04-15
 marketplaceUrl: https://marketplace.atlassian.com/apps/388046425/field-scout-custom-field-audit-for-jira
@@ -17,46 +17,157 @@ products: ["jira"]
 hostProducts: ["jira"]
 order: 6
 icon: ../../../assets/logos/field-scout.png
+ogImage: ../../../assets/og/field-scout.jpg
 priceModel: free
 storesPersonalData: false
+dataStatement: "Field Scout lee la configuración de campos personalizados y de spaces desde la API de Jira cada vez que lo abres y muestra el resultado en tu navegador. No conserva nada de ello, ni en un servidor ni en el navegador. Sus scopes son de solo lectura, funciona por completo en Atlassian Forge y solo los administradores del sitio de Jira pueden abrirlo."
+
+answerFirst: "Para encontrar campos personalizados sin uso en Jira Cloud, revisa las pantallas, los contextos y la fecha de último uso de cada campo. Field Scout, app Forge gratuita, lo hace en bloque: clasifica cada uno como Active, Stale, Likely Unused o Unused, señala duplicados, cuenta campos por space frente al límite de 700 y exporta una lista de limpieza."
+
 audiences:
-  - Administradores de Jira
-  - Equipos de Plataforma
-  - Ingenieros de Migración
-  - Consultores Atlassian
+  - "Administradores de Jira"
+  - "Equipos de Plataforma"
+  - "Ingenieros de Migración"
+  - "Consultores Atlassian"
+
+problem:
+  heading: "Los campos personalizados se acumulan más rápido de lo que nadie los quita"
+  body: "Las apps dejan sus campos atrás al desinstalarse, las migraciones traen sus propias copias y cada equipo que pidió un campo más lo consiguió. Jira Cloud limita ahora cada space a 700 campos, contados a través de sus field configuration schemes, y un mismo campo cuenta en cada space cuyos schemes lo incluyen. Sin una vista de uso, la limpieza se hace a ciegas."
+  questions:
+    - "¿Cuáles de nuestros campos personalizados ha usado alguien este año?"
+    - "¿Qué space está más cerca del límite de 700 campos?"
+    - "¿De verdad necesitamos Cliente, Nombre del Cliente y Customer?"
+
 valueProps:
-  - title: Quédate bajo 700 custom fields por space
-    body: Total en vivo con avisos visuales a medida que te acercas, superas o te recuperas del tope.
-    icon: "📈"
-  - title: Ve exactamente qué es seguro limpiar
-    body: Cada field clasificado como Active, Stale, Likely Unused o Unused según datos reales de uso de Jira.
+  - title: "Encuentra los campos sin uso, con el motivo"
+    body: "Cada campo personalizado se clasifica como Active, Stale, Likely Unused o Unused según sus pantallas, sus contextos y su fecha de último uso, y el Field Health Score resume todo el sitio en un porcentaje, con directrices de limpieza marcadas como ACTION, REVIEW y TIP."
     icon: "🧹"
-  - title: Audita antes de cualquier migración
-    body: Exportación completa a CSV con screens, contextos, fechas de último uso, orígenes y detección de duplicados.
+  - title: "Vigila los spaces cerca de 700"
+    body: "El recuento de campos de cada space, los campos Likely Unused y Unused dentro de cada uno, y avisos cuando un space se acerca al límite o lo supera."
+    icon: "📈"
+  - title: "Entrega una auditoría, no una suposición"
+    body: "Exporta el inventario a CSV en cuatro modos, desde la exportación completa hasta la lista de limpieza, con pantallas, contextos, fechas de último uso y orígenes."
     icon: "📤"
+
+steps:
+  - title: "Instálala desde el Atlassian Marketplace"
+    body: "Field Scout es gratuita. Un admin de la organización o del sitio la instala en tu Jira Cloud, y aparece en Jira en Configuración > Apps."
+  - title: "Ábrela y lee el análisis"
+    body: "Selecciona Field Scout en la barra lateral de Apps. El análisis se carga solo: el Field Health Score, las tarjetas de estado para campos Unused, Likely Unused y Stale, y una lista priorizada de directrices de limpieza."
+  - title: "Carga los datos de los spaces, filtra y exporta"
+    body: "Selecciona Load project data para ver el recuento por space y los campos que solo existen en spaces team-managed, acota la tabla con los filtros y exporta la Cleanup List para trabajarla en el admin de Jira, donde cada nombre de campo lleva enlace."
+
+featureGroups:
+  - name: "Clasificación y salud"
+    blurb: "Cómo decide Field Scout qué está en uso."
+    items:
+      - "Field Health Score como un único porcentaje para el sitio"
+      - "Estados Active, Stale (más de 6 meses o más de un año), Likely Unused y Unused"
+      - "Campos System y Not Tracked separados del resto"
+      - "Directrices de limpieza marcadas como ACTION, REVIEW y TIP"
+      - "Tarjetas de resumen con el total de campos y los campos de sistema, team-managed, Unused, Likely Unused y Stale"
+  - name: "Duplicados, orígenes y tipos"
+    blurb: "De dónde viene el desorden."
+    items:
+      - "Potential Duplicates agrupados por nombre idéntico o parecido"
+      - "Origen de cada campo: Jira Core, Jira Software, JSM, Advanced Roadmaps, ScriptRunner, Tempo y otros"
+      - "Porcentaje de salud por origen, en tabla, gráfico de barras o gráfico circular"
+      - "Campos por tipo en tabla, gráfico o nube de etiquetas"
+  - name: "Vista por space"
+    blurb: "Donde de verdad se aplica el límite de 700."
+    items:
+      - "Recuento de campos personalizados de cada space"
+      - "Campos Likely Unused y Unused por space, a un clic de la tabla filtrada"
+      - "Campos que solo existen en spaces team-managed, descubiertos y sumados al inventario"
+      - "Ámbito de cada campo: todos los spaces, team-managed o company-managed"
+  - name: "Filtros, enlaces y exportación"
+    blurb: "De encontrar un campo a actuar sobre él."
+    items:
+      - "Búsqueda por nombre o ID"
+      - "Filtros por estado, tipo, origen, ámbito y tiempo desde el último uso"
+      - "Filtros rápidos para campos bloqueados, sin descripción, sin pantallas y sin contextos"
+      - "Nombres de campo con enlace a su página de configuración en el admin de Jira"
+      - "Vista filtrada compartida como un texto para copiar"
+      - "Exportación a CSV: Full Export, Cleanup List, Screen Audit, Doc Template"
+
+comparison:
+  heading: "Las herramientas de campos del propio Jira, y lo que añade Field Scout"
+  intro: "La página Fields de Jira Cloud edita, elimina y restaura todos los campos en un solo lugar. En los planes Premium y Enterprise, el Site optimizer además lista los campos personalizados sin uso, señala los spaces cerca del límite y puede mandar campos a la papelera o reorganizar schemes por ti. Field Scout lleva la auditoría a cualquier plan y añade duplicados, orígenes y exportaciones a CSV, mientras los cambios se siguen haciendo en Jira."
+  nativeLabel: "Integrado en Jira Cloud"
+  rows:
+    - need: "Una lista de los campos personalizados que nadie usa"
+      native: "En los planes Premium y Enterprise, el Site optimizer lista los campos personalizados sin uso en ningún space, contexto o pantalla, con tipo, contextos, pantallas, fecha de último uso y una recomendación."
+      app: "Cada campo personalizado clasificado como Active, Stale, Likely Unused o Unused según sus pantallas, sus contextos y su fecha de último uso, en cualquier plan de Jira Cloud."
+    - need: "Los spaces más cerca de 700 campos"
+      native: "En los planes Premium y Enterprise, el Site optimizer señala los spaces cerca del límite o por encima y sugiere cambios en los field schemes. En Standard, Atlassian remite a los detalles de uso en la configuración de Jira, a la REST API o a scripts."
+      app: "El recuento de campos de cada space con sus campos Likely Unused y Unused, avisos cuando un space se acerca a 700 o lo supera, y un clic para filtrar la tabla por ese space."
+    - need: "Campos con nombres iguales o parecidos"
+      native: "La documentación de campos de Atlassian no describe ninguna comprobación de duplicados. Encontrarlos significa buscar y comparar nombres por tu cuenta."
+      app: "Potential Duplicates agrupa nombres idénticos y parecidos, con filtro por tipo de coincidencia y tipo de campo, incluyendo o no los campos team-managed."
+    - need: "De dónde viene un campo"
+      native: "Los campos creados por Jira o por una app aparecen como LOCKED y no se pueden editar."
+      app: "La columna Origin muestra el producto o la app detrás de cada campo (Jira Core, JSM, ScriptRunner, Tempo y otros), incluso después de quitar la app, con un porcentaje de salud por origen."
+    - need: "Quitar un campo que quizá necesites recuperar"
+      native: "Eliminar un campo en la página Fields lo marca para su eliminación en 60 días. Hasta entonces, Restore lo devuelve a todos los sitios donde se usaba, con sus datos, y los campos en la papelera dejan de contar para los 700."
+      app: "Field Scout lee e informa; el borrado se hace en Jira. Cada nombre de campo abre su página en el admin, y la Cleanup List en CSV deja constancia de lo que decidiste quitar."
+    - need: "Un inventario que conservar antes de una migración o auditoría"
+      native: "Para auditorías detalladas, la página de guardrails de Atlassian remite a la REST API o a scripts propios."
+      app: "Exportación a CSV en cuatro modos (Full Export, Cleanup List, Screen Audit, Doc Template), cada uno respetando los filtros que hayas aplicado."
+
 keyFeatures:
-  - Field Health Score
-  - Clasificación Active, Stale, Likely Unused, Unused
-  - Detección de posibles duplicados
-  - Desglose de fields por proyecto
-  - Seguimiento de origen (Jira Core, JSM, ScriptRunner, Tempo, etc.)
-  - Exportación a CSV en 4 modos
-  - Filtrado completo
+  - "Field Health Score"
+  - "Clasificación Active, Stale, Likely Unused, Unused"
+  - "Detección de posibles duplicados"
+  - "Recuento de campos por space"
+  - "Seguimiento de origen (Jira Core, JSM, ScriptRunner, Tempo y otros)"
+  - "Exportación a CSV en 4 modos"
+  - "Filtros por pantallas, contextos, descripciones y último uso"
+
 trustSignals:
-  - Gratis en el Marketplace
-  - Cada campo clasificado por uso real
-  - Construido en Atlassian Forge
+  - "Gratis en el Marketplace"
+  - "Cada campo clasificado por uso real"
+  - "Construido en Atlassian Forge"
+
+useCases:
+  - persona: "Administrador de Jira"
+    job: "Devolver un space por debajo de 700 campos antes de que se bloquee la próxima solicitud de cambio."
+    outcome: "Los campos Likely Unused y Unused de ese space, filtrados y exportados como Cleanup List."
+  - persona: "Ingeniero de migración"
+    job: "Decidir qué campos conservar, fusionar o quitar antes de una migración."
+    outcome: "Un Full Export con pantallas, contextos, fecha de último uso, origen y estado de cada campo."
+  - persona: "Consultor Atlassian"
+    job: "Evaluar la salud de los campos de un cliente antes de recomendar una limpieza."
+    outcome: "Un porcentaje de salud, una lista de duplicados y un desglose por origen, respaldados por un CSV."
+
+faq:
+  - q: "¿Cómo encontrar campos personalizados sin uso en Jira?"
+    a: "Revisa las pantallas, los contextos y la fecha de último uso de cada campo. En los planes Premium y Enterprise, el Site optimizer de Jira lista los campos personalizados sin uso en ningún space, contexto o pantalla. Field Scout lo hace en cualquier plan: Unused es sin pantallas y sin contextos, Likely Unused es cuando falta uno de los dos o Jira no hace seguimiento del campo, y Stale es configurado pero parado desde hace más de 6 meses o más de un año."
+  - q: "¿Cómo sacar una lista de todos los campos personalizados de Jira?"
+    a: "La página Fields de Jira lista todos los campos del sitio, company-managed y team-managed, y Atlassian remite a la REST API o a scripts para las auditorías detalladas. El Full Export de Field Scout vuelca el inventario completo a CSV con ID, nombre, tipo, origen, pantallas, contextos, fecha de último uso, estado, ámbito, bloqueo y descripción. Los modos Cleanup List, Screen Audit y Doc Template recortan esos mismos datos para una tarea concreta."
+  - q: "¿Cuál es el límite de campos personalizados en Jira Cloud?"
+    a: "Jira Cloud permite 700 campos por space, sin límite para el total del sitio. Un space cuenta los campos de los field configuration schemes asociados a él, así que un mismo campo puede contar en varios spaces, y los campos en la papelera no cuentan. En el límite, Jira impide al administrador asociar más campos a ese space, y la configuración existente sigue funcionando. Field Scout muestra el recuento de cada space."
+  - q: "¿Qué datos lee Field Scout y guarda algo?"
+    a: "Field Scout lee configuración, no trabajo. Al abrirlo, obtiene de la API de Jira los metadatos de los campos personalizados (nombre, ID, tipo, descripción, pantallas, contextos, fecha de último uso) y, cuando seleccionas Load project data, nombres y claves de los spaces, field configuration schemes y metadatos de tipos de elemento de trabajo. Lo muestra todo en tu navegador y no conserva nada de ello, ni en un servidor, ni en el Forge storage, ni en el navegador."
+  - q: "¿Puede Field Scout mostrar elementos de trabajo que un usuario no puede abrir?"
+    a: "No. Field Scout lee la configuración de campos y spaces, nunca elementos de trabajo, así que en él no aparece ningún resumen, descripción ni valor de campo. Solo los administradores del sitio de Jira pueden abrir la app. Sus scopes son de solo lectura, así que no crea, no edita ni elimina campos: actúas sobre lo que encuentra en el admin de Jira, donde cada nombre de campo de la tabla lleva enlace."
+  - q: "¿Field Scout funciona en Jira Data Center?"
+    a: "No. Field Scout está construida sobre Atlassian Forge, que funciona en Atlassian Cloud, así que solo está disponible para Jira Cloud. Funcionar en Forge significa que la app se aloja en la propia infraestructura de Atlassian: los datos de tus campos se quedan dentro de Atlassian y la app no hace llamadas de red externas. Quien llega desde Data Center puede instalarla en el nuevo sitio Cloud para auditar los campos que vinieron con la migración."
+  - q: "¿Cuánto se tarda en configurar Field Scout y quién puede instalarla?"
+    a: "La configuración es la propia instalación. Un admin de la organización o del sitio instala Field Scout desde el Atlassian Marketplace, luego un administrador del sitio de Jira abre Configuración > Apps > Field Scout y el análisis se carga solo. Un clic en Load project data añade el recuento por space y los campos que solo existen en spaces team-managed. En sitios con miles de campos, se muestra el progreso mientras carga el resto."
+  - q: "¿Field Scout es gratis?"
+    a: "Sí. Field Scout es gratuita en el Atlassian Marketplace y funciona en cualquier plan de Jira Cloud, así que no necesitas Premium ni Enterprise para auditar tus campos personalizados. Instálala desde la ficha del Marketplace y tendrás la app completa: clasificación, duplicados, recuento por space y los cuatro modos de exportación a CSV."
+
+relatedPosts:
+  - "jira-700-custom-field-limit"
+  - "after-the-cloud-migration-cleanup"
+  - "jira-configuration-limits-http-422"
+
 screenshots:
-  - image: ../../../assets/screenshots/field-scout/01-dashboard.png
-    caption: "Dashboard con Field Health Score, cards de estado y directrices de limpieza priorizadas."
-  - image: ../../../assets/screenshots/field-scout/02-duplicates.png
-    caption: "Panel de Potential Duplicates con grupos de coincidencia exacta y nombres similares, además de la tabla de fields con filtros avanzados."
-  - image: ../../../assets/screenshots/field-scout/04-per-project.png
-    caption: "Seguimiento de fields por proyecto. Mira cuántos fields usa cada proyecto y cuáles están sin uso."
-  - image: ../../../assets/screenshots/field-scout/05-distribution.png
-    caption: "Distribución de fields por origen y tipo, con porcentajes de salud por origen (Jira Core, JSM, ScriptRunner, Tempo)."
-  - image: ../../../assets/screenshots/field-scout/06-csv-export.png
-    caption: "Exporta tu auditoría a CSV en cuatro modos: Full Export, Cleanup List, Screen Audit o Doc Template."
-  - image: ../../../assets/screenshots/field-scout/07-detailed-table.png
-    caption: "Tabla detallada de fields con filtros avanzados, enlaces JQL, fechas de último uso, badges de estado y seguimiento de scope."
+  - image: ../../../assets/screenshots/field-scout/fs-01-dashboard.webp
+    caption: "El panel de Field Scout: una puntuación de salud de los campos, totales de campos personalizados, de sistema y de espacios gestionados por el equipo, recuentos de campos sin uso, probablemente sin uso y obsoletos, y pautas sobre qué limpiar primero."
+    slot: hero
+  - image: ../../../assets/screenshots/field-scout/fs-02-fields-table.webp
+    caption: "La tabla de campos: cada campo personalizado con su tipo, origen, pantallas, contextos, fecha de último uso y un estado como Likely Unused, Stale o Locked, con un enlace JQL para cada uno y filtros arriba."
+  - image: ../../../assets/screenshots/field-scout/fs-03-by-origin.webp
+    caption: "Campos por origen: cómo se reparten los campos personalizados entre Jira, Jira Service Management, Jira Product Discovery y apps, con recuentos de activos, obsoletos y sin uso y una puntuación de salud para cada uno."
 ---

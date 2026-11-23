@@ -3,13 +3,13 @@ lang: pt-BR
 translationKey: expanded-macro-collection
 name: Expanded Macro Collection
 listingName: "Expanded Macro Collection"
-metaTitle: 'Expanded Macro Collection para o Confluence'
-descriptor: "Macros de governança e relatórios para o Confluence"
-metaDescription: "Treze macros do Confluence para governança, descoberta de conteúdo e relatórios administrativos. Aceite, classificação e árvores de páginas em um app."
+metaTitle: "Macros do Confluence: status de página e aceite"
+descriptor: "Macros de status de página, aceite e relatórios para o Confluence"
+metaDescription: "Treze macros do Confluence: aceite de leitura com CSV de auditoria, status consolidado, classificação, backlinks e páginas paradas. Teste grátis."
 version: "2.0.0"
 dateModified: 2026-06-30
-tagline: Treze macros práticas para o Confluence, voltadas a governança, descoberta de conteúdo e relatórios administrativos. Um app, uma assinatura.
-description: O Expanded Macro Collection transforma o Confluence em uma base de conhecimento governada, navegável e auditável, sem sair das suas páginas. Registre aceites de política por versão com exportação de auditoria em um clique, classifique páginas sensíveis com um aviso que sobrevive à exportação para PDF e Word, revele todas as páginas que apontam para a que você está lendo, e dê aos administradores consolidações de status, conteúdo desatualizado e saúde do conteúdo que respeitam permissões.
+tagline: "Treze macros do Confluence para aceite de leitura, status de página, classificação, backlinks e relatórios de conteúdo. Um app, uma assinatura."
+description: "O Expanded Macro Collection é um app para o Confluence Cloud que adiciona 13 macros de governança, status de página, descoberta de conteúdo e relatórios administrativos. Os leitores confirmam cada versão de uma política com um aceite registrado, os editores classificam páginas e avançam o status delas, e os administradores de espaço veem páginas desatualizadas, consolidações de status e o que aponta para cada página, sempre com as permissões do Confluence de quem está vendo."
 marketplaceUrl: https://marketplace.atlassian.com/apps/1276117246/expanded-macro-collection
 documentationUrl: /documentation/expanded-macro-collection/overview/
 supportUrl: https://numericoasis.atlassian.net/servicedesk/customer/portal/39
@@ -18,88 +18,154 @@ hostProducts: ["confluence"]
 order: 3
 priceModel: paid
 icon: ../../../assets/logos/expanded-macro-collection.png
+ogImage: ../../../assets/og/expanded-macro-collection.jpg
 runsOnAtlassian: true
 storesPersonalData: true
-dataStatement: >-
-  Um registro de aceite só tem valor se disser quem confirmou qual versão e quando, então a macro
-  Sign-off and Acknowledgement guarda exatamente isso. É por isso que este app guarda dados pessoais
-  onde o resto da nossa linha não guarda nenhum. Status e classificação de página são guardados como
-  propriedades de conteúdo do Confluence, o que significa que o próprio Confluence aplica as permissões
-  e apaga tudo junto com a página. Tudo roda dentro da Atlassian, e nada é enviado para fora.
+dataStatement: "Um registro de aceite só tem valor se disser quem confirmou qual versão e quando, então a macro Sign-off and Acknowledgement guarda o ID de conta Atlassian e o nome de exibição de quem confirmou, a versão da página e a hora. Status e classificação de página ficam como propriedades de conteúdo do Confluence, com o ID de conta de quem os definiu por último, então o próprio Confluence aplica as permissões e os apaga junto com a página. Tudo roda dentro da Atlassian, nada é enviado para fora, e desinstalar o app apaga o armazenamento dele."
+
+answerFirst: "Macros do Confluence acrescentam conteúdo dinâmico às páginas. O Expanded Macro Collection, app para o Confluence Cloud, traz mais 13, voltadas a governança e revisão: aceite de leitura por versão com CSV de auditoria, um selo de status com consolidação por espaço, classificação que segue para PDF e Word, relatórios de páginas desatualizadas, backlinks e tabelas de páginas filhas ordenáveis."
 
 audiences:
-  - Administradores de espaço do Confluence
-  - Gestores de conhecimento
-  - Responsáveis por conformidade e governança
-  - Times de qualidade e ISO
-  - Governança de TI
+  - "Administradores de espaço do Confluence"
+  - "Gestores de conhecimento"
+  - "Responsáveis por conformidade e governança"
+  - "Times de qualidade e ISO"
+  - "Governança de TI"
+
+problem:
+  heading: "A política está publicada. Agora prove que ela foi lida, revisada e mantida em dia."
+  body: "O Confluence registra edições e, nos planos pagos, visualizações. O auditor pergunta outra coisa: quem confirmou a versão 4, quais páginas ninguém revisa há um ano e o que ainda aponta para a página que você vai arquivar. Responder isso à mão significa exportações, planilhas e muitos cliques pelo histórico das páginas."
+  questions:
+    - "Quem já confirmou a versão atual desta política?"
+    - "Quais páginas deste espaço ninguém altera há um ano?"
+    - "O que ainda aponta para esta página antes de eu arquivá-la?"
 
 valueProps:
-  - title: Comprove que suas políticas foram lidas
-    body: Aceites por versão, com uma lista visível apenas para editores e exportação CSV em um clique para auditoria. Publique uma nova versão e a contagem recomeça.
+  - title: "Comprove que suas políticas foram lidas"
+    body: "O leitor confirma a versão atual com um botão. A macro registra quem, qual versão e quando, os editores veem a lista de confirmações e a aba Acknowledgements exporta um CSV para o auditor. Publique uma nova versão e todos confirmam de novo."
     icon: "✍️"
-  - title: Encontre toda página que aponta para esta
-    body: O app mantém seu próprio índice de links entre páginas, respeitando permissões, para você ver o que aponta para uma página antes de mover, renomear ou arquivar.
+  - title: "Veja status e páginas paradas em todo o espaço"
+    body: "O Status Rollup Report conta os valores do Page Status Badge em um espaço ou árvore de páginas e mostra as páginas por trás de cada número. O Stale Content Report lista as páginas sem alteração há 30, 90, 180 ou 365 dias, das mais antigas para as mais recentes."
+    icon: "📊"
+  - title: "Encontre toda página que aponta para esta"
+    body: "O app mantém seu próprio índice de links entre páginas, respeitando permissões, para você ver o que aponta para uma página antes de mover, renomear ou arquivar."
     icon: "🔗"
-  - title: Uma coleção, uma assinatura
-    body: Treze macros hoje, e as novas entram sem custo adicional em vez de virarem um segundo app.
-    icon: "📦"
+
+steps:
+  - title: "Instale pelo Atlassian Marketplace"
+    body: "Um administrador do site do Confluence instala o app pela página dele no Marketplace, onde começa o teste grátis. O app roda no Atlassian Forge, então não há servidor para montar, e o Referenced By e o Related Pages começam a indexar os links entre páginas em segundo plano."
+  - title: "Adicione uma macro a uma página"
+    body: "No editor, abra o navegador de macros e digite EMC para ver as 13 macros. Insira uma, ajuste as opções (o texto e a versão do aceite, um status, o escopo ou o prazo de um relatório) e publique."
+  - title: "Leia a resposta ou ajuste por espaço"
+    body: "Os leitores veem o selo, o aviso ou o botão de aceite na hora. Os administradores de espaço ajustam status e níveis de classificação em Space Settings, Integrations, Expanded Macro Collection, e exportam os aceites pela aba Acknowledgements quando o auditor pedir."
 
 featureGroups:
-  - name: Governança e conformidade
+  - name: "Governança e conformidade"
+    blurb: "Para políticas, procedimentos e tudo o que um auditor vai perguntar."
     items:
-      - "Sign-off and Acknowledgement: registros por versão, lista de confirmações visível a editores e exportação de auditoria do espaço"
-      - "Page Classification Banner: Público, Interno, Confidencial ou Restrito, impresso também nas exportações para PDF e Word"
-      - "Content Visibility: restrinja quem vê um trecho da página, por pessoa ou por papel no espaço"
-  - name: Navegação e descoberta
+      - "Sign-off and Acknowledgement: o leitor confirma cada versão, quem, qual versão e quando ficam registrados, os editores veem a lista e o espaço exporta um CSV para auditoria"
+      - "Page Classification Banner: Público, Interno, Confidencial ou Restrito por padrão, exibido como aviso e impresso nas exportações para PDF e Word"
+      - "Content Visibility: mostre parte de uma página só para as pessoas ou papéis no espaço que você escolher (um filtro de exibição, omitido nas exportações)"
+  - name: "Status de página e revisão"
+    blurb: "Em que pé está cada página, e quais ninguém olha há um bom tempo."
     items:
-      - "Referenced By: backlinks de verdade, entre espaços e respeitando permissões"
-      - "Related Pages: ordenadas pela força das conexões compartilhadas no grafo de links"
-      - "Numbered Headings: numeração automática na página e nas exportações"
-  - name: Relatórios administrativos
+      - "Page Status Badge: um status que avança com um clique, a partir de um conjunto definido por espaço, alterado só por editores"
+      - "Status Rollup Report: contagem dos selos em um espaço ou árvore de páginas, com as páginas por trás de cada número"
+      - "Review Reminder: um aviso na página quando ela passa de um número definido de dias sem atualização"
+      - "Stale Content Report: páginas sem alteração há 30, 90, 180 ou 365 dias, das mais antigas primeiro, com colunas opcionais de último editor e rótulos"
+  - name: "Navegação e descoberta"
+    blurb: "Veja o que se liga a uma página e o que fica abaixo dela."
     items:
-      - "Status Rollup Report: status de página contados em um espaço ou árvore, com detalhamento"
-      - "Stale Content Report: páginas sem alteração há 30, 90, 180 ou 365 dias, das mais antigas primeiro"
-      - "Advanced Children Display: tabelas de páginas filhas ordenáveis e filtráveis"
-      - "Page Metadata Card: autor, datas, versão, contagem de palavras e rótulos"
-  - name: Autoria
+      - "Referenced By: as páginas que apontam para esta, entre espaços, com páginas restritas contadas mas não nomeadas"
+      - "Related Pages: páginas que compartilham destinos de link com esta, ordenadas pelas conexões em comum"
+      - "Advanced Children Display: uma tabela de páginas filhas ordenável e filtrável, com status, rótulos, versão e contagem de palavras"
+  - name: "Autoria e exportações"
+    blurb: "Ajustes para documentos longos e para os PDFs gerados a partir deles."
     items:
-      - "Page Status Badge: um status de fluxo que avança com um clique, configurável por espaço"
-      - "Review Reminder: um aviso quando a página não é atualizada dentro do prazo"
-      - "PDF Page Divider: uma quebra de página forçada na exportação"
+      - "Numbered Headings: numeração 1, 1.1, 1.2 na página e nas exportações para PDF e Word"
+      - "Page Metadata Card: autor, datas, versão, contagem de palavras e rótulos em um cartão"
+      - "PDF Page Divider: uma quebra de página forçada na exportação para PDF, configurada uma vez por espaço"
+
+comparison:
+  heading: "O que já vem no Confluence Cloud e o que estas macros acrescentam"
+  intro: "O Confluence Cloud cobre parte disso sozinho, e mais nos planos Premium e Enterprise. Cada célula da coluna nativa segue a documentação da Atlassian, para você ver onde o recurso nativo já basta."
+  nativeLabel: "Nativo no Confluence Cloud"
+  rows:
+    - need: "Status de página"
+      native: "Quem pode editar define um status de conteúdo. Rough draft, In progress e Ready for review vêm sugeridos por padrão, e os administradores do espaço podem sugerir até cinco status. No Premium e no Enterprise, o gerenciador de conteúdo filtra um espaço por status."
+      app: "Page Status Badge: um status que avança com um clique, a partir de um conjunto definido por espaço (nomes, cores, ordem), alterado só por editores. O Status Rollup Report conta os selos em um espaço ou árvore de páginas e lista as páginas de cada contagem."
+    - need: "Revisão e aprovação"
+      native: "Aprovações, no Premium e no Enterprise: a página vai para aprovadores nomeados, que aprovam ou pedem mudanças, e o log de atividades guarda os ciclos anteriores. O gerenciador de conteúdo, nos mesmos planos, filtra páginas com última atividade entre mais de 7 dias e 6 meses atrás."
+      app: "Não há etapa de aprovação, então use a do Confluence. O Review Reminder avisa na própria página quando ela passa de um número definido de dias sem atualização, e o Stale Content Report lista as páginas sem alteração há 30, 90, 180 ou 365 dias em um espaço ou árvore, das mais antigas primeiro."
+    - need: "Confirmação de leitura"
+      native: "Os insights de conteúdo, do plano Standard para cima, mostram visualizações e visitantes únicos e resumem a última versão vista por cada leitor. O engajamento é medido pelo tempo na página: 20 segundos ou mais contam como leitura engajada."
+      app: "Sign-off and Acknowledgement: cada leitor confirma a versão atual com um clique. Quem, qual versão e quando ficam registrados, os editores veem a lista, o espaço exporta um CSV para auditoria e uma nova versão pede que todos confirmem de novo."
+    - need: "Classificação de páginas"
+      native: "Classificação de dados, com o Atlassian Guard Premium: os administradores da organização definem os níveis, quem tem acesso de edição ou regras automáticas os aplicam, o conteúdo classificado mostra um selo e os níveis podem refinar as políticas de segurança de dados."
+      app: "Page Classification Banner: um conjunto por espaço (Público, Interno, Confidencial e Restrito por padrão) exibido como aviso colorido e impresso nas exportações para PDF e Word, com consolidação por espaço e reclassificação em massa. Ele rotula páginas; não restringe acesso."
+    - need: "O que aponta para esta página"
+      native: "Nenhuma macro nativa lista na própria página os links que chegam até ela. A sugestão de criar uma (CONFCLOUD-35218) continua reunindo interesse no rastreador público da Atlassian."
+      app: "O Referenced By lista as páginas que apontam para esta, entre espaços, a partir do índice de links do próprio app, e conta as páginas restritas sem nomeá-las. O Related Pages ordena as páginas que compartilham destinos de link com esta."
+    - need: "Listas de páginas filhas"
+      native: "A macro de itens filhos (child items) lista conteúdo e pastas aninhados, até 9 níveis ou todos, ordenados pela árvore de conteúdo, pelo título ou pela data de criação, com prévia opcional do excerpt. Cada leitor vê só os itens que pode abrir."
+      app: "Advanced Children Display: uma tabela paginada com colunas de última alteração, criação, autor, status, rótulos, versão e contagem de palavras, que o leitor ordena e filtra, com as filhas diretas ou a árvore inteira."
 
 keyFeatures:
-  - 13 macros em um app
-  - Registros de aceite por versão
-  - Exportação CSV para auditoria
-  - Classificação de página em quatro níveis
-  - Classificação levada para as exportações
-  - Backlinks entre espaços
-  - Consolidações que respeitam permissões
-  - Configurações de espaço com quatro abas
-  - Novas macros sem custo adicional
+  - "13 macros em um app"
+  - "Registros de aceite por versão"
+  - "Exportação CSV para auditoria"
+  - "Consolidação de status de página"
+  - "Classificação levada para PDF e Word"
+  - "Backlinks entre espaços"
+  - "Relatórios de conteúdo desatualizado"
+  - "Respeita permissões em tudo"
+  - "Novas macros sem custo adicional"
 
 trustSignals:
-  - Respeita as permissões do Confluence do início ao fim
-  - Guarda registros de aceite por design
-  - Construído em Atlassian Forge
+  - "Respeita as permissões do Confluence do início ao fim"
+  - "Guarda registros de aceite por design"
+  - "Construído em Atlassian Forge"
 
 useCases:
-  - persona: Responsável por conformidade
-    job: Mostrar a um auditor quem confirmou a versão atual de uma política.
-    outcome: Uma lista de confirmações por versão e uma exportação CSV, sem precisar de uma ferramenta de conformidade separada.
-  - persona: Gestor de conhecimento
-    job: Descobrir o que ainda aponta para uma página antes de arquivá-la.
-    outcome: Uma lista de backlinks que respeita permissões, pronta antes de alguém mover a página.
-  - persona: Administrador de espaço
-    job: Ver quais páginas de um espaço ficaram desatualizadas ou nunca foram revisadas.
-    outcome: Consolidações de status e de desatualização em uma árvore inteira, em uma única macro.
+  - persona: "Responsável por conformidade"
+    job: "Mostrar a um auditor quem confirmou a versão atual de uma política."
+    outcome: "Uma lista de confirmações por versão e uma exportação CSV, sem precisar de uma ferramenta de conformidade separada."
+  - persona: "Gestor de conhecimento"
+    job: "Descobrir o que ainda aponta para uma página antes de arquivá-la."
+    outcome: "Uma lista de backlinks que respeita permissões, pronta antes de alguém mover a página."
+  - persona: "Administrador de espaço"
+    job: "Ver quais páginas de um espaço ficaram desatualizadas ou nunca foram revisadas."
+    outcome: "Consolidações de status e de desatualização em uma árvore de páginas inteira, com duas macros de relatório."
+
+faq:
+  - q: "Quais macros o Expanded Macro Collection adiciona ao Confluence?"
+    a: "Treze, em quatro grupos. Governança: Sign-off and Acknowledgement, Page Classification Banner e Content Visibility. Status e revisão: Page Status Badge, Status Rollup Report, Review Reminder e Stale Content Report. Navegação: Referenced By, Related Pages e Advanced Children Display. Autoria: Numbered Headings, Page Metadata Card e PDF Page Divider. Digite EMC no navegador de macros para ver todas. As novas macros entram na coleção sem custo adicional."
+  - q: "O Confluence Cloud já tem status de página nativo?"
+    a: "Sim. Quem pode editar uma página define um status de conteúdo, com Rough draft, In progress e Ready for review sugeridos por padrão e até cinco status sugeridos por espaço. O Page Status Badge é um status separado, mantido pelo app: os editores o avançam com um clique por um conjunto que você define em cada espaço, e o Status Rollup Report o conta em um espaço ou árvore de páginas. Se um rótulo na página basta, o status nativo resolve."
+  - q: "Como ter confirmação de leitura em uma página do Confluence?"
+    a: "Adicione a macro Sign-off and Acknowledgement à página. Cada leitor com acesso aperta o botão da versão atual, e a macro registra quem confirmou, qual versão e quando. Os editores veem a lista, e a aba Acknowledgements nas configurações do espaço exporta um CSV. Mude a versão e todos são chamados a confirmar de novo. Os insights de conteúdo do próprio Confluence contam visualizações, o que não é o mesmo que uma confirmação."
+  - q: "Que dados o Expanded Macro Collection guarda, e algum é pessoal?"
+    a: "Alguns, por design. Um aceite registra a página, a versão, a hora, o ID de conta Atlassian e o nome de exibição de quem confirmou, no momento da confirmação. Status e classificação são propriedades de conteúdo da página, com o valor, a data e o ID de conta de quem os definiu por último. O app também mantém um índice de links (IDs e títulos de páginas) e as configurações de cada espaço. Texto de páginas, comentários, anexos e endereços de e-mail não são guardados."
+  - q: "As pessoas vão ver páginas que não têm permissão para abrir?"
+    a: "Não. Toda macro lê o Confluence com as permissões de quem está vendo, então listas, consolidações e backlinks trazem só as páginas que essa pessoa pode abrir, e as páginas restritas aparecem apenas na contagem, sem título. Só quem edita a página muda o status ou a classificação, e só os editores veem a lista de aceites. O Content Visibility é um filtro de exibição para parte da página, não uma permissão: para conteúdo confidencial, use restrições de página."
+  - q: "O Expanded Macro Collection funciona no Confluence Data Center?"
+    a: "Não, ele é feito só para o Confluence Cloud. Roda no Atlassian Forge e tem o selo Runs on Atlassian: o código e os dados ficam na infraestrutura da Atlassian, o app não faz chamadas para nenhum serviço externo e não existe servidor da Numeric Oasis no caminho. Os logs de diagnóstico deixam de fora IDs de conta, conteúdo de páginas e payloads de requisição."
+  - q: "Como configurar as macros, e quem pode instalar o app?"
+    a: "Um administrador do site do Confluence instala o app pela página dele no Atlassian Marketplace, e as macros ficam disponíveis no navegador de macros logo em seguida. As opções por espaço (status, níveis de classificação, auditoria de aceites) ficam em Space Settings, Integrations, Expanded Macro Collection. O Referenced By e o Related Pages montam o índice de links em segundo plano. O único passo manual é um trecho de CSS por espaço, se você usar o PDF Page Divider."
+  - q: "Quanto custa o Expanded Macro Collection?"
+    a: "O preço está na página do app no Atlassian Marketplace, que é onde ele fica sempre atualizado. É um app pago com teste grátis, cobrado pela Atlassian, e é um único app para as treze macros: as novas entram na coleção sem custo adicional, em vez de serem vendidas à parte."
+
+relatedPosts:
+  - confluence-archiving-stale-content
+  - confluence-macros-cloud-migration
+  - confluence-cloud-permissions-explained
 
 screenshots:
   - image: ../../../assets/screenshots/expanded-macro-collection/01-macro-browser.jpg
     caption: "Um app, treze macros. Digitar EMC no navegador de macros do Confluence traz a coleção inteira, e novas macros entram nela sem custo adicional."
   - image: ../../../assets/screenshots/expanded-macro-collection/02-classification-and-signoff.jpg
     caption: "Uma página de política com as duas macros de governança: um aviso de classificação Confidencial que sobrevive à exportação para PDF e Word, e um aceite por versão que registra quem leu."
+    slot: hero
   - image: ../../../assets/screenshots/expanded-macro-collection/03-referenced-by.jpg
     caption: "O Referenced By listando as oito páginas que apontam para este manual, a partir do índice de links do próprio app, que respeita permissões."
 

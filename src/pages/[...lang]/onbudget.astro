@@ -102,7 +102,7 @@ const otherApps = (
   title={t.meta.title}
   description={d.answerFirst}
   metaDescription={d.metaDescription}
-  image={shot('hero')?.image}
+  image={d.ogImage ?? shot('hero')?.image}
   graph={{
     breadcrumbs: [{ name: t.meta.crumb, path: '/onbudget/' }],
     extraNodes: [softwareNode, faqNode],

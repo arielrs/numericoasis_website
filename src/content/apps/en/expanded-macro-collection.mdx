@@ -3,13 +3,13 @@ lang: en
 translationKey: expanded-macro-collection
 name: Expanded Macro Collection
 listingName: "Expanded Macro Collection"
-metaTitle: 'Expanded Macro Collection for Confluence'
-descriptor: "Governance and reporting macros for Confluence"
-metaDescription: "Thirteen Confluence macros for governance, content discovery and admin reporting. Sign-off, classification, page trees and space reports, in one app."
+metaTitle: "Confluence Macros for Page Status and Sign-off"
+descriptor: "Page status, sign-off and reporting macros for Confluence"
+metaDescription: "Thirteen Confluence macros: read sign-off with an audit CSV, page status rollups, classification banners, backlinks and stale page reports. Try it free."
 version: "2.0.0"
 dateModified: 2026-06-30
-tagline: Thirteen practical Confluence macros for governance, content discovery and admin reporting. One app, one subscription.
-description: Expanded Macro Collection turns Confluence into a governed, navigable, audit-ready knowledge base without leaving your pages. Capture per-version policy sign-offs with a one-click audit export, classify sensitive pages with a banner that survives PDF and Word export, surface every page that links to the one you are reading, and give admins permission-aware rollups of page status, staleness and content health.
+tagline: "Thirteen Confluence macros for read sign-off, page status, classification, backlinks and content reports. One app, one subscription."
+description: "Expanded Macro Collection is a Confluence Cloud app that adds 13 macros for governance, page status, content discovery and admin reporting. Readers acknowledge each policy version with a recorded sign-off, editors classify pages and advance their status, and space admins see stale pages, status rollups and what links to a page, all under each viewer's own Confluence permissions."
 marketplaceUrl: https://marketplace.atlassian.com/apps/1276117246/expanded-macro-collection
 documentationUrl: /documentation/expanded-macro-collection/overview/
 supportUrl: https://numericoasis.atlassian.net/servicedesk/customer/portal/39
@@ -18,88 +18,154 @@ hostProducts: ["confluence"]
 order: 3
 priceModel: paid
 icon: ../../../assets/logos/expanded-macro-collection.png
+ogImage: ../../../assets/og/expanded-macro-collection.jpg
 runsOnAtlassian: true
 storesPersonalData: true
-dataStatement: >-
-  A sign-off record is only worth having if it names who acknowledged which version and when, so
-  the Sign-off and Acknowledgement macro keeps exactly that. It is the reason this app holds personal
-  data where the rest of our range holds none. Page status and classification are stored
-  as Confluence content properties, which means Confluence enforces the permissions and deletes them
-  with the page. Everything runs inside Atlassian, and nothing is sent anywhere else.
+dataStatement: "A sign-off record is only worth having if it names who acknowledged which version and when, so the Sign-off and Acknowledgement macro keeps the signer's Atlassian account ID and display name, the page version and the time. Page status and classification are stored as Confluence content properties with the account ID of whoever last set them, so Confluence enforces the permissions and deletes them with the page. Everything runs inside Atlassian, nothing is sent anywhere else, and uninstalling deletes the app's storage."
+
+answerFirst: "Confluence macros add dynamic content to a page. Expanded Macro Collection is a Confluence Cloud app with 13 more of them, for governance and review: per-version read sign-off with an audit CSV, a page status badge with rollups across a space, classification banners that carry into PDF and Word, stale content reports, backlinks and sortable child-page tables."
 
 audiences:
-  - Confluence space admins
-  - Knowledge managers
-  - Compliance and governance officers
-  - Quality and ISO teams
-  - IT governance
+  - "Confluence space admins"
+  - "Knowledge managers"
+  - "Compliance and governance officers"
+  - "Quality and ISO teams"
+  - "IT governance"
+
+problem:
+  heading: "The policy is published. Now prove it was read, reviewed and kept current."
+  body: "Confluence records edits and, on paid plans, views. An auditor asks something else: who acknowledged version 4, which pages nobody has reviewed in a year, and what still links to the page you are about to archive. Answering that by hand means exports, spreadsheets and a lot of clicking through page history."
+  questions:
+    - "Who has acknowledged the current version of this policy?"
+    - "Which pages in this space has nobody touched in a year?"
+    - "What still links to this page before I archive it?"
 
 valueProps:
-  - title: Prove your policies were read
-    body: Per-version acknowledgements with an editor-only roster and a one-click CSV export for auditors. Publish a new version and the clock resets.
+  - title: "Prove your policies were read"
+    body: "Readers acknowledge the current version with one button. The macro records who, which version and when, editors see the roster, and the Acknowledgements tab exports a CSV for the auditor. Publish a new version and everyone signs again."
     icon: "✍️"
-  - title: Find every page that links to this one
-    body: The app keeps its own permission-aware index of links between pages, so you can see what points at a page before you move it, retitle it or archive it.
+  - title: "See status and staleness across a space"
+    body: "Status Rollup Report counts Page Status Badge values across a space or page tree and shows the pages behind each count. Stale Content Report lists pages untouched for 30, 90, 180 or 365 days, oldest first."
+    icon: "📊"
+  - title: "Find every page that links to this one"
+    body: "The app keeps its own permission-aware index of links between pages, so you can see what points at a page before you move it, retitle it or archive it."
     icon: "🔗"
-  - title: One collection, one subscription
-    body: Thirteen macros today, and new ones are added at no extra cost rather than sold as a second app.
-    icon: "📦"
+
+steps:
+  - title: "Install it from the Atlassian Marketplace"
+    body: "A Confluence site admin installs the app from its Marketplace listing, where the free trial starts. It runs on Atlassian Forge, so there is no server to set up, and Referenced By and Related Pages start indexing the links between pages in the background."
+  - title: "Add a macro to a page"
+    body: "In the editor, open the macro browser and type EMC to see all 13 macros. Insert one, set its options (the sign-off statement and version, a status, a report's scope or threshold) and publish."
+  - title: "Read the answer, or tune it per space"
+    body: "Readers see the badge, banner or sign-off button straight away. Space admins adjust statuses and classification levels under Space Settings, Integrations, Expanded Macro Collection, and export acknowledgements from the Acknowledgements tab when the auditor asks."
 
 featureGroups:
-  - name: Governance and compliance
+  - name: "Governance and compliance"
+    blurb: "For policies, procedures and anything an auditor will ask about."
     items:
-      - "Sign-off and Acknowledgement: per-version signer records, an editor-only roster, and a space-wide audit export"
-      - "Page Classification Banner: Public, Internal, Confidential or Restricted, stamped into PDF and Word exports"
-      - "Content Visibility: restrict who sees part of a page, by user or by space role"
-  - name: Navigation and discovery
+      - "Sign-off and Acknowledgement: readers confirm each version, the signer, version and time are recorded, editors see the roster, and the space exports a CSV for auditors"
+      - "Page Classification Banner: Public, Internal, Confidential or Restricted by default, shown as a banner and stamped into PDF and Word exports"
+      - "Content Visibility: show part of a page only to chosen users or space roles (a display filter, left out of exports)"
+  - name: "Page status and review"
+    blurb: "Where each page stands, and which ones nobody has looked at in a while."
     items:
-      - "Referenced By: real backlinks, cross-space and permission-aware"
-      - "Related Pages: ranked by shared connections in the link graph"
-      - "Numbered Headings: automatic numbering on the page and in exports"
-  - name: Admin reporting
+      - "Page Status Badge: a click-to-advance status from a set you define per space, changed only by editors"
+      - "Status Rollup Report: badge counts across a space or page tree, with the pages behind each count"
+      - "Review Reminder: a warning on the page once it goes a set number of days without an update"
+      - "Stale Content Report: pages untouched for 30, 90, 180 or 365 days, oldest first, with optional last editor and labels columns"
+  - name: "Navigation and discovery"
+    blurb: "See what connects to a page and what sits under it."
     items:
-      - "Status Rollup Report: page statuses counted across a space or tree, with drill-down"
-      - "Stale Content Report: pages untouched for 30, 90, 180 or 365 days, oldest first"
-      - "Advanced Children Display: sortable, filterable child-page tables"
-      - "Page Metadata Card: author, dates, version, word count and labels"
-  - name: Authoring
+      - "Referenced By: the pages that link here, across spaces, with restricted pages counted but not named"
+      - "Related Pages: pages that share link targets with this one, ranked by connections in common"
+      - "Advanced Children Display: a sortable, filterable table of child pages with status, labels, version and word count"
+  - name: "Authoring and exports"
+    blurb: "Fixes for long documents and the PDFs made from them."
     items:
-      - "Page Status Badge: a click-to-advance workflow status, configurable per space"
-      - "Review Reminder: a warning when a page has not been updated in time"
-      - "PDF Page Divider: a forced page break in PDF export"
+      - "Numbered Headings: 1, 1.1, 1.2 numbering on the page and in PDF and Word exports"
+      - "Page Metadata Card: author, dates, version, word count and labels in one card"
+      - "PDF Page Divider: a forced page break in PDF export, set up once per space"
+
+comparison:
+  heading: "Built into Confluence Cloud, and what these macros add"
+  intro: "Confluence Cloud covers part of this on its own, and more on Premium and Enterprise. Each built-in cell below follows Atlassian's documentation, so you can see where the native feature is enough."
+  nativeLabel: "Built into Confluence Cloud"
+  rows:
+    - need: "Page status"
+      native: "Anyone who can edit sets a content status. Rough draft, In progress and Ready for review are suggested by default, and space admins can suggest up to five statuses. On Premium and Enterprise, the content manager filters a space by status."
+      app: "Page Status Badge: a click-to-advance status from a set you define per space (names, colours, order), changed only by editors. Status Rollup Report counts the badges across a space or page tree and lists the pages behind each count."
+    - need: "Review and approval"
+      native: "Approvals, on Premium and Enterprise: a page goes to named approvers, who approve or request changes, and the activity log keeps past cycles. The content manager on the same plans filters for pages last active more than 7 days to 6 months ago."
+      app: "No approval step, so use Confluence's. Review Reminder warns on the page once it goes a set number of days without an update, and Stale Content Report lists pages untouched for 30, 90, 180 or 365 days across a space or tree, oldest first."
+    - need: "Read confirmation"
+      native: "Content insights, on Standard and above, chart views and unique viewers and summarise the last version each viewer saw. Engagement is measured by time on the page: 20 seconds or more counts as engaged."
+      app: "Sign-off and Acknowledgement: each reader confirms the current version with one click. Signer, version and time are recorded, editors see the roster, the space exports a CSV for auditors, and a new version asks everyone to sign again."
+    - need: "Page classification"
+      native: "Data classification, with Atlassian Guard Premium: org admins define the levels, people with edit access or automatic rules apply them, classified content shows a badge, and levels can fine-tune data security policies."
+      app: "Page Classification Banner: a per-space set (Public, Internal, Confidential and Restricted by default) shown as a coloured banner and stamped into PDF and Word exports, with a space rollup and bulk re-classify. It labels pages; it does not restrict access."
+    - need: "What links to this page"
+      native: "No built-in macro lists a page's incoming links on the page itself. The suggestion for one (CONFCLOUD-35218) is still gathering interest on Atlassian's public tracker."
+      app: "Referenced By lists the pages that link here, across spaces, from the app's own link index, counting restricted pages without naming them. Related Pages ranks pages that share link targets with this one."
+    - need: "Child page lists"
+      native: "The child items macro lists nested content and folders, up to 9 levels or all of them, sorted by content tree, title or created date, with an optional excerpt preview. Viewers see only items they can open."
+      app: "Advanced Children Display: a paginated table with last modified, created, author, status, labels, version and word count columns that readers sort and filter, for direct children or the full tree."
 
 keyFeatures:
-  - 13 macros in one app
-  - Per-version sign-off records
-  - Auditor CSV export
-  - Four-level page classification
-  - Classification carried into exports
-  - Cross-space backlinks
-  - Permission-aware rollups
-  - Space settings with four admin tabs
-  - New macros at no extra cost
+  - "13 macros in one app"
+  - "Per-version sign-off records"
+  - "Auditor CSV export"
+  - "Page status rollups"
+  - "Classification carried into PDF and Word"
+  - "Cross-space backlinks"
+  - "Stale content reports"
+  - "Permission-aware throughout"
+  - "New macros at no extra cost"
 
 trustSignals:
-  - Respects Confluence permissions throughout
-  - Keeps sign-off records by design
-  - Built on Atlassian Forge
+  - "Respects Confluence permissions throughout"
+  - "Keeps sign-off records by design"
+  - "Built on Atlassian Forge"
 
 useCases:
-  - persona: Compliance officer
-    job: Show an auditor who acknowledged the current version of a policy.
-    outcome: A per-version signer roster and a CSV export, without a separate compliance tool.
-  - persona: Knowledge manager
-    job: Find out what still points at a page before archiving it.
-    outcome: A permission-aware backlink list, ready before anyone moves the page.
-  - persona: Space admin
-    job: See which pages in a space have gone stale or were never reviewed.
-    outcome: Staleness and status rollups across a whole tree, in one macro.
+  - persona: "Compliance officer"
+    job: "Show an auditor who acknowledged the current version of a policy."
+    outcome: "A per-version signer roster and a CSV export, without a separate compliance tool."
+  - persona: "Knowledge manager"
+    job: "Find out what still points at a page before archiving it."
+    outcome: "A permission-aware backlink list, ready before anyone moves the page."
+  - persona: "Space admin"
+    job: "See which pages in a space have gone stale or were never reviewed."
+    outcome: "Staleness and status rollups across a whole page tree, from two report macros."
+
+faq:
+  - q: "What macros does Expanded Macro Collection add to Confluence?"
+    a: "Thirteen, in four groups. Governance: Sign-off and Acknowledgement, Page Classification Banner and Content Visibility. Page status and review: Page Status Badge, Status Rollup Report, Review Reminder and Stale Content Report. Navigation: Referenced By, Related Pages and Advanced Children Display. Authoring: Numbered Headings, Page Metadata Card and PDF Page Divider. Type EMC in the macro browser to see them all. New macros join the collection at no extra cost."
+  - q: "Does Confluence Cloud have page status built in?"
+    a: "Yes. Anyone who can edit a page can set a content status, with Rough draft, In progress and Ready for review suggested by default and up to five suggested statuses per space. The Page Status Badge is a separate status kept by this app: editors advance it with a click through a set you define per space, and the Status Rollup Report counts it across a space or page tree. If a label on the page is all you need, the built-in status is enough."
+  - q: "How do I get read confirmation on a Confluence page?"
+    a: "Add the Sign-off and Acknowledgement macro to the page. Each reader who can open it presses the button for the current version, and the macro records who signed, which version and when. Editors see the roster, and the Acknowledgements tab in space settings exports a CSV. Change the version and everyone is asked to sign again. Confluence's own content insights count views, which is not the same as a confirmation."
+  - q: "What data does Expanded Macro Collection store, and is any of it personal?"
+    a: "Some, by design. A sign-off records the page, the version, the time, and the signer's Atlassian account ID and display name at the moment of signing. Page status and classification are content properties on the page holding the value, a timestamp and the account ID of whoever last set it. The app also keeps a link index of page IDs and titles, and per-space settings. It does not store page text, comments, attachments or email addresses."
+  - q: "Will people see pages they do not have permission to open?"
+    a: "No. Every macro reads Confluence with the viewer's own permissions, so lists, rollups and backlinks include only pages that person can open, and restricted pages appear as a count without their titles. Only people who can edit a page change its status or classification, and only editors see the sign-off roster. Content Visibility is a display filter for part of a page, not a permission, so use page restrictions for anything confidential."
+  - q: "Does Expanded Macro Collection work on Confluence Data Center?"
+    a: "No, it is built for Confluence Cloud only. It runs on Atlassian Forge and carries the Runs on Atlassian label: the code and the data stay on Atlassian's infrastructure, the app makes no outbound calls to any outside service, and there is no Numeric Oasis server in the path. Diagnostic logs leave out account IDs, page content and request payloads."
+  - q: "How do I set up the macros, and who can install the app?"
+    a: "A Confluence site admin installs it from the Atlassian Marketplace listing, and the macros are ready in the macro browser straight away. Per-space options (statuses, classification levels, the acknowledgement audit) are under Space Settings, Integrations, Expanded Macro Collection. Referenced By and Related Pages build their link index in the background. The one manual step is a one-time CSS snippet per space if you use the PDF Page Divider."
+  - q: "How much does Expanded Macro Collection cost?"
+    a: "Pricing is on the Atlassian Marketplace listing, which is where it stays current. It is a paid app with a free trial, paid via Atlassian, and it is one app for all thirteen macros: new macros are added to the collection at no extra cost rather than sold separately."
+
+relatedPosts:
+  - confluence-archiving-stale-content
+  - confluence-macros-cloud-migration
+  - confluence-cloud-permissions-explained
 
 screenshots:
   - image: ../../../assets/screenshots/expanded-macro-collection/01-macro-browser.jpg
     caption: "One app, thirteen macros. Typing EMC in the Confluence macro browser brings up the whole collection, and new macros join it at no extra cost."
   - image: ../../../assets/screenshots/expanded-macro-collection/02-classification-and-signoff.jpg
     caption: "A policy page carrying both governance macros: a Confidential classification banner that survives PDF and Word export, and a per-version acknowledgement that records who has read it."
+    slot: hero
   - image: ../../../assets/screenshots/expanded-macro-collection/03-referenced-by.jpg
     caption: "Referenced By listing the eight pages that link to this handbook, drawn from the app's own permission-aware index of page links."
 
