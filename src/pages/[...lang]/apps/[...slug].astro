@@ -407,7 +407,20 @@ const faqNode: JsonLdNode | undefined =
         {d.comparison.intro && (
           <p class="mt-5 max-w-3xl text-base leading-relaxed text-slate-600">{d.comparison.intro}</p>
         )}
-        <div class="mt-10 overflow-x-auto rounded-2xl border border-sand-200 bg-paper">
+        <!-- Phones get one card per row, so the app's answer is on screen
+             without a sideways scroll; the table takes over from tablet width. -->
+        <div class="mt-8 space-y-4 md:hidden">
+          {d.comparison.rows.map((row) => (
+            <div class="rounded-2xl border border-sand-200 bg-paper p-5">
+              <h3 class="font-semibold text-brand-900">{row.need}</h3>
+              <p class="mt-3 text-xs font-semibold uppercase tracking-[0.1em] text-brand-700">{d.comparison!.nativeLabel}</p>
+              <p class="mt-1 text-sm leading-relaxed text-slate-600">{row.native}</p>
+              <p class="mt-3 text-xs font-semibold uppercase tracking-[0.1em] text-water-700">{d.name}</p>
+              <p class="mt-1 text-sm leading-relaxed text-brand-900">{row.app}</p>
+            </div>
+          ))}
+        </div>
+        <div class="mt-10 hidden overflow-x-auto rounded-2xl border border-sand-200 bg-paper md:block">
           <table class="w-full min-w-[40rem] border-collapse text-left text-sm">
             <thead>
               <tr class="border-b border-sand-300">
