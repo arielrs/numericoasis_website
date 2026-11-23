@@ -26,7 +26,7 @@ Los SLA están en la configuración del espacio de servicio, en **Request manage
 
 - **Condiciones.** "Start counting time when" (empezar a contar cuando), "Pause counting time when" (pausar cuando, opcional) y "Finish counting time when" (terminar cuando). Cada una admite uno o varios eventos, como Issue Created, Entered Status, Comment: For Customers o Resolution: Set. Varias condiciones de inicio significan "cualquiera de ellas".
 - **Objetivos.** Filas de JQL, cada una con un tiempo objetivo y un calendario. Los elementos de trabajo se comparan con los objetivos de arriba abajo.
-- **Calendarios.** Días laborables, franjas horarias, festivos y zona horaria. Los calendarios nuevos vienen con 09:00 a 17:00 por defecto.
+- **Calendarios.** Días laborables, franjas horarias, festivos y zona horaria. Los calendarios nuevos [vienen con 09:00 a 17:00 por defecto](https://support.atlassian.com/jira-service-management-cloud/docs/set-up-sla-calendars/).
 
 La mayoría de los espacios de servicio empiezan con SLA como Time to first response y Time to resolution. Tómalos como punto de partida, no como un diseño terminado.
 
@@ -55,7 +55,7 @@ Si quieres ver el tiempo de espera por otro equipo o por un proveedor, dale un S
 
 Un objetivo de cuatro horas no significa lo mismo a las 16:00 de un viernes que a las 09:00 de un martes. Crea un calendario por cada horario de soporte que de verdad cubres, cada uno con su zona horaria y sus festivos, y asígnalo a los objetivos que correspondan. Si los incidentes críticos tienen guardia 24/7 y todo lo demás va en horario laboral, son dos objetivos con dos calendarios, no un término medio.
 
-Comprueba que todos los calendarios tengan días laborables definidos. La base de conocimientos de Atlassian describe SLA que se pausan nada más empezar porque la semana laboral del calendario se quedó vacía.
+Comprueba que todos los calendarios tengan días laborables definidos. La [base de conocimientos de Atlassian](https://support.atlassian.com/jira/kb/slas-are-being-paused-as-soon-as-they-have-started/) describe SLA que se pausan nada más empezar porque la semana laboral del calendario se quedó vacía.
 
 ## ¿Debe un único objetivo de SLA cubrir todas las solicitudes?
 
@@ -70,13 +70,15 @@ issuetype = "Service Request"                 -> 24h, horario laboral
 Resto de elementos de trabajo                 -> 40h, horario laboral
 ```
 
-El orden importa porque se aplica el primer objetivo que coincide, así que pon la JQL más concreta arriba. También puedes agrupar varias prioridades bajo un mismo objetivo, y Atlassian indica que un objetivo agrupado sigue contando como uno solo, lo que ayuda si te acercas al límite de objetivos. Cuando cambia la prioridad de un elemento de trabajo, el temporizador ajusta el tiempo restante al objetivo de la nueva prioridad.
+El orden importa porque se aplica el primer objetivo que coincide, así que pon la JQL más concreta arriba. También puedes agrupar varias prioridades bajo un mismo objetivo, y Atlassian indica que [un objetivo agrupado sigue contando como uno solo](https://support.atlassian.com/jira-service-management-cloud/docs/use-priority-to-group-sla-goals/), lo que ayuda si te acercas al límite de objetivos. Cuando cambia la prioridad de un elemento de trabajo, el temporizador ajusta el tiempo restante al objetivo de la nueva prioridad.
+
+![El SLA Time to resolution en la configuración de un espacio de Jira Service Management, con un objetivo para incidentes que agrupa las prioridades Highest, High, Medium y Low con metas de 12, 24, 36 y 48 horas en un calendario de 9 a 17](../../../assets/blog/screens/jsm-sla-goals-by-priority.webp)
 
 ## Las trampas que hacen engañoso un informe de SLA
 
 - **Medir la resolución de trabajo sin dueño.** Si los elementos de trabajo esperan sin asignar en una cola compartida, Time to resolution mide la cola, no al equipo. Añade un SLA corto de tiempo hasta la asignación (empieza en Issue Created y termina en Assignee: From Unassigned) para ver dónde está de verdad la espera.
 - **Parar con un evento que no buscabas.** Resolution: Set también se dispara cuando una regla de automatización cierra solicitudes abandonadas. Decide si esos cierres deben contar como objetivo cumplido.
-- **Olvidar las solicitudes reabiertas.** Un elemento de trabajo reabierto inicia un nuevo ciclo de SLA. La función JQL `breached()` mira solo el último ciclo, mientras que `everBreached()` detecta un incumplimiento en cualquier ciclo. Usa la segunda cuando informes sobre la experiencia del cliente.
+- **Olvidar las solicitudes reabiertas.** Un elemento de trabajo reabierto inicia un nuevo ciclo de SLA. La función JQL `breached()` [mira solo el último ciclo](https://support.atlassian.com/jira-service-management-cloud/docs/jql-functions/), mientras que `everBreached()` detecta un incumplimiento en cualquier ciclo. Usa la segunda cuando informes sobre la experiencia del cliente.
 - **Cambiar las reglas sin dejar constancia.** Registra con fecha cada cambio de SLA, para que un salto en las cifras del trimestre siguiente se pueda interpretar.
 
 ## ¿Cómo se informa sobre los SLA en Jira Service Management?

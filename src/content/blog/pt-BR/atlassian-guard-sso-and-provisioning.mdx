@@ -33,13 +33,13 @@ Os preços mudam, então consulte os [preços do Atlassian Guard](https://www.at
 
 No Atlassian Administration, selecione **Directory** e depois **Domains**, e verifique cada domínio da empresa por um registro DNS TXT ou por um arquivo HTML no seu servidor web. Organizações que usam Google Workspace ou Microsoft Entra ID também podem verificar pela conexão com esse provedor de identidade.
 
-Mantenha o registro DNS ou o arquivo no lugar para sempre. Se ele for removido, o domínio pode perder o status de verificado, e as políticas de segurança aplicadas a ele, incluindo o login único via SAML, deixam de valer.
+Mantenha o registro DNS ou o arquivo no lugar para sempre. Se ele for removido, o domínio pode [perder o status de verificado](https://support.atlassian.com/user-management/docs/verify-a-domain-to-manage-accounts/), e as políticas de segurança aplicadas a ele, incluindo o login único via SAML, deixam de valer.
 
 Depois, reivindique as contas desse domínio, o que as transforma em contas gerenciadas que você pode editar, desativar e às quais pode aplicar políticas. Dá para reivindicar todas, incluindo as novas à medida que forem criadas, ou enviar um CSV com endereços específicos. Exporte a lista e revise antes: ela costuma ter caixas de e-mail compartilhadas e contas de teste antigas. Os usuários são avisados quando a conta passa a ser gerenciada.
 
 ## Garanta que você sempre consiga voltar a entrar
 
-Antes de configurar o SAML, crie uma conta de administrador da organização com um e-mail de um domínio que você não verificou e coloque-a numa política de autenticação que não exija login único. A Atlassian recomenda exatamente isso, porque o SSO só vale para contas dos seus domínios verificados. Dê a essa conta credenciais fortes e verificação em duas etapas, guarde-as no cofre de senhas e registre quem pode usá-la.
+Antes de configurar o SAML, crie uma conta de administrador da organização com um e-mail de um domínio que você não verificou e coloque-a numa política de autenticação que não exija login único. [A Atlassian recomenda exatamente isso](https://support.atlassian.com/security-and-access-policies/docs/configure-saml-single-sign-on-with-an-identity-provider/), porque o SSO só vale para contas dos seus domínios verificados. Dê a essa conta credenciais fortes e verificação em duas etapas, guarde-as no cofre de senhas e registre quem pode usá-la.
 
 Se algo der errado, excluir a configuração de SAML faz as pessoas voltarem a conseguir entrar nos apps da Atlassian.
 
@@ -58,7 +58,7 @@ Salvar a configuração de SAML não desconecta os usuários atuais, então uma 
 
 ## Exija o SSO por políticas de autenticação, em etapas
 
-As políticas de autenticação definem como as contas gerenciadas fazem login: login único, verificação em duas etapas, regras de senha e tempo de sessão ociosa. Toda organização tem uma política padrão, e com o Guard Standard você pode criar até vinte. Os usuários ficam na política padrão até você movê-los.
+As políticas de autenticação definem como as contas gerenciadas fazem login: login único, verificação em duas etapas, regras de senha e tempo de sessão ociosa. Toda organização tem uma política padrão, e com o Guard Standard você pode [criar até vinte](https://support.atlassian.com/security-and-access-policies/docs/understand-authentication-policies/). Os usuários ficam na política padrão até você movê-los.
 
 Uma implantação que não deixa ninguém de fora:
 
@@ -73,7 +73,7 @@ Usuários externos, as pessoas de outras empresas que usam os seus sites, ficam 
 
 O provisionamento de usuários usa SCIM 2.0 para sincronizar usuários e grupos do seu provedor de identidade com a sua organização Atlassian. Ele cria contas, mantém os dados atualizados e as desativa quando você as exclui no provedor de identidade. Os grupos sincronizados ficam somente leitura na Atlassian: você altera a associação no provedor e concede acesso aos apps atribuindo esses grupos aos apps.
 
-A Atlassian lista Okta, OneLogin, Microsoft Entra ID (antigo Azure AD), Cisco Duo, Google Workspace, PingFederate e JumpCloud entre os provedores de identidade suportados; os demais podem usar a API de provisionamento de usuários.
+A Atlassian lista Okta, OneLogin, Microsoft Entra ID (antigo Azure AD), Cisco Duo, Google Workspace, PingFederate e JumpCloud entre os [provedores de identidade suportados](https://support.atlassian.com/provisioning-users/docs/understand-user-provisioning/); os demais podem usar a API de provisionamento de usuários.
 
 As armadilhas são quase todas de nome de grupo:
 

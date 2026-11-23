@@ -14,7 +14,7 @@ heroImageAlt: 'Flat illustration: a rounded navy robot shape with a plain screen
 
 *Most first agents are general assistants nobody asked for. The ones that get used do one job well.*
 
-To create a Rovo agent, open Studio, select **Agents**, then **Create** under Rovo agent. Describe what you want in plain language and the builder drafts a name, instructions and conversation starters, or skip to manual setup and fill in each part yourself. You can also start from Rovo Chat with **Create agent**, or from the assignee picker on a Jira work item.
+To create a Rovo agent, open Rovo Studio, select **Agents**, then **Create an agent**. Describe what you want in plain language and the builder drafts a name, instructions and conversation starters, or select **Start from blank** and fill in each part yourself. You can also start from Rovo Chat with **Create agent**, or from the assignee picker on a Jira work item.
 
 The clicks take minutes. Whether anyone uses the agent a month later is decided before that, by how narrow its job is, and after it, by how you test it with real questions.
 
@@ -32,16 +32,18 @@ Write the job down as one sentence. Then collect ten real questions people asked
 
 ## How do you create a Rovo agent in Studio?
 
-Open Studio from the app switcher, select **Agents**, then **Create** under Rovo agent. Either describe the agent and let the builder draft it, then review and select **Create**, or choose **Skip to manual setup**, fill in the identity and subagent sections, and select **Activate**. Either way the agent is published when you finish.
+Open Rovo Studio from the app switcher, select **Agents**, then **View all agents** and **Create an agent**. A dialog asks what the agent should do: describe it and let the builder draft it, or select **Start from blank** to set it up yourself. Starting from blank saves a draft right away, and it is only published when you select **Publish**. [Atlassian's guide to creating agents](https://support.atlassian.com/rovo/docs/create-and-edit-agents/) still names the older buttons (**Create** under Rovo agent, **Skip to manual setup** and **Activate**), so you may see either set of labels.
 
-Manual setup gives you more control and makes each decision visible. The identity section holds:
+Manual setup gives you more control and makes each decision visible. The agent's details page holds:
 
 - **Name.** Say what it does: "Expense policy helper", not "Penny".
 - **Description.** Shown when people browse for agents, so write it for them: what to ask, what not to ask.
-- **Behavior.** Instructions that apply in every situation, such as the agent's role and tone.
+- **Instructions.** What applies in every situation, such as the agent's role and tone.
 - **Conversation starters.** Suggested first questions. Use three of your ten test questions; left blank, Rovo shows generic ones.
 
-Below that, a **subagent** groups instructions, skills, tools, knowledge and reasoning depth. The first set you configure becomes the default subagent, which handles every prompt no other subagent picks up. For a first agent, the default subagent is all you need.
+The same page sets the agent's **Skills**, **Tools**, **Knowledge** (all site knowledge until you narrow it) and **Reasoning** (quick answers by default), and whether it may use **Web search**. **Subagents** are optional, for an agent that needs different instructions for different kinds of request. For a first agent, leave them out.
+
+![The details page of a new draft agent in Rovo Studio, with its name and description at the top, then skills, tools, knowledge, reasoning, instructions, web search, conversation starters and subagents, and Test and Publish buttons](../../../assets/blog/screens/rovo-studio-agent-details.webp)
 
 ## Write instructions like a brief to a new colleague
 
@@ -66,11 +68,11 @@ Knowledge is the content the agent searches: specific Confluence spaces, Jira sp
 Two things to check before you connect a source:
 
 1. **Is it current?** The agent will quote an outdated page as readily as the current one. Archive what is stale first.
-2. **Can the audience read it?** Atlassian is explicit that agents can only access information the person using them has permission to view or edit. If the expense policy sits in a space half the company cannot open, half the company will get poor answers.
+2. **Can the audience read it?** [Atlassian is explicit](https://support.atlassian.com/rovo/docs/rovo-agent-permissions-and-governance/) that agents can only access information the person using them has permission to view or edit. If the expense policy sits in a space half the company cannot open, half the company will get poor answers.
 
 ## Add only the tools the job needs
 
-Tools, which some guides still call actions, let the agent do things: search work items, create a work item, add a comment, update a page. Atlassian recommends no more than five tools per agent for performance.
+Tools, which some guides still call actions, let the agent do things: search work items, create a work item, add a comment, update a page. Atlassian recommends [no more than five tools](https://support.atlassian.com/rovo/docs/create-and-edit-agents/) per agent for performance.
 
 Start read-only. Add tools that write only after the answers have proved reliable, and remember that the agent acts on behalf of the person using it, with their permissions. Reasoning depth is a separate setting that balances speed, cost and quality; deeper reasoning uses more [Rovo credits](https://support.atlassian.com/rovo/docs/rovo-usage-limits/), so raise it only if answers need it.
 
@@ -90,11 +92,11 @@ Under **Users and permissions**, set up ownership so the agent outlives a reorga
 - **Editors** can change it; **managers** can also add editors and delete it.
 - The author display name can be a team instead of a person.
 
-Add at least one manager besides yourself. Organization admins also decide who may create agents in the first place; if you have not set that yet, see [how to enable Rovo](/blog/before-you-turn-on-rovo/).
+Add at least one manager besides yourself. Studio admins also decide who may create agents in the first place; if you have not set that yet, see [how to enable Rovo](/blog/before-you-turn-on-rovo/).
 
 ## How do you measure whether people use a Rovo agent?
 
-Open the agent in Studio and select **Insights**. It shows average daily users and total conversations over a date range, by default the last 31 days, and you can add both as charts to a dashboard in Atlassian Home. Atlassian labels agent insights as an open beta at the time of writing.
+Open the agent in Studio and select **Insights**. It shows average daily users and total conversations over a date range, by default the last 31 days, and you can add both as charts to a dashboard in Atlassian Home. Atlassian labels [agent insights](https://support.atlassian.com/rovo/docs/track-how-often-a-rovo-agent-is-used/) as an open beta at the time of writing.
 
 Numbers tell you whether people come back; they do not tell you whether the answers were right. Pair them with a monthly check: rerun the test set, read a sample of real conversations if your process allows it, and ask three regular users what they would change. Decide in advance what success looks like, for example a share of the target audience using it weekly, and retire agents that miss it.
 

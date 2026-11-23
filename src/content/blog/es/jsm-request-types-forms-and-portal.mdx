@@ -24,6 +24,8 @@ Un tipo de solicitud es la puerta de entrada del cliente a un espacio de servici
 
 Se gestionan en la configuración del espacio, en **Request management** (gestión de solicitudes) y después **Request types** (tipos de solicitud). Cada uno tiene un grupo del portal, un formulario de solicitud (lo que rellena el cliente), una vista del elemento de trabajo (lo que ve el agente) y nombres orientados al cliente para los estados del workflow. Esto último importa más de lo que parece: un cliente que ve "Pendiente de aprobación" entiende mejor su solicitud que uno que ve "Triaje N2".
 
+![Tipos de solicitud en la configuración de un espacio de Jira Service Management: Get IT help, Onboard new employees, Request a new account, Request new hardware, Request new software y Emailed request, cada uno crea un elemento de trabajo Service request](../../../assets/blog/screens/jsm-request-types-list.webp)
+
 ## Nombra los tipos de solicitud como el cliente describe el problema
 
 El error de portal más habitual es nombrar los tipos de solicitud según el equipo o el sistema que los atiende: "Gestión de accesos", "Soporte ERP", "Hardware N1". Un cliente cuyo portátil no carga no sabe cuál de ellos es el suyo.
@@ -40,7 +42,7 @@ Para dar con las palabras, lee los resúmenes de las últimas cien solicitudes q
 
 ## ¿Cuántos tipos de solicitud debe tener un grupo del portal?
 
-Mantén cada grupo lo bastante corto como para leerlo de un vistazo. Atlassian recomienda agrupar los tipos de solicitud cuando el portal supera los siete, y los grupos solo aparecen en el portal si hay más de uno. Un tipo de solicitud puede estar en varios grupos, así que puede aparecer allí donde el cliente lo buscaría.
+Mantén cada grupo lo bastante corto como para leerlo de un vistazo. La [documentación de Data Center de Atlassian](https://confluence.atlassian.com/servicemanagementserver110/setting-up-request-types-1627463510.html) recomienda agrupar los tipos de solicitud cuando el portal tiene siete o más, y [los grupos solo aparecen en el portal](https://support.atlassian.com/jira-service-management-cloud/docs/organize-request-types-into-portal-groups/) si hay más de uno. Un tipo de solicitud puede estar en varios grupos, así que puede aparecer allí donde el cliente lo buscaría.
 
 Agrupa según el objetivo del cliente, no según tus equipos: "Algo no funciona", "Pedir acceso", "Comprar o solicitar algo", "Hacer una consulta". Pon los tipos más usados arriba en cada grupo.
 
@@ -48,7 +50,7 @@ Agrupa según el objetivo del cliente, no según tus equipos: "Algo no funciona"
 
 Los formularios son un generador de formularios dentro del espacio de servicio. Cuando adjuntas un formulario a un tipo de solicitud, el cliente lo ve como parte del formulario de solicitud de ese tipo, junto con los campos de Jira ya configurados. Los formularios aportan lo que el formulario de solicitud básico no tiene, como secciones que solo aparecen según las respuestas anteriores.
 
-Hay dos formas de adjuntar uno: abrir el tipo de solicitud y elegir **Attach form** (crear desde una plantilla o seleccionar un formulario existente), o abrir el formulario desde **Forms**, ir a **Settings** y activar **Attach to request types**.
+Hay [dos formas de adjuntar uno](https://support.atlassian.com/jira-service-management-cloud/docs/add-a-form-to-the-portal-form-for-a-request-type/): abrir el tipo de solicitud y elegir **Attach form** (crear desde una plantilla o seleccionar un formulario existente), o abrir el formulario desde **Forms**, ir a **Settings** y activar **Attach to request types**.
 
 Unas cuantas reglas mantienen útiles los formularios:
 
@@ -61,7 +63,7 @@ Unas cuantas reglas mantienen útiles los formularios:
 
 Algunos valores los necesita el equipo, pero el cliente nunca debería elegirlos: el equipo o el componente responsable, una categoría para los informes, una etiqueta para la automatización. En la pestaña **Request form** del tipo de solicitud, añade el campo y marca **Use preset value and hide from portal** (usar un valor predefinido y ocultarlo en el portal). A partir de ahí, cada solicitud de ese tipo llega con el valor ya puesto.
 
-Algunos campos solo se pueden usar así: Responsable, Elementos de trabajo vinculados y varios campos de selección admiten un valor predefinido, pero no pueden mostrarse en el portal. Otros, como Tipo de trabajo, Informador, Nivel de seguridad y Participantes de la solicitud, no se pueden añadir a un tipo de solicitud. Atlassian enumera ambos grupos en su página sobre campos ocultos y no compatibles.
+Algunos campos solo se pueden usar así: Responsable, Elementos de trabajo vinculados y varios campos de selección admiten un valor predefinido, pero no pueden mostrarse en el portal. Otros, como Tipo de trabajo, Informador, Nivel de seguridad y Participantes de la solicitud, no se pueden añadir a un tipo de solicitud. Atlassian enumera ambos grupos en su página sobre [campos ocultos y no compatibles](https://support.atlassian.com/jira-service-management-cloud/docs/what-are-hidden-fields-and-unsupported-fields-in-request-types/).
 
 Ya que estás en el tipo de solicitud, abre los estados del workflow y da a cada estado interno un nombre que el cliente entienda. Varios estados internos pueden compartir un mismo nombre de cara al cliente.
 
@@ -69,7 +71,7 @@ Ya que estás en el tipo de solicitud, abre los estados del workflow y da a cada
 
 El cliente llega primero al centro de ayuda, luego elige un portal y después un tipo de solicitud. Tres decisiones de diseño pesan más que el resto:
 
-- **La página de inicio del centro de ayuda.** En el editor actual del centro de ayuda puedes organizar la página de inicio y elegir qué portales destacar u ocultar. En los planes Premium y Enterprise también puedes crear varios centros de ayuda para públicos distintos.
+- **La página de inicio del centro de ayuda.** En el editor actual del centro de ayuda puedes organizar la página de inicio y elegir qué portales destacar u ocultar. En los planes Premium y Enterprise también puedes [crear varios centros de ayuda](https://support.atlassian.com/jira-service-management-cloud/docs/create-and-manage-help-centers/) para públicos distintos.
 - **El nombre, el texto de introducción y el logotipo de cada portal**, que se definen en la configuración del espacio. Limita la introducción a una o dos frases sobre para qué sirve el portal.
 - **El orden de los grupos y de los tipos de solicitud.** Las solicitudes más habituales deben verse sin desplazarse por la página.
 

@@ -500,6 +500,11 @@
   .prose-custom blockquote {
     @apply my-6 rounded-lg bg-sand-100 px-5 py-3 text-slate-700;
   }
+  /* Product screenshots in the guides. Framed like the hero, never wider than
+     the column; the height follows the width (see the layer note above). */
+  .prose-custom img {
+    @apply my-8 block w-full rounded-2xl ring-1 ring-sand-200;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

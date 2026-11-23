@@ -42,6 +42,8 @@ Do the same check for team-managed spaces. An **Open** space lets anyone on the 
 
 Open the permission schemes page (Settings, then Work items, then Permission schemes under the work item attributes) and list each scheme with the spaces that use it. You are looking for:
 
+![The Permission schemes page in Jira admin settings, listing the Default Permission Scheme and the Default software scheme with every space that uses each one](../../../assets/blog/screens/jira-permission-schemes-list.webp)
+
 - **One scheme serving sensitive and ordinary spaces.** Split it, so tightening one space does not break the others.
 - **Grants to named users or groups instead of space roles.** Roles let each space decide its own members; a group or a named user in a shared scheme applies to every space on that scheme.
 - **Near-identical copies.** Ten schemes that differ by one line are ten things to audit. Consolidate where you can.

@@ -20,13 +20,13 @@ La primera mitad es rápida. La segunda es donde las cosas se rompen semanas des
 
 ## ¿Desactivar, suspender, quitar o eliminar una cuenta de Atlassian?
 
-Si la persona que se va tiene una cuenta gestionada por tu organización, desactívala. La desactivación bloquea al instante el acceso a todas las apps, deja de facturar esa cuenta, conserva su historial y su contenido, y un administrador puede revertirla. Elimínala solo cuando haya que borrar los datos personales: la eliminación es definitiva tras un periodo de gracia de 14 días y el nombre pasa a mostrarse como "Former user".
+Si la persona que se va tiene una cuenta gestionada por tu organización, desactívala. La desactivación bloquea al instante el acceso a todas las apps, deja de facturar esa cuenta, conserva su historial y su contenido, y un administrador puede revertirla. Elimínala solo cuando haya que borrar los datos personales: la eliminación es definitiva tras un [periodo de gracia de 14 días](https://support.atlassian.com/user-management/docs/delete-a-managed-account/) y el nombre pasa a mostrarse como "Former user".
 
 | Acción | Para quién | Efecto | Reversible |
 | --- | --- | --- | --- |
 | Desactivar la cuenta | Quien se va y tiene cuenta gestionada | Sin acceso a ninguna app, sin facturación, nombre con "(Deactivated)", datos personales conservados | Sí, un administrador puede reactivarla |
 | Suspender el acceso | Cuentas que no gestionas, o ausencias temporales | Sin acceso a las apps de tu organización, sin facturación | Sí, recupera roles y grupos |
-| Quitar al usuario | Personas que ya no deben aparecer en tu organización | Acceso retirado, sin facturación; Atlassian advierte que también puede eliminarse parte del contenido | Solo invitándola de nuevo y reasignando roles y grupos |
+| Quitar al usuario | Personas que ya no deben aparecer en tu organización | Acceso retirado, sin facturación; Atlassian advierte que [también puede eliminarse parte del contenido](https://support.atlassian.com/user-management/docs/remove-or-suspend-a-user/) | Solo invitándola de nuevo y reasignando roles y grupos |
 | Eliminar la cuenta | Cuentas gestionadas cuyos datos personales hay que borrar | Desactivada 14 días y después eliminada para siempre | Solo durante esos 14 días |
 | Quitar el acceso a una app | Quien se queda pero ya no necesita una app | Pierde solo esa app | Sí |
 
@@ -41,7 +41,7 @@ Pide a la persona que se va y a su responsable una lista breve de traspaso: inte
 ## El mismo día: corta el acceso
 
 1. **Desactiva la cuenta** en Atlassian Administration: **Directory**, después **Users**, filtra por cuentas gestionadas, selecciona a la persona y elige **Deactivate account**. Con SCIM, desactívala o elimínala en el proveedor de identidad.
-2. **Revoca sus tokens de API.** La desactivación no revoca los tokens. Dejan de funcionar mientras la cuenta está desactivada, pero siguen existiendo hasta que alguien los revoque. Los administradores de la organización pueden hacerlo en Atlassian Administration, desde la página de la cuenta gestionada o desde los datos de actividad de tokens de API.
+2. **Revoca sus tokens de API.** La desactivación no revoca los tokens, y la [base de conocimientos de Atlassian](https://support.atlassian.com/jira/kb/atlassian-api-token-key-status-of-api-tokens-keys-when-a-user-who-generated-the-token-key-has-left-the-organization/) advierte que un token puede seguir funcionando mientras su cuenta tenga acceso a algún sitio. Revócalos el mismo día. Los administradores de la organización pueden hacerlo en Atlassian Administration, desde la página de la cuenta gestionada.
 3. **Retira los roles de administrador**, para que una reactivación posterior no los devuelva sin que nadie se dé cuenta.
 4. **Revisa el recuento de licencias.** Las cuentas desactivadas no se facturan; consulta [encontrar las licencias de Atlassian que pagas y nadie usa](/es/blog/atlassian-license-reclamation/) para mantener ese recuento al día.
 
@@ -74,7 +74,7 @@ Pasa la propiedad al equipo que depende de la regla y pon como actor el actor pr
 
 Los propietarios del contenido pueden transferir sus páginas, y los administradores de Confluence y de espacio pueden transferir la propiedad en su nombre: abre los detalles de la página o la línea de autoría y elige **Change owner**. El nuevo propietario necesita acceso al espacio y permiso de edición sobre la página. Las páginas de resumen del espacio y los blogs no se pueden transferir así.
 
-En Confluence Premium y Enterprise, el gestor de contenido lo hace de forma masiva: en **Space settings**, abre **Content manager**, filtra la columna **Owner** por **Deactivated**, selecciona las páginas y cambia el propietario, hasta 100 elementos a la vez.
+En Confluence Premium y Enterprise, el [gestor de contenido](https://support.atlassian.com/confluence-cloud/docs/manage-your-content-tree/) lo hace de forma masiva: en **Space settings**, abre **Content manager**, filtra la columna **Owner** por **Deactivated**, selecciona las páginas y cambia el propietario, hasta 100 elementos a la vez.
 
 Después decide qué pasa con el espacio personal de la persona: lleva a un espacio de equipo lo que todavía haga falta y comprueba si había páginas restringidas solo a quien se ha ido. [Los permisos de Confluence Cloud explicados](/es/blog/confluence-cloud-permissions-explained/) muestra cómo se combinan las restricciones con los permisos de espacio.
 
@@ -82,7 +82,7 @@ Después decide qué pasa con el espacio personal de la persona: lleva a un espa
 
 - **Agentes de Rovo.** Transfiere la propiedad en **Users and permissions** antes de que la persona se vaya. Si un agente se queda sin propietario, uno de sus gestores puede asumirla, y por eso [cómo crear un agente de Rovo](/es/blog/building-a-first-rovo-agent/) recomienda un segundo gestor desde el principio.
 - **Apps del Marketplace y apps personalizadas.** Revisa en la administración de cada app si hay roles por usuario, informes programados o conexiones configuradas a nombre de quien se va.
-- **Integraciones con tokens personales.** Pásalas a una cuenta de servicio: una cuenta no asociada a ninguna persona, que se crea en Atlassian Administration en **Directory**, después **Service accounts**, con su propio token de API o credenciales OAuth 2.0. Las cuentas de servicio con acceso a Jira o Confluence no cuentan para tu límite de usuarios. Cuántas puedes crear depende de tu plan.
+- **Integraciones con tokens personales.** Pásalas a una cuenta de servicio: una cuenta no asociada a ninguna persona, que se crea en Atlassian Administration en **Directory**, después **Service accounts**, con su propio token de API o credenciales OAuth 2.0. Las cuentas de servicio con acceso a Jira o Confluence [no cuentan para tu límite de usuarios](https://support.atlassian.com/user-management/docs/understand-service-accounts/). Cuántas puedes crear depende de tu plan.
 
 ## El checklist de offboarding en Atlassian Cloud
 

@@ -14,7 +14,7 @@ heroImageAlt: 'Ilustración plana: un robot redondeado azul marino con una panta
 
 *La mayoría de los primeros agentes son asistentes genéricos que nadie ha pedido. Los que se usan hacen una sola cosa y la hacen bien.*
 
-Para crear un agente de Rovo, abre Studio, selecciona **Agents** y después **Create** en Rovo agent. Describe lo que quieres en lenguaje natural y el asistente de creación prepara un borrador con nombre, instrucciones y sugerencias de conversación, o salta a la configuración manual y rellena cada parte tú mismo. También puedes empezar desde Rovo Chat, con **Create agent**, o desde el selector de responsable de un elemento de trabajo de Jira.
+Para crear un agente de Rovo, abre Rovo Studio, selecciona **Agents** y después **Create an agent**. Describe lo que quieres en lenguaje natural y el asistente de creación prepara un borrador con nombre, instrucciones y sugerencias de conversación, o selecciona **Start from blank** y rellena cada parte tú mismo. También puedes empezar desde Rovo Chat, con **Create agent**, o desde el selector de responsable de un elemento de trabajo de Jira.
 
 Los clics llevan minutos. Que alguien use el agente un mes después se decide antes, por lo concreta que sea su tarea, y después, por cómo lo pruebes con preguntas reales.
 
@@ -32,16 +32,18 @@ Escribe la tarea en una frase. Después reúne diez preguntas reales que la gent
 
 ## ¿Cómo se crea un agente de Rovo en Studio?
 
-Abre Studio desde el selector de apps, selecciona **Agents** y después **Create** en Rovo agent. O describes el agente y dejas que el asistente prepare el borrador, lo revisas y seleccionas **Create**, o eliges **Skip to manual setup**, rellenas las secciones de identidad y de subagente y seleccionas **Activate**. En ambos casos, el agente se publica al terminar.
+Abre Rovo Studio desde el selector de apps, selecciona **Agents**, después **View all agents** y **Create an agent**. Una ventana pregunta qué debe hacer el agente: lo describes y dejas que el asistente prepare el borrador, o seleccionas **Start from blank** para configurarlo tú. Empezar desde cero guarda un borrador al momento, que solo se publica cuando seleccionas **Publish**. La [guía de Atlassian para crear agentes](https://support.atlassian.com/rovo/docs/create-and-edit-agents/) todavía usa los nombres antiguos de los botones (**Create** en Rovo agent, **Skip to manual setup** y **Activate**), así que puedes encontrarte cualquiera de los dos.
 
-La configuración manual da más control y deja cada decisión a la vista. La sección de identidad incluye:
+La configuración manual da más control y deja cada decisión a la vista. La página de detalles del agente incluye:
 
 - **Name** (nombre). Que diga lo que hace: "Asistente de la política de gastos", no "Penny".
 - **Description** (descripción). Se muestra cuando la gente busca agentes, así que escríbela para ellos: qué preguntar y qué no.
-- **Behavior** (comportamiento). Instrucciones que se aplican en cualquier situación, como el papel y el tono del agente.
+- **Instructions** (instrucciones). Lo que se aplica en cualquier situación, como el papel y el tono del agente.
 - **Conversation starters** (sugerencias de conversación). Primeras preguntas sugeridas. Usa tres de tus diez preguntas de prueba; si lo dejas en blanco, Rovo muestra unas genéricas.
 
-Debajo, un **subagente** agrupa instrucciones, habilidades, herramientas, conocimiento y profundidad de razonamiento. El primer conjunto que configuras se convierte en el subagente predeterminado, que atiende cualquier petición que no recoja otro subagente. Para un primer agente, con el subagente predeterminado basta.
+La misma página define las **Skills** (habilidades), las **Tools** (herramientas), el **Knowledge** (conocimiento: todo el sitio, hasta que lo acotes) y el **Reasoning** (razonamiento: respuestas rápidas por defecto) del agente, y si puede usar **Web search** (búsqueda web). Los **Subagents** (subagentes) son opcionales, para un agente que necesita instrucciones distintas según el tipo de petición. En un primer agente, déjalos fuera.
+
+![La página de detalles de un nuevo agente en borrador en Rovo Studio, con el nombre y la descripción arriba, después skills, tools, knowledge, reasoning, instrucciones, búsqueda web, sugerencias de conversación y subagentes, y los botones Test y Publish](../../../assets/blog/screens/rovo-studio-agent-details.webp)
 
 ## Escribe las instrucciones como un briefing para un compañero nuevo
 
@@ -66,11 +68,11 @@ El conocimiento es el contenido en el que busca el agente: espacios concretos de
 Dos comprobaciones antes de conectar una fuente:
 
 1. **¿Está al día?** El agente cita una página obsoleta con la misma facilidad que la vigente. Archiva primero lo antiguo.
-2. **¿Puede leerla el público?** Atlassian deja claro que los agentes solo acceden a la información que la persona que los usa tiene permiso para ver o editar. Si la política de gastos está en un espacio que media empresa no puede abrir, media empresa recibirá respuestas pobres.
+2. **¿Puede leerla el público?** Atlassian [deja claro](https://support.atlassian.com/rovo/docs/rovo-agent-permissions-and-governance/) que los agentes solo acceden a la información que la persona que los usa tiene permiso para ver o editar. Si la política de gastos está en un espacio que media empresa no puede abrir, media empresa recibirá respuestas pobres.
 
 ## Añade solo las herramientas que la tarea necesita
 
-Las herramientas, que algunas guías todavía llaman acciones, permiten al agente hacer cosas: buscar elementos de trabajo, crear uno, comentar, actualizar una página. Atlassian recomienda no pasar de cinco herramientas por agente, por rendimiento.
+Las herramientas, que algunas guías todavía llaman acciones, permiten al agente hacer cosas: buscar elementos de trabajo, crear uno, comentar, actualizar una página. Atlassian recomienda [no pasar de cinco herramientas](https://support.atlassian.com/rovo/docs/create-and-edit-agents/) por agente, por rendimiento.
 
 Empieza solo con lectura. Añade herramientas que escriben únicamente cuando las respuestas hayan demostrado ser fiables, y recuerda que el agente actúa en nombre de quien lo usa, con sus permisos. La profundidad de razonamiento es un ajuste aparte que equilibra velocidad, coste y calidad; un razonamiento más profundo consume más [créditos de Rovo](https://support.atlassian.com/rovo/docs/rovo-usage-limits/), así que súbelo solo si las respuestas lo necesitan.
 
@@ -90,11 +92,11 @@ En **Users and permissions**, organiza la propiedad para que el agente sobreviva
 - Los **editores** pueden modificarlo; los **gestores** además pueden añadir editores y eliminarlo.
 - El nombre de autor que se muestra puede ser un equipo en lugar de una persona.
 
-Añade al menos un gestor además de ti. Los administradores de la organización deciden también quién puede crear agentes; si todavía no lo has definido, consulta [cómo activar Rovo](/es/blog/before-you-turn-on-rovo/).
+Añade al menos un gestor además de ti. Los administradores de Studio deciden también quién puede crear agentes; si todavía no lo has definido, consulta [cómo activar Rovo](/es/blog/before-you-turn-on-rovo/).
 
 ## ¿Cómo se mide si la gente usa un agente de Rovo?
 
-Abre el agente en Studio y selecciona **Insights**. Ahí ves la media de usuarios diarios y el total de conversaciones en un periodo, por defecto los últimos 31 días, y puedes añadir ambos como gráficos a un dashboard de Atlassian Home. Atlassian presenta los datos de uso de agentes como beta abierta en el momento de esta publicación.
+Abre el agente en Studio y selecciona **Insights**. Ahí ves la media de usuarios diarios y el total de conversaciones en un periodo, por defecto los últimos 31 días, y puedes añadir ambos como gráficos a un dashboard de Atlassian Home. Atlassian presenta los [datos de uso de agentes](https://support.atlassian.com/rovo/docs/track-how-often-a-rovo-agent-is-used/) como beta abierta en el momento de esta publicación.
 
 Las cifras te dicen si la gente vuelve; no te dicen si las respuestas eran correctas. Combínalas con una comprobación mensual: vuelve a pasar el conjunto de pruebas, lee una muestra de conversaciones reales si tu proceso lo permite y pregunta a tres usuarios habituales qué cambiarían. Decide de antemano qué es el éxito, por ejemplo una parte del público objetivo usándolo cada semana, y retira los agentes que no lleguen.
 

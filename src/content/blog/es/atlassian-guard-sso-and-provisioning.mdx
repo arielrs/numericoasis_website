@@ -33,13 +33,13 @@ Los precios cambian, así que consulta los [precios de Atlassian Guard](https://
 
 En Atlassian Administration, selecciona **Directory** y después **Domains**, y verifica cada dominio de la empresa con un registro DNS TXT o con un archivo HTML en tu servidor web. Las organizaciones que usan Google Workspace o Microsoft Entra ID también pueden verificarlo a través de la conexión con ese proveedor de identidad.
 
-Deja el registro DNS o el archivo en su sitio de forma permanente. Si se elimina, el dominio puede perder su estado de verificado y las políticas de seguridad que se le aplican, incluido el inicio de sesión único con SAML, dejan de surtir efecto.
+Deja el registro DNS o el archivo en su sitio de forma permanente. Si se elimina, el dominio puede [perder su estado de verificado](https://support.atlassian.com/user-management/docs/verify-a-domain-to-manage-accounts/) y las políticas de seguridad que se le aplican, incluido el inicio de sesión único con SAML, dejan de surtir efecto.
 
 Después reclama las cuentas de ese dominio, lo que las convierte en cuentas gestionadas que puedes editar, desactivar y someter a políticas. Puedes reclamarlas todas, incluidas las nuevas según se crean, o subir un CSV con direcciones concretas. Exporta la lista y revísala antes: suele incluir buzones compartidos y cuentas de prueba antiguas. Los usuarios reciben un aviso cuando su cuenta pasa a estar gestionada.
 
 ## Asegúrate de que siempre puedes volver a entrar
 
-Antes de configurar SAML, crea una cuenta de administrador de la organización con una dirección de correo de un dominio que no hayas verificado y colócala en una política de autenticación que no exija el inicio de sesión único. Atlassian recomienda exactamente esto, porque el SSO solo se aplica a las cuentas de tus dominios verificados. Dale credenciales robustas y verificación en dos pasos, guárdalas en tu gestor de contraseñas y deja por escrito quién puede usarla.
+Antes de configurar SAML, crea una cuenta de administrador de la organización con una dirección de correo de un dominio que no hayas verificado y colócala en una política de autenticación que no exija el inicio de sesión único. [Atlassian recomienda exactamente esto](https://support.atlassian.com/security-and-access-policies/docs/configure-saml-single-sign-on-with-an-identity-provider/), porque el SSO solo se aplica a las cuentas de tus dominios verificados. Dale credenciales robustas y verificación en dos pasos, guárdalas en tu gestor de contraseñas y deja por escrito quién puede usarla.
 
 Si algo sale mal, eliminar la configuración de SAML permite que la gente vuelva a iniciar sesión en las apps de Atlassian.
 
@@ -58,7 +58,7 @@ Guardar la configuración de SAML no cierra la sesión de los usuarios actuales,
 
 ## Exige el SSO mediante políticas de autenticación, por fases
 
-Las políticas de autenticación deciden cómo inician sesión las cuentas gestionadas: inicio de sesión único, verificación en dos pasos, reglas de contraseña y duración de la sesión inactiva. Toda organización tiene una política predeterminada y, con Guard Standard, puedes crear hasta veinte. Los usuarios siguen en la política predeterminada hasta que los muevas.
+Las políticas de autenticación deciden cómo inician sesión las cuentas gestionadas: inicio de sesión único, verificación en dos pasos, reglas de contraseña y duración de la sesión inactiva. Toda organización tiene una política predeterminada y, con Guard Standard, puedes [crear hasta veinte](https://support.atlassian.com/security-and-access-policies/docs/understand-authentication-policies/). Los usuarios siguen en la política predeterminada hasta que los muevas.
 
 Un despliegue que no deja a nadie fuera:
 
@@ -73,7 +73,7 @@ Los usuarios externos, las personas de otras empresas que usan tus sitios, queda
 
 El aprovisionamiento de usuarios usa SCIM 2.0 para sincronizar usuarios y grupos de tu proveedor de identidad con tu organización de Atlassian. Crea cuentas, mantiene sus datos al día y las desactiva cuando las eliminas en el proveedor de identidad. Los grupos sincronizados son de solo lectura en Atlassian: cambias la pertenencia en el proveedor y concedes acceso a las apps asignándoles esos grupos.
 
-Atlassian incluye Okta, OneLogin, Microsoft Entra ID (antes Azure AD), Cisco Duo, Google Workspace, PingFederate y JumpCloud entre los proveedores de identidad compatibles; el resto puede usar la API de aprovisionamiento de usuarios.
+Atlassian incluye Okta, OneLogin, Microsoft Entra ID (antes Azure AD), Cisco Duo, Google Workspace, PingFederate y JumpCloud entre los [proveedores de identidad compatibles](https://support.atlassian.com/provisioning-users/docs/understand-user-provisioning/); el resto puede usar la API de aprovisionamiento de usuarios.
 
 Las trampas tienen que ver casi siempre con los nombres de grupo:
 

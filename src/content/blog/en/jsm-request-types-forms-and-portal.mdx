@@ -24,6 +24,8 @@ A request type is the customer-facing entry point of a service space: a name, a 
 
 You manage them in the space settings, under **Request management**, then **Request types**. Each request type has a portal group, a request form (what customers fill in), a work item view (what agents see) and customer-facing names for workflow statuses. That last part matters more than it looks: a customer who sees "Waiting for approval" understands their request better than one who sees "L2 Triage".
 
+![Request types in the settings of a Jira Service Management space: Get IT help, Onboard new employees, Request a new account, Request new hardware, Request new software and Emailed request, each creating a Service request work item](../../../assets/blog/screens/jsm-request-types-list.webp)
+
 ## Name request types the way customers describe problems
 
 The most common portal mistake is naming request types after the team or system that handles them: "Access management", "ERP support", "Hardware L1". A customer with a laptop that will not charge does not know which of those is theirs.
@@ -40,7 +42,7 @@ To find the right words, read the summaries of the last hundred requests that ca
 
 ## How many request types should a portal group hold?
 
-Keep each portal group short enough to scan at a glance. Atlassian recommends grouping request types once a portal has more than seven, and groups only appear on the portal when there is more than one. A request type can belong to several groups, so it can appear wherever customers would look for it.
+Keep each portal group short enough to scan at a glance. Atlassian's [Data Center documentation](https://confluence.atlassian.com/servicemanagementserver110/setting-up-request-types-1627463510.html) recommends grouping request types once a portal has seven or more, and [groups only appear on the portal](https://support.atlassian.com/jira-service-management-cloud/docs/organize-request-types-into-portal-groups/) when there is more than one. A request type can belong to several groups, so it can appear wherever customers would look for it.
 
 Group by the customer's goal rather than by your teams: "Something is broken", "Get access", "Buy or request something", "Ask a question". Put the most used request types at the top of each group.
 
@@ -48,7 +50,7 @@ Group by the customer's goal rather than by your teams: "Something is broken", "
 
 Forms are a form builder inside your service space. When you attach a form to a request type, it appears to customers as part of that request type's request form, together with any Jira fields already configured. Forms add things a plain request form lacks, such as sections that only appear depending on earlier answers.
 
-There are two ways to attach one: open the request type and select **Attach form** (create from a template or select an existing form), or open the form from **Forms**, go to **Settings** and turn on **Attach to request types**.
+There are [two ways to attach one](https://support.atlassian.com/jira-service-management-cloud/docs/add-a-form-to-the-portal-form-for-a-request-type/): open the request type and select **Attach form** (create from a template or select an existing form), or open the form from **Forms**, go to **Settings** and turn on **Attach to request types**.
 
 A few rules keep forms useful:
 
@@ -61,7 +63,7 @@ A few rules keep forms useful:
 
 Some values are needed by the team but should never be chosen by the customer: the team or component that owns the request, a category for reporting, a label for automation. On the request type's **Request form** tab, add the field and select **Use preset value and hide from portal**. Every request of that type then arrives with the value already set.
 
-Some fields can only be used this way: Assignee, Linked work items and several picker fields can take a preset value but cannot be shown on the portal. Others, such as Work type, Reporter, Security level and Request participants, cannot be added to a request type at all. Atlassian lists both groups in its page on hidden and unsupported fields.
+Some fields can only be used this way: Assignee, Linked work items and several picker fields can take a preset value but cannot be shown on the portal. Others, such as Work type, Reporter, Security level and Request participants, cannot be added to a request type at all. Atlassian lists both groups in its page on [hidden and unsupported fields](https://support.atlassian.com/jira-service-management-cloud/docs/what-are-hidden-fields-and-unsupported-fields-in-request-types/).
 
 While you are on the request type, open the workflow statuses and give each internal status a name a customer understands. Several internal statuses can share one customer-facing name.
 
@@ -69,7 +71,7 @@ While you are on the request type, open the workflow statuses and give each inte
 
 Customers land on the help center first, then pick a portal, then a request type. Three layout decisions matter most:
 
-- **The help center home page.** In the current help center editor you can arrange the home page and choose which portals to feature or hide. On Premium and Enterprise plans you can also create several help centers for different audiences.
+- **The help center home page.** In the current help center editor you can arrange the home page and choose which portals to feature or hide. On Premium and Enterprise plans you can also [create several help centers](https://support.atlassian.com/jira-service-management-cloud/docs/create-and-manage-help-centers/) for different audiences.
 - **Each portal's name, introduction text and logo**, set in the space settings. Keep the introduction to one or two sentences about what this portal is for.
 - **The order of groups and request types.** The most common requests should be visible without scrolling.
 

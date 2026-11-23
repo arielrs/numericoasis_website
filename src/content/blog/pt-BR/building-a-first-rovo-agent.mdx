@@ -14,7 +14,7 @@ heroImageAlt: 'Ilustração em estilo flat: um robô arredondado azul-marinho co
 
 *A maioria dos primeiros agentes é um assistente genérico que ninguém pediu. Os que dão certo fazem uma coisa só, e bem feita.*
 
-Para criar um agente Rovo, abra o Studio, selecione **Agents** e depois **Create** em Rovo agent. Descreva o que você quer em linguagem natural e o construtor monta um rascunho com nome, instruções e sugestões de conversa, ou pule para a configuração manual e preencha cada parte você mesmo. Também dá para começar pelo Rovo Chat, em **Create agent**, ou pelo seletor de responsável de um item de trabalho do Jira.
+Para criar um agente Rovo, abra o Rovo Studio, selecione **Agents** e depois **Create an agent**. Descreva o que você quer em linguagem natural e o construtor monta um rascunho com nome, instruções e sugestões de conversa, ou selecione **Start from blank** e preencha cada parte você mesmo. Também dá para começar pelo Rovo Chat, em **Create agent**, ou pelo seletor de responsável de um item de trabalho do Jira.
 
 Os cliques levam minutos. Se alguém vai usar o agente um mês depois é algo que se decide antes, pelo quanto a tarefa dele é específica, e depois, pela forma como você o testa com perguntas reais.
 
@@ -32,16 +32,18 @@ Escreva a tarefa numa frase. Depois junte dez perguntas reais que as pessoas fiz
 
 ## Como criar um agente Rovo no Studio?
 
-Abra o Studio pelo seletor de apps, selecione **Agents** e depois **Create** em Rovo agent. Ou descreva o agente e deixe o construtor montar o rascunho, revise e selecione **Create**, ou escolha **Skip to manual setup**, preencha as seções de identidade e de subagente e selecione **Activate**. Nos dois casos o agente é publicado quando você termina.
+Abra o Rovo Studio pelo seletor de apps, selecione **Agents**, depois **View all agents** e **Create an agent**. Uma janela pergunta o que o agente deve fazer: descreva e deixe o construtor montar o rascunho, ou selecione **Start from blank** para configurar você mesmo. Começar do zero já salva um rascunho, que só é publicado quando você seleciona **Publish**. O [guia da Atlassian para criar agentes](https://support.atlassian.com/rovo/docs/create-and-edit-agents/) ainda usa os nomes antigos dos botões (**Create** em Rovo agent, **Skip to manual setup** e **Activate**), então você pode encontrar qualquer um dos dois.
 
-A configuração manual dá mais controle e deixa cada decisão visível. A seção de identidade tem:
+A configuração manual dá mais controle e deixa cada decisão visível. A página de detalhes do agente tem:
 
 - **Name** (nome). Diga o que ele faz: "Ajudante da política de despesas", e não "Penny".
 - **Description** (descrição). Aparece quando as pessoas procuram agentes, então escreva para elas: o que perguntar e o que não perguntar.
-- **Behavior** (comportamento). Instruções que valem em qualquer situação, como o papel e o tom do agente.
+- **Instructions** (instruções). O que vale em qualquer situação, como o papel e o tom do agente.
 - **Conversation starters** (sugestões de conversa). Perguntas iniciais sugeridas. Use três das suas dez perguntas de teste; se ficar em branco, o Rovo mostra sugestões genéricas.
 
-Abaixo disso, um **subagente** reúne instruções, habilidades, ferramentas, conhecimento e profundidade de raciocínio. O primeiro conjunto que você configura vira o subagente padrão, que atende todo prompt que nenhum outro subagente pegar. Para um primeiro agente, o subagente padrão basta.
+A mesma página define as **Skills** (habilidades), as **Tools** (ferramentas), o **Knowledge** (conhecimento: todo o site, até você restringir) e o **Reasoning** (raciocínio: respostas rápidas por padrão) do agente, e se ele pode usar **Web search** (pesquisa na web). Os **Subagents** (subagentes) são opcionais, para um agente que precisa de instruções diferentes para cada tipo de pedido. Num primeiro agente, deixe-os de fora.
+
+![A página de detalhes de um novo agente em rascunho no Rovo Studio, com nome e descrição no topo, depois skills, tools, knowledge, reasoning, instruções, pesquisa na web, sugestões de conversa e subagentes, e os botões Test e Publish](../../../assets/blog/screens/rovo-studio-agent-details.webp)
 
 ## Escreva as instruções como um briefing para um colega novo
 
@@ -66,11 +68,11 @@ Conhecimento é o conteúdo em que o agente pesquisa: espaços específicos do C
 Duas coisas para conferir antes de conectar uma fonte:
 
 1. **Ela está atualizada?** O agente cita uma página desatualizada com a mesma facilidade que a atual. Arquive primeiro o que estiver velho.
-2. **O público consegue ler?** A Atlassian deixa claro que os agentes só acessam informações que a pessoa que os usa tem permissão para ver ou editar. Se a política de despesas fica num espaço que metade da empresa não abre, metade da empresa vai receber respostas fracas.
+2. **O público consegue ler?** A Atlassian [deixa claro](https://support.atlassian.com/rovo/docs/rovo-agent-permissions-and-governance/) que os agentes só acessam informações que a pessoa que os usa tem permissão para ver ou editar. Se a política de despesas fica num espaço que metade da empresa não abre, metade da empresa vai receber respostas fracas.
 
 ## Adicione só as ferramentas que a tarefa exige
 
-As ferramentas, que alguns guias ainda chamam de ações, permitem que o agente faça coisas: pesquisar itens de trabalho, criar um item de trabalho, comentar, atualizar uma página. A Atlassian recomenda no máximo cinco ferramentas por agente, por desempenho.
+As ferramentas, que alguns guias ainda chamam de ações, permitem que o agente faça coisas: pesquisar itens de trabalho, criar um item de trabalho, comentar, atualizar uma página. A Atlassian recomenda [no máximo cinco ferramentas](https://support.atlassian.com/rovo/docs/create-and-edit-agents/) por agente, por desempenho.
 
 Comece só com leitura. Adicione ferramentas que escrevem apenas depois que as respostas se mostrarem confiáveis, e lembre que o agente age em nome de quem o usa, com as permissões dessa pessoa. A profundidade de raciocínio é uma configuração à parte que equilibra velocidade, custo e qualidade; raciocínio mais profundo consome mais [créditos do Rovo](https://support.atlassian.com/rovo/docs/rovo-usage-limits/), então aumente só se as respostas precisarem.
 
@@ -90,11 +92,11 @@ Em **Users and permissions**, organize a responsabilidade para que o agente sobr
 - **Editores** podem alterá-lo; **gerentes** também podem adicionar editores e excluí-lo.
 - O nome exibido como autor pode ser uma equipe em vez de uma pessoa.
 
-Adicione pelo menos um gerente além de você. Os administradores da organização também decidem quem pode criar agentes; se isso ainda não foi definido, veja [como ativar o Rovo](/pt-BR/blog/before-you-turn-on-rovo/).
+Adicione pelo menos um gerente além de você. Os administradores do Studio também decidem quem pode criar agentes; se isso ainda não foi definido, veja [como ativar o Rovo](/pt-BR/blog/before-you-turn-on-rovo/).
 
 ## Como medir se as pessoas usam um agente Rovo?
 
-Abra o agente no Studio e selecione **Insights**. Ali aparecem a média de usuários diários e o total de conversas num período, por padrão os últimos 31 dias, e dá para adicionar os dois como gráficos a um dashboard no Atlassian Home. A Atlassian classifica os insights de agentes como beta aberto no momento desta publicação.
+Abra o agente no Studio e selecione **Insights**. Ali aparecem a média de usuários diários e o total de conversas num período, por padrão os últimos 31 dias, e dá para adicionar os dois como gráficos a um dashboard no Atlassian Home. A Atlassian classifica os [insights de agentes](https://support.atlassian.com/rovo/docs/track-how-often-a-rovo-agent-is-used/) como beta aberto no momento desta publicação.
 
 Os números dizem se as pessoas voltam; não dizem se as respostas estavam certas. Combine-os com uma verificação mensal: rode de novo o conjunto de testes, leia uma amostra de conversas reais se o seu processo permitir e pergunte a três usuários frequentes o que mudariam. Defina antes o que é sucesso, por exemplo uma parcela do público-alvo usando o agente toda semana, e aposente os agentes que não chegarem lá.
 

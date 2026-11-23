@@ -26,7 +26,7 @@ You find SLAs in the service space settings (spaces were formerly called project
 
 - **Conditions.** "Start counting time when", "Pause counting time when" (optional) and "Finish counting time when". Each takes one or more events, such as Issue Created, Entered Status, Comment: For Customers or Resolution: Set. Several start conditions mean "any of these".
 - **Goals.** Rows of JQL, each with a time target and a calendar. Work items are checked against the goals from top to bottom.
-- **Calendars.** Working days, time slots, holidays and a time zone. New calendars default to 09:00 to 17:00.
+- **Calendars.** Working days, time slots, holidays and a time zone. New calendars [default to 09:00 to 17:00](https://support.atlassian.com/jira-service-management-cloud/docs/set-up-sla-calendars/).
 
 Most service spaces start with SLAs such as Time to first response and Time to resolution. Treat them as a starting point, not as a design.
 
@@ -55,7 +55,7 @@ If you want to see time spent waiting on another team or a supplier, give it a s
 
 A four-hour goal means something different at 16:00 on a Friday than at 09:00 on a Tuesday. Create one calendar per support schedule you actually staff, each with its own time zone and holidays, and attach it to the goals it applies to. If critical incidents have a 24/7 on-call path and everything else is business hours, that is two goals with two calendars, not one compromise.
 
-Check that every calendar has working days set. Atlassian's knowledge base describes SLAs that pause as soon as they start because the calendar's work week was left empty.
+Check that every calendar has working days set. [Atlassian's knowledge base](https://support.atlassian.com/jira/kb/slas-are-being-paused-as-soon-as-they-have-started/) describes SLAs that pause as soon as they start because the calendar's work week was left empty.
 
 ## Should one SLA goal cover every request?
 
@@ -70,13 +70,15 @@ issuetype = "Service Request"                 -> 24h, business hours
 All remaining work items                      -> 40h, business hours
 ```
 
-Order matters because the first matching goal applies, so put the narrowest JQL at the top. You can also group several priorities under one goal, and Atlassian notes that a grouped goal still counts as one goal, which helps if you approach the limit on goals. When a work item's priority changes, the timer adjusts the remaining time to the goal for the new priority.
+Order matters because the first matching goal applies, so put the narrowest JQL at the top. You can also group several priorities under one goal, and Atlassian notes that [a grouped goal still counts as one goal](https://support.atlassian.com/jira-service-management-cloud/docs/use-priority-to-group-sla-goals/), which helps if you approach the limit on goals. When a work item's priority changes, the timer adjusts the remaining time to the goal for the new priority.
+
+![The Time to resolution SLA in the settings of a Jira Service Management space, with one goal for incidents that groups the priorities Highest, High, Medium and Low under targets of 12, 24, 36 and 48 hours on a 9-to-5 calendar](../../../assets/blog/screens/jsm-sla-goals-by-priority.webp)
 
 ## The traps that make SLA reports misleading
 
 - **Measuring resolution of work nobody owns.** If work items wait unassigned in a shared queue, Time to resolution measures the queue, not the team. Add a short Time to assignment SLA (start on Issue Created, stop on Assignee: From Unassigned) so you can see where the wait really is.
 - **Stopping on an event you did not mean.** Resolution: Set also fires when an automation rule closes stale requests. Decide whether those closures should count as meeting the goal.
-- **Ignoring reopened requests.** A reopened work item starts a new SLA cycle. The `breached()` JQL function looks at the last cycle only, while `everBreached()` catches a breach in any cycle. Use the second when you report on customer experience.
+- **Ignoring reopened requests.** A reopened work item starts a new SLA cycle. The `breached()` JQL function [looks at the last cycle only](https://support.atlassian.com/jira-service-management-cloud/docs/jql-functions/), while `everBreached()` catches a breach in any cycle. Use the second when you report on customer experience.
 - **Changing the rules without a note.** Keep a dated record of every SLA change, so a jump in the numbers next quarter can be read against it.
 
 ## How do you report on SLAs in Jira Service Management?

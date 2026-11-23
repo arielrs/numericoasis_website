@@ -24,6 +24,8 @@ Um tipo de solicitação é a porta de entrada do cliente num espaço de serviç
 
 Você os gerencia nas configurações do espaço, em **Request management** (gerenciamento de solicitações) e depois **Request types** (tipos de solicitação). Cada um tem um grupo do portal, um formulário de solicitação (o que o cliente preenche), uma visualização do item de trabalho (o que o agente vê) e nomes voltados ao cliente para os status do workflow. Essa última parte pesa mais do que parece: um cliente que vê "Aguardando aprovação" entende melhor a situação do que um que vê "Triagem N2".
 
+![Tipos de solicitação nas configurações de um espaço do Jira Service Management: Get IT help, Onboard new employees, Request a new account, Request new hardware, Request new software e Emailed request, cada um criando um item de trabalho Service request](../../../assets/blog/screens/jsm-request-types-list.webp)
+
 ## Dê nomes do jeito que o cliente descreve o problema
 
 O erro mais comum de portal é nomear os tipos de solicitação pela equipe ou pelo sistema que atende: "Gestão de acessos", "Suporte ERP", "Hardware N1". Um cliente com um notebook que não carrega não sabe qual deles é o dele.
@@ -40,7 +42,7 @@ Para achar as palavras certas, leia os resumos das últimas cem solicitações q
 
 ## Quantos tipos de solicitação cabem num grupo do portal?
 
-Mantenha cada grupo curto o bastante para ser lido de relance. A Atlassian recomenda agrupar os tipos de solicitação quando o portal passa de sete, e os grupos só aparecem no portal quando há mais de um. Um tipo de solicitação pode estar em vários grupos, então pode aparecer onde quer que o cliente procure.
+Mantenha cada grupo curto o bastante para ser lido de relance. A [documentação do Data Center da Atlassian](https://confluence.atlassian.com/servicemanagementserver110/setting-up-request-types-1627463510.html) recomenda agrupar os tipos de solicitação quando o portal tem sete ou mais, e [os grupos só aparecem no portal](https://support.atlassian.com/jira-service-management-cloud/docs/organize-request-types-into-portal-groups/) quando há mais de um. Um tipo de solicitação pode estar em vários grupos, então pode aparecer onde quer que o cliente procure.
 
 Agrupe pelo objetivo do cliente, e não pelas suas equipes: "Algo quebrou", "Pedir acesso", "Comprar ou solicitar algo", "Tirar uma dúvida". Coloque os tipos mais usados no topo de cada grupo.
 
@@ -48,7 +50,7 @@ Agrupe pelo objetivo do cliente, e não pelas suas equipes: "Algo quebrou", "Ped
 
 Os formulários são um construtor de formulários dentro do espaço de serviço. Quando você anexa um formulário a um tipo de solicitação, ele aparece para o cliente como parte do formulário de solicitação daquele tipo, junto com os campos do Jira já configurados. Os formulários trazem o que o formulário de solicitação simples não tem, como seções que só aparecem conforme as respostas anteriores.
 
-Há dois caminhos para anexar um: abrir o tipo de solicitação e escolher **Attach form** (criar a partir de um modelo ou selecionar um formulário existente), ou abrir o formulário em **Forms**, ir a **Settings** e ativar **Attach to request types**.
+Há [dois caminhos para anexar um](https://support.atlassian.com/jira-service-management-cloud/docs/add-a-form-to-the-portal-form-for-a-request-type/): abrir o tipo de solicitação e escolher **Attach form** (criar a partir de um modelo ou selecionar um formulário existente), ou abrir o formulário em **Forms**, ir a **Settings** e ativar **Attach to request types**.
 
 Algumas regras mantêm os formulários úteis:
 
@@ -61,7 +63,7 @@ Algumas regras mantêm os formulários úteis:
 
 Alguns valores são necessários para a equipe, mas nunca deveriam ser escolhidos pelo cliente: a equipe ou o componente responsável, uma categoria para relatórios, um rótulo para automação. Na aba **Request form** do tipo de solicitação, adicione o campo e marque **Use preset value and hide from portal** (usar valor predefinido e ocultar do portal). Toda solicitação daquele tipo passa a chegar com o valor já preenchido.
 
-Alguns campos só podem ser usados assim: Responsável, Itens de trabalho vinculados e vários campos seletores aceitam um valor predefinido, mas não podem aparecer no portal. Outros, como Tipo de trabalho, Relator, Nível de segurança e Participantes da solicitação, não podem ser adicionados a um tipo de solicitação. A Atlassian lista os dois grupos na página sobre campos ocultos e não suportados.
+Alguns campos só podem ser usados assim: Responsável, Itens de trabalho vinculados e vários campos seletores aceitam um valor predefinido, mas não podem aparecer no portal. Outros, como Tipo de trabalho, Relator, Nível de segurança e Participantes da solicitação, não podem ser adicionados a um tipo de solicitação. A Atlassian lista os dois grupos na página sobre [campos ocultos e não suportados](https://support.atlassian.com/jira-service-management-cloud/docs/what-are-hidden-fields-and-unsupported-fields-in-request-types/).
 
 Aproveite que está no tipo de solicitação, abra os status do workflow e dê a cada status interno um nome que o cliente entenda. Vários status internos podem compartilhar o mesmo nome voltado ao cliente.
 
@@ -69,7 +71,7 @@ Aproveite que está no tipo de solicitação, abra os status do workflow e dê a
 
 O cliente chega primeiro à central de ajuda, depois escolhe um portal e então um tipo de solicitação. Três decisões de layout pesam mais:
 
-- **A página inicial da central de ajuda.** No editor atual da central de ajuda você organiza a página inicial e escolhe quais portais destacar ou ocultar. Nos planos Premium e Enterprise também é possível criar várias centrais de ajuda para públicos diferentes.
+- **A página inicial da central de ajuda.** No editor atual da central de ajuda você organiza a página inicial e escolhe quais portais destacar ou ocultar. Nos planos Premium e Enterprise também é possível [criar várias centrais de ajuda](https://support.atlassian.com/jira-service-management-cloud/docs/create-and-manage-help-centers/) para públicos diferentes.
 - **O nome, o texto de introdução e o logotipo de cada portal**, definidos nas configurações do espaço. Limite a introdução a uma ou duas frases sobre para que serve o portal.
 - **A ordem dos grupos e dos tipos de solicitação.** As solicitações mais comuns devem aparecer sem rolar a página.
 

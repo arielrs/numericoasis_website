@@ -33,13 +33,13 @@ Prices change, so check [Atlassian Guard pricing](https://www.atlassian.com/soft
 
 In Atlassian Administration, select **Directory**, then **Domains**, and verify each company domain by DNS TXT record or by an HTML file on your web server. Organizations using Google Workspace or Microsoft Entra ID can also verify through that identity provider connection.
 
-Keep the DNS record or file in place permanently. If it is removed, the domain can lose its verified status, and security policies on it, SAML single sign-on included, stop applying.
+Keep the DNS record or file in place permanently. If it is removed, the domain can [lose its verified status](https://support.atlassian.com/user-management/docs/verify-a-domain-to-manage-accounts/), and security policies on it, SAML single sign-on included, stop applying.
 
 Then claim the accounts on that domain, which turns them into managed accounts you can edit, deactivate and apply policies to. You can claim all of them, including new ones as they are created, or upload a CSV of specific addresses. Export the list and review it first: it often contains shared mailboxes and old test accounts. Users are notified when their account becomes managed.
 
 ## Make sure you can always get back in
 
-Before you configure SAML, create an organization admin account with an email address from a domain you have not verified, and put it in an authentication policy that does not enforce single sign-on. Atlassian recommends exactly this, because SSO only applies to accounts on your verified domains. Give it strong credentials and two-step verification, store them in your password vault, and write down who may use it.
+Before you configure SAML, create an organization admin account with an email address from a domain you have not verified, and put it in an authentication policy that does not enforce single sign-on. [Atlassian recommends exactly this](https://support.atlassian.com/security-and-access-policies/docs/configure-saml-single-sign-on-with-an-identity-provider/), because SSO only applies to accounts on your verified domains. Give it strong credentials and two-step verification, store them in your password vault, and write down who may use it.
 
 If something does go wrong, deleting the SAML configuration lets people sign in to Atlassian apps again.
 
@@ -58,7 +58,7 @@ Saving the SAML configuration does not log out existing users, so a broken setup
 
 ## Enforce SSO through authentication policies, in waves
 
-Authentication policies decide how managed accounts sign in: single sign-on, two-step verification, password rules and idle session length. Every organization has a default policy, and with Guard Standard you can create up to twenty. Users stay in the default policy until you move them.
+Authentication policies decide how managed accounts sign in: single sign-on, two-step verification, password rules and idle session length. Every organization has a default policy, and with Guard Standard you can [create up to twenty](https://support.atlassian.com/security-and-access-policies/docs/understand-authentication-policies/). Users stay in the default policy until you move them.
 
 A rollout that keeps everyone in:
 
@@ -73,7 +73,7 @@ External users, the people from other companies who use your sites, are covered 
 
 User provisioning uses SCIM 2.0 to sync users and groups from your identity provider into your Atlassian organization. It creates accounts, keeps their details updated and deactivates them when you delete them in the identity provider. Synced groups are read-only in Atlassian: you change membership in the identity provider and grant app access by assigning those groups to apps.
 
-Atlassian lists Okta, OneLogin, Microsoft Entra ID (formerly Azure AD), Cisco Duo, Google Workspace, PingFederate and JumpCloud among the supported identity providers; others can use the user provisioning API.
+Atlassian lists Okta, OneLogin, Microsoft Entra ID (formerly Azure AD), Cisco Duo, Google Workspace, PingFederate and JumpCloud among the [supported identity providers](https://support.atlassian.com/provisioning-users/docs/understand-user-provisioning/); others can use the user provisioning API.
 
 The traps are almost all about group names:
 
