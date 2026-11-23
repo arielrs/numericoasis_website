@@ -2,7 +2,7 @@
 title: "Builds"
 app: "kindelve"
 order: 5
-description: "What a Kin becomes on the way down: upgrade ranks, the twenty-two keystones, twelve synergies with tiers, and keystone mastery."
+description: "What a Kin becomes on the way down: upgrade ranks, the twenty-seven keystones, twelve synergies with tiers, and keystone mastery."
 ---
 
 A build is what a Kin becomes during one delve. It is assembled from three things, in this order:
@@ -28,7 +28,7 @@ At three points in a delve, the deep offers **keystones**: three of them, with a
 would rather see others. Take one, or take none, and the offer passes on its own after ten seconds
 if you do not answer.
 
-There are twenty-two, and they are builds rather than bonuses. A keystone changes what your Kin is
+There are twenty-seven, and they are builds rather than bonuses. A keystone changes what your Kin is
 doing, not how much of it: one turns thorns into the point of a shield, one makes a crit the thing
 you aim the whole delve at, one makes speed the resource. Most are unlocked by deeds rather than
 being available from the start.
