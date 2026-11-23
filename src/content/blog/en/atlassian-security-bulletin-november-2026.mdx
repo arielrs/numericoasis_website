@@ -1,0 +1,83 @@
+---
+lang: en
+translationKey: atlassian-security-bulletin-november-2026
+title: "Atlassian security bulletin November 2026: 318 Data Center fixes, plus the critical Confluence CVE-2026-90436"
+metaTitle: 'Atlassian security bulletin November 2026'
+description: "Atlassian's November 17, 2026 security bulletin lists 318 vulnerabilities across its Data Center and Server products, 52 of them critical third-party issues. A week earlier, Atlassian published a separate critical advisory for CVE-2026-90436, a remote code execution flaw in Confluence Data Center 9.x and earlier. Which versions to patch to, the Remote API mitigation, and a checklist."
+metaDescription: 'November 2026 Atlassian security bulletin: 318 Data Center fixes and critical Confluence CVE-2026-90436. Versions to patch to, the mitigation, and a checklist.'
+pubDate: 2026-11-18
+tags: ["atlassian-news", "jira-administration", "cloud-migration"]
+author: team
+heroImage: ../../../assets/blog/atlassian-security-bulletin-november-2026.jpg
+heroImageAlt: 'Flat illustration: a tall sheaf of white papers on a navy backing held by a big teal binder clip, a large gold wrench leaning against it, and a small orange switch beside the stack, with a calm teal wave along the bottom.'
+---
+
+*The bulletin is big but routine. The Confluence advisory from November 9 is the one that needs action this week if you still run Confluence 9.x.*
+
+The Atlassian security bulletin for November 2026, [published on November 17](https://confluence.atlassian.com/security/security-bulletin-november-17-2026-1874690748.html), lists "266 high-severity vulnerabilities and 52 critical-severity third-party vulnerabilities" across Bamboo, Bitbucket, Confluence, Crowd, Fisheye/Crucible, Jira Software and Jira Service Management Data Center and Server. Atlassian recommends patching to the latest version or to one of the listed fixed versions.
+
+The more urgent item came a week earlier. On November 9, 2026 (Pacific time), Atlassian published a critical advisory for [CVE-2026-90436](https://confluence.atlassian.com/security/cve-2026-90436-remote-code-execution-in-confluence-data-center-1874560038.html), a remote code execution flaw in Confluence Data Center versions 1.x through 9.x, scored 9.3. It only applies when the "Remote API (XML-RPC & SOAP)" setting is enabled, and Confluence 10.x and later are not affected.
+
+Atlassian Cloud sites need no action for either. Atlassian states that CVE-2026-90436 "has no impact on Atlassian Cloud sites, and no action is required."
+
+## What is in the Atlassian security bulletin for November 2026?
+
+The November 2026 bulletin covers 318 vulnerabilities in self-managed products: 266 rated high and 52 rated critical. The critical ones are all in third-party dependencies, such as lodash, Spring and Jackson, which Atlassian assesses as a lower, non-critical risk in how its products use them. It also includes high-severity path traversal and cross-site scripting flaws in Jira and Confluence.
+
+The entries most Jira and Confluence teams will notice:
+
+| CVE | Score | Product | Issue |
+|---|---|---|---|
+| CVE-2026-4800 | 9.8 | Confluence | Remote code execution in the lodash dependency |
+| CVE-2026-59313 | 9.8 | Crowd | Remote code execution in the spring-webmvc dependency |
+| CVE-2026-47884 | 9.8 | Bamboo | File inclusion in a Spring dependency |
+| CVE-2026-110879 | 9.8 | Fisheye/Crucible | Denial of service in jackson-databind |
+| CVE-2026-21590 | 8.7 | Jira Software | Path traversal (arbitrary read and write) |
+| CVE-2026-21605 | 8.7 | Confluence | Path traversal (arbitrary read and write) |
+| CVE-2026-21603 | 8.4 | Jira Software and Jira Core | Stored cross-site scripting |
+
+As in every monthly bulletin, Atlassian states that these CVEs have been "assessed as presenting a non-critical risk to Atlassian customers". Schedule the upgrade; do not skip it.
+
+## What is CVE-2026-90436 in Confluence Data Center?
+
+CVE-2026-90436 is a critical remote code execution flaw, CVSS 9.3, in the third-party Apache Axis library that Confluence uses for its XML-RPC and SOAP APIs. It affects Confluence Data Center 1.x through 9.x when the "Remote API (XML-RPC & SOAP)" setting is on. The fix is in 9.2.28. Confluence 10.0 removed the feature, so 10.x and later are not affected.
+
+Key points from the advisory:
+
+- The vector requires no authentication and no user interaction.
+- The Remote API setting has been off by default for new installations since Confluence 3.0, so exposure depends on whether someone turned it on, often years ago, for a script or integration.
+- If you cannot patch, the mitigation is to turn the setting off: **General Configuration**, then **Further Configuration**, select **Edit**, clear the **Remote API (XML-RPC & SOAP)** checkbox and save. No restart is needed.
+- To validate, open the SOAP service URL that the advisory gives (it ends in `soap-axis1/confluenceservice-v2`) on your base URL. A correctly applied mitigation returns HTTP 403 Forbidden.
+- Turning the API off may break scripts, automations and third-party apps that still use it, so test first.
+- Atlassian says it cannot confirm whether your instance has been affected and advises checking for evidence of compromise.
+
+## Which versions should you patch to?
+
+Patch to the long term support releases the November bulletin recommends: Jira Software and Jira Service Management 11.3.13, Confluence 10.2.20 (or 9.2.28 if you stay on 9.2, which also fixes CVE-2026-90436), Bitbucket 10.2.9 and Crowd 7.2.6. The full list:
+
+| Product | Recommended fixed versions |
+|---|---|
+| Jira Software Data Center | 11.3.13 (LTS) recommended, or 10.3.27 (LTS) |
+| Jira Service Management Data Center | 11.3.13 (LTS) recommended, or 10.3.27 (LTS) |
+| Confluence Data Center | 10.2.20 (LTS) recommended; on the 9.2 LTS line, 9.2.28, which also fixes CVE-2026-90436 |
+| Bitbucket Data Center | 10.2.9 (LTS) recommended, or 9.4.27 (LTS) |
+| Crowd Data Center | 7.2.6 recommended |
+| Fisheye/Crucible | 4.9.16 recommended |
+
+Atlassian notes that fixed versions are current as of publication, so check the release notes linked from the bulletin before you schedule. It no longer publishes binary patches; fixes ship in maintenance releases.
+
+## Does this affect Atlassian Cloud?
+
+No action is needed on Cloud. The November bulletin covers Data Center and Server products only, and the CVE-2026-90436 advisory states that Cloud sites are not affected. What Cloud admins should still check is any self-managed system attached to the Cloud site: a Confluence Data Center instance kept read-only after a migration, a Crowd server or a Bitbucket Data Center instance.
+
+## What to do now
+
+1. **Check every Confluence Data Center instance for the Remote API setting.** If it is on and you are on 9.x or earlier, patch to 9.2.28 or a later supported release, or turn the setting off today.
+2. **Find out who still uses the Remote API.** XML-RPC and SOAP calls usually come from old scripts and integrations; they will need a REST replacement before any move to Confluence 10.x or Cloud.
+3. **Look for signs of compromise** on instances where the Remote API was enabled and reachable.
+4. **Schedule the bulletin upgrades** to the LTS versions above for Jira, Jira Service Management, Confluence, Bitbucket and Crowd.
+5. **Include forgotten instances**: read-only archives, test servers, disaster recovery copies.
+
+## The short version
+
+The November 17 bulletin is a large set of dependency fixes for Data Center, plus high-severity path traversal and cross-site scripting fixes in Jira and Confluence. CVE-2026-90436 is the urgent one: a critical remote code execution flaw in Confluence 9.x and earlier, exploitable when the Remote API setting is on. Patch to 9.2.28 or later, or turn the setting off now. Cloud sites need no action. If those Remote API scripts are part of what keeps you on Data Center, [the Confluence macros that do not survive the move to Cloud](/blog/confluence-macros-cloud-migration/) covers the other half of a Confluence migration inventory.

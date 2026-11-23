@@ -1,0 +1,82 @@
+---
+lang: es
+translationKey: atlassian-ip-ranges-january-2027
+title: "Rangos de IP de Atlassian: Atlassian Cloud añade 131.162.88.0/21 el 1 de enero de 2027"
+metaTitle: 'Rangos de IP de Atlassian: nuevo rango en 2027'
+description: "Atlassian anunció el 16 de octubre de 2026 que Atlassian Cloud empezará a usar un nuevo rango de IP, 131.162.88.0/21, a partir del 1 de enero de 2027. Cualquier firewall, proxy o backend de una app que permita a Atlassian por dirección IP necesita el nuevo rango antes de esa fecha. Qué cambia, a quién afecta y una lista de comprobación."
+metaDescription: 'Atlassian Cloud añade el rango de IP 131.162.88.0/21 el 1 de enero de 2027. Quién debe actualizar el firewall, qué es entrada y salida y qué hacer ya.'
+pubDate: 2026-10-16
+tags: ["atlassian-news", "atlassian-cloud", "forge"]
+author: team
+heroImage: ../../../assets/blog/atlassian-ip-ranges-january-2027.jpg
+heroImageAlt: 'Ilustración plana: un muro de ladrillos azul marino con una puerta redondeada abierta, un rastro de pequeños círculos verde azulado que sube hasta un único ladrillo dorado nuevo encajándose en lo alto del muro y un portapapeles melocotón al lado, sobre una ola verde azulada.'
+---
+
+*Atlassian Cloud empieza a usar un nuevo bloque de direcciones el 1 de enero de 2027. Los firewalls que permiten a Atlassian por IP lo necesitan antes.*
+
+Los rangos de IP de Atlassian crecen. El 16 de octubre de 2026, Atlassian [lo anunció en su changelog para desarrolladores](https://developer.atlassian.com/changelog/#CHANGE-3519): a partir del 1 de enero de 2027, Atlassian Cloud "will add new IP address ranges as we expand our cloud infrastructure". El nuevo rango es `131.162.88.0/21` y se suma a los rangos actuales, que siguen vigentes.
+
+Si algo en tu red acepta o permite tráfico según las direcciones IP de Atlassian, necesita el nuevo rango antes del 1 de enero. Eso incluye servidores que reciben webhooks de Jira o Confluence, application links con sistemas self-managed, backends de apps que filtran las llamadas por dirección y proxies corporativos que solo dejan a la plantilla acceder a destinos aprobados.
+
+Si tu lista de permitidos se genera automáticamente a partir de la lista que publica Atlassian, el changelog indica que no hace falta nada más. Si alguien escribió los rangos a mano en un firewall, esa es la regla que tienes que encontrar.
+
+## ¿Cuáles son los nuevos rangos de IP de Atlassian?
+
+El nuevo rango resumido es `131.162.88.0/21`. Atlassian lo divide por dirección: `131.162.88.0/23` lleva las peticiones hacia Atlassian (navegadores y clientes que llaman a las API de Atlassian) y `131.162.90.0/23` lleva las peticiones que salen de Atlassian (webhooks, llamadas de ciclo de vida de Connect y otras peticiones hacia tu app). Ambos entran en vigor el 1 de enero de 2027.
+
+| Rango | Dirección | Qué tráfico lleva |
+|---|---|---|
+| `131.162.88.0/21` | Ambas (resumen) | El bloque nuevo completo |
+| `131.162.88.0/23` | Hacia Atlassian | Navegadores y clientes que llaman a las API de Atlassian |
+| `131.162.90.0/23` | Desde Atlassian | Webhooks, llamadas de ciclo de vida de Connect, otras peticiones salientes |
+
+La lista legible por máquina en [ip-ranges.atlassian.com](https://ip-ranges.atlassian.com) ya incluye estas entradas, etiquetadas para Jira, Confluence, Forge y Loom. La entrada del changelog está asociada a las API de Jira, Jira Service Management, Confluence, Cloud Admin, Forge y Rovo MCP, entre otras, así que trátala como un cambio de plataforma y no de un solo producto.
+
+## ¿Quién tiene que actualizar su lista de permitidos?
+
+Cualquiera cuya red decida qué aceptar, o adónde puede conectarse la plantilla, según las direcciones IP de Atlassian. En la práctica son tres grupos: equipos que reciben tráfico de Atlassian Cloud, equipos de red cuyos proxies de salida restringen destinos y desarrolladores cuyos backends solo aceptan llamadas de Atlassian.
+
+Los sitios donde suele esconderse una lista mantenida a mano:
+
+- **Reglas de firewall o WAF de entrada** delante de servidores que reciben webhooks de Jira, Jira Service Management o Confluence.
+- **Application links** entre tu sitio de Atlassian Cloud y servidores self-managed. La [página de direcciones IP y dominios](https://support.atlassian.com/organization-administration/docs/ip-addresses-and-domains-for-atlassian-cloud-products/) de Atlassian los cita como conexión saliente típica.
+- **Backends remotos de Forge y servidores de apps Connect** que comprueban la dirección de origen de las llamadas. El changelog se dirige a ellos directamente: "If your app, remote backend, or integration allowlists Atlassian IP addresses, you must add these ranges before January 1, 2027".
+- **Proxies y firewalls corporativos de salida** que solo dejan al navegador llegar a destinos de una lista. Ahí es donde importa la mitad de entrada, `131.162.88.0/23`.
+- **Security groups y políticas de red** en tus propias cuentas de nube, fáciles de olvidar porque nadie las mira hasta que algo se rompe.
+
+No lo confundas con la lista de IP permitidas de Atlassian Administration, que limita qué direcciones de tu empresa pueden acceder a tus sitios de Atlassian. Este anuncio trata de las direcciones de Atlassian, no de las tuyas.
+
+## ¿Cómo mantener actualizada la lista de IP de Atlassian de forma automática?
+
+Lee el archivo JSON de ip-ranges.atlassian.com de forma programada y reconstruye tus reglas a partir de él, en lugar de pegar rangos a mano. La documentación de Atlassian recomienda justo eso y además ofrece notificaciones de cambios mediante un tema de Amazon SNS, para que un script reaccione cuando cambie el archivo.
+
+Un ejemplo mínimo que muestra los rangos que Atlassian usa para el tráfico saliente, es decir, lo que permites entrar en tu red:
+
+```bash
+curl -s https://ip-ranges.atlassian.com/ \
+  | jq -r '.items[] | select(any(.direction[]; . == "egress")) | .cidr'
+```
+
+Detalles útiles de la [página de direcciones IP y dominios](https://support.atlassian.com/organization-administration/docs/ip-addresses-and-domains-for-atlassian-cloud-products/) de Atlassian:
+
+- El tema de SNS se llama `atlassian-public-ip-changes`, en la región `us-east-1`. La notificación incluye un sync token, un hash y la URL del archivo.
+- Las notificaciones dependen de la disponibilidad del endpoint, así que la página sugiere revisar también el archivo cada cierto tiempo.
+- Atlassian no recomienda permitir redes asociadas a regiones concretas. Usa los rangos globales.
+- Las listas de salida incluyen tráfico configurable por el usuario, por ejemplo el de la plataforma Forge. Es un motivo para combinar la lista de IP con autenticación en el lado que recibe, y no fiarlo todo a la dirección.
+
+## Qué hacer ahora
+
+Una lista breve para la próxima ventana de cambios, mucho antes de la congelación de cambios de Navidad:
+
+1. **Haz inventario de cada regla que mencione a Atlassian.** Busca en la configuración de firewalls, WAF, proxies, security groups y balanceadores comentarios, nombres o rangos de Atlassian.
+2. **Añade `131.162.90.0/23`** (o el `/21` completo) donde aceptes tráfico de Atlassian Cloud: receptores de webhooks, endpoints de application links, backends de apps.
+3. **Añade `131.162.88.0/23`** (o el `/21` completo) donde restrinjas el tráfico saliente y Atlassian tenga que ser accesible.
+4. **Sustituye las listas mantenidas a mano** por una tarea programada que lea el archivo JSON, y suscríbete al tema de SNS.
+5. **Pregunta a quien desarrolló integraciones propias o apps privadas** si su backend filtra por IP y confirma que ya tiene el nuevo rango.
+6. **Documenta el cambio** con el enlace a la entrada del changelog, para que quien esté de guardia el 1 de enero sepa qué cambió y por qué.
+
+No hay forma de generar tráfico desde el nuevo rango por tu cuenta antes de la fecha, así que la prueba es una revisión de configuración, no una comprobación en vivo. Otro motivo para hacerlo en noviembre o diciembre y no en Nochevieja.
+
+## En resumen
+
+A partir del 1 de enero de 2027, Atlassian Cloud también usa `131.162.88.0/21`: el `/23` que empieza en .88 para el tráfico que entra en Atlassian y el `/23` que empieza en .90 para el que sale. Si tus listas de permitidos se generan desde ip-ranges.atlassian.com, ya estás cubierto. Si se escribieron a mano, encuéntralas, añade el rango y aprovecha para cambiarlas por una tarea programada. Las integraciones que leen los datos publicados por Atlassian en lugar de copiarlos suelen sobrevivir a cambios como este, un patrón que se explica en [integraciones que sobreviven a los cambios de API](/es/blog/integrations-that-survive-api-changes/).

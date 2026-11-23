@@ -1,0 +1,92 @@
+---
+lang: en
+translationKey: atlassian-cloud-editions-compared
+title: "Jira Standard vs Premium vs Enterprise: what admins actually get on each Atlassian Cloud plan"
+metaTitle: 'Jira Standard vs Premium: what admins get'
+description: "Jira Standard vs Premium is the plan question most admins face, with Free and Enterprise at either end. What each Atlassian Cloud plan gives an administrator in November 2026: user limits, permissions, sandboxes, release tracks, admin insights, data residency, uptime SLA, support, automation, Rovo and Atlassian Guard, plus the questions that settle the choice."
+metaDescription: 'Jira Standard vs Premium vs Enterprise for admins: user limits, sandboxes, release tracks, data residency, SLA, support, automation, Rovo and Guard compared.'
+pubDate: 2026-11-18
+tags: ["atlassian-cloud"]
+author: team
+heroImage: ../../../assets/blog/atlassian-cloud-editions-compared.jpg
+heroImageAlt: 'Flat illustration: four rounded navy steps rising from left to right, holding a small teal key, a teal toolbox, a gold shield and a peach building with a flag, on a warm cream background with a gentle teal wave along the bottom.'
+---
+
+*The plan you pick decides which admin tools you have when something goes wrong, not just how many people can log in.*
+
+Jira Standard vs Premium comes down to control. Standard gives you permissions, audit logs and data residency for up to 100,000 users on one site. Premium adds the tools for managing change and risk: a sandbox, release tracks, admin insights, IP allowlisting, unlimited storage, a 99.9% uptime SLA and 24/7 support for critical issues. Enterprise adds multiple sites, Atlassian Guard Standard included and a 99.95% SLA.
+
+Free sits below all three: up to 10 users, and every user is an admin. The details below are taken from Atlassian's [Jira](https://www.atlassian.com/software/jira/pricing) and [Confluence](https://www.atlassian.com/software/confluence/pricing) pricing pages as listed in November 2026. Prices are left out on purpose, because they change; check the pricing pages for your user count.
+
+## What are the Atlassian Cloud plans in 2026?
+
+Jira and Confluence each come in four plans: Free, Standard, Premium and Enterprise. Each product has its own plan, so Jira can be on Premium while Confluence stays on Standard. Jira Service Management is now sold inside Atlassian's Service Collection (with Customer Service Management and Assets), which uses the same four plan names.
+
+Existing Jira Service Management plans began moving to Service Collection in February 2026, per Atlassian's [transition guide](https://support.atlassian.com/jira-service-management-cloud/docs/transitioning-to-service-collection/). Service Collection Free covers up to three agents; customers who raise requests do not need a license on any plan. Enterprise is sold on annual subscriptions only.
+
+## What does the Free plan include for admins?
+
+Free is a working product for a small team, not a cut-down trial. On Jira it allows 10 users on one site, 2 GB of file storage and Community support. The catch for an admin is that Free has no user roles or permissions: every user is an admin. Jira on Free also caps email at 100 messages a day across the site, counting notifications and automation together.
+
+Free does not include Rovo. It suits evaluation and very small teams; once you need to stop someone from deleting a space, you need Standard.
+
+## Jira Standard vs Premium: what changes for an admin?
+
+Here is how the four Jira plans compare on the features administrators ask about. Confluence matches Jira on the admin rows (permissions, audit logs, data residency, admin insights, IP allowlisting, sandbox and release tracks) and has its own automation allowance.
+
+| Feature | Free | Standard | Premium | Enterprise |
+|---|---|---|---|---|
+| Users per site | 10 | 100,000 | 100,000 | 100,000 |
+| Sites | 1 | 1 | 1 | Up to 150 |
+| File storage | 2 GB | 250 GB | Unlimited | Unlimited |
+| User roles and permissions | No | Yes | Yes | Yes |
+| Audit log of site changes | No | Yes | Yes | Yes, plus user activity |
+| Data residency | No | Yes | Yes | Yes |
+| Admin insights | No | No | Yes | Yes |
+| IP allowlisting | No | No | Yes | Yes |
+| Sandbox | No | No | 1 free per app | Up to 5 free per app |
+| Release tracks | No | No | Yes | Yes |
+| Uptime SLA | None | None | 99.9% | 99.95% |
+| Support | Community | Local business hours | 24/7 for critical issues | 24/7 for all issues |
+| Automation steps per month | 150 per subscription | 400 per user | 750 per user | 1,000 per user |
+| Rovo credits per user per month | Not included | 25 | 70 | 150 |
+| Atlassian Guard Standard | Separate subscription | Separate subscription | Separate subscription | Included |
+
+Standard is where real administration starts: roles and permissions, work item security, anonymous access, guest access, an audit log of site configuration changes, and the choice of where your data is hosted. For many single-team sites it is enough.
+
+Premium earns its price through the admin column. The [sandbox](https://support.atlassian.com/organization-administration/docs/sandbox-limits/) lets you test configuration and apps against a copy of production. [Release tracks](https://support.atlassian.com/organization-administration/docs/what-are-release-tracks/) let you take most of Atlassian's changes in a monthly bundle instead of continuously. Admin insights shows usage, security and access data over time, and IP allowlisting limits access to trusted networks. Support moves to 24/7 for critical issues with a one-hour response time. On Confluence, Premium also adds analytics, inspect permissions and an admin key.
+
+For Jira Service Management, Service Collection Premium adds advanced incident management, the virtual service agent and a 99.9% uptime SLA, according to the [Service Collection pricing page](https://www.atlassian.com/collections/service/pricing).
+
+## What does Enterprise add?
+
+Enterprise is about scale and central control. It licenses up to 150 sites with users counted once across them, includes Atlassian Guard Standard, raises the uptime SLA to 99.95%, and gives 24/7 support for all issues with a 30-minute response time for critical ones. It also adds audit logs of user activity, multiple identity providers, up to five free sandboxes per app that you can assign to any production site, and the Atlassian Data Lake.
+
+If you run several sites today, or expect to, Enterprise is often the plan that removes duplicate licenses.
+
+## How do automation and Rovo allowances differ by plan?
+
+The pricing pages already list automation in steps per month, the meter that replaces rule runs on December 3, 2026. Jira Free gets 150 steps for the whole subscription; paid plans get a per-user allowance that grows from 400 on Standard to 1,000 on Enterprise. Confluence allowances are smaller. How steps are counted, and what happens when you run out, is covered in [Jira automation usage limits](/blog/jira-automation-usage-limits/).
+
+Rovo Search, Chat and Agents are included on every paid plan. Usage is measured in credits, pooled across the organization and reset each month: 25 per user on Standard, 70 on Premium, 150 on Enterprise. Rovo Search does not use credits; Chat and agent requests do. Before switching it on, read [what to check before you turn on Rovo](/blog/before-you-turn-on-rovo/).
+
+## Where does Atlassian Guard fit?
+
+Atlassian Guard is a separate subscription that adds single sign-on, user provisioning with SCIM, mobile app management, org insights and organization audit logs. On Free, Standard and Premium you buy Guard Standard on top; Enterprise includes it. Guard Premium (data classification, threat detection, content scanning) is a further step. The setup is covered in [Atlassian Guard, SSO and provisioning](/blog/atlassian-guard-sso-and-provisioning/).
+
+## How to decide which plan you need
+
+Answer these in order. The first "yes" usually sets your minimum plan.
+
+1. **Do you need users who are not admins?** Then you need Standard, because Free makes everyone an admin.
+2. **Must data stay in a specific region?** Data residency starts on Standard.
+3. **Do configuration changes break things for users?** A sandbox and release tracks start on Premium.
+4. **Does an outage cost real money or breach a contract?** A financially backed uptime SLA starts on Premium.
+5. **Do you need help at 3 a.m.?** 24/7 support for critical issues starts on Premium.
+6. **Are you running out of automation steps or Rovo credits?** Compare your actual monthly usage with each plan's allowance before buying extra usage.
+7. **Do you run more than one site, or need SSO and SCIM for everyone?** Price Enterprise against Premium plus Guard.
+8. **Which product needs the upgrade?** Plans are per product, so upgrade only where the admin features are needed.
+
+## The short version
+
+Free suits a small team where everyone can be an admin. Standard adds real permissions, audit logs and data residency. Premium is the plan for controlling change: sandbox, release tracks, admin insights, a 99.9% SLA and 24/7 support for critical issues. Enterprise adds multiple sites, Guard Standard and a 99.95% SLA. Whatever you choose, count the users who actually need access first: [reclaiming unused Atlassian licenses](/blog/atlassian-license-reclamation/) before an upgrade often pays for part of it.

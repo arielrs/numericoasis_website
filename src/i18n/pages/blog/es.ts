@@ -3,16 +3,16 @@ import type { BlogCopy } from './en';
 export const es = {
   meta: {
     crumb: 'Blog',
-    title: 'Apuntes sobre software, Atlassian y juegos',
+    title: 'Guías y noticias de Atlassian, software y juegos',
     metaDescription:
-      'Apuntes sobre software a medida, trabajo con Jira y Confluence, apps en Forge y la creación de un juego de navegador, del equipo de Numeric Oasis.',
+      'Guías y noticias para administradores de Jira, Confluence, JSM y Rovo, y artículos sobre software a medida y la industria del videojuego, de Numeric Oasis.',
     description:
-      'Apuntes sobre software a medida, migración y administración de Jira y Confluence, apps en Forge y la creación de un juego de navegador, del equipo de Numeric Oasis.',
+      'Guías y noticias para administradores de Atlassian Cloud sobre Jira, Confluence, Jira Service Management y Rovo, y artículos sobre software a medida y la industria del videojuego, del equipo de Numeric Oasis.',
   },
   index: {
     eyebrow: 'Del taller',
     headline: 'Apuntes del taller.',
-    lede: 'Lo que aprendemos construyendo software en tres frentes: aplicaciones a medida, trabajo con Jira y Confluence y apps en Forge, y un juego propio. Sobre todo las decisiones que salen caras cuando se toman mal, escritas para dejar de explicarlas dos veces.',
+    lede: 'Guías y noticias para administradores de Atlassian Cloud, notas sobre desarrollo de software a medida y artículos sobre la industria del videojuego. Cada uno responde a su pregunta en las primeras líneas y enlaza sus fuentes.',
     empty: 'Todavía no hay nada publicado.',
     allTags: 'Todos los artículos',
     tagsLabel: 'Explorar por tema',
@@ -62,7 +62,7 @@ export const es = {
         secondary: 'Escríbenos',
       },
       studio: {
-        headline: 'Hecho por nuestro Estudio de Juegos.',
+        headline: 'Juega a lo que hace nuestro Estudio de Juegos.',
         body: 'Kindelve es un descenso a mazmorras con colección de criaturas que funciona en cualquier navegador, gratis, en cinco idiomas. La página del estudio tiene el juego, cómo está hecho y lo que viene.',
         primary: 'El Estudio de Juegos',
         secondary: 'Habla con el estudio',
@@ -89,5 +89,8 @@ export const es = {
     'atlassian-consulting': 'Consultoría Atlassian',
     'cloud-migration': 'Migración a Cloud',
     'game-development': 'Desarrollo de videojuegos',
+    'atlassian-news': 'Noticias de Atlassian',
+    'jira-service-management': 'Jira Service Management',
+    'rovo-and-ai': 'Rovo e IA',
   },
 } as const satisfies BlogCopy;

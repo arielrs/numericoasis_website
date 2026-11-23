@@ -13,12 +13,17 @@
 import BaseLayout from './BaseLayout.astro';
 import { LOCALES, DEFAULT_LOCALE } from '../i18n';
 import type { Crumb, JsonLdNode } from '../lib/schema';
-import { docHref, groupLabel, type DocEntry, type DocGroup, type Heading } from '../lib/docs';
+import {
+  docHref, groupHref, groupLabel, SECTIONS,
+  type DocEntry, type DocGroup, type DocSection, type Heading,
+} from '../lib/docs';
 
 interface Props {
   title: string;
   description: string;
   groups: DocGroup[];
+  /** Which wiki this page is in: the apps wiki, or the Game Studio's. */
+  section?: DocSection;
   /** Omitted on the hub, which is the one docs page with no current entry. */
   current?: DocEntry;
   /** Set by a group index page, which has a group but no single entry. */
@@ -36,8 +41,11 @@ interface Props {
 }
 
 const {
-  title, description, groups, current, currentApp, headings = [], prev, next, graph,
+  title, description, groups, section = 'apps', current, currentApp, headings = [], prev, next, graph,
 } = Astro.props;
+
+/** Labels and paths of the wiki this page belongs to. */
+const wiki = SECTIONS[section];
 
 /** The group in view, from either a leaf or a group index. */
 const activeApp = current?.data.app ?? currentApp;
@@ -104,7 +112,7 @@ const linkBase =
             aria-controls="doc-nav"
             class="flex w-full cursor-pointer items-center justify-between rounded-lg border border-sand-200 bg-sand-50 px-4 py-3 text-sm font-semibold text-brand-900 transition duration-200 ease-out-soft hover:border-water-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sun-500 lg:hidden"
           >
-            Wiki
+            {wiki.label}
             <svg
               class="transition duration-200 ease-out-soft"
               width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -121,12 +129,12 @@ const linkBase =
           <nav
             id="doc-nav"
             class="mt-4 hidden lg:sticky lg:top-24 lg:mt-0 lg:block lg:max-h-[calc(100vh-8rem)] lg:overflow-y-auto lg:pr-2"
-            aria-label="Wiki"
+            aria-label={wiki.label}
           >
             <a
-              href="/documentation/"
+              href={wiki.base}
               class:list={[linkBase, 'font-semibold text-brand-800 hover:bg-sand-50']}
-            >All documentation</a>
+            >{wiki.homeLabel}</a>
 
             <!--
               One group open at a time.
@@ -185,13 +193,17 @@ const linkBase =
       <div class="min-w-0">
         {current && (
           <nav class="mb-6 flex flex-wrap items-center gap-1.5 text-sm text-slate-600" aria-label="Breadcrumb">
+            {wiki.crumbs.map((crumb) => (
+              <>
+                <a
+                  href={crumb.path}
+                  class="rounded-sm transition duration-200 ease-out-soft hover:text-brand-900 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sun-500"
+                >{crumb.name}</a>
+                <span aria-hidden="true">/</span>
+              </>
+            ))}
             <a
-              href="/documentation/"
-              class="rounded-sm transition duration-200 ease-out-soft hover:text-brand-900 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sun-500"
-            >Wiki</a>
-            <span aria-hidden="true">/</span>
-            <a
-              href={`/documentation/${current.data.app}/`}
+              href={groupHref(current.data.app)}
               class="rounded-sm transition duration-200 ease-out-soft hover:text-brand-900 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sun-500"
             >{groupLabel(current.data.app)}</a>
             <span aria-hidden="true">/</span>

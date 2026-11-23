@@ -1,0 +1,92 @@
+---
+lang: en
+translationKey: before-you-turn-on-rovo
+title: "How to enable Rovo: the admin decisions to make before and after it goes live"
+metaTitle: 'How to enable Rovo: an admin checklist'
+description: "On paid Atlassian Cloud plans Rovo is switched on automatically, so enabling it well is about the decisions around it: which apps and groups get AI features, how Rovo credits are spent, which third-party tools to connect, which forgotten content becomes easy to find, where data is stored, and what your people may use it for."
+metaDescription: 'How to enable Rovo in Atlassian Cloud: plans and credits, per-app access, permissions, connectors, data residency and a rollout checklist.'
+pubDate: 2026-11-02
+tags: ["rovo-and-ai", "atlassian-cloud"]
+author: team
+heroImage: ../../../assets/blog/before-you-turn-on-rovo.jpg
+heroImageAlt: 'Flat illustration: a navy control panel with three rounded teal switches, two turned on and one turned off, a gold key resting beside the panel, and a soft peach shield shape standing behind it, with a gentle teal wave along the bottom edge.'
+---
+
+*Rovo is probably already on in your organization. The decisions that matter are the ones nobody has made yet.*
+
+How to enable Rovo is a shorter question than it sounds. On paid Standard, Premium and Enterprise cloud plans, Atlassian turns Rovo on automatically, and AI features need to be enabled on each site where Rovo is present. There is no big switch to flip.
+
+What admins actually need to decide is everything around it: which apps and groups get AI features, how credit usage is capped, which external tools to connect, which content becomes findable that used to be safely obscure, where Rovo data is stored, and what people may use it for. Make those decisions before the first team relies on Rovo, or in the first weeks after.
+
+## Is Rovo included in my Atlassian plan?
+
+Yes, if you are on a paid cloud plan. Rovo is included in Standard, Premium and Enterprise plans of Jira, Confluence, Jira Service Management and the Atlassian collections. Usage is measured in Rovo credits: each paid subscription brings a monthly allowance per user, pooled across the organization, that does not roll over. Rovo Search, definitions and summaries do not consume credits; chat and agents do.
+
+The allowance grows with the plan tier, and collections get more than single apps. The exact figures are on Atlassian's [Rovo credits page](https://support.atlassian.com/rovo/docs/rovo-usage-limits/). Rovo is not available in Atlassian Government Cloud organizations.
+
+One date to plan around: Atlassian announced on September 1, 2026 that allowance limits and billing for usage beyond them take effect on December 3, 2026. Pay as you go is on by default. Organization and billing admins can set a spending limit, or turn pay as you go off, in Atlassian Administration. With it off, billable Rovo interactions pause once the allowance is used up, until it resets.
+
+## How do you enable or disable Rovo for each app?
+
+An organization admin opens Atlassian Administration, selects **AI and Rovo**, then **Access**, and blocks the apps that should not have AI features. Blocking an app disables all of its current and upcoming AI features, including agents and chat. Content Rovo already generated stays. On Enterprise plans you can also allow or block access by user group.
+
+A few details catch people out:
+
+- **Jira apps share some features.** Rovo Search, Chat and Create with Rovo stay available while any Jira app on the site still has Rovo enabled. To remove them, block every Jira app on that site.
+- **Some apps have their own settings.** Atlassian names Jira Service Management and Bitbucket Cloud as needing extra configuration in their own admin settings.
+- **Not everything is AI.** Atlassian's admin guide lists Rovo Search, bookmarks, third-party connectors and Studio as staying available when the AI toggle is off. Search across your content is part of the platform either way.
+
+## Does Rovo respect permissions?
+
+Yes. Atlassian states that agents "don't grant additional access or permissions to any data or information", and that for connected third-party apps Rovo synchronizes access controls so that "users only see content they have access to." Rovo respects the permissions you already have. It does not fix them.
+
+That is exactly why the permission review comes first. Rovo makes existing access easy to use, and a lot of existing access was never meant to be used. Typical examples:
+
+- A Confluence space open to every licensed user that still holds an old salary review or a reorganization draft.
+- A Jira space whose permission scheme grants Browse to a broad group because nobody narrowed it after a migration.
+- Attachments: exported customer lists, contract PDFs, spreadsheets with personal data.
+- Pages restricted the wrong way, or not restricted at all because "nobody will find them".
+
+Before Rovo, finding those took effort. With Rovo, a question in plain language can surface and summarize them. Spend a week on a permission sweep: list spaces open to everyone, check who can browse each Jira space, and fix the outliers. These guides help: [Confluence Cloud permissions explained](/blog/confluence-cloud-permissions-explained/) and the [Jira Cloud permission audit](/blog/jira-cloud-permission-audit/). Then deal with stale content, because Rovo will quote an outdated page as confidently as a current one; [archiving stale Confluence content](/blog/confluence-archiving-stale-content/) covers that.
+
+## Which third-party tools should you connect?
+
+Connectors bring content from tools such as Google Drive, SharePoint or Slack into Rovo. An organization admin sets them up in Atlassian Administration. Start with the one or two tools where answers actually live, not with everything on offer.
+
+Atlassian's own guidance before connecting an app is worth following:
+
+1. **Review the data stored in the tool** and confirm that connecting it fits your internal data policies.
+2. **Check the tool's permissions.** Rovo relies on them, so an overshared folder in the source becomes an overshared answer in Rovo.
+3. **Narrow the scope.** Rovo indexes the whole workspace of a connected app by default; some connectors, such as Google Drive and SharePoint, let you exclude parts of it.
+
+If you disconnect a tool later, Atlassian deletes the content it indexed from that tool within 30 days.
+
+A related decision is AI tools from outside Atlassian. If people want their own AI assistants to read Jira and Confluence through the Atlassian MCP server, Atlassian Guard Standard lets you allow or block that per data security policy.
+
+## Data residency and an AI usage policy
+
+If you pin data to a region, check Rovo separately. Organization admins can choose where in-scope Rovo data is stored, which includes chat logs, agent configuration, bookmarks and ingested third-party content. Atlassian app data in the Rovo search index stays with that app's own data. Atlassian keeps chat and agent inputs and outputs for 30 days for safety and security, and states that its model providers neither retain them nor use them to improve their services.
+
+Then write a one-page AI usage policy, in your own words, covering:
+
+- What may and may not be pasted into chat (customer data, credentials, health data).
+- Which outputs need a human check before they go to a customer or into a decision.
+- Who may create agents. By default anyone can; in Studio settings you can limit creation to selected groups or to admins.
+- Where to report a wrong or harmful answer.
+
+## A Rovo rollout checklist
+
+1. Confirm which plan each app is on and that AI features are enabled on the sites you expect.
+2. Decide which apps to block under **AI and Rovo**, then **Access** (and which groups, on Enterprise).
+3. Set a credit spending limit, or decide to turn pay as you go off, before December 3, 2026.
+4. Run the permission sweep on Confluence spaces and Jira spaces open to broad groups.
+5. Archive or delete stale content in the spaces people will ask about most.
+6. Decide who can create agents.
+7. Pick the first one or two connectors and narrow their scope.
+8. Check data residency for in-scope Rovo data.
+9. Publish the AI usage policy and say where feedback goes.
+10. Start with one team, review Rovo activity insights in Atlassian Administration after a month, then widen.
+
+## The short version
+
+On paid cloud plans, Rovo is already there. Enabling it well means choosing which apps and groups get AI features, capping credit spend before billing starts on December 3, 2026, fixing overshared spaces and stale pages before Rovo makes them easy to find, connecting only the tools where answers live, checking data residency, and giving people a short usage policy. If you would like help with the permission sweep that should come first, the [Numeric Oasis Atlassian team](/atlassian/) does this kind of review.

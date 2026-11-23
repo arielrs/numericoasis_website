@@ -1,0 +1,84 @@
+---
+lang: pt-BR
+translationKey: jira-cloud-permission-audit
+title: "Auditoria de permissões do Jira: quem vê e quem faz o quê no Jira Cloud"
+metaTitle: 'Auditoria de permissões do Jira, passo a passo'
+description: "Uma auditoria de permissões do Jira percorre camadas: acesso público, permissões dadas a qualquer usuário logado, esquemas de permissão compartilhados entre espaços, papéis, grupos e permissões globais, e níveis de segurança dos itens de trabalho. Um procedimento passo a passo para o Jira Cloud e a ordem para corrigir o que aparecer."
+metaDescription: 'Auditoria de permissões do Jira em cinco passos: acesso público, usuários logados, esquemas compartilhados, papéis e grupos, segurança e o que corrigir antes.'
+pubDate: 2026-10-21
+tags: ["jira-administration", "atlassian-cloud"]
+author: team
+heroImage: ../../../assets/blog/jira-cloud-permission-audit.jpg
+heroImageAlt: 'Ilustração em estilo flat: uma prancheta azul-marinho com uma coluna de marcas de verificação verde-azuladas, uma grande chave dourada apoiada sobre ela, três pequenos cadeados ao lado, dois azul-marinho e um em laranja suave, e uma suave onda verde-azulada na base.'
+---
+
+*A maior parte da exposição no Jira não é uma invasão. É uma permissão dada a "todo mundo" que alguém criou anos atrás e ninguém leu desde então.*
+
+Uma auditoria de permissões do Jira responde a duas perguntas para cada espaço: quem consegue vê-lo e quem pode mudar o quê dentro dele. No Jira Cloud, a resposta está espalhada em camadas: o acesso ao produto no Atlassian Administration, as permissões globais, o esquema de permissões de cada espaço gerenciado pela empresa, os papéis e grupos, o nível de acesso de cada espaço gerenciado pela equipe e os níveis de segurança dos itens de trabalho.
+
+Audite na ordem da exposição. Primeiro o acesso público, depois as permissões dadas a qualquer usuário logado, depois os esquemas compartilhados por muitos espaços, depois papéis, grupos e permissões globais, e por fim os itens de trabalho individuais. Essa ordem encontra os piores problemas na primeira hora.
+
+## O que decide quem vê um item de trabalho no Jira?
+
+Todas as camadas precisam dizer sim. A pessoa precisa ter acesso ao Jira. O espaço precisa conceder a ela "Browse spaces" (antes chamada Browse projects): pelo esquema de permissões, se for gerenciado pela empresa, ou pelo nível de acesso e pelos papéis, se for gerenciado pela equipe. E, se o item tiver um nível de segurança, ela precisa estar nele. A primeira camada que disser não decide.
+
+Uma exceção atravessa tudo isso. Uma permissão concedida a **Public** vale para qualquer pessoa na internet, sem licença do Jira e sem login. Por isso o acesso público vem primeiro.
+
+## Passo 1: encontre tudo o que é público
+
+1. **Esquemas de permissão que concedem Browse spaces a Public.** O [artigo da Atlassian sobre espaços públicos](https://support.atlassian.com/jira-cloud-administration/docs/prevent-or-remove-public-access/) explica que isso deixa qualquer pessoa ver o espaço e seus itens de trabalho sem acesso ao Jira. A documentação mais antiga chama o mesmo destinatário de "Anyone on the web". Se a permissão de criar itens de trabalho também for dada a Public, visitantes anônimos podem criar trabalho. O plano Free não permite espaços públicos; do Standard para cima, sim.
+2. **Filtros e dashboards públicos.** A configuração geral do Jira tem uma opção que permite aos usuários compartilhar dashboards e filtros com o público. Desligue-a, a menos que você publique de propósito, e revise os compartilhamentos existentes em Shared items, como descreve a [base de conhecimento](https://support.atlassian.com/jira/kb/restrict-the-public-sharing-of-dashboards-and-filters/) da Atlassian.
+3. **Browse users and groups.** Essa permissão global mostra o nome de todos os usuários do site nos seletores de usuário e nas menções. Ela deve ficar só com grupos internos.
+
+Confirme cada correção abrindo o espaço numa janela anônima do navegador. Você deve cair numa página de login.
+
+## Passo 2: verifique o que foi dado a qualquer usuário logado
+
+O destinatário "Any logged-in user" abrange toda conta com acesso ao Jira, inclusive terceirizados e parceiros que você convidou. Ele aparece com frequência nos esquemas padrão para Browse spaces e para a criação de itens de trabalho. Num espaço interno de engenharia isso pode estar certo; para RH, jurídico, segurança ou dados de clientes, raramente está.
+
+Faça a mesma verificação nos espaços gerenciados pela equipe. Um espaço **Aberto** deixa qualquer pessoa do site ver, criar e editar seus itens de trabalho, e um espaço **Limitado** deixa qualquer pessoa ver e comentar, segundo os [níveis de acesso da Atlassian](https://support.atlassian.com/jira-software-cloud/docs/manage-how-people-access-your-next-gen-project/). Espaços sensíveis desse tipo devem ser Privados. A forma como os dois tipos de espaço tratam o acesso está comparada em [team-managed vs company-managed](/pt-BR/blog/team-managed-vs-company-managed-spaces/).
+
+## Passo 3: relacione esquemas e espaços
+
+Abra a página de esquemas de permissão (Configurações, depois Itens de trabalho, depois Esquemas de permissão, entre os atributos de item de trabalho) e liste cada esquema com os espaços que o usam. Você está procurando:
+
+- **Um esquema atendendo espaços sensíveis e comuns ao mesmo tempo.** Divida-o, para que apertar um espaço não quebre os outros.
+- **Permissões dadas a usuários ou grupos nomeados em vez de papéis do espaço.** Os papéis deixam cada espaço decidir seus membros; um grupo ou um usuário nomeado num esquema compartilhado vale para todos os espaços que usam esse esquema.
+- **Cópias quase idênticas.** Dez esquemas que diferem numa linha são dez coisas para auditar. Consolide onde for possível.
+
+Uma permissão merece cuidado: o papel do espaço que os apps instalados usam para chegar ao trabalho dos seus espaços. Mantenha-o, a menos que você saiba qual app depende dele, ou esse app deixa de funcionar nesses espaços.
+
+## Passo 4: revise papéis, grupos e permissões globais
+
+Os grupos concedem acesso ao produto e permissões globais; os papéis concedem acesso dentro dos espaços. Verifique, nesta ordem:
+
+- **Quem tem Administer Jira, Make bulk changes e Share dashboards and filters.** São poderes que valem para o site inteiro ([lista de permissões globais da Atlassian](https://support.atlassian.com/jira-cloud-administration/docs/manage-global-permissions/)). Mantenha-os com grupos nomeados e com motivo.
+- **Quem pode criar espaços gerenciados pela equipe.** Cada novo espaço desse tipo traz suas próprias configurações de acesso, então conceda essa permissão a um grupo, e não a todo mundo.
+- **Quem saiu.** Qualquer pessoa desativada ou que deixou a empresa deve estar fora dos grupos e papéis. A mesma revisão recupera licenças, como mostra o texto sobre [as licenças que ninguém usa](/pt-BR/blog/atlassian-license-reclamation/).
+
+## Passo 5: confira os níveis de segurança dos itens de trabalho
+
+Os esquemas de segurança de itens de trabalho escondem itens específicos dentro de um espaço de pessoas que, de outra forma, poderiam navegar por ele. A [visão geral](https://support.atlassian.com/jira-cloud-administration/docs/configure-issue-security-schemes/) da Atlassian observa que, num espaço sem esquema de segurança, o trabalho fica visível para qualquer pessoa com acesso ao espaço, e que o campo de segurança precisa estar no layout para que os níveis possam ser definidos. Para cada esquema em uso, confirme quem está em cada nível, se existe um nível padrão e se o campo de fato está no layout. O plano Free não permite configurar segurança de itens de trabalho.
+
+## Como verificar o acesso de uma pessoa?
+
+Use o Permission helper. Em Configurações, depois Sistema, na seção Admin helper, escolha Permission helper e selecione um usuário, um item de trabalho e uma permissão. Ele lista o que o usuário pode fazer e, com "Show failed conditions" marcado, por que não pode. Deixe o usuário em branco para testar o que um visitante anônimo consegue fazer.
+
+Ele responde a uma pergunta do tipo "por que ela consegue ver isto?" em um minuto, e o teste com o usuário em branco é uma boa verificação final depois do Passo 1. O [artigo da Atlassian sobre o Permission helper](https://support.atlassian.com/jira-cloud-administration/docs/check-a-users-access-from-a-work-item/) mostra o passo a passo.
+
+## O que uma auditoria de permissões do Jira deve corrigir primeiro?
+
+Corrija primeiro a exposição para o mundo externo, depois a exposição para todos de dentro e, por fim, o excesso de poder. Na prática, nesta ordem:
+
+1. Browse spaces concedida a Public em qualquer espaço que não deveria ser público.
+2. Compartilhamento público de filtros e dashboards, e Browse users and groups nas mãos de quem não é de um grupo interno.
+3. "Any logged-in user" em espaços sensíveis, e acesso Aberto ou Limitado em espaços sensíveis gerenciados pela equipe.
+4. Administer Jira e Make bulk changes concedidas de forma ampla demais.
+5. Pessoas que saíram e continuam em grupos e papéis.
+6. Níveis de segurança com membros desatualizados ou sem nível padrão.
+
+Registre cada mudança e o motivo, e repita a auditoria a cada trimestre. As permissões voltam a se espalhar no momento em que um pedido é atendido com pressa.
+
+## Em resumo
+
+Audite as permissões do Jira na ordem da exposição: primeiro permissões públicas e filtros públicos, depois "Any logged-in user" e espaços gerenciados pela equipe com acesso Aberto, depois esquemas compartilhados, papéis, grupos, permissões globais e níveis de segurança. Use o Permission helper para testar casos isolados, incluindo o visitante anônimo. Entre uma auditoria e outra, um registro de quem mudou cada permissão encurta a próxima; o [Configuration Monitor](/pt-BR/apps/configuration-monitor/), da Numeric Oasis, mantém esse registro para cada espaço, dentro do Jira.

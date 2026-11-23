@@ -1,0 +1,68 @@
+---
+lang: es
+translationKey: connect-end-of-support-in-product-warnings
+title: "Fin del soporte de Atlassian Connect: los avisos llegan a los usuarios de Jira y Confluence en diciembre"
+metaTitle: 'Fin del soporte de Atlassian Connect: avisos'
+description: "El soporte de Atlassian Connect termina el 31 de enero de 2027. El 13 de noviembre de 2026, Atlassian avisó de que los mensajes sobre apps Connect empezarán a aparecer dentro de Jira y Confluence, delante de los usuarios finales, a lo largo de diciembre. Qué verán los usuarios, qué apps activan el aviso y qué deben hacer los administradores antes de que lleguen los mensajes."
+metaDescription: 'El soporte de Connect termina el 31/01/2027. Desde diciembre, los usuarios de Jira y Confluence verán avisos en las apps Connect. Qué dicen y qué hacer.'
+pubDate: 2026-11-16
+tags: ["atlassian-news", "marketplace", "forge"]
+author: team
+heroImage: ../../../assets/blog/connect-end-of-support-in-product-warnings.jpg
+heroImageAlt: 'Ilustración plana: una fila de piezas de puzle redondeadas azul marino, dos con pequeños triángulos de aviso naranjas sin símbolos, un puente verde azulado hacia piezas doradas y, encima, una tarjeta de calendario blanca con la parte superior melocotón, sobre una ola verde azulada.'
+---
+
+*Hasta ahora, los avisos sobre Connect vivían en una página de administración. En diciembre pasan a las propias apps, donde todo el mundo los ve.*
+
+El fin del soporte de Atlassian Connect es el 31 de enero de 2027, y los avisos están a punto de hacerse visibles para todos. En un [aviso del changelog para desarrolladores del 13 de noviembre de 2026](https://developer.atlassian.com/changelog/#CHANGE-3567), Atlassian indicó que los mensajes sobre apps Connect llegarán a los sitios del Developer Canary en unas dos semanas, seguidos de "a gradual rollout to production instances throughout the month of December."
+
+Los mensajes aparecen dentro de los módulos de las apps Connect en Jira y Confluence: en páginas completas, macros, el byline de Confluence y el panel de contexto del elemento de trabajo en Jira. Se muestran en las apps cuyos desarrolladores han dicho que no migrarán a Forge, que están indecisos o que no han declarado nada.
+
+Para los administradores, el efecto práctico es sencillo: los usuarios empezarán a preguntar si una app está a punto de romperse. La respuesta tiene que estar lista antes de que aparezca el primer mensaje.
+
+## ¿Qué es el fin del soporte de Atlassian Connect?
+
+Connect es el framework antiguo de Atlassian para apps en la nube, sustituido por Forge. El soporte termina el 31 de enero de 2027, tras una prórroga desde diciembre de 2026. A partir de esa fecha, Atlassian solo atenderá vulnerabilidades de seguridad críticas, las funciones de Connect podrán retirarse con poco aviso y algunas apps podrían dejar de funcionar sin previo aviso.
+
+El [artículo de preparación](https://www.atlassian.com/blog/developer/getting-ready-for-connect-end-of-support) de Atlassian lo dice claramente: "Connect will not remain in a steady state after end of support." Los hitos anteriores ya han pasado: el Marketplace dejó de aceptar apps Connect nuevas en septiembre de 2025 y, desde marzo de 2026, las apps con descriptor Connect ya no pueden recibir actualizaciones.
+
+## ¿Qué verán los usuarios de Jira y Confluence?
+
+Los usuarios verán un panel de aviso en la parte superior de los módulos Connect de página completa y de las macros, o un icono de aviso junto a módulos más pequeños, como el byline de Confluence y el panel de contexto del elemento de trabajo en Jira. El texto depende de lo que haya declarado el desarrollador sobre su migración a Forge, y todos los mensajes se pueden descartar.
+
+Los mensajes, según la página [what users see in product](https://developer.atlassian.com/platform/adopting-forge-from-connect/what-users-see-in-product/) de Atlassian ("App name" se sustituye por el nombre de la app):
+
+| Intención declarada por el desarrollador | Lo que lee el usuario final |
+|---|---|
+| No migrará | "App name will no longer be supported or updated after January 2027." (la app deja de tener soporte y actualizaciones después de enero de 2027) |
+| Indeciso | "App name might stop working because it is running on a platform we'll no longer support after January 2027." (la app podría dejar de funcionar) |
+| Nada declarado | "App name might change or stop working because it is running on a platform we'll no longer support after January 2027." (la app podría cambiar o dejar de funcionar) |
+| Migrará | Ningún mensaje en el producto antes del 31 de enero de 2027. |
+
+Los administradores ven la misma frase inicial y una indicación hacia la página Connected apps. En una app sin declaración, la acción "Contact the app developer" abre la pestaña de soporte de su ficha en el Marketplace. En una app privada, el usuario final lee: "This is a private app. Contact your admin for support."
+
+## ¿Cómo saber qué apps están afectadas?
+
+Abre la página Connected apps en Atlassian Administration. Desde mediados de 2026 muestra un banner en cada app afectada: avisos amarillos para las apps que no migrarán, están indecisas o no han declarado nada, y un banner informativo azul con enlace al plan de migración del desarrollador en las que sí migrarán. Las apps Connect privadas aparecen marcadas como LEGACY.
+
+La [documentación de la vista del administrador](https://developer.atlassian.com/platform/adopting-forge-from-connect/what-admins-see/) de Atlassian describe los banners. Los amarillos dicen que la app "is running on a platform that will be unsupported after January 2027".
+
+Clasifica lo que encuentres en tres grupos:
+
+1. **Apps del Marketplace que migrarán.** Suele ser lo que menos trabajo da: espera la versión en Forge y luego revisa y aprueba los permisos nuevos que pida. La guía de [revisión de seguridad de apps del Marketplace](/es/blog/approving-a-marketplace-app-security-review/) explica qué comprobar cuando una app pide ámbitos nuevos.
+2. **Apps del Marketplace que no migrarán, están indecisas o no dicen nada.** Contacta con el desarrollador a través de la ficha y empieza ya a evaluar una alternativa.
+3. **Apps Connect privadas y a medida.** La [guía de Atlassian para apps privadas](https://developer.atlassian.com/platform/adopting-forge-from-connect/connect-end-of-support-private-apps/) deja claro que nadie las migrará por ti: revisa cada una, desinstala lo que ya no haga falta, migra el resto a Forge o avisa a los usuarios y programa su retirada antes del 31 de enero de 2027.
+
+## Qué hacer ahora
+
+1. **Exporta la lista** de apps Connect desde la página Connected apps, con el banner que muestra cada una.
+2. **Decide el destino de cada app**: mantenerla y esperar a Forge, sustituirla, reconstruirla en Forge o retirarla.
+3. **Redacta una nota breve para el service desk y los usuarios** antes de diciembre, con el mensaje que verán y lo que significa para esa app.
+4. **Contacta con los desarrolladores** de las apps del Marketplace indecisas o que no dicen nada; su respuesta cambia el mensaje que verán tus usuarios.
+5. **Asigna un responsable y una fecha** a cada app Connect privada.
+6. **Sigue las versiones en Forge** y reserva tiempo para aprobar permisos actualizados; Atlassian advierte de que los clientes pueden tener que actualizar o aprobar permisos nuevos cuando las apps migren.
+7. **Observa el despliegue en el Developer Canary** a finales de noviembre si tienes un sitio de pruebas inscrito, para ver el texto real en tus apps.
+
+## En resumen
+
+El fin del soporte de Connect es el 31 de enero de 2027 y, desde diciembre, los avisos salen de la página de administración y pasan a Jira y Confluence, delante de los usuarios. Usa la página Connected apps para clasificar cada app Connect en migrar, sustituir o retirar, prepara al service desk antes de que aparezcan los mensajes y asigna a cada app privada un responsable y un plazo. Si la revisión saca a la luz apps que nadie usa de verdad, es buen momento para la limpieza más amplia que se describe en [cómo reducir tu parque de apps Atlassian](/es/blog/atlassian-app-footprint-reduction/).

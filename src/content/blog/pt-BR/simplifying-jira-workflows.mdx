@@ -1,0 +1,86 @@
+---
+lang: pt-BR
+translationKey: simplifying-jira-workflows
+title: "Como simplificar workflows no Jira: menos status, quadros e relatórios mais claros"
+metaTitle: 'Como simplificar workflows no Jira'
+description: "Status demais deixam os quadros do Jira largos, os filtros frágeis e os relatórios enganosos. Como simplificar workflows no Jira: mapear status para a categoria certa, decidir quais status merecem ficar, unir o resto com segurança no editor de workflow e lidar com workflows compartilhados entre espaços."
+metaDescription: 'Como simplificar workflows no Jira: categorias de status, como unir status com segurança no editor, workflows compartilhados e consolidação passo a passo.'
+pubDate: 2026-11-16
+tags: ["jira-administration", "how-to"]
+author: team
+heroImage: ../../../assets/blog/simplifying-jira-workflows.jpg
+heroImageAlt: 'Ilustração em estilo flat: um emaranhado de caminhos azul-marinho e pêssego à esquerda que se endireita em três faixas lisas verde-azuladas à direita, cada uma terminando em um marcador dourado arredondado, sobre fundo creme quente com uma suave onda verde-azulada embaixo.'
+---
+
+*Cada status a mais é mais uma coluna no quadro, mais uma condição no filtro e mais uma forma de o relatório errar.*
+
+Para simplificar workflows no Jira, reduza cada workflow aos status em que o trabalho de fato espera ou muda de mãos, coloque cada status na categoria certa e una o resto com o passo nativo do editor de workflow que move os itens de trabalho para um novo status. Faça isso por processo, não por espaço, e atualize quadros e filtros na mesma mudança.
+
+O ganho é prático: quadros mais estreitos, JQL que sobrevive à próxima reorganização e relatórios que dizem o que parecem dizer. O risco também é prático, porque o editor move os itens existentes sem executar as regras do workflow. O procedimento no fim do texto trata disso.
+
+## Por que status demais atrapalham quadros e relatórios?
+
+Cada status precisa ser mapeado para uma coluna do quadro, aparece pelo nome nos filtros e alimenta os relatórios pela sua categoria. Quando um site mantém Done, Closed, Resolved e Complete como status separados, todo quadro, filtro e dashboard precisa listar os quatro, e qualquer um que esqueça um deles subconta sem avisar.
+
+A própria documentação da Atlassian é direta sobre dois efeitos: as categorias de status controlam como os itens de trabalho aparecem em listas, relatórios e quadros, e [os relatórios se baseiam no nome do status](https://support.atlassian.com/jira-cloud-administration/docs/what-is-a-workflow-status/), então renomear um status pode mudar o que eles mostram. Um status sem coluna em um quadro simplesmente não aparece nele, e o trabalho pode ficar parado ali sem ninguém ver.
+
+A proliferação costuma ter origem inocente: um time copia um workflow e acrescenta "Aguardando fornecedor", outro acrescenta "Bloqueado externamente", e ninguém é dono da lista.
+
+## Como funcionam as categorias de status no Jira?
+
+Todo status do Jira pertence a uma de três categorias: To Do, In Progress ou Done, exibidas em cinza, azul e verde. Não é possível criar categorias nem mudar as cores. Listas, quadros e relatórios leem a categoria, então um status na categoria errada distorce todo gráfico que o usa.
+
+Daí saem dois hábitos:
+
+- **Audite o mapeamento.** Um status "Bloqueado" na categoria Done faz o trabalho travado parecer concluído. Um status "Pronto para publicar" em To Do faz o trabalho pronto parecer intocado.
+- **Filtre por categoria quando puder.** `statusCategory = "In Progress"` continua funcionando depois que você une status; `status in ("In Dev", "Coding", "Doing")` quebra no dia em que um deles some.
+
+## Quais status vale a pena manter?
+
+Mantenha um status quando alguém age de forma diferente por causa dele: outra pessoa ou outro time assume o trabalho, uma coluna do quadro ou uma fila depende dele, ou um SLA, uma regra de automação ou uma aprovação se baseia nele. Una status que só diferem no nome. Troque condições temporárias, como "aguardando alguém", por uma sinalização (flag) ou um campo, em vez de um status próprio.
+
+Um teste rápido para cada status: se ele sumisse amanhã, quem perceberia, e o que faria de diferente? Se a resposta for "ninguém" ou "nada", ele é candidato a ser unido a outro.
+
+## O que acontece com os itens de trabalho quando você une status?
+
+No editor de workflow, excluir um status abre a escolha de um novo status para os itens de trabalho que estão nele. A movimentação acontece depois que você seleciona Update workflow, não no momento da exclusão. Dá para criar exceções, para que itens de certos espaços ou tipos de trabalho sigam para outro status. As regras do workflow não rodam durante a movimentação.
+
+A Atlassian explica a consequência no guia sobre [mover itens de trabalho ao atualizar o workflow](https://support.atlassian.com/jira-software-cloud/docs/move-issues-to-new-statuses-while-updating-your-workflow/): regras de Restrict transition e Validate details não bloqueiam nada, e regras de Perform actions não são executadas. Se uma pós-função normalmente define a resolução ou limpa um campo a caminho de Done, isso não vai acontecer com os itens movidos. Planeje uma edição em massa desses campos, ou passe os itens por uma transição de verdade antes de excluir o status.
+
+Mais dois detalhes do mesmo conjunto de documentos:
+
+- **Remover não é excluir.** [Remover um status](https://support.atlassian.com/jira-cloud-administration/docs/remove-a-status-from-a-workflow/) de um workflow só faz aquele workflow deixar de usá-lo. Excluir um status o tira de todos os workflows do site.
+- **A trilha de auditoria é magra.** O log de auditoria registra que o workflow foi atualizado, mas não qual status foi removido, e os times não são avisados. Anote o que mudou e avise as pessoas afetadas.
+
+## Como os workflows compartilhados mudam o plano?
+
+Em espaços gerenciados pela empresa, um único workflow pode atender vários espaços por meio de esquemas de workflow, e uma edição vale para todos de uma vez. O editor de workflow mostra quais espaços usam o workflow antes de você publicar, então confira essa lista primeiro. Espaços gerenciados pela equipe têm workflows próprios, e a mesma limpeza precisa ser repetida espaço por espaço.
+
+Workflows compartilhados são o objetivo, não o obstáculo. Com os status consolidados, busque um workflow por tipo de processo (entrega de software, solicitações, aprovações), compartilhado por todos os espaços que seguem aquele processo. As diferenças entre os dois tipos de espaço estão em [espaços gerenciados pela equipe e pela empresa](/pt-BR/blog/team-managed-vs-company-managed-spaces/).
+
+## Quais transições e regras vale a pena manter?
+
+O [editor de workflow](https://support.atlassian.com/jira-cloud-administration/docs/what-is-the-new-workflow-editor) agrupa as regras de transição em Restrict transition (condições), Validate details (validadores), Perform actions (pós-funções) e Request input (telas). Mantenha as regras que protegem a qualidade dos dados ou garantem um controle real:
+
+- Um validador que exige os campos de que seus relatórios dependem antes de o trabalho chegar a Done.
+- Uma restrição que limita as transições de aprovação a quem aprova.
+- Uma ação que define a resolução quando o trabalho termina, para que filtros baseados em resolução continuem corretos.
+
+Questione todo o resto, principalmente transições que só existem para pular uma etapa e telas que coletam campos que ninguém lê.
+
+## Como simplificar workflows no Jira, passo a passo
+
+1. **Inventário.** Liste cada workflow, seus status e categorias, e os espaços que o usam. Conte itens de trabalho por status com uma JQL como `status = "Closed" AND updated >= -180d`. O post de [consultas JQL para administradores](/pt-BR/blog/jira-jql-queries-for-administrators/) traz mais padrões.
+2. **Desenhe o alvo.** Escreva a lista curta de status por processo, cada um com sua categoria e o motivo de existir.
+3. **Encontre dependências.** Mapeamento de colunas dos quadros, filtros salvos e dashboards que citam status, regras de automação, SLAs e filas do JSM, e integrações que leem nomes de status.
+4. **Troque filtros por categorias** onde isso preserva o significado, antes de mudar qualquer outra coisa.
+5. **Ensaie.** No Premium ou Enterprise, teste a mudança antes em um sandbox com cópia dos dados de produção.
+6. **Edite e mova.** No editor de workflow, exclua os status redundantes, escolha o status de destino de cada um, acrescente exceções se precisar e selecione Update workflow.
+7. **Refaça o que as regras fariam.** Defina em massa as resoluções ou campos que as pós-funções normalmente cuidam.
+8. **Remapeie quadros e confira relatórios.** Coloque os status que ficaram nas colunas certas e verifique por amostragem os relatórios que os times usam.
+9. **Exclua os órfãos.** Quando nenhum workflow usar mais um status antigo, exclua-o para que ninguém o reutilize.
+10. **Comunique e registre.** Conte a cada time o que mudou e guarde a lista de antes e depois.
+
+## Em resumo
+
+Simplificar workflows no Jira significa menos status, cada um na categoria certa, compartilhados por todos os espaços que seguem o mesmo processo. Una status com o passo de movimentação do editor de workflow, mas lembre que ele ignora as regras do workflow: corrija resoluções e campos você mesmo, depois remapeie os quadros e troque os filtros por `statusCategory`. Como o log de auditoria nativo não diz qual status foi removido, vale ter um histórico de configuração antes de começar: o [Configuration Monitor](/pt-BR/apps/configuration-monitor/) registra as mudanças de configuração dos espaços do Jira, workflows incluídos, com os valores de antes e depois.

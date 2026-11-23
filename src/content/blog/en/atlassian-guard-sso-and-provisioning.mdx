@@ -1,0 +1,102 @@
+---
+lang: en
+translationKey: atlassian-guard-sso-and-provisioning
+title: "Atlassian Guard SSO and SCIM: set up single sign-on and user provisioning without locking anyone out"
+metaTitle: 'Atlassian Guard SSO and SCIM setup guide'
+description: "How to roll out Atlassian Guard in the right order: verify your domain and claim accounts, prepare a way back in, connect your identity provider for SAML single sign-on, enforce it through authentication policies in waves, and turn on SCIM user provisioning. Plus what Guard Standard includes and what Guard Premium adds."
+metaDescription: 'Set up Atlassian Guard SSO and SCIM safely: domain verification, SAML, authentication policies, user provisioning and Guard Standard vs Premium.'
+pubDate: 2026-11-06
+tags: ["atlassian-cloud"]
+author: team
+heroImage: ../../../assets/blog/atlassian-guard-sso-and-provisioning.jpg
+heroImageAlt: 'Flat illustration: a large navy padlock with a teal keyhole joined by a gentle curved line to a gold key card, three small peach rounded person silhouettes waiting in line beside an open teal gate, and a soft teal wave along the bottom edge.'
+---
+
+*SSO projects go wrong in two ways: someone gets locked out, or nothing is actually enforced.*
+
+Setting up Atlassian Guard SSO and SCIM is mostly a question of order. Verify your domain and claim the accounts, keep an admin account that can always get in, connect your identity provider and configure SAML, test it on one user, then enforce it through authentication policies in waves. Turn on SCIM user provisioning so that joiners and leavers flow from the identity provider instead of from tickets.
+
+Each step is documented by Atlassian. What causes trouble is doing them out of order: enforcing SSO before testing it, or syncing groups before the domain is verified.
+
+## What does Atlassian Guard Standard include, and what does Premium add?
+
+Guard Standard covers identity and access: SAML single sign-on, user provisioning, multiple authentication policies, user API token management, external user policies and data security policies. Guard Premium sits on top of Guard Standard and adds data classification, Guard Detect (alerts for suspicious activity and sensitive data) and extended audit logs.
+
+Two billing facts are worth knowing before you plan:
+
+- **Enterprise plans already include Guard Standard**, so users on Enterprise are not charged for it again.
+- **Guard Standard counts unique users.** A managed or external user with access to Jira, Confluence, Jira Service Management, Bitbucket or Trello counts once, however many apps they use. Deactivated accounts do not count, and neither do users in a non-billable authentication policy.
+
+Prices change, so check [Atlassian Guard pricing](https://www.atlassian.com/software/guard/pricing) for current figures.
+
+## Verify your domain and claim the accounts
+
+In Atlassian Administration, select **Directory**, then **Domains**, and verify each company domain by DNS TXT record or by an HTML file on your web server. Organizations using Google Workspace or Microsoft Entra ID can also verify through that identity provider connection.
+
+Keep the DNS record or file in place permanently. If it is removed, the domain can lose its verified status, and security policies on it, SAML single sign-on included, stop applying.
+
+Then claim the accounts on that domain, which turns them into managed accounts you can edit, deactivate and apply policies to. You can claim all of them, including new ones as they are created, or upload a CSV of specific addresses. Export the list and review it first: it often contains shared mailboxes and old test accounts. Users are notified when their account becomes managed.
+
+## Make sure you can always get back in
+
+Before you configure SAML, create an organization admin account with an email address from a domain you have not verified, and put it in an authentication policy that does not enforce single sign-on. Atlassian recommends exactly this, because SSO only applies to accounts on your verified domains. Give it strong credentials and two-step verification, store them in your password vault, and write down who may use it.
+
+If something does go wrong, deleting the SAML configuration lets people sign in to Atlassian apps again.
+
+## How do you set up SAML single sign-on in Atlassian Guard?
+
+In Atlassian Administration, go to **Security**, then **User security**, then **Identity providers**, select your identity provider directory and choose **Set up SAML single sign-on**. Copy the identity provider's entity ID, SSO URL and public certificate into Atlassian, copy Atlassian's entity URL and assertion consumer service URL back into the identity provider, and link your verified domains.
+
+Then test it without affecting anyone:
+
+1. Create a test authentication policy and add one test user.
+2. Enable SAML single sign-on for that policy only.
+3. Sign in as the test user from a private browser window.
+4. Check the sign-out, a second device and an expired session.
+
+Saving the SAML configuration does not log out existing users, so a broken setup can go unnoticed for days. Test before you enforce.
+
+## Enforce SSO through authentication policies, in waves
+
+Authentication policies decide how managed accounts sign in: single sign-on, two-step verification, password rules and idle session length. Every organization has a default policy, and with Guard Standard you can create up to twenty. Users stay in the default policy until you move them.
+
+A rollout that keeps everyone in:
+
+1. **Break-glass policy.** The admin account described above, no SSO, two-step verification required.
+2. **Pilot policy.** The IT team, with SSO enforced, for a week or two.
+3. **Department waves.** Move groups into an SSO policy one at a time, with a message to each beforehand.
+4. **Default policy last.** Enforce SSO on the default policy once nearly everyone has moved. Just-in-time provisioning also requires SAML enforced on the default policy.
+
+External users, the people from other companies who use your sites, are covered by an external user policy instead, which can require SSO or a one-time passcode.
+
+## How does SCIM user provisioning work with Atlassian Guard?
+
+User provisioning uses SCIM 2.0 to sync users and groups from your identity provider into your Atlassian organization. It creates accounts, keeps their details updated and deactivates them when you delete them in the identity provider. Synced groups are read-only in Atlassian: you change membership in the identity provider and grant app access by assigning those groups to apps.
+
+Atlassian lists Okta, OneLogin, Microsoft Entra ID (formerly Azure AD), Cisco Duo, Google Workspace, PingFederate and JumpCloud among the supported identity providers; others can use the user provisioning API.
+
+The traps are almost all about group names:
+
+- Pushing a group with the same name as an existing group in your organization produces an error, and a synced group that shares its name with a default or manually created group can end up empty.
+- Groups named like Atlassian's built-in groups, such as org-admins or site-admins, cannot sync. Rename them in the identity provider.
+- Default groups cannot be managed through SCIM.
+- Existing users from an unverified domain who match identity provider users get linked and may gain access to apps. Verify domains first.
+
+Agree on a naming convention before the first sync, for example one group per app and role, and plan to move product access from manually managed groups to synced ones. When a person leaves, Atlassian recommends deactivating them in the identity provider before deleting them.
+
+## An Atlassian Guard SSO and SCIM rollout order that keeps everyone in
+
+1. Verify every company domain and leave the DNS records in place.
+2. Export, review and claim the accounts.
+3. Subscribe to Guard Standard, or confirm your Enterprise plan includes it.
+4. Create the break-glass admin on an unverified domain, in a policy without SSO.
+5. Connect the identity provider, configure SAML and link the domains.
+6. Test with a test policy and one test user.
+7. Turn on provisioning for a pilot group and check the group names in Atlassian.
+8. Enforce SSO for IT, then department by department, then on the default policy.
+9. Assign app access to synced groups and retire manual memberships.
+10. Review user API tokens: Guard lets you view and revoke them for managed accounts and set an expiry between 1 and 365 days.
+
+## The short version
+
+Roll out Guard in order: verify domains and keep them verified, claim accounts after reviewing the list, keep an admin account outside SSO, configure SAML and test it on one user, then enforce it through authentication policies in waves with the default policy last. Add SCIM provisioning with a clear group naming convention so access follows the identity provider. Guard Standard covers all of this; Premium adds classification, detection and extended audit logs. When access comes from synced groups, removing licenses also gets easier, as described in [finding the Atlassian licenses nobody uses](/blog/atlassian-license-reclamation/). For help planning the rollout, the [Numeric Oasis Atlassian team](/atlassian/) does this kind of administration work.

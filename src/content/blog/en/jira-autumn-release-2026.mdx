@@ -1,0 +1,80 @@
+---
+lang: en
+translationKey: jira-autumn-release-2026
+title: "Jira autumn 2026 release: space policies, custom templates on Standard and Premium, and agents on the board"
+metaTitle: 'Jira autumn 2026 release: what admins need to know'
+description: "On October 30, 2026 Atlassian published the Jira autumn 2026 release: space policies that keep team-managed spaces on global fields and statuses, custom space templates for Standard and Premium, agents with their own identity on boards and work items, and faster company-managed boards. What each change means for Jira admins and what to do before it reaches your site."
+metaDescription: 'Jira autumn 2026 release: space policies, custom templates on Standard and Premium, agents on boards, faster boards. What admins should set up first.'
+pubDate: 2026-10-31
+tags: ["atlassian-news", "jira-administration", "rovo-and-ai"]
+author: team
+heroImage: ../../../assets/blog/jira-autumn-release-2026.jpg
+heroImageAlt: 'Flat illustration: a navy kanban board with three rounded columns of teal and peach cards, a small gold hexagon badge resting on one card, a low teal fence of rounded posts along the board edge, and falling peach autumn leaves above a teal wave.'
+---
+
+*Atlassian's autumn Jira release is mostly about consistency: guardrails for team-managed spaces, templates for more plans, and agents you can see.*
+
+The Jira autumn 2026 release, [announced by Atlassian on October 30](https://www.atlassian.com/blog/development/jira-autumn-release), bundles four kinds of change: faster company-managed boards, a reworked work item view, agents that appear on boards and work items with their own identity, and admin controls for consistency. Atlassian says everything "is rolling out now and will be generally available across Jira Cloud by November 2026."
+
+For admins, two items matter more than the rest. Space policies let you stop team-managed spaces from creating their own fields and statuses, and can be the default for every new space. Custom space templates, previously described as an Enterprise feature, now reach Standard and Premium according to the announcement.
+
+The agent features matter too, but mostly as something to plan for: once agents show up on boards and in automations, someone has to know where they are and what they can touch.
+
+## What is in the Jira autumn 2026 release?
+
+The Jira autumn 2026 release adds space policies and global statuses for team-managed spaces, custom templates on Standard and Premium, agent identities and an agent usage dashboard, a new work item layout with suggested fields at create, and company-managed boards that Atlassian says load 22% faster. It reaches Jira Cloud sites by November 2026.
+
+A quick map of who should care:
+
+| Change | Who it mostly affects |
+|---|---|
+| Space policies, global statuses | Jira admins governing team-managed spaces |
+| Custom templates on Standard and Premium | Admins and team leads standardizing setups |
+| Agent identities, agent space settings, usage dashboard | Space admins, Rovo owners, security reviewers |
+| Faster company-managed boards, saved views | Everyone using boards |
+| New work item layout, suggested fields | Everyone creating and editing work items (formerly issues) |
+
+## What are Jira space policies?
+
+Space policies are guardrails for team-managed spaces (formerly projects). A Jira admin picks one of three policies: global fields only, global statuses only, or both. A space under a policy can use existing site-wide fields and statuses, but neither its admins nor apps can create new space-specific ones. One policy can be the default for all new spaces.
+
+Details from Atlassian's [space policy documentation](https://support.atlassian.com/jira-cloud-administration/docs/set-up-a-space-policy/) and the [open beta announcement](https://community.atlassian.com/forums/discussion/3285642/jira-space-policies-give-teams-autonomy-within-admin-guardrails) from September:
+
+- Available on Standard, Premium and Enterprise. Only Jira admins create and manage them.
+- The path is global space settings, then **Spaces**, then **Space policies**. A toggle sets a policy as the default for new spaces.
+- Applying a policy to an existing space takes effect immediately. Existing space-specific fields and statuses keep working, and Jira flags them as conflicts to review over time.
+- If the space behind a custom template has a policy, spaces created from that template inherit it.
+- Changing the default affects future spaces only.
+
+Our read: this is the change that most reduces long-term admin work, because duplicate fields and near-identical statuses in team-managed spaces are a common reason Jira reporting stops lining up across teams. The release adds global statuses to team-managed spaces at the same time, so teams can pick a shared "In Progress" instead of inventing their own. If you are still deciding which space type fits which team, see [team-managed vs company-managed spaces](/blog/team-managed-vs-company-managed-spaces/).
+
+## Which plans get custom space templates?
+
+According to the October 30 announcement, custom templates are now available on Standard and Premium, not only Enterprise. Admins and team leads can turn a configured team-managed space, including its workflows, work types, views and embedded agents, into a reusable template for new spaces.
+
+Atlassian's July announcement of template improvements still described custom templates as an Enterprise feature, and some support pages may lag behind the rollout. If you are on Standard or Premium and do not see the option yet, check again once the November rollout completes.
+
+## How will agents show up in Jira spaces?
+
+Under Atlassian's Agentic Multiplayer Protocol (AMP), introduced at Team '26 Europe, each agent in Jira gets its own identity and appears on the board, in list view and on the work item. Space admins get an agents area in space settings showing where agents are used, for example in automations and workflows, and can add knowledge and instructions.
+
+A new agent usage dashboard in the space **Reports** tab connects activity from Rovo, coding tools and third-party agents to cycle time and throughput. Atlassian says it is "set up by default with no config". The announcement does not say which plans include each agent feature, so check before you promise it to a team.
+
+## What changes on company-managed boards?
+
+Boards in company-managed software spaces get the same foundation as team-managed boards. Atlassian says they load 22% faster, show subtasks and epics, let people save their own views and give more control over columns. The announcement states that workflows, data and permissions stay as they are.
+
+The work item view also changes: a cleaner layout with personalizable key fields, Rovo and voice-to-text for updates, and a create screen that suggests fields based on how a team works. Suggestions are only added after the person reviews and confirms them.
+
+## What to do now
+
+1. **Inventory your team-managed spaces.** Count space-specific fields and statuses so you know how many conflicts a policy will surface.
+2. **Agree the global statuses first.** A policy limited to global statuses only helps if the shared set is clear.
+3. **Pick a default policy for new spaces.** Start with new spaces, then apply policies to existing ones in batches.
+4. **Decide who may create templates** and review any templates that carry embedded agents.
+5. **List the agents already working in your spaces** once agent space settings appear, and check what each can do.
+6. **Tell board users what is coming**, so a new layout is not reported as a bug.
+
+## The short version
+
+The Jira autumn 2026 release gives admins real guardrails for team-managed spaces, extends custom templates to Standard and Premium, and makes agents visible on boards and work items. Set a default space policy before teams create more fields of their own, and review where agents already run. For the field side of the problem, [Jira's 700 custom field limit is per space](/blog/jira-700-custom-field-limit/) explains why duplicate fields cost more than they seem.

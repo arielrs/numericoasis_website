@@ -72,8 +72,10 @@ const PAGES = [
   '/custom-development/',
   '/atlassian/',
   '/es/atlassian/',
-  // A post with an engraved hero: a different image treatment on the post shape.
-  '/blog/proving-a-leaderboard-score-by-replay/',
+  // The Game Studio wiki (2026-11-23): the docs shape with a two-crumb
+  // section, a play call to action, and the hub's per-game panel.
+  '/studio/wiki/',
+  '/studio/wiki/kindelve/descent/',
   '/404.html',
 ];
 

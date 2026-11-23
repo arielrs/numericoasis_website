@@ -1,0 +1,89 @@
+---
+lang: en
+translationKey: approving-a-marketplace-app-security-review
+title: "Atlassian Marketplace app security review: what to check before you approve an app"
+metaTitle: 'Atlassian Marketplace app security review'
+description: "An Atlassian Marketplace app security review comes down to five checks: where the app runs, where your data goes, which permissions it asks for, what the vendor commits to in writing, and which trust signals back it up. What each check means in late 2026, with a checklist you can reuse for every request."
+metaDescription: 'Atlassian Marketplace app security review: Forge vs Connect, Runs on Atlassian, data egress, scopes, current trust badges and a reusable checklist.'
+pubDate: 2026-11-11
+tags: ["marketplace", "forge", "atlassian-cloud"]
+author: team
+heroImage: ../../../assets/blog/approving-a-marketplace-app-security-review.jpg
+heroImageAlt: 'Flat illustration: a rounded gold puzzle piece under a navy magnifying glass, beside a teal clipboard with three check marks and a small peach padlock, on a warm cream background with a gentle teal wave along the bottom edge.'
+---
+
+*Before an app reads your Jira or Confluence data, a short review tells you where that data goes and who you are trusting with it.*
+
+An Atlassian Marketplace app security review answers five questions: where the app's code runs, where your data goes and is stored, which permissions the app asks for, what the vendor commits to in writing, and which independent trust signals back those claims. Most answers sit on the app's Marketplace listing. The rest you confirm in Atlassian Administration during a trial.
+
+The review matters more in late 2026 than a year ago. Connect, the older app platform, reaches end of support in January 2027, and Atlassian has reshuffled its Marketplace badges, so a policy written in 2024 may ask for badges that no longer exist.
+
+## What should an Atlassian Marketplace app security review cover?
+
+A complete review covers five areas: the platform (Forge or Connect), data location and egress, requested scopes, the vendor's written commitments (privacy policy, Privacy & Security tab, data processing agreement), and Marketplace trust signals. Add a sixth that is about your own site: who is allowed to install apps at all.
+
+Keep the effort proportional: a read-only gadget for one team needs less scrutiny than an app that edits every work item or syncs data to an outside service. Write the answers down either way, because the record is what you show an auditor.
+
+## Is the app built on Forge or Connect?
+
+Forge apps run on infrastructure Atlassian manages. Connect apps are [hosted by the vendor](https://developer.atlassian.com/developer-guide/cloud-app-hosting/), along with their database, so your data travels to the vendor's servers and your review has to cover the vendor's hosting too. Connect also reaches end of support on January 31, 2027.
+
+Atlassian moved that date from December 2026 in an [August 2026 update](https://www.atlassian.com/blog/developer/getting-ready-for-connect-end-of-support). After it, Atlassian will address only critical security issues in Connect, and platform changes may break Connect apps without advance notice. For any app still on Connect, ask the vendor for its Forge migration plan and date. Admins already see a [banner on Connect apps](https://developer.atlassian.com/platform/adopting-forge-from-connect/what-admins-see/) that links to the vendor's plan when the vendor has declared one.
+
+Forge alone is not a data guarantee: a Forge app can still call external services it declares, or a backend its vendor runs (a Forge remote). The next check covers that.
+
+## What does the Runs on Atlassian badge certify?
+
+Runs on Atlassian marks Forge apps that meet three requirements: they use only Atlassian-hosted compute and storage, they support data residency that matches the host app, and customers can control any external egress, such as analytics and logs, through admin controls. Apart from that analytics case, the app must not send data out.
+
+According to Atlassian's [program page](https://developer.atlassian.com/platform/marketplace/runs-on-atlassian/), eligibility is detected automatically rather than self-declared, and apps are monitored continuously. If an update would break eligibility (adding a remote backend, for example), customers are notified and an admin has to approve that update. The badge shows on the listing and in app management, so you can check apps you already have.
+
+If your data policy says "customer data stays in Atlassian's cloud", this badge answers most of the egress question in one line.
+
+## Where does the app send and store your data?
+
+Open the listing's Privacy & Security tab. It says whether the app stores End-User Data outside Atlassian products, supports data residency, shares data with sub-processors, offers a data processing agreement, holds compliance certifications, and has completed a CAIQ Lite questionnaire.
+
+Two cautions. The [questionnaire is optional](https://developer.atlassian.com/platform/marketplace/security-privacy-tab/) for partners, so a sparse tab is itself a finding (a privacy policy, by contrast, is required of every partner). And data residency is decided app by app: Forge apps that use Forge hosted storage follow the host product when you move it, while other apps must support a move and may need one of their own. Atlassian Administration shows each app's status, such as Eligible or Pinned ([Atlassian's guide](https://support.atlassian.com/security-and-access-policies/docs/moving-your-marketplace-apps-data-to-another-location)).
+
+## Which permissions (scopes) is the app asking for?
+
+Compare every scope with what the app says it does: a reporting app that asks to write and delete work items deserves a question first.
+
+On Forge, scopes and egress are declared in the app's manifest. Adding a scope or a new egress category creates a [major version](https://developer.atlassian.com/platform/forge/versions/), and by default a major version is not applied to your site until an admin consents. Minor versions update automatically. The permission set you approve is the one the app keeps until you approve a new one, so read the upgrade prompt instead of clicking through it.
+
+## Which Marketplace trust signals still count in late 2026?
+
+Four changes matter for anyone with a written app policy:
+
+- **Atlassian Enterprise Certified (AEC)** opened to Forge apps in October 2026. It requires annual CREST-accredited penetration tests, bug bounty participation, SOC 2 Type 2 or ISO 27001, full data residency support, a public status page, a 24-hour response SLA for critical issues, and a VPAT ([what AEC requires](https://support.atlassian.com/organization-administration/docs/what-is-the-atlassian-enterprise-certified-program/)). Marketplace search can filter by it.
+- **Bug bounty participation** is shown on the listing, and Atlassian requires every Marketplace bug bounty program to [become public](https://developer.atlassian.com/platform/marketplace/atlassian-marketplace-security-bug-bounty-program/).
+- **Cloud Fortified** accepts no new submissions, and existing badges stay visible only through December 31, 2026, per the [AEC announcement](https://community.developer.atlassian.com/t/introducing-atlassian-enterprise-certified-aec/103035).
+- **Cloud Security Participant** was [retired at the end of March 2026](https://community.developer.atlassian.com/t/request-for-update-on-rfc-124-evolving-the-marketplace-trust-program/100160). If your policy asks for it, replace that line with bug bounty participation.
+
+Runs on Atlassian and AEC answer different questions (where the data lives versus how the vendor operates), and an app can hold both.
+
+## Who is allowed to install apps on your site?
+
+People who are not admins can request a Marketplace app from Apps, then Find new apps. Site admins review requests under Apps, Manage apps, on the Requested apps tab ([how requests work](https://support.atlassian.com/organization-administration/docs/managing-marketplace-app-and-user-requests/)). Users can also connect some third-party apps to their own accounts; to keep that admin-only, select **Block user apps** in the site's Connected apps settings in Atlassian Administration.
+
+With Atlassian Guard Standard, data security policies can also limit where Marketplace apps can reach your content ([Atlassian's guide](https://support.atlassian.com/security-and-access-policies/docs/manage-your-users-third-party-apps/)). For the identity side of Guard, see [Atlassian Guard, SSO and provisioning](/blog/atlassian-guard-sso-and-provisioning/).
+
+## A reusable app review checklist
+
+1. Record the business need, the owner, and which spaces and users will use the app.
+2. Platform: Forge or Connect? If Connect, record the vendor's migration plan and date.
+3. Runs on Atlassian badge: yes or no. If no, list the outside services the app sends data to.
+4. Privacy & Security tab: data stored outside Atlassian, sub-processors, data processing agreement, certifications, CAIQ Lite.
+5. Data residency: does your policy require it, and does the app support it?
+6. Scopes: does each one match a feature you actually need?
+7. Trust signals: AEC, bug bounty, and the vendor's own security or trust page.
+8. Privacy policy read and accepted by whoever owns data protection.
+9. Trial in a sandbox or with a small group first, and watch what the app does on install.
+10. Record the approval, the approved major version, and a review date.
+11. On every major upgrade prompt, repeat steps 3 to 6 for whatever changed.
+12. When the app is no longer used, uninstall it. For Forge apps, uninstalling revokes the app's user and system grants.
+
+## The short version
+
+An Atlassian Marketplace app security review is five checks plus a record: platform, data location and egress, scopes, the vendor's written commitments, and current trust signals. Update any policy that still asks for Cloud Security Participant or Cloud Fortified, ask every Connect vendor for a migration date, and treat Runs on Atlassian as the fastest answer to "does our data leave Atlassian's cloud?". The apps Numeric Oasis publishes are Forge apps with the Runs on Atlassian badge, and you can [run this same checklist against them](/apps/).

@@ -1,0 +1,82 @@
+---
+lang: en
+translationKey: atlassian-ip-ranges-january-2027
+title: "Atlassian IP ranges: Atlassian Cloud adds 131.162.88.0/21 on January 1, 2027"
+metaTitle: 'Atlassian IP ranges: new cloud range from 2027'
+description: "Atlassian announced on October 16, 2026 that Atlassian Cloud will start using a new IP range, 131.162.88.0/21, from January 1, 2027. Any firewall, proxy or app backend that allowlists Atlassian by IP address needs the new range before then. What changed, who is affected, and a checklist."
+metaDescription: 'Atlassian Cloud adds the 131.162.88.0/21 IP range on January 1, 2027. Who must update firewall allowlists, which half is inbound or outbound, and what to do.'
+pubDate: 2026-10-16
+tags: ["atlassian-news", "atlassian-cloud", "forge"]
+author: team
+heroImage: ../../../assets/blog/atlassian-ip-ranges-january-2027.jpg
+heroImageAlt: 'Flat illustration: a navy brick wall with a rounded open gateway, a trail of small teal circles rising toward a single new gold brick being slotted into the top of the wall, and a peach clipboard resting beside it, above a gentle teal wave.'
+---
+
+*Atlassian Cloud starts using a new block of addresses on January 1, 2027. Firewalls that allowlist Atlassian by IP need it first.*
+
+Atlassian IP ranges are growing. On October 16, 2026, Atlassian [announced in its developer changelog](https://developer.atlassian.com/changelog/#CHANGE-3519) that from January 1, 2027, Atlassian Cloud "will add new IP address ranges as we expand our cloud infrastructure". The new range is `131.162.88.0/21`, and it comes in addition to the existing ranges, which stay in place.
+
+If anything in your network accepts or allows traffic based on Atlassian's IP addresses, it needs the new range before January 1. That covers servers receiving Jira or Confluence webhooks, application links to self-managed systems, app backends that filter callers by address, and corporate proxies that only let staff reach approved destinations.
+
+If your allowlist is generated automatically from Atlassian's published list, the changelog says no further action is required. If someone typed the ranges into a firewall by hand, that rule is the one to find.
+
+## What are the new Atlassian IP ranges?
+
+The new summary range is `131.162.88.0/21`. Atlassian splits it by direction: `131.162.88.0/23` carries requests to Atlassian (browsers and clients calling Atlassian APIs), and `131.162.90.0/23` carries requests from Atlassian (webhooks, Connect lifecycle calls and other requests to your app). Both take effect on January 1, 2027.
+
+| Range | Direction | What it carries |
+|---|---|---|
+| `131.162.88.0/21` | Both (summary) | The whole new block |
+| `131.162.88.0/23` | Into Atlassian | Browsers and clients calling Atlassian APIs |
+| `131.162.90.0/23` | Out of Atlassian | Webhooks, Connect lifecycle calls, other outbound requests |
+
+The machine-readable list at [ip-ranges.atlassian.com](https://ip-ranges.atlassian.com) already contains these entries, tagged for Jira, Confluence, Forge and Loom. The changelog entry is filed against the Jira, Jira Service Management, Confluence, Cloud Admin, Forge and Rovo MCP APIs, among others, so treat it as a platform change rather than a single-product one.
+
+## Who needs to update an allowlist?
+
+Anyone whose network decides what to accept, or where staff may connect, based on Atlassian's IP addresses. In practice that means three groups: teams that receive traffic from Atlassian Cloud, network teams whose outbound proxies restrict destinations, and developers whose app backends only accept calls from Atlassian.
+
+The places a hand-maintained list tends to hide:
+
+- **Inbound firewall or WAF rules** in front of servers that receive Jira, Jira Service Management or Confluence webhooks.
+- **Application links** between your Atlassian Cloud site and self-managed servers. Atlassian's [IP addresses and domains page](https://support.atlassian.com/organization-administration/docs/ip-addresses-and-domains-for-atlassian-cloud-products/) lists these as a typical outgoing connection.
+- **Forge remote backends and Connect app servers** that check the source address of incoming calls. The changelog addresses these directly: "If your app, remote backend, or integration allowlists Atlassian IP addresses, you must add these ranges before January 1, 2027".
+- **Corporate egress proxies and firewalls** that only allow browsers to reach listed destinations. That is where the inbound half, `131.162.88.0/23`, matters.
+- **Security groups and network policies** in your own cloud accounts, which are easy to forget because nobody looks at them until something breaks.
+
+Do not confuse this with IP allowlisting in Atlassian Administration, which limits which of your own addresses may reach your Atlassian sites. This announcement is about Atlassian's addresses, not yours.
+
+## How do you keep Atlassian's IP list current automatically?
+
+Read the JSON file at ip-ranges.atlassian.com on a schedule and rebuild your rules from it, rather than pasting ranges by hand. Atlassian's documentation recommends exactly that, and also offers change notifications through an Amazon SNS topic, so a script can react when the file changes.
+
+A minimal example that prints the ranges Atlassian uses for outgoing traffic, which is what you allow into your network:
+
+```bash
+curl -s https://ip-ranges.atlassian.com/ \
+  | jq -r '.items[] | select(any(.direction[]; . == "egress")) | .cidr'
+```
+
+Useful details from Atlassian's [IP addresses and domains page](https://support.atlassian.com/organization-administration/docs/ip-addresses-and-domains-for-atlassian-cloud-products/):
+
+- The SNS topic is named `atlassian-public-ip-changes`, in the `us-east-1` region. The notification carries a sync token, a hash and the file URL.
+- Notifications depend on endpoint availability, so the page suggests also checking the file periodically.
+- Atlassian does not recommend allowlisting networks tied to specific regions. Use the global ranges.
+- The outgoing lists include traffic that is user-configurable, for example from the Forge platform. That is a reason to pair an IP allowlist with authentication on the receiving end, not to rely on the address alone.
+
+## What to do now
+
+A short checklist for the next change window, well before the holiday freeze:
+
+1. **Inventory every rule that mentions Atlassian.** Search firewall, WAF, proxy, security group and load balancer configuration for Atlassian comments, names or ranges.
+2. **Add `131.162.90.0/23`** (or the full `/21`) wherever you accept traffic from Atlassian Cloud: webhook receivers, application link endpoints, app backends.
+3. **Add `131.162.88.0/23`** (or the full `/21`) wherever you restrict outbound traffic and Atlassian must be reachable.
+4. **Replace hand-kept lists** with a scheduled job that reads the JSON file, and subscribe to the SNS topic.
+5. **Ask the developers of any self-hosted integration or private app** whether their backend filters by IP, and confirm they have the new range.
+6. **Record the change** with a link to the changelog entry, so whoever is on call on January 1 knows what moved and why.
+
+There is no way to generate traffic from the new range yourself ahead of time, so the test is a configuration review, not a live check. That is another reason to do it in November or December rather than on New Year's Eve.
+
+## The short version
+
+From January 1, 2027, Atlassian Cloud also uses `131.162.88.0/21`: the `/23` starting at .88 for traffic into Atlassian, the `/23` starting at .90 for traffic out of it. If your allowlists are generated from ip-ranges.atlassian.com you are covered. If they were typed by hand, find them, add the range, and swap them for a scheduled job while you are there. Integrations that read Atlassian's published data instead of copying it tend to survive changes like this one, a pattern covered in [integrations that survive API changes](/blog/integrations-that-survive-api-changes/).

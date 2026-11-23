@@ -1,0 +1,82 @@
+---
+lang: en
+translationKey: jsm-knowledge-base-with-confluence
+title: "Jira Service Management knowledge base: a Confluence setup that actually deflects requests"
+metaTitle: 'Jira Service Management knowledge base setup'
+description: "A Jira Service Management knowledge base deflects requests when articles use the customer's words, customers can open them, and the portal suggests them as a request is being typed. How to link the Confluence space, set permissions, write articles, measure deflection and keep the content current."
+metaDescription: 'Set up a Jira Service Management knowledge base in Confluence that deflects requests: linking, permissions, templates, portal suggestions and reports.'
+pubDate: 2026-11-13
+tags: ["jira-service-management", "confluence-governance", "how-to"]
+author: team
+heroImage: ../../../assets/blog/jsm-knowledge-base-with-confluence.jpg
+heroImageAlt: 'Flat illustration: an open navy book with teal pages in front of a rounded help-desk counter, a small gold lightbulb above the book and a peach paper plane turning back from the counter, on a warm cream background with a teal wave below.'
+---
+
+*A knowledge base only saves your agents time if customers find the right article before they press Create.*
+
+A Jira Service Management knowledge base deflects requests when three things line up: the articles answer real questions in the words customers type, customers are allowed to open them without friction, and the portal suggests them at the moment someone starts a request. Linking a Confluence space takes minutes. The deflection comes from writing, permissions and measurement.
+
+This guide covers each part on Jira Service Management Cloud as it works in November 2026, where service projects are now called service spaces and the product is sold as part of Atlassian's Service Collection.
+
+## How do you set up a Jira Service Management knowledge base?
+
+Open your service space, select Knowledge base in the sidebar, then Set up knowledge base. Choose a source and select or create a Confluence space. You need at least the Free plan of Confluence on the same site, and setup can switch that on for you. Google Drive and Microsoft SharePoint are offered as sources too, and there is a Set up with Rovo option.
+
+To link a space you already have, go to Space settings, Knowledge base, then Link spaces ([Atlassian's steps](https://support.atlassian.com/jira-service-management-cloud/docs/link-spaces-from-confluence-to-your-team-managed-project/)). Three constraints apply: you need View permission on the space, the Confluence site must share the domain of your Jira Service Management site, and a service space links spaces from only one Confluence site at a time.
+
+Decide early between the two kinds of knowledge base. An external knowledge base is for customers and appears in the help center, the portal and the virtual service agent. An internal one holds runbooks and procedures for agents only, and its readers need Confluence licenses ([the difference](https://support.atlassian.com/jira-service-management-cloud/docs/the-difference-between-internal-and-external-knowledge-bases/)). Keep them in separate spaces, so a runbook never lands in front of a customer.
+
+## Who can see knowledge base articles?
+
+For each linked space you choose who can view articles: Anyone, All logged-in users, or Only Confluence users. All logged-in users is the usual choice for customer articles: anyone signed in to your help center can read them there. Anyone makes articles public and findable by search engines, and it needs a paid Confluence plan.
+
+You set this in Space settings, Channels & self service, Knowledge base, on the External tab ([Atlassian's guide](https://support.atlassian.com/jira-service-management-cloud/docs/manage-knowledge-base-permissions-from-your-service-project/)). The same tab sets who can edit: Service space users lets agents write articles from Jira Service Management, while Only Confluence users limits editing to licensed Confluence users. Finer control, such as page restrictions, lives in Confluence itself; [Confluence Cloud permissions explained](/blog/confluence-cloud-permissions-explained/) covers how those layers combine.
+
+One trap: labels help the portal choose articles, but they do not restrict access. If an article must not reach customers, it belongs in the internal space.
+
+## How do you write articles customers will actually find?
+
+Write titles in the customer's words. A customer types "I can't connect to the VPN from home", not "Remote access client configuration". Portal suggestions start from what the customer types as the request summary, so titles that sound like those summaries are the ones that surface.
+
+The fastest source of titles is your own request history. Pull the last 90 days of a busy request type with JQL such as `project = "IT Help" AND created >= -90d ORDER BY created DESC`, read the summaries, and turn the most common phrasings into article titles.
+
+Then give every article the same shape:
+
+1. **Title:** the symptom or question, as customers phrase it.
+2. **First line:** the answer in one sentence.
+3. **Steps:** numbered, one action each, with a screenshot only where a screen is ambiguous.
+4. **Still stuck?** A link to the request type that handles the problem.
+5. **Labels** that match the request type, so suggestions stay relevant.
+
+Jira Service Management offers article templates to keep that shape consistent. There are [seven templates per space](https://support.atlassian.com/jira-service-management-cloud/docs/use-templates-to-create-articles/), and admins cannot add more, so pick the closest one and agree on how your team uses it.
+
+## How do articles show up in the portal?
+
+Customers meet articles in three places: help center search, suggestions that appear while they type a request summary, and answers from the virtual service agent if you use it (included in Service Collection Premium and Enterprise). Suggestions in request forms are the ones that deflect, because they reach a customer who is about to raise a request.
+
+Set up article suggestions on the request types that generate repeat questions, and use labels so a printer request suggests printer articles rather than the whole space. How request types and forms fit together is covered in [JSM request types, forms and portal](/blog/jsm-request-types-forms-and-portal/).
+
+## How do you measure deflection in Jira Service Management?
+
+Jira Service Management has two knowledge base reports, Requests deflected and Requests resolved, under Reports in the service space. A request counts as deflected only when a customer starts typing a summary in the portal, opens a suggested article, and votes it helpful. Requests resolved splits requests resolved with an article (a comment links to one) from those resolved without.
+
+Atlassian documents both definitions in [its reporting guide](https://support.atlassian.com/jira-service-management-cloud/docs/how-are-my-knowledge-base-articles-performing/). The helpful vote is the weak link: many customers read the answer and leave without voting, so treat the deflected count as a floor. Pair it with:
+
+- **Volume per request type**, month over month, before and after you publish articles for it.
+- **Resolved without an article.** Each recurring one is a candidate for a new article.
+- **Suggested topics**, on Service Collection Premium or Enterprise with AI activated. Jira Service Management lists recurring request topics that have no matching article (a topic needs more than five requests) and refreshes the list weekly ([suggested topics](https://support.atlassian.com/jira-service-management-cloud/docs/address-knowledge-gaps-with-suggested-topics/)).
+
+A deflected request never enters a queue or starts an SLA clock, which also makes your [SLA targets](/blog/jsm-sla-design/) easier to meet.
+
+## How do you keep knowledge base articles current?
+
+A stale article is worse than none: the customer follows wrong steps, then raises the request anyway. Four habits keep a knowledge base honest:
+
+1. **Give every article an owner**, normally the team that owns the matching request type.
+2. **Review on change, not on a calendar.** When a system, form or policy changes, its owner updates the related articles as part of the same change.
+3. **Close the loop from requests.** When an agent answers a recurring question without an article, write one and link it in the reply, so Requests resolved counts it next time.
+4. **Archive what nobody opens.** Confluence page insights and page archiving (Standard plan and above) help; see [archiving stale Confluence content](/blog/confluence-archiving-stale-content/).
+
+## The short version
+
+Linking Confluence to Jira Service Management takes minutes. Deflection comes from article titles in the customer's words, a view setting that lets logged-in customers read them, suggestions switched on for the request types that repeat, and a monthly look at Requests deflected and Requests resolved, read as a floor rather than the full picture. Give every article an owner and review it when the thing it describes changes. For a space-wide view of which articles have gone stale, the [Expanded Macro Collection](/apps/expanded-macro-collection/) includes permission-aware rollups of page status and staleness inside Confluence.

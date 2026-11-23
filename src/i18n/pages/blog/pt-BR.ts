@@ -3,16 +3,16 @@ import type { BlogCopy } from './en';
 export const ptBR = {
   meta: {
     crumb: 'Blog',
-    title: 'Anotações sobre software, Atlassian e jogos',
+    title: 'Guias e notícias Atlassian, software e jogos',
     metaDescription:
-      'Anotações sobre software sob medida, trabalho com Jira e Confluence, apps em Forge e a criação de um jogo de navegador, do time da Numeric Oasis.',
+      'Guias e notícias para admins de Jira, Confluence, JSM e Rovo, e artigos sobre software sob medida e a indústria de games, do time da Numeric Oasis.',
     description:
-      'Anotações sobre software sob medida, migração e administração de Jira e Confluence, apps em Forge e a criação de um jogo de navegador, do time da Numeric Oasis.',
+      'Guias e notícias para administradores do Atlassian Cloud sobre Jira, Confluence, Jira Service Management e Rovo, e artigos sobre software sob medida e a indústria de games, do time da Numeric Oasis.',
   },
   index: {
     eyebrow: 'Da oficina',
     headline: 'Anotações da oficina.',
-    lede: 'O que aprendemos construindo software em três frentes: aplicações sob medida, trabalho com Jira e Confluence e apps em Forge, e um jogo nosso. Principalmente as decisões que custam caro quando dão errado, escritas para pararmos de explicar tudo duas vezes.',
+    lede: 'Guias e notícias para administradores do Atlassian Cloud, anotações sobre desenvolvimento de software sob medida e artigos sobre a indústria de games. Cada um responde à pergunta nas primeiras linhas e traz as fontes.',
     empty: 'Nada publicado ainda.',
     allTags: 'Todos os posts',
     tagsLabel: 'Navegar por tema',
@@ -62,7 +62,7 @@ export const ptBR = {
         secondary: 'Fale com a gente',
       },
       studio: {
-        headline: 'Feito pelo nosso Estúdio de Jogos.',
+        headline: 'Jogue o que o nosso Estúdio de Jogos faz.',
         body: 'Kindelve é uma descida a masmorras com coleção de criaturas que roda em qualquer navegador, de graça, em cinco idiomas. A página do estúdio mostra o jogo, como ele é feito e o que vem a seguir.',
         primary: 'O Estúdio de Jogos',
         secondary: 'Fale com o estúdio',
@@ -89,5 +89,8 @@ export const ptBR = {
     'atlassian-consulting': 'Consultoria Atlassian',
     'cloud-migration': 'Migração para o Cloud',
     'game-development': 'Desenvolvimento de jogos',
+    'atlassian-news': 'Notícias da Atlassian',
+    'jira-service-management': 'Jira Service Management',
+    'rovo-and-ai': 'Rovo e IA',
   },
 } as const satisfies BlogCopy;

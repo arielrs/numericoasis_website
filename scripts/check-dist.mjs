@@ -17,9 +17,10 @@ const STANDALONE = new Set(['/poker/', '/404.html']);
 /**
  * Whole sections that are monolingual. The documentation was migrated out of a
  * public Confluence space in English and is not translated, so route parity and
- * the hreflang count do not apply to it.
+ * the hreflang count do not apply to it. The Game Studio wiki is the same kind
+ * of section, split out of it on 2026-11-23.
  */
-const STANDALONE_PREFIXES = ['/documentation/'];
+const STANDALONE_PREFIXES = ['/documentation/', '/studio/wiki/'];
 
 const isStandalone = (url) =>
   STANDALONE.has(url) || STANDALONE_PREFIXES.some((prefix) => url.startsWith(prefix));

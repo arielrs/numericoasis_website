@@ -59,6 +59,6 @@ five minutes, and a Warden skill makes every creature stronger for good.
 
 Send the same Kin down again. The second delve starts from the strength the first one paid for, and
 it will stop deeper. Once that stops being true, the rest of the game is the answer to why:
-[Kin](/documentation/kindelve/kin/) for who you send,
-[Builds](/documentation/kindelve/builds/) for what they become on the way down, and
-[The Warden](/documentation/kindelve/warden/) for what you are becoming.
+[Kin](/studio/wiki/kindelve/kin/) for who you send,
+[Builds](/studio/wiki/kindelve/builds/) for what they become on the way down, and
+[The Warden](/studio/wiki/kindelve/warden/) for what you are becoming.

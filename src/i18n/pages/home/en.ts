@@ -4,7 +4,7 @@ export const en = {
     metaDescription:
       'Numeric Oasis builds custom software, migrates and runs Jira and Confluence, publishes Forge apps, and runs a game studio. From Canoas, Brazil, since 2011.',
     description:
-      'Numeric Oasis Technologies works on three fronts: custom web applications, integrations and internal tools; Atlassian consulting, Marketplace apps and custom Forge apps; and a game studio building Kindelve, a browser game in open testing. Small releases, a test for every fix, in English, Portuguese and Spanish.',
+      'Numeric Oasis Technologies works on three fronts: custom web applications, integrations and internal tools; Atlassian consulting, Marketplace apps and custom Forge apps; and a game studio building Kindelve, a browser game in open beta. Small releases, a test for every fix, in English, Portuguese and Spanish.',
   },
   hero: {
     eyebrow: 'Numeric Oasis Technologies',
@@ -18,7 +18,7 @@ export const en = {
   fronts: [
     { name: 'Custom Development', line: 'Web apps, integrations and internal tools, built to your shape.' },
     { name: 'Atlassian', line: 'Cloud migrations, administration, Forge apps and a smaller app bill.' },
-    { name: 'Game Studio', line: 'Kindelve, a creature-collection descent, in open testing now.' },
+    { name: 'Game Studio', line: 'Kindelve, a creature-collection descent, in open beta now.' },
   ],
   /**
    * Six reasons to trust us, not six facts about our stack. Company-wide since
@@ -67,7 +67,7 @@ export const en = {
         headline: 'A game you can play in the tab you have open.',
         body: 'Kindelve is a creature-collection dungeon descent that runs in any browser, on a phone or a desktop. It is built with the same discipline as everything else here: a simulation that gives the same answer on every device, five languages from the first release, and nothing for sale that would buy power.',
         points: [
-          'Kindelve, in open testing and free to play',
+          'Kindelve, in open beta and free to play',
           'A daily Trial where scores are proven, not trusted',
           'English, Portuguese, Spanish, French and Japanese',
         ],

@@ -6,7 +6,7 @@ export const ptBR = {
     metaDescription:
       'A Numeric Oasis cria software sob medida, migra e administra Jira e Confluence, publica apps em Forge e mantém um estúdio de jogos. De Canoas, desde 2011.',
     description:
-      'A Numeric Oasis Technologies trabalha em três frentes: aplicações web, integrações e ferramentas internas sob medida; consultoria Atlassian, apps no Marketplace e apps em Forge sob medida; e um estúdio de jogos que está criando Kindelve, um jogo de navegador em teste aberto. Entregas pequenas, um teste para cada correção, em português, inglês e espanhol.',
+      'A Numeric Oasis Technologies trabalha em três frentes: aplicações web, integrações e ferramentas internas sob medida; consultoria Atlassian, apps no Marketplace e apps em Forge sob medida; e um estúdio de jogos que está criando Kindelve, um jogo de navegador em beta aberto. Entregas pequenas, um teste para cada correção, em português, inglês e espanhol.',
   },
   hero: {
     eyebrow: 'Numeric Oasis Technologies',
@@ -19,7 +19,7 @@ export const ptBR = {
   fronts: [
     { name: 'Desenvolvimento sob medida', line: 'Aplicações web, integrações e ferramentas internas, no formato do seu trabalho.' },
     { name: 'Atlassian', line: 'Migração para o Cloud, administração, apps em Forge e uma conta de apps menor.' },
-    { name: 'Estúdio de Jogos', line: 'Kindelve, uma descida com coleção de criaturas, em teste aberto agora.' },
+    { name: 'Estúdio de Jogos', line: 'Kindelve, uma descida com coleção de criaturas, em beta aberto agora.' },
   ],
   proof: {
     label: 'Feito para confiar',
@@ -64,7 +64,7 @@ export const ptBR = {
         headline: 'Um jogo para jogar na aba que você já tem aberta.',
         body: 'Kindelve é uma descida a masmorras com coleção de criaturas que roda em qualquer navegador, no celular ou no computador. Ele é feito com a mesma disciplina de todo o resto aqui: uma simulação que dá a mesma resposta em qualquer aparelho, cinco idiomas desde a primeira versão, e nada à venda que compre poder.',
         points: [
-          'Kindelve, em teste aberto e de graça',
+          'Kindelve, em beta aberto e de graça',
           'Um Trial diário em que a pontuação é provada, não confiada',
           'Inglês, português, espanhol, francês e japonês',
         ],

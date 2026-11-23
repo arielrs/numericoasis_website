@@ -1,0 +1,102 @@
+---
+lang: pt-BR
+translationKey: atlassian-cloud-offboarding-checklist
+title: "Checklist de offboarding no Atlassian Cloud: o que fazer no Jira, no Confluence e no Atlassian Administration quando alguém sai"
+metaTitle: 'Checklist de offboarding no Atlassian Cloud'
+description: "Um checklist prático de offboarding no Atlassian Cloud: quando desativar, suspender, remover ou excluir uma conta, e como repassar o que a pessoa tinha, de itens de trabalho, filtros e dashboards a regras de automação, páginas do Confluence, agentes Rovo, tokens de API e integrações que rodavam em nome dela."
+metaDescription: 'Checklist de offboarding no Atlassian Cloud: desativar ou excluir, itens de trabalho, filtros, automações, páginas do Confluence, tokens e integrações.'
+pubDate: 2026-11-09
+tags: ["atlassian-cloud", "jira-administration", "how-to"]
+author: team
+heroImage: ../../../assets/blog/atlassian-cloud-offboarding-checklist.jpg
+heroImageAlt: 'Ilustração em estilo flat: uma porta azul-marinho aberta com um capacho verde-azulado, uma pequena caixa de papelão pêssego com uma pasta em branco e uma chave dourada por cima, e três quadrados verde-azulados ao lado, um deles desbotado para cinza, sobre uma onda verde-azulada suave.'
+---
+
+*Desativar a conta leva um minuto. Encontrar o que ela deixa para trás leva mais tempo.*
+
+Um checklist de offboarding no Atlassian Cloud tem duas metades. No último dia, corte o acesso: desative a conta gerenciada (ou suspenda o acesso se a sua organização não gerencia a conta), revogue os tokens de API e retire os papéis de administrador. Nos dias em volta, repasse o que era da pessoa: itens de trabalho abertos, filtros e dashboards, regras de automação, páginas do Confluence, agentes Rovo e qualquer integração que rode com as credenciais dela.
+
+A primeira metade é rápida. A segunda é onde as coisas quebram semanas depois: um dashboard fica em branco, uma regra para de rodar, uma integração começa a falhar.
+
+## Desativar, suspender, remover ou excluir uma conta Atlassian?
+
+Para quem sai e tem uma conta gerenciada pela sua organização, desative. A desativação bloqueia na hora o acesso a todos os apps, para a cobrança daquela conta, mantém o histórico e o conteúdo no lugar e pode ser revertida por um administrador. Exclua só quando os dados pessoais precisarem ser apagados: a exclusão fica permanente depois de um período de carência de 14 dias, e o nome passa a aparecer como "Former user".
+
+| Ação | Para quem | Efeito | Reversível |
+| --- | --- | --- | --- |
+| Desativar a conta | Quem sai e tem conta gerenciada | Sem acesso a nenhum app, sem cobrança, nome exibido com "(Deactivated)", dados pessoais mantidos | Sim, um administrador pode reativar |
+| Suspender o acesso | Contas que você não gerencia, ou afastamentos temporários | Sem acesso aos apps da sua organização, sem cobrança | Sim, papéis e grupos voltam |
+| Remover o usuário | Pessoas que não devem mais aparecer na sua organização | Acesso removido, sem cobrança; a Atlassian avisa que algum conteúdo também pode ser removido | Só convidando de novo e reatribuindo papéis e grupos |
+| Excluir a conta | Contas gerenciadas cujos dados pessoais precisam sumir | Desativada por 14 dias, depois excluída de vez | Só durante os 14 dias |
+| Remover o acesso a um app | Quem fica, mas não precisa mais de um app | Perde só aquele app | Sim |
+
+Excluir uma conta não apaga as páginas, os itens de trabalho e os comentários que a pessoa criou. As informações de perfil guardadas por apps do Marketplace ou apps personalizados também ficam; para isso, a Atlassian orienta procurar o parceiro responsável por cada app.
+
+Se você provisiona usuários a partir de um provedor de identidade, excluir o usuário lá desativa a conta Atlassian. O [guia de SSO e SCIM no Atlassian Guard](/pt-BR/blog/atlassian-guard-sso-and-provisioning/) cobre essa configuração.
+
+## Antes do último dia
+
+Peça à pessoa que está saindo e ao gestor dela uma lista curta de repasse: integrações e scripts (principalmente qualquer coisa com o token de API pessoal dela), regras de automação, filtros e dashboards compartilhados, páginas e espaços do Confluence, agentes Rovo e papéis de administrador. Compare com o que o Jira e o Confluence dizem que pertence a ela e defina um sucessor para cada item. Transferir a responsabilidade enquanto a pessoa ainda pode explicar as coisas é muito mais fácil do que desvendar tudo depois.
+
+## No dia: corte o acesso
+
+1. **Desative a conta** no Atlassian Administration: **Directory**, depois **Users**, filtre por contas gerenciadas, selecione a pessoa e escolha **Deactivate account**. Com SCIM, desative ou exclua a pessoa no provedor de identidade.
+2. **Revogue os tokens de API.** A desativação não revoga os tokens. Eles param de funcionar enquanto a conta está desativada, mas continuam existindo até alguém revogá-los. Administradores da organização fazem isso no Atlassian Administration, na página da conta gerenciada ou nos insights de atividade de tokens de API.
+3. **Retire os papéis de administrador**, para que uma reativação futura não os devolva sem ninguém perceber.
+4. **Confira a contagem de licenças.** Contas desativadas não são cobradas; veja [encontrando as licenças Atlassian que ninguém usa](/pt-BR/blog/atlassian-license-reclamation/) para manter essa contagem honesta ao longo do tempo.
+
+## Como reatribuir os itens de trabalho de quem saiu no Jira?
+
+Pesquise com JQL os itens de trabalho não resolvidos atribuídos à pessoa e use a alteração em massa para dar a eles novos responsáveis. Faça espaço por espaço, para que o líder de cada equipe escolha o novo dono, em vez de mandar tudo para um gestor que depois vai redistribuir à mão.
+
+```
+assignee = "ACCOUNT_ID" AND statusCategory != Done ORDER BY project
+```
+
+Depois olhe além do campo de responsável: líder do espaço, líder de componente, responsável padrão, aprovadores no Jira Service Management e qualquer campo de seleção de usuário que a sua equipe use. O post de [consultas JQL para administradores](/pt-BR/blog/jira-jql-queries-for-administrators/) traz mais pesquisas desse tipo.
+
+## Filtros, dashboards e assinaturas
+
+Um quadro deixa de funcionar para todo mundo quando o filtro dele é privado de alguém que saiu, e um filtro pode continuar mandando e-mails de assinatura depois que o dono foi embora. Administradores do Jira resolvem os dois casos: abra **Settings**, depois **System**, e em **Shared items** selecione **Filters**. Encontre o filtro, abra **More options** e escolha **Change owner** ou **Delete filter**. Os dashboards aparecem na mesma seção.
+
+Passe filtros e dashboards compartilhados para o líder da equipe, não para você.
+
+## Regras de automação: proprietário e ator
+
+Toda regra de automação tem duas pessoas associadas:
+
+- **O proprietário**, normalmente quem criou a regra. É ele quem recebe o e-mail quando a regra falha, então um proprietário que saiu significa falhas que ninguém lê. A propriedade pode ser transferida em massa.
+- **O ator**, o usuário com o qual as ações da regra são executadas. O ator precisa das permissões certas em cada espaço, e uma conta desativada não as tem mais. Os atores são trocados regra por regra.
+
+Passe a propriedade para a equipe que depende da regra e defina como ator o ator padrão da automação ou uma conta de serviço, e não outra pessoa.
+
+## Páginas, espaços e espaço pessoal no Confluence
+
+Os donos do conteúdo podem transferir as próprias páginas, e administradores do Confluence e de espaço podem transferir a propriedade em nome deles: abra os detalhes da página ou a linha de autoria e escolha **Change owner**. O novo dono precisa ter acesso ao espaço e permissão de edição na página. Páginas de visão geral do espaço e blogs não podem ser transferidos dessa forma.
+
+No Confluence Premium e Enterprise, o gerenciador de conteúdo faz isso em massa: em **Space settings**, abra **Content manager**, filtre a coluna **Owner** por **Deactivated**, selecione as páginas e troque o dono, até 100 itens por vez.
+
+Depois decida o que fazer com o espaço pessoal da pessoa: leve para um espaço da equipe o que ainda for necessário e verifique se havia páginas restritas só a quem saiu. O post [permissões do Confluence Cloud explicadas](/pt-BR/blog/confluence-cloud-permissions-explained/) mostra como restrições e permissões de espaço se combinam.
+
+## Agentes Rovo, apps e contas de serviço
+
+- **Agentes Rovo.** Transfira a propriedade em **Users and permissions** antes de a pessoa sair. Se um agente ficar sem proprietário, um dos gerentes dele pode assumir, e é por isso que [como criar um agente Rovo](/pt-BR/blog/building-a-first-rovo-agent/) recomenda um segundo gerente desde o início.
+- **Apps do Marketplace e apps personalizados.** Confira nas configurações de administração de cada app se há papéis por usuário, relatórios agendados ou conexões configuradas em nome de quem saiu.
+- **Integrações com tokens pessoais.** Passe-as para uma conta de serviço: uma conta não associada a uma pessoa, criada no Atlassian Administration em **Directory**, depois **Service accounts**, com token de API ou credenciais OAuth 2.0 próprios. Contas de serviço com acesso ao Jira ou ao Confluence não contam no seu limite de usuários. Quantas você pode criar depende do seu plano.
+
+## O checklist de offboarding no Atlassian Cloud
+
+1. Reúna a lista de repasse e defina um sucessor para cada item.
+2. Desative a conta, ou suspenda o acesso se você não a gerencia.
+3. Revogue os tokens de API e retire os papéis de administrador.
+4. Reatribua itens de trabalho abertos, liderança de espaços e componentes e aprovações.
+5. Troque o dono de filtros e dashboards compartilhados.
+6. Transfira a propriedade das regras de automação e substitua a pessoa como ator.
+7. Transfira a propriedade das páginas do Confluence e revise o espaço pessoal dela.
+8. Transfira os agentes Rovo e confira as configurações específicas de cada app.
+9. Passe as integrações para uma conta de serviço.
+10. Depois de 30 a 90 dias, decida se mantém a conta desativada ou se a exclui.
+
+## Em resumo
+
+Desative as contas gerenciadas em vez de excluí-las, revogue os tokens de API e os papéis de administrador no mesmo dia e depois repasse tudo o que era da pessoa: itens de trabalho, filtros e dashboards, regras de automação (proprietário e ator), páginas do Confluence, agentes Rovo e integrações, que devem ficar em contas de serviço. Rode o checklist para cada pessoa que sai e a limpeza continua pequena. Se quiser ajuda para transformar isso num processo repetível nos seus sites, a [equipe Atlassian da Numeric Oasis](/pt-BR/atlassian/) faz esse tipo de trabalho de administração.

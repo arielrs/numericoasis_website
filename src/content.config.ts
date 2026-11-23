@@ -28,6 +28,11 @@ export const BLOG_TAGS = [
   'atlassian-consulting',
   'cloud-migration',
   'game-development',
+  // The Atlassian ecosystem set (2026-11-23): news, the service desk, and
+  // Rovo. Each carries at least three posts on the day it was added.
+  'atlassian-news',
+  'jira-service-management',
+  'rovo-and-ai',
 ] as const;
 
 export type BlogTag = (typeof BLOG_TAGS)[number];

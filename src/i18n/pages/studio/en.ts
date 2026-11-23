@@ -1,27 +1,27 @@
 export const en = {
   meta: {
     crumb: 'Game Studio',
-    title: 'Game Studio: the game we are building',
+    title: 'Game Studio: Kindelve, a free browser game',
     metaDescription:
-      'Numeric Oasis Game Studio builds Kindelve, a creature-collection dungeon descent you play in a browser. In open testing, free, in five languages.',
+      'Numeric Oasis Game Studio makes Kindelve, a free creature-collection dungeon descent you play in any browser, in five languages. In open beta.',
     description:
-      'Numeric Oasis Game Studio is the games side of Numeric Oasis Technologies, based in Canoas, Brazil. It is building Kindelve, a creature-collection dungeon descent that runs in a browser on any phone or desktop.',
+      'Numeric Oasis Game Studio makes games that run in a browser on any phone or computer. Its first game, Kindelve, is a free creature-collection dungeon descent, in open beta and in five languages.',
   },
   hero: {
     eyebrow: 'Numeric Oasis Game Studio',
-    headline: 'We make games the way we make apps.',
-    lede: 'Small, finished, and built to run on the device somebody already owns. The studio has one game in open testing and a long list of things it is not going to do to you.',
+    headline: 'Games that run on the device you already own.',
+    lede: 'Free to start, in five languages, in any modern browser on a phone or a computer. Our first game, Kindelve, is in open beta and updated most weeks.',
   },
-  why: {
-    eyebrow: 'Why a studio',
-    headline: 'The same company, a different craft.',
+  craft: {
+    eyebrow: 'What the studio makes',
+    headline: 'Games you start in a browser tab and keep for months.',
     paragraphs: [
-      'Numeric Oasis Technologies builds Forge apps for Jira and Confluence Cloud, and has since 2011. The Game Studio is a separate line of work under the same roof: the same people, the same engineering standards, aimed at something nobody has to install.',
-      'A game is a harder test of the same discipline. An app can be forgiven a slow page; a game cannot be forgiven a dropped frame. So the studio builds the way the apps do, in small releases that ship, with the simulation under test and the content as data rather than as code.',
+      'Numeric Oasis Game Studio makes games that open in a browser tab, on a phone or a computer, with nothing to install and no account needed to start. A short session fits a coffee break; the progress it leaves behind builds over weeks.',
+      'Each game is written once and runs everywhere from the same build: the browser first, then mobile apps and Steam. Progress follows the player through one account, every piece of player text ships in five languages, and the systems underneath are documented in full in the studio wiki.',
     ],
   },
   game: {
-    eyebrow: 'In open testing',
+    eyebrow: 'In open beta',
     name: 'Kindelve',
     tagline: 'Pour creatures into a rift and decide how deep is deep enough.',
     paragraphs: [
@@ -31,7 +31,8 @@ export const en = {
     factsHeading: 'At a glance',
     facts: [
       { label: 'Where', value: 'Any modern browser, phone or desktop. Nothing to install' },
-      { label: 'Status', value: 'Open testing, updated most weeks' },
+      { label: 'Status', value: 'Open beta since 12 November 2026, updated most weeks' },
+      { label: 'Season', value: 'The First Watch, since 16 November 2026: eight weeks, four optional goals' },
       { label: 'Languages', value: 'English, Portuguese, Spanish, French, Japanese' },
       {
         label: 'Saves',
@@ -40,7 +41,13 @@ export const en = {
       { label: 'Price', value: 'Free to play, with no ads. Purchases save time or change looks, never power' },
     ],
     play: 'Play Kindelve',
-    docs: 'Read the documentation',
+    docs: 'Read the player guide',
+  },
+  wiki: {
+    eyebrow: 'Player guide',
+    headline: 'How Kindelve works, in full.',
+    body: 'The studio wiki covers the whole game: the descent, the Kin you send into it, builds, the Warden, the daily Trial, saves, and what the game stores.',
+    all: 'Open the studio wiki',
   },
   principles: {
     eyebrow: 'How it is built',
@@ -68,16 +75,21 @@ export const en = {
     eyebrow: 'What is next',
     headline: 'Coming next.',
     items: [
-      'Seasons, the first from 16 November 2026: eight weeks with four goals beside the game, all optional, and nothing taken back when a season ends.',
       'Mobile apps, then Steam, from the same build. The game is written once and each platform is a thin shell over it.',
       'One account everywhere: the account you sign in with in the browser today is the one the apps and Steam will open.',
+      'New seasons after The First Watch, each eight weeks with four optional goals, and nothing taken back when a season ends.',
     ],
+  },
+  blog: {
+    eyebrow: 'From the blog',
+    headline: 'Notes on making and releasing games.',
+    all: 'All game development posts',
   },
   cta: {
     heading: 'Go down and see.',
     body: 'It runs in the tab you are reading this in, there is nothing to install, and the first delve takes about two minutes.',
     play: 'Play Kindelve',
-    docs: 'Read the documentation',
+    docs: 'Read the player guide',
     contact: 'Talk to the studio',
     support: 'Get help with a game',
   },

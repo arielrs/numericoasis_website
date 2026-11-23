@@ -1,0 +1,83 @@
+---
+lang: es
+translationKey: atlassian-security-bulletin-november-2026
+title: "Boletín de seguridad de Atlassian de noviembre de 2026: 318 correcciones en Data Center y la CVE-2026-90436, crítica, en Confluence"
+metaTitle: 'Boletín de seguridad Atlassian: noviembre 2026'
+description: "El boletín de seguridad de Atlassian del 17 de noviembre de 2026 recoge 318 vulnerabilidades en sus productos Data Center y Server, 52 de ellas críticas y en componentes de terceros. Una semana antes, Atlassian publicó un aviso crítico aparte para la CVE-2026-90436, un fallo de ejecución remota de código en Confluence Data Center 9.x y anteriores. A qué versiones actualizar, la mitigación de la Remote API y una lista de comprobación."
+metaDescription: 'Boletín de seguridad de Atlassian de noviembre de 2026: 318 correcciones en Data Center y la CVE-2026-90436 crítica en Confluence. Versiones y mitigación.'
+pubDate: 2026-11-18
+tags: ["atlassian-news", "jira-administration", "cloud-migration"]
+author: team
+heroImage: ../../../assets/blog/atlassian-security-bulletin-november-2026.jpg
+heroImageAlt: 'Ilustración plana: un fajo alto de papeles blancos sobre una base azul marino, sujeto con una gran pinza verde azulado, una gran llave inglesa dorada apoyada en él, un pequeño interruptor naranja al lado y una ola verde azulada tranquila en la parte inferior.'
+---
+
+*El boletín es grande pero rutinario. El aviso de Confluence del 9 de noviembre es el que exige actuar esta semana si todavía usas Confluence 9.x.*
+
+El boletín de seguridad de Atlassian de noviembre de 2026, [publicado el 17 de noviembre](https://confluence.atlassian.com/security/security-bulletin-november-17-2026-1874690748.html), recoge "266 high-severity vulnerabilities and 52 critical-severity third-party vulnerabilities" en Bamboo, Bitbucket, Confluence, Crowd, Fisheye/Crucible, Jira Software y Jira Service Management, en sus versiones Data Center y Server. Atlassian recomienda actualizar a la última versión o a una de las versiones corregidas de la lista.
+
+Lo más urgente llegó una semana antes. El 9 de noviembre de 2026 (hora del Pacífico), Atlassian publicó un aviso crítico sobre la [CVE-2026-90436](https://confluence.atlassian.com/security/cve-2026-90436-remote-code-execution-in-confluence-data-center-1874560038.html), un fallo de ejecución remota de código en Confluence Data Center de las versiones 1.x a 9.x, con una puntuación de 9,3. Solo se aplica cuando el ajuste "Remote API (XML-RPC & SOAP)" está activado, y Confluence 10.x y posteriores no se ven afectados.
+
+Los sitios de Atlassian Cloud no tienen que hacer nada en ninguno de los dos casos. Atlassian afirma que la CVE-2026-90436 "has no impact on Atlassian Cloud sites, and no action is required."
+
+## ¿Qué incluye el boletín de seguridad de Atlassian de noviembre de 2026?
+
+El boletín de noviembre de 2026 cubre 318 vulnerabilidades en productos self-managed: 266 de severidad alta y 52 críticas. Todas las críticas están en dependencias de terceros, como lodash, Spring y Jackson, que Atlassian considera un riesgo menor, no crítico, por cómo las usan sus productos. También incluye fallos de severidad alta de path traversal y cross-site scripting en Jira y Confluence.
+
+Las entradas en las que más se fijarán los equipos de Jira y Confluence:
+
+| CVE | Puntuación | Producto | Problema |
+|---|---|---|---|
+| CVE-2026-4800 | 9,8 | Confluence | Ejecución remota de código en la dependencia lodash |
+| CVE-2026-59313 | 9,8 | Crowd | Ejecución remota de código en la dependencia spring-webmvc |
+| CVE-2026-47884 | 9,8 | Bamboo | Inclusión de archivos en una dependencia de Spring |
+| CVE-2026-110879 | 9,8 | Fisheye/Crucible | Denegación de servicio en jackson-databind |
+| CVE-2026-21590 | 8,7 | Jira Software | Path traversal (lectura y escritura arbitrarias) |
+| CVE-2026-21605 | 8,7 | Confluence | Path traversal (lectura y escritura arbitrarias) |
+| CVE-2026-21603 | 8,4 | Jira Software y Jira Core | Cross-site scripting almacenado |
+
+Como en todos los boletines mensuales, Atlassian afirma que estas CVE se han "assessed as presenting a non-critical risk to Atlassian customers". Planifica la actualización; no te la saltes.
+
+## ¿Qué es la CVE-2026-90436 de Confluence Data Center?
+
+La CVE-2026-90436 es un fallo crítico de ejecución remota de código, con CVSS 9,3, en la librería de terceros Apache Axis que Confluence usa para sus API XML-RPC y SOAP. Afecta a Confluence Data Center 1.x a 9.x cuando el ajuste "Remote API (XML-RPC & SOAP)" está activado. La corrección está en la 9.2.28. Confluence 10.0 eliminó la función, así que 10.x y posteriores no se ven afectados.
+
+Puntos clave del aviso:
+
+- El vector no requiere autenticación ni interacción del usuario.
+- La Remote API viene desactivada por defecto en las instalaciones nuevas desde Confluence 3.0, así que la exposición depende de que alguien la activara, a menudo hace años, para un script o una integración.
+- Si no puedes actualizar, la mitigación es desactivar el ajuste: **General Configuration**, luego **Further Configuration**, pulsa **Edit**, desmarca **Remote API (XML-RPC & SOAP)** y guarda. No hace falta reiniciar.
+- Para validarlo, abre en tu URL base la dirección del servicio SOAP que indica el aviso (termina en `soap-axis1/confluenceservice-v2`). Una mitigación bien aplicada devuelve HTTP 403 Forbidden.
+- Desactivar la API puede romper scripts, automatizaciones y apps de terceros que aún la usen, así que pruébalo antes.
+- Atlassian dice que no puede confirmar si tu instancia se ha visto afectada y recomienda buscar indicios de compromiso.
+
+## ¿A qué versiones hay que actualizar?
+
+Actualiza a las versiones de soporte a largo plazo que recomienda el boletín de noviembre: Jira Software y Jira Service Management 11.3.13, Confluence 10.2.20 (o 9.2.28 si sigues en la 9.2, que también corrige la CVE-2026-90436), Bitbucket 10.2.9 y Crowd 7.2.6. La lista completa:
+
+| Producto | Versiones corregidas recomendadas |
+|---|---|
+| Jira Software Data Center | 11.3.13 (LTS) recomendada, o 10.3.27 (LTS) |
+| Jira Service Management Data Center | 11.3.13 (LTS) recomendada, o 10.3.27 (LTS) |
+| Confluence Data Center | 10.2.20 (LTS) recomendada; en la línea 9.2 LTS, la 9.2.28, que también corrige la CVE-2026-90436 |
+| Bitbucket Data Center | 10.2.9 (LTS) recomendada, o 9.4.27 (LTS) |
+| Crowd Data Center | 7.2.6 recomendada |
+| Fisheye/Crucible | 4.9.16 recomendada |
+
+Atlassian advierte de que las versiones corregidas son las vigentes a fecha de publicación, así que revisa las notas de versión enlazadas en el boletín antes de planificar. Ya no publica parches binarios; las correcciones llegan en versiones de mantenimiento.
+
+## ¿Afecta esto a Atlassian Cloud?
+
+En Cloud no hay que hacer nada. El boletín de noviembre cubre solo productos Data Center y Server, y el aviso de la CVE-2026-90436 afirma que los sitios Cloud no se ven afectados. Lo que un administrador de Cloud sí debe revisar es cualquier sistema self-managed conectado al sitio Cloud: una instancia de Confluence Data Center que se dejó en solo lectura tras una migración, un servidor Crowd o una instancia de Bitbucket Data Center.
+
+## Qué hacer ahora
+
+1. **Comprueba el ajuste de la Remote API en cada instancia de Confluence Data Center.** Si está activado y estás en 9.x o anterior, actualiza a la 9.2.28 o a una versión con soporte posterior, o desactiva el ajuste hoy mismo.
+2. **Averigua quién sigue usando la Remote API.** Las llamadas XML-RPC y SOAP suelen venir de scripts e integraciones antiguos; necesitarán una alternativa REST antes de pasar a Confluence 10.x o a Cloud.
+3. **Busca indicios de compromiso** en las instancias donde la Remote API estaba activada y accesible.
+4. **Planifica las actualizaciones del boletín** a las versiones LTS anteriores en Jira, Jira Service Management, Confluence, Bitbucket y Crowd.
+5. **Incluye las instancias olvidadas**: archivos en solo lectura, servidores de pruebas, copias de recuperación ante desastres.
+
+## En resumen
+
+El boletín del 17 de noviembre es un conjunto grande de correcciones de dependencias para Data Center, más correcciones de severidad alta de path traversal y cross-site scripting en Jira y Confluence. La CVE-2026-90436 es la urgente: un fallo crítico de ejecución remota de código en Confluence 9.x y anteriores, explotable cuando la Remote API está activada. Actualiza a la 9.2.28 o posterior, o desactiva el ajuste ya. Los sitios Cloud no tienen que hacer nada. Si esos scripts de la Remote API son parte de lo que te mantiene en Data Center, [las macros de Confluence que no sobreviven a la migración a Cloud](/es/blog/confluence-macros-cloud-migration/) cubre la otra mitad del inventario de una migración de Confluence.

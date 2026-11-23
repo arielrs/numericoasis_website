@@ -1,0 +1,90 @@
+---
+lang: en
+translationKey: team-managed-vs-company-managed-spaces
+title: "Team-managed vs company-managed Jira spaces: how to choose"
+metaTitle: 'Team-managed vs company-managed Jira: how to pick'
+description: "Team-managed spaces let a team configure its own Jira space; company-managed spaces share schemes that Jira admins control. What each choice means for configuration, fields, permissions, boards, cross-space reporting and moving work later, with a decision table."
+metaDescription: 'Team-managed vs company-managed Jira spaces: who configures what, shared schemes, cross-space reporting, moving work between them, and a decision table.'
+pubDate: 2026-10-19
+tags: ["jira-administration", "how-to"]
+author: team
+heroImage: ../../../assets/blog/team-managed-vs-company-managed-spaces.jpg
+heroImageAlt: 'Flat illustration: a small teal house standing alone with its own little garden and gate, beside a row of identical navy houses joined by one gold pipe, with a gentle teal wave along the bottom.'
+---
+
+*The real question is not which features a team needs this month. It is who will own the configuration in two years.*
+
+Team-managed vs company-managed in Jira comes down to who configures the space. In a team-managed space, the space's own admins set up work types, fields, workflows and access, and nothing they change touches any other space. In a company-managed space, Jira admins configure shared schemes that many spaces (formerly projects) use at once.
+
+Team-managed is faster to start and easy for a team to own. Company-managed is the choice when several spaces need the same configuration, when you need more than one board or a board across spaces, or when reports depend on fields meaning the same thing everywhere. You can move work between the two later, but some data does not survive the trip, so choose deliberately.
+
+## What is the difference between team-managed and company-managed spaces?
+
+Atlassian's own summary is that the key difference is [how they are administered](https://support.atlassian.com/jira-software-cloud/docs/what-are-team-managed-and-company-managed-spaces/). Team-managed spaces are set up and maintained by the team, without involving a Jira admin. Company-managed spaces are configured by Jira admins through schemes, and a change to a scheme changes every space that uses it.
+
+| | Team-managed | Company-managed |
+| --- | --- | --- |
+| Who configures | Space admins | Jira admins, through schemes |
+| Custom fields | Local to the space, up to 50 | Shared fields, configured per context |
+| Workflows and work types | Defined inside the space | Shared schemes |
+| Access | Space roles plus an access level: Open, Limited or Private | A permission scheme, usually shared |
+| Boards | The space's own board | Several boards per space, and boards across spaces |
+| Schemes shared with other spaces | None | Permissions, workflows, screens, fields, notifications, work item security |
+
+The 50-field cap and the access levels come from Atlassian's pages on [team-managed fields](https://support.atlassian.com/jira-software-cloud/docs/customize-an-issues-fields-in-team-managed-projects/) and [team-managed access](https://support.atlassian.com/jira-software-cloud/docs/manage-how-people-access-your-next-gen-project/).
+
+## Who configures what?
+
+In a **team-managed space**, anyone with the space admin role can add fields, change the workflow, create work types and decide who gets in. The access level does a lot of the work: Open lets anyone on the Jira site view, create and edit work items; Limited lets everyone view and comment; Private limits the space to Jira admins and the people added to it. Jira admins control who can create team-managed spaces in the first place, through the "Create team-managed spaces" global permission, which Atlassian's [knowledge base](https://support.atlassian.com/jira/kb/disable-team-managed-projects-in-jira-cloud/) shows how to restrict.
+
+In a **company-managed space**, the configuration lives in schemes owned by Jira admins. Space admins manage who is in each space role, but changing how the space works means a request to a Jira admin. That is slower, and it is also the point: one change, reviewed once, applied consistently.
+
+## Shared schemes: the benefit and the risk
+
+Sharing is what makes company-managed spaces efficient. Ten spaces on one workflow scheme behave alike, report alike and are fixed in one place.
+
+The risk is the mirror image. Editing a shared scheme for one team's request changes it for every space that uses it, including spaces whose owners were never asked. Before editing any scheme, check which spaces use it. If only one of them needs the change, copy the scheme and point that space at the copy.
+
+Shared fields carry their own cost. A custom field available in many spaces counts toward each of them, which is how a site drifts toward Jira's [700 custom field limit per space](/blog/jira-700-custom-field-limit/). Team-managed spaces avoid that by keeping fields local, and pay for it in reporting.
+
+## Can you report across team-managed and company-managed spaces?
+
+Yes, with limits. JQL, filters and dashboards search across both types. What breaks is anything that relies on a shared field or status: a field created in a team-managed space exists only in that space, so a "Customer" field in two team-managed spaces is two different fields, and a cross-space report cannot treat them as one.
+
+In practice:
+
+- **Boards across spaces** are a company-managed feature. Atlassian's [boards guide](https://www.atlassian.com/software/jira/guides/boards/overview) says multiple and cross-space boards are available in company-managed spaces.
+- **Plans** can include team-managed spaces, but a team-managed field only works with work from its own space. Atlassian [suggests](https://support.atlassian.com/jira-software-cloud/docs/limitations-of-team-managed-projects-in-advanced-roadmaps) asking a Jira admin to convert such a field into one that can be shared.
+- **Status reports** should use `statusCategory` in JQL, because each team names its own statuses.
+
+## Can you move work between team-managed and company-managed spaces?
+
+Yes, by bulk-moving work items into a space of the other type; Jira has no button that converts a space. Expect losses. Moving to team-managed drops sprints, story point estimates, components and versions. Moving to company-managed needs a Jira admin to recreate statuses, fields and work types first, or the field data is lost.
+
+The details are in Atlassian's [migration guide](https://support.atlassian.com/jira-software-cloud/docs/migrate-between-team-managed-and-company-managed-projects/). Work item keys change, and links to the old keys redirect. Reporting history such as velocity and burnup does not come along. Atlassian recommends a test migration in a sandbox first. Take that advice: run the test, compare a sample of work items field by field, then schedule the real move.
+
+## Team-managed vs company-managed: a decision table
+
+| If this describes the space | Choose |
+| --- | --- |
+| One team with its own process that wants to change it without filing a request | Team-managed |
+| Short-lived work: an event, a pilot, an experiment | Team-managed |
+| Several teams must share a workflow, fields or reports | Company-managed |
+| Needs more than one board, or one board across several spaces | Company-managed |
+| Needs more than 50 custom fields | Company-managed |
+| Some work items must be hidden from some members with security levels | Company-managed |
+| Audit or compliance expects central control of permissions | Company-managed |
+
+When the answers are mixed, use company-managed for anything that will feed cross-team reporting, and keep team-managed for work that stays inside one team.
+
+## How do you keep team-managed spaces from sprawling?
+
+Limit who can create them, review them every quarter, and archive the finished ones. Team-managed spaces are easy to create, which is both the point and the problem: each one brings its own fields, statuses and access settings, and nobody else is watching them.
+
+1. **Decide who can create them.** Grant "Create team-managed spaces" to a group, not to everyone.
+2. **Review them quarterly.** Look for spaces with no recent updates and for open work nobody owns; the [JQL queries for Jira admins](/blog/jira-jql-queries-for-administrators/) cover both.
+3. **Archive what is finished.** On Premium and Enterprise, space admins can archive team-managed spaces and Jira admins can restore them, as Atlassian's [archiving article](https://support.atlassian.com/jira-cloud-administration/docs/archive-a-project/) explains.
+
+## The short version
+
+Choose team-managed when one team should own its configuration and its work stays inside the team. Choose company-managed when spaces must share workflows, fields, boards or reports, or when permissions need central control. Moving later is possible but costs sprints, estimates and any field not recreated first, so test the move in a sandbox. If shared custom fields weigh on the decision, a free [custom field audit](/apps/field-scout/) shows which fields each space actually uses before you consolidate.

@@ -38,7 +38,57 @@ export type DocEntry = CollectionEntry<'docs'>;
  * in the apps collection at all. The order matches the apps collection where
  * they overlap, so OnBudget leads here as it does everywhere else.
  */
-const GROUPS: { app: string; label: string; blurb: string; indexDescription?: string }[] = [
+/**
+ * The two wikis.
+ *
+ * Until 2026-11-23 the game sat in the same wiki as the six Marketplace apps,
+ * filtered out of the hub's app grid and still in every app page's sidebar. A
+ * player reading about a delve had Jira permission settings one click away, and
+ * an administrator reading OnBudget's security policy had a game in the rail.
+ * The game's pages now belong to the Game Studio, at /studio/wiki/, and share
+ * nothing with the apps wiki except the layout and the content collection.
+ */
+export type DocSection = 'apps' | 'studio';
+
+export const SECTIONS: Record<
+  DocSection,
+  {
+    /** Where the section's hub lives, and the prefix of every page in it. */
+    base: string;
+    /** The sidebar's heading and its mobile toggle. */
+    label: string;
+    /** The first link in the sidebar, back to the section's hub. */
+    homeLabel: string;
+    /** Crumbs that sit above the group in every trail. */
+    crumbs: { name: string; path: string }[];
+  }
+> = {
+  apps: {
+    base: '/documentation/',
+    label: 'Wiki',
+    homeLabel: 'All documentation',
+    crumbs: [{ name: 'Wiki', path: '/documentation/' }],
+  },
+  studio: {
+    base: '/studio/wiki/',
+    label: 'Studio wiki',
+    homeLabel: 'All game guides',
+    crumbs: [
+      { name: 'Game Studio', path: '/studio/' },
+      { name: 'Wiki', path: '/studio/wiki/' },
+    ],
+  },
+};
+
+const GROUPS: {
+  app: string;
+  label: string;
+  blurb: string;
+  indexDescription?: string;
+  section?: DocSection;
+  /** Games only: where the game is played, for the call to action on its pages. */
+  playUrl?: string;
+}[] = [
   {
     app: 'onbudget',
     label: 'OnBudget',
@@ -77,6 +127,8 @@ const GROUPS: { app: string; label: string; blurb: string; indexDescription?: st
     // "setup, features and policies" the way the six Marketplace apps do.
     indexDescription:
       'How Kindelve works, in full: the descent, the Kin you send into it, builds, the daily Trial, and what the game stores.',
+    section: 'studio',
+    playUrl: 'https://play.kindelve.com',
   },
   {
     app: 'legal',
@@ -89,26 +141,39 @@ export type DocGroup = {
   app: string;
   label: string;
   blurb: string;
-  /** Overrides the app-shaped default on /documentation/<app>/. */
+  /** Overrides the app-shaped default on the group's index page. */
   indexDescription?: string;
+  section?: DocSection;
+  playUrl?: string;
   pages: DocEntry[];
 };
 
-/** The slug a docs entry is published at, without the /documentation prefix. */
+/** The wiki a group belongs to. Everything that is not a game is in the apps wiki. */
+export const sectionOf = (app: string): DocSection =>
+  GROUPS.find((g) => g.app === app)?.section ?? 'apps';
+
+/** The slug a docs entry is published at, without its section's prefix. */
 export const docSlug = (entry: DocEntry): string => entry.id.replace(/\.mdx?$/, '');
 
-export const docHref = (entry: DocEntry): string => `/documentation/${docSlug(entry)}/`;
+export const docHref = (entry: DocEntry): string =>
+  `${SECTIONS[sectionOf(entry.data.app)].base}${docSlug(entry)}/`;
+
+/** A group's own index page, in whichever wiki it belongs to. */
+export const groupHref = (app: string): string => `${SECTIONS[sectionOf(app)].base}${app}/`;
 
 /**
- * Every published group, in display order, each with its pages sorted.
+ * Every published group of one wiki, in display order, each with its pages
+ * sorted.
  *
  * Drafts are dropped here rather than at each call site, so an unpublished app
- * cannot leak into the sidebar of a published one by being forgotten.
+ * cannot leak into the sidebar of a published one by being forgotten. The
+ * section filter is here for the same reason: a game cannot reach the apps
+ * wiki's sidebar, or an app the studio's, by a page forgetting to filter.
  */
-export async function docGroups(): Promise<DocGroup[]> {
+export async function docGroups(section: DocSection = 'apps'): Promise<DocGroup[]> {
   const all = await getCollection('docs', ({ data }) => !data.draft);
 
-  return GROUPS.map((group) => ({
+  return GROUPS.filter((group) => (group.section ?? 'apps') === section).map((group) => ({
     ...group,
     pages: all
       .filter((entry) => entry.data.app === group.app)

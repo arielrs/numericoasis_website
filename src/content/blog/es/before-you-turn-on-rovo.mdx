@@ -1,0 +1,92 @@
+---
+lang: es
+translationKey: before-you-turn-on-rovo
+title: "Cómo activar Rovo: las decisiones del administrador antes y después de ponerlo en marcha"
+metaTitle: 'Cómo activar Rovo: guía para administradores'
+description: "En los planes de pago de Atlassian Cloud, Rovo se activa automáticamente, así que activarlo bien depende de las decisiones que lo rodean: qué apps y grupos reciben funciones de IA, cómo se gastan los créditos de Rovo, qué herramientas externas conectar, qué contenido olvidado pasa a ser fácil de encontrar, dónde se guardan los datos y para qué puede usarlo la gente."
+metaDescription: 'Cómo activar Rovo en Atlassian Cloud: planes y créditos, acceso por app, permisos, conectores, residencia de datos y una lista de comprobación.'
+pubDate: 2026-11-02
+tags: ["rovo-and-ai", "atlassian-cloud"]
+author: team
+heroImage: ../../../assets/blog/before-you-turn-on-rovo.jpg
+heroImageAlt: 'Ilustración plana: un panel de control azul marino con tres interruptores verde azulados redondeados, dos encendidos y uno apagado, una llave dorada apoyada junto al panel y un escudo melocotón suave detrás, con una suave ola verde azulada en el borde inferior.'
+---
+
+*Lo más probable es que Rovo ya esté activado en tu organización. Las decisiones importantes son las que todavía no ha tomado nadie.*
+
+Cómo activar Rovo es una pregunta más corta de lo que parece. En los planes de nube de pago Standard, Premium y Enterprise, Atlassian activa Rovo automáticamente, y las funciones de IA tienen que estar habilitadas en cada sitio donde esté Rovo. No hay un gran interruptor que pulsar.
+
+Lo que el administrador tiene que decidir es todo lo que hay alrededor: qué apps y grupos reciben funciones de IA, cómo se limita el consumo de créditos, qué herramientas externas se conectan, qué contenido pasa a encontrarse cuando antes estaba felizmente olvidado, dónde se guardan los datos de Rovo y para qué puede usarlo la gente. Toma esas decisiones antes de que el primer equipo dependa de Rovo, o en las primeras semanas.
+
+## ¿Está Rovo incluido en mi plan de Atlassian?
+
+Sí, si tienes un plan de nube de pago. Rovo está incluido en los planes Standard, Premium y Enterprise de Jira, Confluence, Jira Service Management y las colecciones de Atlassian. El uso se mide en créditos de Rovo: cada suscripción de pago aporta una asignación mensual por usuario, agrupada a nivel de organización, que no se acumula de un mes a otro. Rovo Search, las definiciones y los resúmenes no consumen créditos; el chat y los agentes, sí.
+
+La asignación crece con el nivel del plan, y las colecciones reciben más que las apps sueltas. Las cifras exactas están en la [página de créditos de Rovo](https://support.atlassian.com/rovo/docs/rovo-usage-limits/) de Atlassian. Rovo no está disponible en organizaciones de Atlassian Government Cloud.
+
+Una fecha que conviene planificar: Atlassian anunció el 1 de septiembre de 2026 que los límites de la asignación y la facturación del uso que los supere entran en vigor el 3 de diciembre de 2026. El pago por uso (pay as you go) viene activado por defecto. Los administradores de la organización y de facturación pueden fijar un límite de gasto, o desactivar el pago por uso, en Atlassian Administration. Si está desactivado, las interacciones facturables de Rovo se detienen cuando se agota la asignación, hasta que se renueva.
+
+## ¿Cómo se activa o desactiva Rovo en cada app?
+
+Un administrador de la organización abre Atlassian Administration, selecciona **AI and Rovo**, después **Access**, y bloquea las apps que no deben tener funciones de IA. Bloquear una app desactiva todas sus funciones de IA actuales y futuras, incluidos los agentes y el chat. El contenido que Rovo ya generó se conserva. En los planes Enterprise también puedes permitir o bloquear el acceso por grupo de usuarios.
+
+Algunos detalles pillan a la gente por sorpresa:
+
+- **Las apps de Jira comparten algunas funciones.** Rovo Search, Chat y Create with Rovo siguen disponibles mientras alguna app de Jira del sitio tenga Rovo activado. Para quitarlas, bloquea todas las apps de Jira de ese sitio.
+- **Algunas apps tienen su propia configuración.** Atlassian menciona Jira Service Management y Bitbucket Cloud como apps que necesitan ajustes adicionales en su propia administración.
+- **No todo es IA.** La guía del administrador de Atlassian indica que Rovo Search, los marcadores, los conectores de terceros y Studio siguen disponibles con la IA desactivada. La búsqueda en tu contenido forma parte de la plataforma en cualquier caso.
+
+## ¿Respeta Rovo los permisos?
+
+Sí. Atlassian afirma que los agentes "don't grant additional access or permissions to any data or information" (no conceden acceso ni permisos adicionales sobre ningún dato) y que, en las apps de terceros conectadas, Rovo sincroniza los controles de acceso para que "users only see content they have access to" (cada usuario vea únicamente el contenido al que tiene acceso). Rovo respeta los permisos que ya tienes. No los corrige.
+
+Precisamente por eso la revisión de permisos va primero. Rovo hace fácil usar el acceso que ya existe, y buena parte de ese acceso nunca se pensó para usarse. Ejemplos típicos:
+
+- Un espacio de Confluence abierto a todos los usuarios con licencia que todavía guarda una revisión salarial antigua o un borrador de reorganización.
+- Un espacio de Jira cuyo esquema de permisos concede Browse a un grupo amplio porque nadie lo restringió tras una migración.
+- Adjuntos: listas de clientes exportadas, contratos en PDF, hojas de cálculo con datos personales.
+- Páginas con restricciones mal puestas, o sin restringir porque "nadie las va a encontrar".
+
+Antes de Rovo, encontrar eso costaba esfuerzo. Con Rovo, una pregunta en lenguaje natural puede sacarlo a la luz y resumirlo. Dedica una semana a un barrido de permisos: enumera los espacios abiertos a todo el mundo, comprueba quién puede navegar por cada espacio de Jira y corrige las excepciones. Estas guías ayudan: [los permisos de Confluence Cloud explicados](/es/blog/confluence-cloud-permissions-explained/) y la [auditoría de permisos de Jira Cloud](/es/blog/jira-cloud-permission-audit/). Después ocúpate del contenido obsoleto, porque Rovo cita una página antigua con la misma seguridad que una actual; [archivar contenido obsoleto de Confluence](/es/blog/confluence-archiving-stale-content/) lo explica.
+
+## ¿Qué herramientas de terceros conviene conectar?
+
+Los conectores llevan a Rovo el contenido de herramientas como Google Drive, SharePoint o Slack. Los configura un administrador de la organización en Atlassian Administration. Empieza por las una o dos herramientas donde de verdad están las respuestas, no por todo lo disponible.
+
+Merece la pena seguir la propia recomendación de Atlassian antes de conectar una app:
+
+1. **Revisa los datos que guarda la herramienta** y confirma que conectarla encaja con tus políticas internas de datos.
+2. **Comprueba los permisos de la herramienta.** Rovo depende de ellos, así que una carpeta compartida de más en el origen se convierte en una respuesta compartida de más en Rovo.
+3. **Acota el alcance.** Por defecto, Rovo indexa todo el espacio de trabajo de una app conectada; algunos conectores, como Google Drive y SharePoint, permiten excluir partes.
+
+Si más adelante desconectas una herramienta, Atlassian elimina en un plazo de 30 días el contenido que había indexado de ella.
+
+Una decisión relacionada son las herramientas de IA ajenas a Atlassian. Si la gente quiere que sus propios asistentes de IA lean Jira y Confluence a través del servidor MCP de Atlassian, Atlassian Guard Standard te deja autorizarlo o bloquearlo mediante una política de seguridad de datos.
+
+## Residencia de datos y una política de uso de IA
+
+Si fijas tus datos en una región, revisa Rovo por separado. Los administradores de la organización pueden elegir dónde se guardan los datos de Rovo incluidos en la residencia, entre ellos los registros de chat, la configuración de los agentes, los marcadores y el contenido de terceros ingerido. Los datos de las apps de Atlassian en el índice de búsqueda de Rovo se quedan con los datos de la propia app. Atlassian conserva las entradas y salidas del chat y de los agentes durante 30 días por motivos de seguridad, y afirma que sus proveedores de modelos no las retienen ni las usan para mejorar sus servicios.
+
+Después, redacta una política de uso de IA de una página, con tus propias palabras, que cubra:
+
+- Qué se puede y qué no se puede pegar en el chat (datos de clientes, credenciales, datos de salud).
+- Qué resultados necesitan revisión humana antes de llegar a un cliente o a una decisión.
+- Quién puede crear agentes. Por defecto, cualquiera; en la configuración de Studio puedes limitar la creación a grupos concretos o a los administradores.
+- Dónde comunicar una respuesta errónea o dañina.
+
+## Lista de comprobación para desplegar Rovo
+
+1. Confirma el plan de cada app y que las funciones de IA están habilitadas en los sitios previstos.
+2. Decide qué apps bloquear en **AI and Rovo**, después **Access** (y qué grupos, en Enterprise).
+3. Fija un límite de gasto en créditos, o decide desactivar el pago por uso, antes del 3 de diciembre de 2026.
+4. Haz el barrido de permisos en los espacios de Confluence y de Jira abiertos a grupos amplios.
+5. Archiva o elimina el contenido obsoleto de los espacios sobre los que más se va a preguntar.
+6. Decide quién puede crear agentes.
+7. Elige los primeros uno o dos conectores y acota su alcance.
+8. Comprueba la residencia de los datos de Rovo incluidos.
+9. Publica la política de uso de IA e indica adónde va el feedback.
+10. Empieza con un equipo, revisa los datos de actividad de Rovo en Atlassian Administration al cabo de un mes y después amplía.
+
+## En resumen
+
+En los planes de nube de pago, Rovo ya está ahí. Activarlo bien significa elegir qué apps y grupos reciben funciones de IA, limitar el gasto en créditos antes de que la facturación empiece el 3 de diciembre de 2026, corregir los espacios compartidos de más y las páginas obsoletas antes de que Rovo los haga fáciles de encontrar, conectar solo las herramientas donde están las respuestas, comprobar la residencia de datos y dar a la gente una política de uso breve. Si quieres ayuda con el barrido de permisos que debe ir primero, el [equipo de Atlassian de Numeric Oasis](/es/atlassian/) hace este tipo de revisión.

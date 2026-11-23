@@ -1,0 +1,81 @@
+---
+lang: en
+translationKey: atlassian-security-bulletin-october-2026
+title: "Atlassian security bulletin October 2026: 176 Data Center fixes, and CVE-2026-21589 is now on CISA's exploited list"
+metaTitle: 'Atlassian security bulletin October 2026'
+description: "Atlassian's October 20, 2026 security bulletin lists 176 vulnerabilities across its Data Center and Server products, 14 of them critical third-party issues. Five days earlier, CISA added the separate critical CVE-2026-21589 to its Known Exploited Vulnerabilities catalog. Which versions to patch to, what Cloud admins need to know, and a checklist."
+metaDescription: 'October 2026 Atlassian security bulletin: 176 Data Center fixes, CVE-2026-21589 exploited in the wild, the versions to patch to and a short checklist.'
+pubDate: 2026-10-21
+tags: ["atlassian-news", "jira-administration", "cloud-migration"]
+author: team
+heroImage: ../../../assets/blog/atlassian-security-bulletin-october-2026.jpg
+heroImageAlt: 'Flat illustration: a rounded navy server cabinet with a large teal shield standing in front of it, a small orange patch stuck on one shelf, a gold padlock at its base, and a gentle teal wave along the bottom edge.'
+---
+
+*The monthly bulletin is routine. The file access flaw disclosed two weeks earlier is not, and it is now being exploited.*
+
+The Atlassian security bulletin for October 2026, [published on October 20](https://confluence.atlassian.com/security/security-bulletin-october-20-2026-1874690162.html), lists "162 high-severity vulnerabilities and 14 critical-severity third-party vulnerabilities" across Bamboo, Bitbucket, Confluence, Crowd, Fisheye/Crucible, Jira Software and Jira Service Management Data Center and Server. Atlassian's recommendation is the usual one: patch to the latest version or to one of the listed fixed versions.
+
+The more urgent item is separate from the bulletin. CVE-2026-21589, an arbitrary file access flaw that Atlassian disclosed in a critical advisory on October 5, was added to CISA's Known Exploited Vulnerabilities catalog on October 15. If you run any affected Data Center product and have not patched it, that is the job for this week.
+
+Atlassian Cloud customers have nothing to patch. For CVE-2026-21589, Atlassian states that affected Cloud products have been patched and no Cloud customer action is required.
+
+## What is in the Atlassian security bulletin for October 2026?
+
+The October 2026 bulletin covers 176 vulnerabilities in self-managed products: 162 rated high and 14 rated critical. Every critical entry is in a third-party dependency, such as Tomcat, Bouncy Castle or Netty, and Atlassian assesses its own use of those dependencies as a lower, non-critical risk. Fixes ship in the listed Data Center releases.
+
+The critical entries most Jira and Confluence teams will meet:
+
+| CVE | Score | Component | Products named |
+|---|---|---|---|
+| CVE-2026-65637 | 9.8 | Tomcat (tomcat-coyote) | Confluence, Crowd |
+| CVE-2026-58062 | 9.3 | Bouncy Castle (bcprov) | Confluence, Crowd, Jira Software, Jira Service Management |
+| CVE-2026-75595 | 9.1 | Netty (netty-handler) | Confluence, Jira Software, Jira Service Management |
+| CVE-2026-77185 | 9.1 | Apache SSHD (sshd-core) | Crucible |
+
+Atlassian states that CVEs in its monthly bulletins have been "assessed as presenting a non-critical risk to Atlassian customers". That is Atlassian's own assessment of how each library is used in its products. It is not a reason to skip the upgrade, only a reason to schedule it rather than treat it as an emergency.
+
+## Is CVE-2026-21589 being exploited?
+
+Yes. Canada's Cyber Centre updated its advisory to say open-source reporting indicates CVE-2026-21589 is being exploited in the wild, and on October 15, 2026 CISA added it to the Known Exploited Vulnerabilities catalog. Atlassian rates it critical, CVSS 9.3, and says all versions of the affected Data Center products are vulnerable.
+
+From [Atlassian's advisory](https://confluence.atlassian.com/security/cve-2026-21589-arbitrary-file-access-vulnerability-impacts-multiple-products-1870495748.html): the flaw "allows an unauthenticated attacker to access specific files within the web application root directory". Exploitation requires knowing the target file's exact name and path. The affected products are Bitbucket, Confluence, Jira Software, Jira Service Management, Bamboo, Crowd, Crucible and Fisheye.
+
+The [Cyber Centre advisory AV26-1002](https://www.cyber.gc.ca/en/alerts-advisories/atlassian-security-advisory-av26-1002) records both updates. Coverage by [Security Affairs](https://securityaffairs.com/?p=201086) cites honeypot telemetry showing attempts from early October, after a public technical analysis was published.
+
+## Which versions should you patch to?
+
+Patch to the releases that fix CVE-2026-21589. On the current long term support lines that means Jira Software and Jira Service Management 11.3.12, Confluence 10.2.19 and Bitbucket 10.2.8. Older lines have their own fixed versions, listed here from Atlassian's advisory:
+
+| Product | Fixed versions |
+|---|---|
+| Jira Software Data Center | 9.12.40, 10.3.26, 11.3.12 |
+| Jira Service Management Data Center | 5.12.40, 10.3.26, 11.3.12 |
+| Confluence Data Center | 9.2.26, 10.2.19 |
+| Bitbucket Data Center | 9.4.26, 10.2.8, 10.5.1 |
+| Bamboo Data Center | 10.2.24, 12.1.12 |
+| Crowd Data Center | 6.3.7, 7.0.3, 7.1.7, 7.2.4 |
+| Crucible and Fisheye | 4.9.15 |
+
+The October bulletin's recommended releases on the current long term support lines (Jira and Jira Service Management 11.3.12, Confluence 10.2.19, Bitbucket 10.2.8, Bamboo 12.1.12, Crowd 7.2.4, Crucible 4.9.15) are the same version numbers. One upgrade on those lines covers the exploited flaw and the bulletin's dependency fixes. Check the release notes linked from the bulletin, because Atlassian notes the fixed versions are only current as of publication.
+
+Atlassian no longer releases binary patches; critical fixes are backported to maintenance releases. If you cannot upgrade immediately, the advisory describes interim mitigations: take the instance off the public internet, block the request pattern at a WAF or proxy, or add Tomcat rewrite rules (Bitbucket uses its own `urlrewrite.xml` rule).
+
+## Does this affect Atlassian Cloud?
+
+Not in a way that needs action from you. The October bulletin covers Data Center and Server products only. For CVE-2026-21589, Atlassian states: "Affected Atlassian Cloud products have been patched, and our investigation has not found evidence of exploitation. No Cloud customer action is required."
+
+Where Cloud admins should still look is anything self-managed that connects to the Cloud site: a Crowd server, a Bitbucket Data Center instance, a Bamboo build server, or a Data Center instance still running alongside Cloud during a migration.
+
+## What to do now
+
+1. **List every self-managed Atlassian instance**, including the ones in a migration's "keep it running until cutover" state and any Crowd or Bamboo server nobody thinks about.
+2. **Patch CVE-2026-21589 first.** It is exploited, unauthenticated and affects all versions. Use the table above.
+3. **Apply a mitigation if the upgrade must wait**: restrict external access and add the WAF or rewrite rule from the advisory.
+4. **Check for compromise.** Atlassian says it cannot confirm whether your instance was affected. Its detection guidance is to URL-decode access log request lines (up to two passes) and search for `..` immediately next to `/`, `\` or `::`.
+5. **Rotate credentials kept in readable configuration files** if you find suspicious hits. Published research cited by Security Affairs read a Crowd configuration file and reused the credentials in it.
+6. **Schedule the bulletin's dependency upgrades** in the same window if you are on an LTS line.
+
+## The short version
+
+The October 20 bulletin is a large but routine set of dependency fixes for Data Center. CVE-2026-21589 is not routine: it has been exploited since early October and CISA listed it on October 15. Patch every affected instance to the fixed versions, mitigate where you cannot, and review access logs. Cloud sites need no action. With Data Center reaching end of life on March 28, 2029, every patch cycle like this one is also a reasonable moment to size the move; a structured way to do that is in [what a Jira Data Center to Cloud assessment should actually tell you](/blog/jira-data-center-to-cloud-assessment/).

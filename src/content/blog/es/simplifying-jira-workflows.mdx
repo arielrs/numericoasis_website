@@ -1,0 +1,86 @@
+---
+lang: es
+translationKey: simplifying-jira-workflows
+title: "Cómo simplificar los flujos de trabajo de Jira: menos estados, tableros e informes más claros"
+metaTitle: 'Simplificar flujos de trabajo en Jira'
+description: "Demasiados estados hacen que los tableros de Jira sean anchos, los filtros frágiles y los informes engañosos. Cómo simplificar los flujos de trabajo (workflows) de Jira: asignar cada estado a la categoría correcta, decidir qué estados se quedan, fusionar el resto con seguridad en el editor y gestionar los workflows compartidos entre espacios."
+metaDescription: 'Cómo simplificar los workflows de Jira: categorías de estado, fusionar estados con seguridad en el editor, workflows compartidos y consolidación paso a paso.'
+pubDate: 2026-11-16
+tags: ["jira-administration", "how-to"]
+author: team
+heroImage: ../../../assets/blog/simplifying-jira-workflows.jpg
+heroImageAlt: 'Ilustración plana: una maraña de caminos azul marino y melocotón a la izquierda que se endereza en tres carriles lisos verde azulado a la derecha, cada uno acabado en un marcador dorado redondeado, sobre fondo crema cálido con una suave ola verde azulado abajo.'
+---
+
+*Cada estado de más es otra columna en el tablero, otra condición en el filtro y otra forma de que un informe se equivoque.*
+
+Para simplificar los flujos de trabajo (workflows) de Jira, reduce cada workflow a los estados en los que el trabajo de verdad espera o cambia de manos, coloca cada estado en la categoría correcta y fusiona el resto con el paso que trae el editor de workflows para mover los elementos de trabajo a un estado nuevo. Hazlo por proceso, no por espacio, y actualiza tableros y filtros dentro del mismo cambio.
+
+La ganancia es práctica: tableros más estrechos, JQL que sobrevive a la próxima reorganización e informes que significan lo que parecen. El riesgo también lo es, porque el editor mueve los elementos existentes sin ejecutar las reglas del workflow. El procedimiento del final se ocupa de ello.
+
+## ¿Por qué perjudican tantos estados a los tableros y los informes?
+
+Cada estado tiene que asignarse a una columna del tablero, aparece por su nombre en los filtros y alimenta los informes a través de su categoría. Cuando un sitio mantiene Done, Closed, Resolved y Complete como estados distintos, cada tablero, filtro y dashboard tiene que enumerar los cuatro, y el que olvide alguno cuenta de menos sin avisar.
+
+La propia documentación de Atlassian es clara sobre dos efectos: las categorías de estado controlan cómo se muestran los elementos de trabajo en listas, informes y tableros, y [los informes se basan en el nombre del estado](https://support.atlassian.com/jira-cloud-administration/docs/what-is-a-workflow-status/), así que renombrar un estado puede cambiar lo que muestran. Un estado sin columna en un tablero no aparece en él, y el trabajo puede quedarse ahí sin que nadie lo vea.
+
+La proliferación suele tener un origen inocente: un equipo copia un workflow y añade "Esperando al proveedor", otro añade "Bloqueado externamente", y nadie es dueño de la lista.
+
+## ¿Cómo funcionan las categorías de estado en Jira?
+
+Todo estado de Jira pertenece a una de tres categorías: To Do, In Progress o Done, mostradas en gris, azul y verde. No se pueden crear categorías ni cambiar sus colores. Listas, tableros e informes leen la categoría, así que un estado en la categoría equivocada distorsiona todos los gráficos que lo usan.
+
+De ahí salen dos hábitos:
+
+- **Audita la asignación.** Un estado "Bloqueado" en la categoría Done hace que el trabajo atascado parezca terminado. Un estado "Listo para publicar" en To Do hace que el trabajo terminado parezca sin empezar.
+- **Filtra por categoría siempre que puedas.** `statusCategory = "In Progress"` sigue funcionando después de fusionar estados; `status in ("In Dev", "Coding", "Doing")` se rompe el día en que uno de ellos desaparece.
+
+## ¿Qué estados conviene mantener?
+
+Mantén un estado cuando alguien actúa de forma distinta por él: otra persona u otro equipo recoge el trabajo, una columna del tablero o una cola depende de él, o un SLA, una regla de automatización o una aprobación se basan en él. Fusiona los estados que solo se diferencian en el nombre. Sustituye las situaciones temporales, como "esperando a alguien", por una marca (flag) o un campo en lugar de un estado propio.
+
+Una prueba rápida para cada estado: si desapareciera mañana, ¿quién lo notaría y qué haría distinto? Si la respuesta es "nadie" o "nada", es candidato a fusionarse.
+
+## ¿Qué pasa con los elementos de trabajo al fusionar estados?
+
+En el editor de workflows, eliminar un estado te pide elegir un estado nuevo para los elementos de trabajo que están en él. El traslado se ejecuta después de seleccionar Update workflow, no al eliminar. Puedes añadir excepciones para que los elementos de ciertos espacios o tipos de trabajo vayan a otro estado. Las reglas del workflow no se ejecutan durante el traslado.
+
+Atlassian explica la consecuencia en su guía sobre [mover elementos de trabajo al actualizar el workflow](https://support.atlassian.com/jira-software-cloud/docs/move-issues-to-new-statuses-while-updating-your-workflow/): las reglas Restrict transition y Validate details no bloquean nada, y las reglas Perform actions no se ejecutan. Si una función posterior suele fijar la resolución o vaciar un campo de camino a Done, no ocurrirá con los elementos trasladados. Planifica una edición masiva de esos campos, o pasa los elementos por una transición real antes de eliminar el estado.
+
+Dos detalles más de la misma documentación:
+
+- **Quitar no es eliminar.** [Quitar un estado](https://support.atlassian.com/jira-cloud-administration/docs/remove-a-status-from-a-workflow/) de un workflow solo hace que ese workflow deje de usarlo. Eliminar un estado lo quita de todos los workflows del sitio.
+- **El rastro de auditoría es escaso.** El registro de auditoría anota que el workflow se actualizó, pero no qué estado se quitó, y no se avisa a los equipos. Apunta lo que cambias y avisa a las personas afectadas.
+
+## ¿Cómo cambian el plan los workflows compartidos?
+
+En los espacios gestionados por la empresa, un mismo workflow puede servir a muchos espacios mediante esquemas de workflow, y una edición se aplica a todos a la vez. El editor muestra qué espacios usan un workflow antes de publicar, así que revisa esa lista primero. Los espacios gestionados por el equipo tienen sus propios workflows, y la misma limpieza hay que repetirla espacio por espacio.
+
+Los workflows compartidos son el objetivo, no el obstáculo. Con los estados consolidados, apunta a un workflow por tipo de proceso (entrega de software, solicitudes, aprobaciones) compartido por todos los espacios que siguen ese proceso. Las diferencias entre ambos tipos de espacio están en [espacios gestionados por el equipo frente a gestionados por la empresa](/es/blog/team-managed-vs-company-managed-spaces/).
+
+## ¿Qué transiciones y reglas merece la pena conservar?
+
+El [editor de workflows](https://support.atlassian.com/jira-cloud-administration/docs/what-is-the-new-workflow-editor) agrupa las reglas de transición en Restrict transition (condiciones), Validate details (validadores), Perform actions (funciones posteriores) y Request input (pantallas). Conserva las reglas que protegen la calidad de los datos o aplican un control real:
+
+- Un validador que exige los campos de los que dependen tus informes antes de que el trabajo llegue a Done.
+- Una restricción que limita las transiciones de aprobación a quienes aprueban.
+- Una acción que fija la resolución cuando el trabajo termina, para que los filtros basados en la resolución sigan siendo correctos.
+
+Cuestiona todo lo demás, sobre todo las transiciones que solo existen para saltarse un paso y las pantallas que recogen campos que nadie lee.
+
+## Cómo simplificar los flujos de trabajo de Jira, paso a paso
+
+1. **Inventario.** Enumera cada workflow, sus estados y categorías, y los espacios que lo usan. Cuenta los elementos de trabajo por estado con una JQL como `status = "Closed" AND updated >= -180d`. La entrada de [consultas JQL para administradores](/es/blog/jira-jql-queries-for-administrators/) tiene más patrones.
+2. **Diseña el objetivo.** Escribe la lista corta de estados por proceso, cada uno con su categoría y el motivo de que exista.
+3. **Localiza dependencias.** Asignación de columnas de los tableros, filtros guardados y dashboards que nombran estados, reglas de automatización, SLA y colas de JSM, e integraciones que leen nombres de estado.
+4. **Cambia los filtros a categorías** donde se mantenga su significado, antes de tocar nada más.
+5. **Ensaya.** En Premium o Enterprise, prueba antes el cambio en un sandbox con una copia de los datos de producción.
+6. **Edita y traslada.** En el editor, elimina los estados redundantes, elige el estado de destino de cada uno, añade excepciones si hace falta y selecciona Update workflow.
+7. **Repara lo que harían las reglas.** Fija de forma masiva las resoluciones o campos que normalmente gestionan las funciones posteriores.
+8. **Reasigna los tableros y revisa los informes.** Coloca los estados que quedan en las columnas correctas y comprueba por muestreo los informes que usan los equipos.
+9. **Elimina los huérfanos.** Cuando ningún workflow use un estado antiguo, elimínalo para que nadie lo reutilice.
+10. **Comunica y registra.** Cuenta a cada equipo qué ha cambiado y guarda la lista de antes y después.
+
+## En resumen
+
+Simplificar los flujos de trabajo de Jira significa menos estados, cada uno en su categoría correcta, compartidos por todos los espacios que siguen el mismo proceso. Fusiona con el paso de traslado del editor de workflows, pero recuerda que se salta las reglas del workflow: corrige tú las resoluciones y los campos, luego reasigna los tableros y cambia los filtros a `statusCategory`. Como el registro de auditoría nativo no dice qué estado se quitó, conviene tener un historial de configuración antes de empezar: [Configuration Monitor](/es/apps/configuration-monitor/) registra los cambios de configuración de los espacios de Jira, workflows incluidos, con los valores de antes y después.

@@ -1,0 +1,80 @@
+---
+lang: pt-BR
+translationKey: jira-autumn-release-2026
+title: "Novidades do Jira na release de outono de 2026: políticas de espaço, templates personalizados no Standard e no Premium e agentes no quadro"
+metaTitle: 'Novidades do Jira: release de outono de 2026'
+description: "Em 30 de outubro de 2026 a Atlassian publicou a release de outono do Jira: políticas de espaço que mantêm os espaços gerenciados pela equipe nos campos e status globais, templates personalizados de espaço no Standard e no Premium, agentes com identidade própria em quadros e itens de trabalho e quadros mais rápidos nos espaços gerenciados pela empresa. O que cada mudança significa para quem administra o Jira e o que fazer antes que ela chegue ao seu site."
+metaDescription: 'Novidades do Jira de outubro de 2026: políticas de espaço, templates no Standard e Premium, agentes nos quadros. O que o admin deve configurar primeiro.'
+pubDate: 2026-10-31
+tags: ["atlassian-news", "jira-administration", "rovo-and-ai"]
+author: team
+heroImage: ../../../assets/blog/jira-autumn-release-2026.jpg
+heroImageAlt: 'Ilustração em estilo flat: um quadro kanban azul-marinho com três colunas arredondadas de cartões verde-azulados e pêssego, um pequeno selo hexagonal dourado sobre um cartão, uma cerca baixa verde-azulada na borda do quadro e folhas de outono cor de pêssego caindo sobre uma onda verde-azulada.'
+---
+
+*A release de outono do Jira gira em torno de consistência: limites claros para espaços gerenciados pela equipe, templates para mais planos e agentes que dá para enxergar.*
+
+A release de outono de 2026 do Jira, [anunciada pela Atlassian em 30 de outubro](https://www.atlassian.com/blog/development/jira-autumn-release), reúne quatro tipos de mudança: quadros mais rápidos nos espaços gerenciados pela empresa, uma nova visualização do item de trabalho, agentes que aparecem nos quadros e nos itens de trabalho com identidade própria e controles de consistência para admins. A Atlassian diz que tudo "is rolling out now and will be generally available across Jira Cloud by November 2026."
+
+Para quem administra o Jira, dois itens pesam mais que o resto. As políticas de espaço (Space policies) impedem que espaços gerenciados pela equipe criem campos e status próprios e podem ser o padrão de todo espaço novo. E os templates personalizados de espaço, até então descritos como recurso do Enterprise, chegam ao Standard e ao Premium, segundo o anúncio.
+
+Os recursos de agentes também importam, mas sobretudo como algo a planejar: quando os agentes aparecem nos quadros e nas automações, alguém precisa saber onde eles estão e no que podem mexer.
+
+## O que traz a release de outono de 2026 do Jira?
+
+A release de outono de 2026 do Jira traz políticas de espaço e status globais para espaços gerenciados pela equipe, templates personalizados no Standard e no Premium, identidade para agentes e um dashboard de uso de agentes, um novo layout do item de trabalho com sugestão de campos na criação e quadros que, segundo a Atlassian, carregam 22% mais rápido. Chega aos sites Jira Cloud até novembro de 2026.
+
+Um mapa rápido de quem deve prestar atenção:
+
+| Mudança | Quem é mais afetado |
+|---|---|
+| Políticas de espaço, status globais | Admins do Jira que governam espaços gerenciados pela equipe |
+| Templates personalizados no Standard e no Premium | Admins e líderes de equipe padronizando configurações |
+| Identidade de agentes, configurações de agentes no espaço, dashboard de uso | Admins de espaço, responsáveis pelo Rovo, revisores de segurança |
+| Quadros mais rápidos e visualizações salvas | Todo mundo que usa quadros |
+| Novo layout do item de trabalho, campos sugeridos | Todo mundo que cria e edita itens de trabalho |
+
+## O que são as políticas de espaço do Jira?
+
+Políticas de espaço são limites para espaços gerenciados pela equipe. Um admin do Jira escolhe uma de três políticas: só campos globais, só status globais ou ambos. Um espaço sob uma política pode usar os campos e status que já existem no site, mas nem os admins do espaço nem os apps conseguem criar novos campos ou status próprios. Uma política pode ser o padrão para todos os espaços novos.
+
+Detalhes da [documentação de políticas de espaço](https://support.atlassian.com/jira-cloud-administration/docs/set-up-a-space-policy/) da Atlassian e do [anúncio do beta aberto](https://community.atlassian.com/forums/discussion/3285642/jira-space-policies-give-teams-autonomy-within-admin-guardrails), de setembro:
+
+- Disponível nos planos Standard, Premium e Enterprise. Só admins do Jira criam e gerenciam as políticas.
+- O caminho é configurações globais de espaços, depois **Spaces** e depois **Space policies**. Um botão define a política como padrão para espaços novos.
+- Aplicar uma política a um espaço existente vale na hora. Os campos e status próprios que já existem continuam funcionando, e o Jira os marca como conflitos para revisar com calma.
+- Se o espaço por trás de um template personalizado tem uma política, os espaços criados a partir desse template herdam essa política.
+- Mudar o padrão afeta só os espaços futuros.
+
+Na nossa leitura, esta é a mudança que mais reduz trabalho de admin no longo prazo, porque campos duplicados e status quase idênticos em espaços gerenciados pela equipe são um motivo comum para os relatórios do Jira não baterem entre times. A release também leva status globais aos espaços gerenciados pela equipe, então os times podem escolher um "In Progress" comum em vez de inventar o seu. Se você ainda está decidindo qual tipo de espaço serve para cada time, veja [espaços gerenciados pela equipe ou pela empresa](/pt-BR/blog/team-managed-vs-company-managed-spaces/).
+
+## Quais planos têm templates personalizados de espaço?
+
+Segundo o anúncio de 30 de outubro, os templates personalizados passam a estar disponíveis no Standard e no Premium, e não só no Enterprise. Admins e líderes de equipe podem transformar um espaço gerenciado pela equipe já configurado, com workflows, tipos de trabalho, visualizações e agentes incorporados, num template reutilizável para espaços novos.
+
+O anúncio da Atlassian de julho sobre melhorias em templates ainda descrevia os templates personalizados como recurso do Enterprise, e algumas páginas de suporte podem demorar para acompanhar o rollout. Se você está no Standard ou no Premium e ainda não vê a opção, confira de novo quando o rollout de novembro terminar.
+
+## Como os agentes vão aparecer nos espaços do Jira?
+
+Com o Agentic Multiplayer Protocol (AMP) da Atlassian, apresentado no Team '26 Europe, cada agente no Jira ganha identidade própria e aparece no quadro, na visualização em lista e no item de trabalho. Os admins de espaço ganham uma área de agentes nas configurações do espaço, que mostra onde os agentes são usados, por exemplo em automações e workflows, e permite adicionar conhecimento e instruções.
+
+Um novo dashboard de uso de agentes, na aba **Reports** do espaço, relaciona a atividade do Rovo, de ferramentas de código e de agentes de terceiros com cycle time e throughput. A Atlassian diz que ele vem "set up by default with no config". O anúncio não diz quais planos incluem cada recurso de agentes, então confira antes de prometer algo a um time.
+
+## O que muda nos quadros dos espaços gerenciados pela empresa?
+
+Os quadros dos espaços de software gerenciados pela empresa passam a usar a mesma base dos quadros gerenciados pela equipe. A Atlassian diz que eles carregam 22% mais rápido, mostram subtarefas e epics, permitem que cada pessoa salve as próprias visualizações e dão mais controle sobre as colunas. O anúncio afirma que workflows, dados e permissões continuam como estão.
+
+A visualização do item de trabalho também muda: um layout mais limpo com campos principais personalizáveis, Rovo e ditado por voz para atualizações e uma tela de criação que sugere campos com base no jeito de trabalhar do time. As sugestões só entram depois que a pessoa revisa e confirma.
+
+## O que fazer agora
+
+1. **Levante os seus espaços gerenciados pela equipe.** Conte os campos e status próprios para saber quantos conflitos uma política vai mostrar.
+2. **Defina primeiro os status globais.** Uma política de status globais só ajuda se o conjunto comum estiver claro.
+3. **Escolha uma política padrão para espaços novos.** Comece pelos novos e depois aplique políticas aos existentes, em lotes.
+4. **Decida quem pode criar templates** e revise os templates que levam agentes incorporados.
+5. **Liste os agentes que já trabalham nos seus espaços** assim que as configurações de agentes aparecerem e confira o que cada um pode fazer.
+6. **Avise quem usa quadros sobre o que vem aí**, para que um layout novo não seja aberto como bug.
+
+## Em resumo
+
+A release de outono de 2026 do Jira dá aos admins limites reais para espaços gerenciados pela equipe, leva os templates personalizados ao Standard e ao Premium e torna os agentes visíveis em quadros e itens de trabalho. Defina uma política de espaço padrão antes que os times criem mais campos próprios e revise onde os agentes já rodam. Do lado dos campos, [o limite de 700 custom fields do Jira é por espaço](/pt-BR/blog/jira-700-custom-field-limit/) explica por que campos duplicados custam mais do que parecem.

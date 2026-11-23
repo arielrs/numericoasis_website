@@ -1,0 +1,81 @@
+---
+lang: es
+translationKey: confluence-archiving-stale-content
+title: "Archivar páginas en Confluence: una rutina trimestral para que la búsqueda siga siendo útil"
+metaTitle: 'Archivar páginas en Confluence: rutina trimestral'
+description: "En Confluence Cloud, archivar saca las páginas del árbol y de la búsqueda rápida sin borrarlas, y archivar un espacio lo oculta del directorio. Cómo funciona hoy el archivado, cómo encontrar contenido obsoleto, una revisión que pone al mando a los dueños de las páginas y una rutina trimestral."
+metaDescription: 'Cómo archivar páginas y espacios en Confluence Cloud, qué cambia en la búsqueda y los enlaces, cómo encontrar contenido obsoleto y una rutina trimestral.'
+pubDate: 2026-10-23
+tags: ["confluence-governance", "how-to"]
+author: team
+heroImage: ../../../assets/blog/confluence-archiving-stale-content.jpg
+heroImageAlt: 'Ilustración plana: una estantería alta azul marino con algunos libros verde azulados de pie, varios libros grises deslizándose dentro de una caja de archivo naranja suave con una placa dorada lisa, y una suave ola verde azulada abajo.'
+---
+
+*Las páginas antiguas no hacen daño a nadie hasta que alguien busca, encuentra la versión de 2021 y la sigue.*
+
+Para archivar páginas en Confluence Cloud, abre el menú More actions (Más acciones) de la página y elige Archive (Archivar). La página sale del árbol de páginas y de la búsqueda rápida, pero conserva su contenido, sus enlaces y su historial, y se puede restaurar en cualquier momento. Los espacios completos se archivan igual, desde el menú del espacio, y desaparecen del directorio de espacios.
+
+Archivar es la opción por defecto adecuada para el contenido obsoleto porque es reversible. Lo difícil no es el botón; es decidir qué está obsoleto y quién puede decirlo. A continuación, cómo funciona hoy el archivado, cómo encontrar candidatas, una revisión que pone al mando a los dueños de las páginas y una rutina que cabe en unas pocas horas al trimestre.
+
+## ¿Qué pasa cuando archivas una página en Confluence?
+
+La página sale del árbol y pasa al archivo del espacio. Deja de aparecer en la búsqueda rápida y en las analíticas, aunque la búsqueda avanzada puede incluir contenido archivado. Los enlaces a ella siguen funcionando y muestran una etiqueta de archivada. La edición, el movimiento y los comentarios se desactivan, y cualquiera con el permiso de archivar en ese espacio puede restaurarla.
+
+Algunos detalles del [artículo de Atlassian sobre el archivado](https://support.atlassian.com/confluence-cloud/docs/archive-pages/) importan en la práctica:
+
+- **Cada espacio tiene su propio archivo**, en Space settings, después Content y después Archived. No hay un archivo de todo el sitio.
+- **Archivar una página padre es todo o nada.** Archivas la página con todas sus páginas anidadas, o ninguna.
+- **Las hijas que no puedes ver se quedan.** Las páginas anidadas que no puedes ver ni archivar permanecen en el árbol y suben un nivel. Atlassian advierte de que esto puede cambiar las restricciones heredadas, de modo que el contenido podría quedar visible para más gente de la prevista. Revisa los árboles restringidos antes de archivar sus páginas padre.
+- **El archivado masivo**, de hasta 500 elementos a la vez, forma parte del content manager (gestor de contenido) en Premium y Enterprise.
+
+## ¿Qué pasa cuando archivas un espacio?
+
+Un espacio archivado desaparece del directorio de espacios, de la navegación rápida y de los flujos de actividad. No queda bloqueado: sus páginas siguen accesibles por enlace, la gente puede seguir editando según los permisos del espacio, las suscripciones y las notificaciones siguen funcionando, y un espacio público puede seguir apareciendo en buscadores externos. Para congelar un espacio, cambia también sus permisos.
+
+Los pasos, y cómo restaurar un espacio, están en el [artículo de Atlassian sobre archivar espacios](https://support.atlassian.com/confluence-cloud/docs/archive-a-space/). Lo práctico es lo que se acaba de decir: archivar un espacio cambia su visibilidad, no sus permisos. Para el espacio de un proyecto terminado, archívalo y reduce sus roles a solo lectura. Para un espacio que ya nadie debe leer, restringe también el acceso.
+
+## ¿Cómo encontrar contenido obsoleto en Confluence?
+
+Hay tres vías nativas. En Premium y Enterprise, el content manager filtra las páginas inactivas de un espacio. Con la automatización, una regla puede recorrer las páginas inactivas y actuar sobre ellas. Y la búsqueda, ordenada por última modificación, sigue sirviendo para un vistazo rápido. Inactiva significa sin visitas, ediciones, comentarios ni otra actividad en el periodo que elijas.
+
+**El content manager** (Space settings, después Content manager) muestra el contenido de un espacio con filtros por última actividad (desde más de 7 días hasta más de 6 meses), dueño (incluidos los desactivados), etiquetas, estado, colaboradores y fechas. El filtro de páginas inactivas omite las páginas que tienen hijas. Desde los resultados puedes archivar hasta 500 elementos de una vez o cambiar dueños en bloque. Los detalles están en el [artículo de Atlassian sobre el content manager](https://support.atlassian.com/confluence-cloud/docs/manage-your-content-tree).
+
+**La automatización** ofrece la rama "For each inactive page", que ejecuta condiciones o acciones sobre un máximo de 1.000 páginas sin actividad en el periodo que fijes. Cuentan como actividad las visitas, las ediciones, los comentarios, los adjuntos y los movimientos, y la actividad en una página hija cuenta para su padre. Una segunda rama trata las páginas cuyo dueño es una cuenta desactivada, y la acción "Archive page" está ahí cuando quieras actuar ([ramas de la automatización de Confluence](https://support.atlassian.com/cloud-automation/docs/branches-in-confluence-automation/)). Las ejecuciones de automatización cuentan contra la cuota de tu plan, que [Atlassian mide en pasos desde diciembre de 2026](/es/blog/jira-automation-usage-limits/).
+
+## Una revisión dirigida por los dueños de las páginas
+
+Quien es dueño de una página sabe si todavía importa. El trabajo del administrador es que esa decisión sea fácil y que la opción por defecto sea segura.
+
+1. **Fija un umbral por tipo de espacio.** Doce meses sin actividad sirven para la mayoría de los espacios de equipo; las políticas y el material de referencia pueden necesitar más, las actas de reuniones, menos.
+2. **Prepara la lista de candidatas.** Usa el filtro del content manager o una regla de automatización que añada una etiqueta como `archive-candidate` a las páginas inactivas y avise a sus dueños.
+3. **Resuelve primero la propiedad.** Las páginas cuyo dueño es una cuenta desactivada no tienen a quién preguntar. Pásalas al dueño del espacio o a un responsable de equipo antes de empezar la revisión.
+4. **Pide a los dueños una de tres respuestas, con plazo:** conservar (y actualizar la página), archivar o eliminar.
+5. **Mira qué apunta a una página antes de archivarla.** Los enlaces siguen funcionando, pero una página a la que remite un documento de proceso vigente debe sustituirse, no solo archivarse.
+6. **Archiva lo que nadie reclame** cuando venza el plazo, en bloque si tu plan lo permite.
+7. **Elimina solo lo que claramente no vale nada:** borradores vacíos, duplicados y páginas de prueba. Todo lo demás va al archivo, de donde puede volver.
+
+## ¿Archivar, eliminar o conservar una página?
+
+Archiva por defecto, elimina pocas veces y conserva solo lo que alguien sigue usando y asume como suyo. Las páginas archivadas se pueden restaurar y sus enlaces siguen funcionando, así que archivar es la opción de bajo riesgo siempre que haya dudas. Eliminar es para páginas sin ningún valor. El único caso que pide una comprobación previa es una página restringida dentro de un árbol que vas a archivar.
+
+| La página es | Haz esto |
+| --- | --- |
+| Actual y en uso | Consérvala y confirma su dueño |
+| Sustituida, pero alguien puede necesitar el historial | Archívala |
+| De un proyecto terminado o de una decisión antigua | Archívala |
+| Un borrador vacío, un duplicado o una prueba | Elimínala |
+| Restringida, dentro de un árbol que vas a archivar | Revisa antes sus restricciones |
+
+## Una rutina trimestral para archivar páginas en Confluence
+
+- **Semana 1:** saca las páginas inactivas de cada espacio y las páginas con dueños desactivados, y reasigna esos dueños.
+- **Semana 2:** los dueños responden conservar, archivar o eliminar.
+- **Semana 3:** archiva y elimina lo acordado, y etiqueta lo que se conserva para que no vuelva a salir el trimestre siguiente.
+- **Una vez al trimestre:** lista los espacios sin actividad reciente, archiva los terminados y reduce sus roles a solo lectura.
+
+La primera pasada es la lenta. Después, la rutina consiste sobre todo en leer listas cortas y enviar unos pocos mensajes.
+
+## En resumen
+
+Archiva por defecto y elimina pocas veces. Las páginas archivadas salen del árbol y de la búsqueda rápida pero conservan enlaces e historial; los espacios archivados salen del directorio pero siguen siendo editables salvo que cambies también sus permisos. Encuentra candidatas con el content manager o con una automatización de páginas inactivas, resuelve la propiedad, deja que los dueños decidan dentro de un plazo y repítelo cada trimestre. Si quieres la lista de contenido obsoleto y una comprobación de "qué enlaza aquí" dentro de las páginas que tus administradores de espacio ya visitan, [Expanded Macro Collection](/es/apps/expanded-macro-collection/), de Numeric Oasis, añade a Confluence un informe de contenido obsoleto y una macro de enlaces entrantes.

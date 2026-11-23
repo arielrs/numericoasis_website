@@ -1,0 +1,102 @@
+---
+lang: es
+translationKey: atlassian-guard-sso-and-provisioning
+title: "Atlassian Guard SSO y SCIM: configura el inicio de sesión único y el aprovisionamiento de usuarios sin dejar a nadie fuera"
+metaTitle: 'Atlassian Guard SSO y SCIM: guía de configuración'
+description: "Cómo desplegar Atlassian Guard en el orden correcto: verificar el dominio y reclamar las cuentas, asegurar una vía de entrada, conectar el proveedor de identidad para el inicio de sesión único con SAML, exigirlo por políticas de autenticación en fases y activar el aprovisionamiento de usuarios con SCIM. Y qué incluye Guard Standard y qué añade Guard Premium."
+metaDescription: 'Configura SSO y SCIM en Atlassian Guard sin riesgos: verificación de dominio, SAML, políticas de autenticación, aprovisionamiento y Standard vs Premium.'
+pubDate: 2026-11-06
+tags: ["atlassian-cloud"]
+author: team
+heroImage: ../../../assets/blog/atlassian-guard-sso-and-provisioning.jpg
+heroImageAlt: 'Ilustración plana: un gran candado azul marino con cerradura verde azulada unido por una línea curva a una tarjeta llave dorada, tres pequeñas siluetas redondeadas de personas en melocotón en fila junto a una puerta verde azulada abierta, sobre una suave ola verde azulada.'
+---
+
+*Los proyectos de SSO fallan de dos maneras: alguien se queda fuera, o en realidad no se exige nada.*
+
+Configurar SSO y SCIM en Atlassian Guard es, sobre todo, una cuestión de orden. Verifica el dominio y reclama las cuentas, conserva una cuenta de administrador que siempre pueda entrar, conecta el proveedor de identidad y configura SAML, pruébalo con un usuario y solo entonces exige el SSO mediante políticas de autenticación, por fases. Activa el aprovisionamiento de usuarios con SCIM para que las altas y bajas lleguen desde el proveedor de identidad y no desde tickets.
+
+Atlassian documenta cada paso. Lo que da problemas es hacerlos desordenados: exigir el SSO antes de probarlo, o sincronizar grupos antes de verificar el dominio.
+
+## ¿Qué incluye Atlassian Guard Standard y qué añade Premium?
+
+Guard Standard cubre la identidad y el acceso: inicio de sesión único con SAML, aprovisionamiento de usuarios, varias políticas de autenticación, gestión de tokens de API de usuario, políticas para usuarios externos y políticas de seguridad de datos. Guard Premium es un complemento de Guard Standard que añade clasificación de datos, Guard Detect (alertas de actividad sospechosa y de datos sensibles) y registros de auditoría ampliados.
+
+Dos datos de facturación que conviene conocer antes de planificar:
+
+- **Los planes Enterprise ya incluyen Guard Standard**, así que a los usuarios de Enterprise no se les cobra otra vez.
+- **Guard Standard cuenta usuarios únicos.** Un usuario gestionado o externo con acceso a Jira, Confluence, Jira Service Management, Bitbucket o Trello cuenta una sola vez, use las apps que use. Las cuentas desactivadas no cuentan, ni tampoco los usuarios de una política de autenticación no facturable.
+
+Los precios cambian, así que consulta los [precios de Atlassian Guard](https://www.atlassian.com/software/guard/pricing) para ver las cifras actuales.
+
+## Verifica el dominio y reclama las cuentas
+
+En Atlassian Administration, selecciona **Directory** y después **Domains**, y verifica cada dominio de la empresa con un registro DNS TXT o con un archivo HTML en tu servidor web. Las organizaciones que usan Google Workspace o Microsoft Entra ID también pueden verificarlo a través de la conexión con ese proveedor de identidad.
+
+Deja el registro DNS o el archivo en su sitio de forma permanente. Si se elimina, el dominio puede perder su estado de verificado y las políticas de seguridad que se le aplican, incluido el inicio de sesión único con SAML, dejan de surtir efecto.
+
+Después reclama las cuentas de ese dominio, lo que las convierte en cuentas gestionadas que puedes editar, desactivar y someter a políticas. Puedes reclamarlas todas, incluidas las nuevas según se crean, o subir un CSV con direcciones concretas. Exporta la lista y revísala antes: suele incluir buzones compartidos y cuentas de prueba antiguas. Los usuarios reciben un aviso cuando su cuenta pasa a estar gestionada.
+
+## Asegúrate de que siempre puedes volver a entrar
+
+Antes de configurar SAML, crea una cuenta de administrador de la organización con una dirección de correo de un dominio que no hayas verificado y colócala en una política de autenticación que no exija el inicio de sesión único. Atlassian recomienda exactamente esto, porque el SSO solo se aplica a las cuentas de tus dominios verificados. Dale credenciales robustas y verificación en dos pasos, guárdalas en tu gestor de contraseñas y deja por escrito quién puede usarla.
+
+Si algo sale mal, eliminar la configuración de SAML permite que la gente vuelva a iniciar sesión en las apps de Atlassian.
+
+## ¿Cómo se configura el inicio de sesión único con SAML en Atlassian Guard?
+
+En Atlassian Administration, ve a **Security**, después **User security** e **Identity providers**, selecciona el directorio de tu proveedor de identidad y elige **Set up SAML single sign-on**. Copia el entity ID, la URL de SSO y el certificado público del proveedor de identidad en Atlassian, copia la URL de entidad y la URL del assertion consumer service de Atlassian en el proveedor y vincula tus dominios verificados.
+
+Después pruébalo sin afectar a nadie:
+
+1. Crea una política de autenticación de prueba y añade un usuario de prueba.
+2. Activa el inicio de sesión único con SAML solo en esa política.
+3. Inicia sesión como el usuario de prueba en una ventana privada del navegador.
+4. Comprueba el cierre de sesión, un segundo dispositivo y una sesión caducada.
+
+Guardar la configuración de SAML no cierra la sesión de los usuarios actuales, así que una configuración rota puede pasar días sin que nadie lo note. Prueba antes de exigir.
+
+## Exige el SSO mediante políticas de autenticación, por fases
+
+Las políticas de autenticación deciden cómo inician sesión las cuentas gestionadas: inicio de sesión único, verificación en dos pasos, reglas de contraseña y duración de la sesión inactiva. Toda organización tiene una política predeterminada y, con Guard Standard, puedes crear hasta veinte. Los usuarios siguen en la política predeterminada hasta que los muevas.
+
+Un despliegue que no deja a nadie fuera:
+
+1. **Política de emergencia.** La cuenta de administrador descrita arriba, sin SSO y con verificación en dos pasos obligatoria.
+2. **Política piloto.** El equipo de TI, con SSO obligatorio, durante una o dos semanas.
+3. **Fases por departamento.** Mueve un grupo cada vez a una política con SSO, avisando a cada uno antes.
+4. **La política predeterminada, al final.** Exige el SSO en la política predeterminada cuando casi todos se hayan movido. El aprovisionamiento just-in-time también requiere SAML obligatorio en la política predeterminada.
+
+Los usuarios externos, las personas de otras empresas que usan tus sitios, quedan cubiertos por una política de usuarios externos, que puede exigir SSO o un código de un solo uso.
+
+## ¿Cómo funciona el aprovisionamiento de usuarios con SCIM en Atlassian Guard?
+
+El aprovisionamiento de usuarios usa SCIM 2.0 para sincronizar usuarios y grupos de tu proveedor de identidad con tu organización de Atlassian. Crea cuentas, mantiene sus datos al día y las desactiva cuando las eliminas en el proveedor de identidad. Los grupos sincronizados son de solo lectura en Atlassian: cambias la pertenencia en el proveedor y concedes acceso a las apps asignándoles esos grupos.
+
+Atlassian incluye Okta, OneLogin, Microsoft Entra ID (antes Azure AD), Cisco Duo, Google Workspace, PingFederate y JumpCloud entre los proveedores de identidad compatibles; el resto puede usar la API de aprovisionamiento de usuarios.
+
+Las trampas tienen que ver casi siempre con los nombres de grupo:
+
+- Enviar un grupo con el mismo nombre que un grupo ya existente en tu organización da error, y un grupo sincronizado que comparta nombre con un grupo predeterminado o creado a mano puede quedarse vacío.
+- Los grupos que se llaman como los grupos internos de Atlassian, por ejemplo org-admins o site-admins, no se sincronizan. Cámbiales el nombre en el proveedor de identidad.
+- Los grupos predeterminados no se pueden gestionar con SCIM.
+- Los usuarios existentes de un dominio no verificado que coincidan con usuarios del proveedor se vinculan y pueden obtener acceso a apps. Verifica primero los dominios.
+
+Acuerda una convención de nombres antes de la primera sincronización, por ejemplo un grupo por app y rol, y planifica pasar el acceso a los productos de grupos gestionados a mano a grupos sincronizados. Cuando alguien se va, Atlassian recomienda desactivarlo en el proveedor de identidad antes de eliminarlo.
+
+## Orden de despliegue de Atlassian Guard SSO y SCIM sin dejar a nadie fuera
+
+1. Verifica todos los dominios de la empresa y deja los registros DNS en su sitio.
+2. Exporta, revisa y reclama las cuentas.
+3. Contrata Guard Standard, o confirma que tu plan Enterprise lo incluye.
+4. Crea el administrador de emergencia en un dominio no verificado, en una política sin SSO.
+5. Conecta el proveedor de identidad, configura SAML y vincula los dominios.
+6. Prueba con una política de prueba y un usuario de prueba.
+7. Activa el aprovisionamiento para un grupo piloto y comprueba los nombres de los grupos en Atlassian.
+8. Exige el SSO a TI, después departamento por departamento y, al final, en la política predeterminada.
+9. Asigna el acceso a las apps a los grupos sincronizados y retira las pertenencias manuales.
+10. Revisa los tokens de API de los usuarios: Guard permite verlos y revocarlos en las cuentas gestionadas y fijar una caducidad de entre 1 y 365 días.
+
+## En resumen
+
+Despliega Guard en orden: verifica los dominios y mantenlos verificados, reclama las cuentas después de revisar la lista, conserva una cuenta de administrador fuera del SSO, configura SAML y pruébalo con un usuario, y después exige el SSO mediante políticas de autenticación por fases, con la predeterminada al final. Añade el aprovisionamiento con SCIM y una convención clara de nombres de grupo para que el acceso siga al proveedor de identidad. Guard Standard cubre todo esto; Premium añade clasificación, detección y registros de auditoría ampliados. Cuando el acceso viene de grupos sincronizados, recuperar licencias también es más fácil, como se explica en [encontrar las licencias de Atlassian que pagas y nadie usa](/es/blog/atlassian-license-reclamation/). Si necesitas ayuda para planificar el despliegue, el [equipo de Atlassian de Numeric Oasis](/es/atlassian/) hace este tipo de trabajo de administración.

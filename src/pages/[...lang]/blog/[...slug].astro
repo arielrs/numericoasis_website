@@ -20,6 +20,7 @@ import type { BlogTag } from '../../../content.config';
 import { ORG_ID, type JsonLdNode } from '../../../lib/schema';
 import { relatedPosts } from '../../../lib/blog';
 import { authorFor } from '../../../lib/authors';
+import { citationsFrom, faqFrom } from '../../../lib/post-schema';
 
 type PostProps = {
   post: CollectionEntry<'blog'>;
@@ -84,6 +85,7 @@ const [cta, ctaPath] = has('onbudget', 'jira-cost-management')
 const ctaHref = withLocale(lang, ctaPath);
 
 const postUrl = new URL(withLocale(lang, `/blog/${slug}/`), SITE.url).toString();
+const citations = citationsFrom(post.body ?? '', SITE.url);
 const blogUrl = new URL(withLocale(lang, '/blog/'), SITE.url).toString();
 
 // Frontmatter dates are date-only, so they parse as UTC midnight. Formatting
@@ -111,7 +113,12 @@ const blogPosting: JsonLdNode = {
   isPartOf: { '@id': `${blogUrl}#blog` },
   mainEntityOfPage: { '@id': `${postUrl}#webpage` },
   wordCount,
-  keywords: [...post.data.tags],
+  // Readable labels in the post's own language, not the URL slugs.
+  keywords: post.data.tags.map((tag: BlogTag) => t.tags[tag]),
+  articleSection: t.tags[post.data.tags[0] as BlogTag],
+  // Every outside source the post links to. The posts written from 2026-11-23
+  // cite their sources inline; this is the same list, for a machine.
+  ...(citations.length > 0 && { citation: citations }),
   timeRequired: `PT${readingMinutes}M`,
   ...(post.data.heroImage && {
     image: {
@@ -122,6 +129,31 @@ const blogPosting: JsonLdNode = {
     },
   }),
 };
+
+/**
+ * The post's question headings and the paragraph under each, as a FAQPage.
+ *
+ * Read from the body the reader sees, never written separately, so the node
+ * cannot claim what the page does not say. Two questions at least: one is a
+ * heading, not a set of questions and answers. As on the app pages, this is
+ * not for rich results, which Google restricted in 2023, but so an answer
+ * engine gets each question and its answer as one addressable unit.
+ */
+const faq = faqFrom(post.body ?? '');
+const faqNode: JsonLdNode | undefined =
+  faq.length >= 2
+    ? {
+        '@type': 'FAQPage',
+        '@id': `${postUrl}#faq`,
+        inLanguage: BCP47_MAP[lang],
+        isPartOf: { '@id': `${postUrl}#webpage` },
+        mainEntity: faq.map((item) => ({
+          '@type': 'Question',
+          name: item.q,
+          acceptedAnswer: { '@type': 'Answer', text: item.a },
+        })),
+      }
+    : undefined;
 
 // Emitted alongside the post so the isPartOf reference above never dangles.
 const blogNode: JsonLdNode = {
@@ -156,7 +188,7 @@ const navCardClass =
       { name: t.meta.crumb, path: '/blog/' },
       { name: post.data.title, path: `/blog/${slug}/` },
     ],
-    extraNodes: [blogPosting, blogNode, ...author.nodes],
+    extraNodes: [blogPosting, blogNode, ...(faqNode ? [faqNode] : []), ...author.nodes],
     primaryEntityId: `${postUrl}#blogposting`,
     pageType: 'ItemPage',
   }}

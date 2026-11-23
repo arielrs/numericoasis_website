@@ -1,0 +1,78 @@
+---
+lang: es
+translationKey: jira-automation-usage-limits
+title: "Límites de automatización de Jira: cómo se cuenta el uso y cómo dejar de desperdiciarlo"
+metaTitle: 'Límites de automatización de Jira: qué cuenta'
+description: "El uso de la automatización de Jira tiene un límite por plan, y Atlassian está cambiando cómo se mide: a partir del 3 de diciembre de 2026, la automatización se mide en pasos (steps) sumados en toda la organización, y no en ejecuciones de regla por producto. Cómo se cuenta el uso, dónde consultarlo y los patrones de regla que agotan la cuota."
+metaDescription: 'Límites de automatización de Jira: cómo cuentan hoy las ejecuciones, el paso a steps el 3 de diciembre de 2026, dónde ver el uso y cómo recortarlo.'
+pubDate: 2026-10-16
+tags: ["jira-administration", "atlassian-cloud", "how-to"]
+author: team
+heroImage: ../../../assets/blog/jira-automation-usage-limits.jpg
+heroImageAlt: 'Ilustración plana: un indicador redondo azul marino con la aguja dorada cerca del centro, una fila de pequeños engranajes verde azulados que lo alimentan, un engranaje en naranja suave girando suelto fuera de la fila y una suave ola verde azulada en la parte inferior.'
+---
+
+*La automatización se mide. Las reglas que más consumen suelen ser las silenciosas, las que nadie recuerda haber creado.*
+
+Los límites de automatización de Jira son cuotas mensuales ligadas a tu plan, y la forma en que Atlassian las cuenta está cambiando. Hoy Jira cuenta ejecuciones de regla correctas, por producto: una ejecución que realiza al menos una acción cuenta una vez, tenga las acciones que tenga. A partir del 3 de diciembre de 2026, la automatización se mide en pasos (cada desencadenador, condición, acción y rama que se ejecuta), sumados en toda la organización, con cuotas por usuario en los planes de pago.
+
+Los dos modelos premian los mismos hábitos: reglas que se disparan solo cuando hace falta, se detienen pronto cuando no hay nada que hacer y terminan su trabajo de una vez. A continuación, cómo cuenta cada modelo, dónde ver tu uso y qué cambiar primero.
+
+## ¿Cómo se cuentan hoy los límites de automatización de Jira?
+
+Una ejecución de regla cuenta para el límite mensual cuando realiza al menos una acción correcta, y cuenta una sola vez, haga las acciones que haga. No cuentan las ejecuciones que una condición detiene antes de cualquier acción, las reglas de sistema que crea Atlassian ni las tareas auxiliares, como registrar en el log o crear una variable. Cada producto Jira tiene su propio límite, y Enterprise es ilimitado.
+
+Es el modelo que Atlassian implantó en noviembre de 2023, resumido en su [artículo sobre límites y uso de la automatización](https://support.atlassian.com/automation/kb/difference-between-automation-service-limits-and-automation-usage-limits/). El ámbito no cambia la cuenta: las reglas de un espacio, de varios o globales consumen el mismo límite mensual, y cada plan por encima de Free tiene uno mayor.
+
+El mismo artículo hace una distinción que conviene conocer. El límite mensual de uso es una cosa; los [límites de servicio](https://support.atlassian.com/cloud-automation/docs/automation-service-limits/) son otra. Los límites de servicio acotan lo que puede hacer una sola ejecución (cuántos elementos de trabajo devuelve una búsqueda, cuánto tiempo de proceso consumen tus reglas, cuántas veces pueden dispararse unas a otras antes de que la detección de bucles las pare), y cambiar de plan no los amplía.
+
+## ¿Qué cambia el 3 de diciembre de 2026?
+
+Atlassian [anunció el 1 de septiembre de 2026](https://www.atlassian.com/blog/company-news/expanded-usage-based-pricing) que la automatización pasa a facturarse por uso, medida en pasos. Cada desencadenador, condición, acción y rama que se ejecuta es un paso, los bucles cuentan por cada elemento y las cuotas se suman en toda la organización. Los planes de pago pueden superar la cuota y pagar el exceso; el plan Free se detiene.
+
+Las cuotas mensuales que Atlassian publica para Jira en su [artículo sobre el cálculo del uso](https://support.atlassian.com/cloud-automation/docs/how-is-my-usage-calculated/) son:
+
+| Plan de Jira | Pasos de automatización al mes |
+| --- | --- |
+| Free | 150 por suscripción |
+| Standard | 400 por usuario |
+| Premium | 750 por usuario |
+| Enterprise | 1.000 por usuario |
+
+Los demás productos tienen sus propias cuotas, que se suman al mismo total de la organización. Las acciones de Rovo dentro de una regla consumen créditos de Rovo, no pasos. El precio de los pasos adicionales está en las páginas de precios de Atlassian; consúltalo allí en lugar de fiarte de una cifra citada en un blog.
+
+Dos consecuencias importan más que la tabla. La primera: Enterprise deja de ser ilimitado. La segunda: el tamaño de cada ejecución pasa a importar. Con el modelo de ejecuciones, una regla que editaba 200 elementos de trabajo en una rama contaba una vez, igual que una que editaba uno. Con el modelo de pasos, cada acción dentro de la rama cuenta por cada elemento, y reglas que eran baratas como una sola ejecución pueden convertirse en la línea más grande del contador.
+
+## ¿Dónde ver el uso de la automatización?
+
+En Jira, la automatización global tiene una pestaña Usage (abre Settings, después System y después la automatización global) que muestra el uso del mes hasta hoy, el límite de tu plan y la previsión a fin de mes. Necesitas el permiso global Administer Jira. Los indicadores de rendimiento de las reglas de automatización muestran qué reglas se ejecutan más, y por ahí debe empezar la limpieza.
+
+Para los nuevos contadores, Atlassian ha indicado que los administradores de la organización tendrán vistas de uso y controles de gasto en Atlassian Administration. Su [artículo sobre el uso adicional](https://support.atlassian.com/subscriptions-and-billing/docs/manage-extra-usage-for-a-meter/) explica cómo fijar un límite mensual o desactivar el uso adicional, y señala que los administradores reciben un aviso al llegar al 80% y al 100% de la cuota. Con el uso adicional desactivado, las funciones medidas pueden detenerse hasta el siguiente ciclo de facturación, así que decide qué comportamiento quieres antes de diciembre.
+
+## ¿Qué reglas agotan la cuota?
+
+Busca estos patrones, más o menos por orden de coste:
+
+- **Desencadenadores amplios.** El desencadenador de actualización de un elemento de trabajo se dispara con cada edición de cualquier campo. "Field value changed", configurado para el único campo que le importa a la regla, se dispara mucho menos.
+- **Ámbito global para un trabajo de un solo espacio.** Una regla global recibe eventos de todos los espacios. Limita su ámbito a los espacios que la necesitan.
+- **Condiciones tardías o caras.** Una regla que hace tres búsquedas antes de comprobar si el elemento es del tipo correcto paga esas búsquedas cada vez. Pon primero las comparaciones sencillas; una condición JQL cuesta más que comparar un campo.
+- **Reglas programadas demasiado frecuentes.** Una regla que se ejecuta cada hora sobre una búsqueda JQL que devuelve siempre los mismos elementos repite el mismo trabajo una y otra vez.
+- **Un mensaje por elemento de trabajo.** Diez notificaciones para diez elementos retrasados son diez conjuntos de acciones; un resumen es uno.
+- **Reglas que disparan reglas.** Una regla a la que se permite dispararse por las acciones de otra puede multiplicar las ejecuciones y, en el peor caso, acaba en la detección de bucles.
+- **Reglas huérfanas.** Las reglas cuyo dueño se fue, o que actúan sobre espacios que nadie usa, siguen ejecutándose.
+
+## ¿Cómo recortar el desperdicio de la automatización?
+
+1. **Empieza por los datos.** Abre la pestaña Usage y los indicadores de rendimiento, apunta las diez reglas que más se ejecutan y trabaja sobre esa lista. Casi todo el desperdicio suele estar en unas pocas reglas.
+2. **Acota el desencadenador.** Sustituye el desencadenador de actualización de un elemento por "Field value changed" siempre que a la regla solo le importe un campo.
+3. **Acota el ámbito.** Lleva las reglas globales a los espacios que las necesitan.
+4. **Reordena las condiciones.** Las más baratas y selectivas primero, para que la mayoría de las ejecuciones se detenga en la primera comprobación.
+5. **Haz que el JQL programado devuelva solo lo que hay que cambiar.** Excluye lo que la regla ya trató, por ejemplo con `AND labels != escalated`, y baja la frecuencia cuando una hora de retraso no importe. Las [consultas JQL para administradores](/es/blog/jira-jql-queries-for-administrators/) muestran el estilo: búsquedas que devuelven solo lo que necesita atención.
+6. **Agrupa las notificaciones.** Busca los elementos una vez y envía un único mensaje con la lista, en lugar de un mensaje por elemento.
+7. **Usa la edición masiva para arreglos puntuales.** Un cambio masivo que vas a hacer una sola vez corresponde a la edición masiva de Jira desde los resultados de búsqueda, no a una regla temporal. La edición masiva es una función nativa de Jira y deja la cuota de automatización para las reglas que se ejecutan a diario.
+8. **Dale un dueño a cada regla.** Escribe el dueño y el propósito en la descripción de la regla y desactiva las que nadie reclame.
+9. **Fija tu límite de uso adicional antes del 3 de diciembre**, para que la primera factura con el modelo de pasos sea una cifra que tú elegiste.
+
+## En resumen
+
+La automatización de Jira tiene un límite por plan: hoy en ejecuciones de regla correctas por producto y, desde el 3 de diciembre de 2026, en pasos sumados en toda la organización, donde las ramas y los bucles grandes cuestan más que antes. Revisa la pestaña Usage y los indicadores de rendimiento, acota desencadenadores y ámbitos, pon primero las condiciones baratas, haz que las búsquedas programadas devuelvan solo lo que hay que cambiar, agrupa las notificaciones y fija tu límite de uso adicional antes del cambio. Si quieres una segunda opinión sobre un conjunto grande de reglas antes de esa fecha, la revisión de reglas forma parte del trabajo de administración de Jira que hace el [equipo de Atlassian de Numeric Oasis](/es/atlassian/).

@@ -1,0 +1,85 @@
+---
+lang: pt-BR
+translationKey: confluence-cloud-permissions-explained
+title: "Permissões do Confluence explicadas: papéis, restrições de página, convidados e acesso anônimo"
+metaTitle: 'Permissões do Confluence Cloud explicadas'
+description: "O Confluence Cloud decide o acesso em camadas: acesso ao produto, permissões do site, papéis de espaço que estão substituindo a antiga grade de permissões, e restrições de página. Como cada camada funciona, o que convidados e visitantes anônimos alcançam e um procedimento curto para responder quem vê uma página e por quê."
+metaDescription: 'Permissões do Confluence explicadas: acesso ao produto, permissões do site, papéis de espaço, restrições de página, convidados, acesso anônimo e quem vê o quê.'
+pubDate: 2026-10-26
+tags: ["confluence-governance", "atlassian-cloud"]
+author: team
+heroImage: ../../../assets/blog/confluence-cloud-permissions-explained.jpg
+heroImageAlt: 'Ilustração em estilo flat: quatro molduras arredondadas encaixadas umas nas outras, do azul-marinho ao verde-azulado, ao pêssego e ao dourado, uma única página creme dentro da moldura dourada menor, uma pequena chave azul-marinho ao lado da moldura externa e uma suave onda verde-azulada na base.'
+---
+
+*O Confluence responde a "esta pessoa pode ver esta página?" em camadas. Entenda as camadas e a resposta deixa de ser um mistério.*
+
+As permissões do Confluence, explicadas numa frase: o Confluence Cloud verifica quatro camadas, de fora para dentro, e uma pessoa só vê uma página se todas a deixarem passar. As camadas são o acesso ao produto Confluence, concedido por grupos no Atlassian Administration; as permissões do site, como quem pode criar espaços; o acesso ao espaço, agora atribuído por papéis; e as restrições de página em cada conteúdo.
+
+A camada do espaço é a que mudou. A Atlassian está substituindo a antiga grade de permissões individuais de espaço por papéis: quatro padrões (Admin, Manager, Collaborator e Viewer) e papéis personalizados. Dependendo do site, você está num período de transição em que os dois modelos convivem, ou já no acesso baseado apenas em papéis, que é como os sites novos começam.
+
+## Como funcionam as permissões do Confluence?
+
+Pense em quatro portões em fila. O acesso ao produto decide se a pessoa pode usar o Confluence. As permissões do site decidem algumas capacidades que valem para o site inteiro. Os papéis de espaço decidem o que a pessoa pode fazer em cada espaço. As restrições de página estreitam o acesso a uma página e às filhas dela, mas nunca o ampliam além do que o espaço permite. Basta falhar em um portão para a página ficar invisível.
+
+Convidados, visitantes anônimos e links públicos são caminhos especiais por esses portões, tratados mais abaixo.
+
+## Permissões do site
+
+Na administração do Confluence, em Settings, depois Security, depois Permissions, a aba Site permissions reúne as poucas capacidades do site inteiro: ter um espaço pessoal, criar espaços e ver perfis de usuários ([artigo da Atlassian sobre permissões globais](https://support.atlassian.com/confluence-cloud/docs/manage-global-permissions/)). O acesso ao produto em si é concedido a grupos, e não a pessoas, e esses grupos são administrados no Atlassian Administration.
+
+Duas abas vizinhas importam numa auditoria: Anonymous access, tratada abaixo, e JSM access, que controla se os clientes do Jira Service Management podem usar o Confluence. A pergunta de auditoria no nível do site é curta: quais grupos podem criar espaços? Cada espaço novo traz novas decisões de acesso, então deixe a criação de espaços com grupos que vão tomar essas decisões com cuidado.
+
+## Papéis de espaço: o novo modelo de permissões
+
+Cada espaço concede acesso atribuindo papéis a pessoas, grupos, times ou classes de usuários, como todos os usuários do Confluence. Os papéis padrão, como a Atlassian [os descreve](https://support.atlassian.com/confluence-cloud/docs/what-are-confluences-roles/):
+
+| Papel | O que pode fazer |
+| --- | --- |
+| Admin (administrador) | Gerencia tudo no espaço |
+| Manager (gerente) | Gerencia pessoas e conteúdo, mas não as configurações |
+| Collaborator (colaborador) | Cria e edita conteúdo |
+| Viewer (leitor) | Visualiza e comenta o conteúdo |
+
+Um site pode definir até 10 papéis personalizados. Quem administra o acesso a um espaço só pode atribuir papéis cujas permissões também tenha, então um Manager não consegue distribuir poderes de administrador.
+
+Durante a transição, pessoas e grupos cuja antiga combinação de permissões não corresponde a um papel aparecem como **Custom access** (acesso personalizado). O Confluence não converte essas combinações em papéis por você. Os administradores usam a ferramenta "Transition to roles" para trocar cada combinação por um papel nos espaços escolhidos, com uma prévia de quem ganha ou perde o quê, como descreve o [guia de transição](https://support.atlassian.com/confluence-cloud/docs/custom-access-and-how-to-transition-to-roles/) da Atlassian. Quando a janela de transição termina, quem ainda estiver em acesso personalizado recebe um papel substituto, e o [FAQ de papéis](https://support.atlassian.com/confluence-cloud/docs/faq-role-based-access-in-confluence/) informa que os administradores do Confluence veem a data de transição do site em Roles central. Faça esse mapeamento você mesmo, com calma, antes dessa data.
+
+## Como funcionam as restrições de página?
+
+As restrições estreitam o acesso a uma página. Uma página é aberta, quando qualquer pessoa com acesso ao espaço pode editá-la ou apenas vê-la, ou restrita a pessoas específicas. Restrições de visualização são herdadas por todas as páginas aninhadas abaixo; restrições de edição, não. Uma restrição nunca concede mais do que o espaço permite, então quem não pode editar no espaço também não edita uma página aberta.
+
+Mais três pontos do [artigo da Atlassian sobre restrições](https://support.atlassian.com/confluence-cloud/docs/add-or-remove-page-restrictions/):
+
+- **Administradores do espaço podem mudar as restrições** das páginas do seu espaço, então uma restrição não é segredo para eles.
+- **Administradores da organização nos planos Premium e Enterprise** podem ver e mudar o acesso a qualquer conteúdo usando a admin key.
+- **O plano Free não permite restringir conteúdo.**
+
+As restrições de visualização herdadas também explicam por que mover ou arquivar uma página pai merece uma verificação. Como mostra o guia sobre [arquivar páginas no Confluence](/pt-BR/blog/confluence-archiving-stale-content/), páginas filhas que ficam para trás podem perder uma restrição da qual dependiam.
+
+## O que os convidados podem fazer no Confluence?
+
+Convidados são contas externas limitadas a um único espaço, atribuído por um administrador. Por padrão, veem tudo nesse espaço, exceto páginas restritas, e não conseguem ver o diretório de pessoas nem buscar usuários. Mas conseguem abrir qualquer espaço que permita acesso anônimo. Administradores de espaço não podem dar a convidados as permissões de administrar o espaço, exportar ou gerenciar restrições.
+
+Essa exceção é o ponto de auditoria: se algum espaço estiver aberto a usuários anônimos, todos os convidados também conseguem lê-lo. O [artigo da Atlassian sobre convidados](https://support.atlassian.com/confluence-cloud/docs/what-can-guests-see-and-do-on-confluence) traz a lista completa.
+
+## Como funciona o acesso anônimo no Confluence?
+
+São necessários dois interruptores. Um administrador do Confluence ativa o acesso anônimo para o site (Settings, depois Security, depois Anonymous access) e, em seguida, um espaço concede acesso aos usuários anônimos. Visitantes anônimos não afetam a contagem de licenças, e as páginas que eles podem ler podem aparecer no Google. Links públicos são um caminho à parte, que compartilha uma única página com quem tiver o link.
+
+Segundo o [artigo da Atlassian sobre acesso anônimo](https://support.atlassian.com/confluence-cloud/docs/set-up-public-access/), sites mais novos bloqueiam o acesso anônimo no nível do espaço se ele não estiver ativado no site, e alguns sites oferecem uma opção para impor esse controle do site, que desliga o acesso anônimo nos espaços em que estava ativo e não pode ser desfeita. Os links públicos, disponíveis nos planos pagos, têm controles próprios para o site, para cada espaço e para espaços novos, descritos no [artigo sobre links públicos](https://support.atlassian.com/confluence-cloud/docs/set-up-and-manage-public-links/). Os espaços os permitem por padrão. Se nada no seu site deve ser público, desligue o acesso anônimo e os links públicos no nível do site.
+
+## Quem pode ver esta página, e por quê?
+
+1. **Acesso ao produto.** A pessoa está num grupo com acesso ao Confluence no Atlassian Administration?
+2. **Convidado ou membro?** Um convidado alcança só o espaço atribuído, além de qualquer espaço aberto a usuários anônimos.
+3. **Papel no espaço.** Nas configurações do espaço, encontre o papel dela: atribuído diretamente, por um grupo ou time, ou por uma classe de usuários, como todos os usuários do Confluence.
+4. **Restrições.** Abra as restrições da página. Se ela estiver restrita por uma página pai, siga a cadeia para cima; uma restrição de visualização em qualquer nível acima vale para ela.
+5. **Caminhos públicos.** O espaço está aberto a usuários anônimos, ou a página tem um link público ativo?
+6. **Confirme.** No Premium, Inspect permissions, no diálogo de restrições, mostra para um usuário onde o acesso é permitido ou negado em cada nível ([artigo da Atlassian](https://support.atlassian.com/confluence-cloud/docs/inspect-a-users-permissions/)). Para ver o alcance de uma pessoa em todos os espaços, o recurso [User Access](https://confluence.atlassian.com/confkb/how-to-check-which-spaces-someone-has-access-to-with-the-user-access-feature-in-confluence-cloud-1608056874.html), na administração do Confluence, gera um relatório de permissões por espaço.
+
+A mesma abordagem em camadas funciona no Jira; a [auditoria de permissões do Jira](/pt-BR/blog/jira-cloud-permission-audit/) percorre as camadas equivalentes por lá.
+
+## Em resumo
+
+O Confluence verifica o acesso ao produto, depois as permissões do site, depois os papéis de espaço e, por fim, as restrições de página, e uma página só fica visível quando todas as camadas permitem. Os papéis estão substituindo a antiga grade de permissões, então leve o acesso personalizado para papéis com cuidado antes da data de transição do seu site. Restrições de visualização são herdadas e as de edição não; convidados ficam presos a um espaço, exceto nos espaços abertos a usuários anônimos; e o acesso anônimo e os links públicos pedem, cada um, uma decisão no nível do site. Para páginas que precisam de um rótulo de sensibilidade visível além das restrições, a [Expanded Macro Collection](/pt-BR/apps/expanded-macro-collection/), da Numeric Oasis, inclui um banner de classificação de página que acompanha as exportações para PDF e Word.

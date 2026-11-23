@@ -49,7 +49,7 @@ Apple and Steam sign-in come later, with the iOS and Steam builds.
 ## Your data
 
 Download everything the server keeps about your account, or delete it, in Options, Your Warden.
-What is kept and for how long is in [What the game stores](/documentation/kindelve/what-the-game-stores/)
+What is kept and for how long is in [What the game stores](/studio/wiki/kindelve/what-the-game-stores/)
 and, binding, in the [privacy policy](https://play.kindelve.com/privacy/).
 
 ## Fresh starts during testing

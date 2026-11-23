@@ -1,0 +1,80 @@
+---
+lang: es
+translationKey: jira-autumn-release-2026
+title: "Novedades de Jira en otoño de 2026: políticas de espacio, plantillas personalizadas en Standard y Premium y agentes en el tablero"
+metaTitle: 'Novedades de Jira: versión de otoño de 2026'
+description: "El 30 de octubre de 2026 Atlassian publicó la versión de otoño de Jira: políticas de espacio que mantienen los espacios gestionados por el equipo en los campos y estados globales, plantillas de espacio personalizadas en Standard y Premium, agentes con identidad propia en tableros y elementos de trabajo y tableros más rápidos en los espacios gestionados por la empresa. Qué supone cada cambio para quien administra Jira y qué hacer antes de que llegue a tu sitio."
+metaDescription: 'Novedades de Jira de otoño de 2026: políticas de espacio, plantillas en Standard y Premium, agentes en tableros. Qué debe configurar primero el admin.'
+pubDate: 2026-10-31
+tags: ["atlassian-news", "jira-administration", "rovo-and-ai"]
+author: team
+heroImage: ../../../assets/blog/jira-autumn-release-2026.jpg
+heroImageAlt: 'Ilustración plana: un tablero kanban azul marino con tres columnas redondeadas de tarjetas verde azulado y melocotón, una pequeña insignia hexagonal dorada sobre una tarjeta, una valla baja verde azulada en el borde del tablero y hojas otoñales melocotón cayendo sobre una ola verde azulada.'
+---
+
+*La versión de otoño de Jira va sobre todo de coherencia: límites para los espacios gestionados por el equipo, plantillas para más planes y agentes que se pueden ver.*
+
+La versión de otoño de 2026 de Jira, [anunciada por Atlassian el 30 de octubre](https://www.atlassian.com/blog/development/jira-autumn-release), agrupa cuatro tipos de cambio: tableros más rápidos en los espacios gestionados por la empresa, una vista renovada del elemento de trabajo, agentes que aparecen en tableros y elementos de trabajo con identidad propia y controles de coherencia para administradores. Atlassian dice que todo "is rolling out now and will be generally available across Jira Cloud by November 2026."
+
+Para quien administra Jira, dos novedades pesan más que el resto. Las políticas de espacio (Space policies) impiden que los espacios gestionados por el equipo creen sus propios campos y estados, y pueden ser la opción por defecto de cada espacio nuevo. Y las plantillas de espacio personalizadas, descritas hasta ahora como función de Enterprise, llegan a Standard y Premium según el anuncio.
+
+Las funciones de agentes también importan, pero sobre todo como algo que planificar: cuando los agentes aparecen en tableros y automatizaciones, alguien tiene que saber dónde están y qué pueden tocar.
+
+## ¿Qué incluye la versión de otoño de 2026 de Jira?
+
+La versión de otoño de 2026 de Jira añade políticas de espacio y estados globales para los espacios gestionados por el equipo, plantillas personalizadas en Standard y Premium, identidad para los agentes y un dashboard de uso de agentes, un nuevo diseño del elemento de trabajo con campos sugeridos al crear y tableros que, según Atlassian, cargan un 22% más rápido. Llega a los sitios de Jira Cloud en noviembre de 2026.
+
+Un mapa rápido de a quién le afecta cada cosa:
+
+| Cambio | A quién afecta sobre todo |
+|---|---|
+| Políticas de espacio, estados globales | Administradores de Jira que gobiernan espacios gestionados por el equipo |
+| Plantillas personalizadas en Standard y Premium | Administradores y responsables de equipo que estandarizan configuraciones |
+| Identidad de agentes, ajustes de agentes del espacio, dashboard de uso | Administradores de espacio, responsables de Rovo, revisores de seguridad |
+| Tableros más rápidos y vistas guardadas | Todo el que usa tableros |
+| Nuevo diseño del elemento de trabajo, campos sugeridos | Todo el que crea y edita elementos de trabajo |
+
+## ¿Qué son las políticas de espacio de Jira?
+
+Las políticas de espacio son límites para los espacios gestionados por el equipo. Un administrador de Jira elige una de tres políticas: solo campos globales, solo estados globales o ambos. Un espacio con una política puede usar los campos y estados que ya existen en el sitio, pero ni sus administradores ni las apps pueden crear campos o estados propios nuevos. Una política puede ser la predeterminada para todos los espacios nuevos.
+
+Detalles de la [documentación de políticas de espacio](https://support.atlassian.com/jira-cloud-administration/docs/set-up-a-space-policy/) de Atlassian y del [anuncio de la beta abierta](https://community.atlassian.com/forums/discussion/3285642/jira-space-policies-give-teams-autonomy-within-admin-guardrails) de septiembre:
+
+- Disponible en los planes Standard, Premium y Enterprise. Solo los administradores de Jira las crean y gestionan.
+- La ruta es la configuración global de espacios, luego **Spaces** y luego **Space policies**. Un interruptor marca la política como predeterminada para los espacios nuevos.
+- Aplicar una política a un espacio existente tiene efecto inmediato. Los campos y estados propios que ya existían siguen funcionando, y Jira los marca como conflictos para revisarlos con calma.
+- Si el espacio en el que se basa una plantilla personalizada tiene una política, los espacios creados con esa plantilla la heredan.
+- Cambiar la predeterminada solo afecta a los espacios futuros.
+
+En nuestra opinión, este es el cambio que más trabajo de administración ahorra a largo plazo, porque los campos duplicados y los estados casi idénticos en los espacios gestionados por el equipo son un motivo habitual de que los informes de Jira no cuadren entre equipos. La versión también lleva los estados globales a los espacios gestionados por el equipo, así que los equipos pueden elegir un "In Progress" común en lugar de inventarse el suyo. Si todavía estás decidiendo qué tipo de espacio encaja con cada equipo, consulta [espacios gestionados por el equipo o por la empresa](/es/blog/team-managed-vs-company-managed-spaces/).
+
+## ¿Qué planes tienen plantillas de espacio personalizadas?
+
+Según el anuncio del 30 de octubre, las plantillas personalizadas pasan a estar disponibles en Standard y Premium, no solo en Enterprise. Los administradores y responsables de equipo pueden convertir un espacio gestionado por el equipo ya configurado, con sus workflows, tipos de trabajo, vistas y agentes integrados, en una plantilla reutilizable para espacios nuevos.
+
+El anuncio de Atlassian de julio sobre mejoras en plantillas aún describía las plantillas personalizadas como función de Enterprise, y algunas páginas de soporte pueden ir por detrás del despliegue. Si estás en Standard o Premium y todavía no ves la opción, vuelve a comprobarlo cuando termine el despliegue de noviembre.
+
+## ¿Cómo aparecerán los agentes en los espacios de Jira?
+
+Con el Agentic Multiplayer Protocol (AMP) de Atlassian, presentado en Team '26 Europe, cada agente de Jira recibe identidad propia y aparece en el tablero, en la vista de lista y en el elemento de trabajo. Los administradores de espacio tienen una sección de agentes en los ajustes del espacio que muestra dónde se usan, por ejemplo en automatizaciones y workflows, y permite añadir conocimiento e instrucciones.
+
+Un nuevo dashboard de uso de agentes, en la pestaña **Reports** del espacio, relaciona la actividad de Rovo, de herramientas de código y de agentes de terceros con el cycle time y el throughput. Atlassian dice que viene "set up by default with no config". El anuncio no indica qué planes incluyen cada función de agentes, así que compruébalo antes de prometérselo a un equipo.
+
+## ¿Qué cambia en los tableros de los espacios gestionados por la empresa?
+
+Los tableros de los espacios de software gestionados por la empresa pasan a usar la misma base que los tableros gestionados por el equipo. Atlassian dice que cargan un 22% más rápido, muestran subtareas y epics, permiten que cada persona guarde sus propias vistas y dan más control sobre las columnas. El anuncio afirma que los workflows, los datos y los permisos se mantienen como están.
+
+La vista del elemento de trabajo también cambia: un diseño más limpio con campos clave personalizables, Rovo y dictado por voz para las actualizaciones y una pantalla de creación que sugiere campos según cómo trabaja el equipo. Las sugerencias solo se añaden después de que la persona las revisa y confirma.
+
+## Qué hacer ahora
+
+1. **Haz inventario de tus espacios gestionados por el equipo.** Cuenta los campos y estados propios para saber cuántos conflictos sacará a la luz una política.
+2. **Acuerda primero los estados globales.** Una política de estados globales solo ayuda si el conjunto común está claro.
+3. **Elige una política predeterminada para los espacios nuevos.** Empieza por los nuevos y luego aplica políticas a los existentes por tandas.
+4. **Decide quién puede crear plantillas** y revisa las plantillas que llevan agentes integrados.
+5. **Haz una lista de los agentes que ya trabajan en tus espacios** en cuanto aparezcan los ajustes de agentes, y comprueba qué puede hacer cada uno.
+6. **Avisa a quienes usan tableros de lo que viene**, para que un diseño nuevo no se notifique como un error.
+
+## En resumen
+
+La versión de otoño de 2026 de Jira da a los administradores límites reales para los espacios gestionados por el equipo, extiende las plantillas personalizadas a Standard y Premium y hace visibles a los agentes en tableros y elementos de trabajo. Define una política de espacio predeterminada antes de que los equipos creen más campos propios y revisa dónde funcionan ya los agentes. En cuanto a los campos, [el límite de 700 custom fields de Jira es por espacio](/es/blog/jira-700-custom-field-limit/) explica por qué los campos duplicados cuestan más de lo que parece.

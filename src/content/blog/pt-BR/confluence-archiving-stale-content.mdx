@@ -1,0 +1,81 @@
+---
+lang: pt-BR
+translationKey: confluence-archiving-stale-content
+title: "Arquivar páginas no Confluence: uma rotina trimestral para manter a busca útil"
+metaTitle: 'Arquivar páginas no Confluence: rotina trimestral'
+description: "No Confluence Cloud, arquivar tira as páginas da árvore e da busca rápida sem apagá-las, e arquivar um espaço o esconde do diretório. Como o arquivamento funciona hoje, como encontrar conteúdo desatualizado, uma revisão que coloca os donos das páginas no comando e uma rotina trimestral."
+metaDescription: 'Como arquivar páginas e espaços no Confluence Cloud, o que muda na busca e nos links, como achar conteúdo desatualizado e uma rotina trimestral de revisão.'
+pubDate: 2026-10-23
+tags: ["confluence-governance", "how-to"]
+author: team
+heroImage: ../../../assets/blog/confluence-archiving-stale-content.jpg
+heroImageAlt: 'Ilustração em estilo flat: uma estante alta azul-marinho com alguns livros verde-azulados em pé, vários livros cinza desbotados deslizando para dentro de uma caixa de arquivo laranja suave com uma placa dourada lisa na frente, e uma suave onda verde-azulada na base.'
+---
+
+*Páginas antigas não fazem mal a ninguém até alguém buscar, achar a versão de 2021 e segui-la.*
+
+Para arquivar páginas no Confluence Cloud, abra o menu More actions (Mais ações) da página e escolha Archive (Arquivar). A página sai da árvore de páginas e da busca rápida, mas mantém o conteúdo, os links e o histórico, e pode ser restaurada a qualquer momento. Espaços inteiros são arquivados do mesmo jeito, pelo menu do espaço, e saem do diretório de espaços.
+
+Arquivar é o padrão certo para conteúdo desatualizado porque dá para voltar atrás. A parte difícil não é o botão; é decidir o que está desatualizado e quem pode dizer isso. A seguir, como o arquivamento funciona hoje, como encontrar candidatos, uma revisão que coloca os donos das páginas no comando e uma rotina que cabe em poucas horas por trimestre.
+
+## O que acontece quando você arquiva uma página no Confluence?
+
+A página sai da árvore e vai para o arquivo do espaço. Ela deixa de aparecer na busca rápida e nas análises, embora a busca avançada possa incluir conteúdo arquivado. Os links para ela continuam funcionando e mostram um selo de arquivada. Edição, movimentação e comentários ficam desativados, e qualquer pessoa com a permissão de arquivar naquele espaço pode restaurá-la.
+
+Alguns detalhes do [artigo da Atlassian sobre arquivamento](https://support.atlassian.com/confluence-cloud/docs/archive-pages/) fazem diferença na prática:
+
+- **Cada espaço tem seu próprio arquivo**, em Space settings, depois Content, depois Archived. Não existe um arquivo do site inteiro.
+- **Arquivar uma página pai é tudo ou nada.** Você arquiva a página com todas as páginas aninhadas, ou nenhuma delas.
+- **As filhas que você não vê ficam para trás.** Páginas aninhadas que você não pode ver nem arquivar permanecem na árvore e sobem um nível. A Atlassian alerta que isso pode mudar restrições herdadas, e o conteúdo pode ficar visível para mais gente do que deveria. Verifique as árvores restritas antes de arquivar as páginas pai.
+- **O arquivamento em massa**, de até 500 itens por vez, faz parte do content manager (gerenciador de conteúdo) nos planos Premium e Enterprise.
+
+## O que acontece quando você arquiva um espaço?
+
+Um espaço arquivado some do diretório de espaços, da navegação rápida e dos fluxos de atividade. Ele não fica trancado: as páginas continuam acessíveis por link, as pessoas ainda podem editar conforme as permissões do espaço, quem acompanha continua recebendo notificações e um espaço público ainda pode aparecer em buscadores externos. Para congelar um espaço, mude também as permissões.
+
+Os passos, e o caminho para restaurar um espaço, estão no [artigo da Atlassian sobre arquivar espaços](https://support.atlassian.com/confluence-cloud/docs/archive-a-space/). O ponto prático é o de cima: arquivar um espaço muda a visibilidade, não as permissões. Para o espaço de um projeto encerrado, arquive e reduza os papéis a leitura. Para um espaço que ninguém mais deve ler, restrinja o acesso também.
+
+## Como encontrar conteúdo desatualizado no Confluence?
+
+Há três caminhos nativos. Nos planos Premium e Enterprise, o content manager filtra as páginas inativas de um espaço. Com automação, uma regra percorre páginas inativas e age sobre elas. E a busca, ordenada pela última modificação, ainda serve para uma olhada rápida. Inativa significa sem visualizações, edições, comentários ou outra atividade no período que você escolher.
+
+**O content manager** (Space settings, depois Content manager) lista o conteúdo de um espaço com filtros por última atividade (de mais de 7 dias a mais de 6 meses), dono (inclusive donos desativados), etiquetas, status, colaboradores e datas. O filtro de páginas inativas ignora páginas que têm filhas. A partir dos resultados, dá para arquivar até 500 itens de uma vez ou trocar donos em massa. Os detalhes estão no [artigo da Atlassian sobre o content manager](https://support.atlassian.com/confluence-cloud/docs/manage-your-content-tree).
+
+**A automação** tem a ramificação "For each inactive page", que executa condições ou ações em até 1.000 páginas sem atividade num período definido por você. Contam como atividade visualizações, edições, comentários, anexos e movimentações, e a atividade numa página filha conta para a página pai. Uma segunda ramificação trata páginas cujo dono é uma conta desativada, e a ação "Archive page" está lá quando você estiver pronto para agir ([ramificações da automação do Confluence](https://support.atlassian.com/cloud-automation/docs/branches-in-confluence-automation/)). As execuções de automação contam contra a cota do seu plano, que a [Atlassian passa a medir em etapas a partir de dezembro de 2026](/pt-BR/blog/jira-automation-usage-limits/).
+
+## Uma revisão conduzida pelos donos das páginas
+
+Quem é dono de uma página sabe se ela ainda importa. O trabalho do administrador é tornar essa decisão fácil e o padrão seguro.
+
+1. **Defina um prazo por tipo de espaço.** Doze meses sem atividade servem para a maioria dos espaços de times; políticas e material de referência podem pedir mais, atas de reunião, menos.
+2. **Monte a lista de candidatas.** Use o filtro do content manager ou uma regra de automação que adicione uma etiqueta como `archive-candidate` às páginas inativas e avise os donos.
+3. **Resolva a questão dos donos primeiro.** Páginas cujo dono é uma conta desativada não têm a quem perguntar. Passe-as para o dono do espaço ou para um líder de time antes de a revisão começar.
+4. **Peça aos donos uma de três respostas, com prazo:** manter (e atualizar a página), arquivar ou excluir.
+5. **Veja o que aponta para a página antes de arquivá-la.** Os links continuam funcionando, mas uma página para a qual um documento de processo ativo manda as pessoas deve ser substituída, e não só arquivada.
+6. **Arquive o que ninguém reivindicar** quando o prazo vencer, em massa se o seu plano permitir.
+7. **Exclua só o que claramente não tem valor:** rascunhos vazios, duplicatas e páginas de teste. Todo o resto vai para o arquivo, de onde pode voltar.
+
+## Arquivar, excluir ou manter uma página?
+
+Arquive por padrão, exclua raramente e mantenha só o que alguém ainda usa e assume. Páginas arquivadas podem ser restauradas e os links para elas continuam funcionando, então arquivar é a escolha de baixo risco sempre que houver dúvida. A exclusão serve para páginas sem valor nenhum. O único caso que pede verificação antes é uma página restrita dentro de uma árvore que você vai arquivar.
+
+| A página é | Faça isto |
+| --- | --- |
+| Atual e usada | Mantenha e confirme o dono |
+| Substituída, mas alguém pode precisar do histórico | Arquive |
+| De um projeto encerrado ou de uma decisão antiga | Arquive |
+| Um rascunho vazio, uma duplicata ou um teste | Exclua |
+| Restrita, dentro de uma árvore que você vai arquivar | Verifique as restrições antes |
+
+## Uma rotina trimestral para arquivar páginas no Confluence
+
+- **Semana 1:** levante as páginas inativas de cada espaço e as páginas com donos desativados, e reatribua esses donos.
+- **Semana 2:** os donos respondem manter, arquivar ou excluir.
+- **Semana 3:** arquive e exclua conforme o combinado, e marque com uma etiqueta o que foi mantido para que não volte a aparecer no próximo trimestre.
+- **Uma vez por trimestre:** liste os espaços sem atividade recente, arquive os que terminaram e reduza os papéis deles a leitura.
+
+A primeira rodada é a demorada. Depois dela, a rotina é basicamente ler listas curtas e mandar algumas mensagens.
+
+## Em resumo
+
+Arquive por padrão e exclua raramente. Páginas arquivadas saem da árvore e da busca rápida, mas mantêm links e histórico; espaços arquivados saem do diretório, mas continuam editáveis a menos que você mude também as permissões. Encontre candidatas com o content manager ou com uma automação de páginas inativas, resolva a questão dos donos, deixe que eles decidam dentro de um prazo e repita a cada trimestre. Se você quer a lista de páginas desatualizadas e uma verificação de "o que aponta para esta página" dentro das páginas que os administradores de espaço já visitam, a [Expanded Macro Collection](/pt-BR/apps/expanded-macro-collection/), da Numeric Oasis, acrescenta ao Confluence um relatório de conteúdo desatualizado e uma macro de backlinks.

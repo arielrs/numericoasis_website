@@ -1,0 +1,89 @@
+---
+lang: pt-BR
+translationKey: jira-sandboxes-and-release-tracks
+title: "Sandbox do Jira e release tracks: como testar mudanças antes que os usuários vejam"
+metaTitle: 'Sandbox do Jira e release tracks: como testar'
+description: "Um sandbox do Jira permite ensaiar suas próprias mudanças de configuração em uma cópia da produção; os release tracks definem quando as mudanças da Atlassian chegam aos usuários. Quais planos incluem cada um, como criar e atualizar um sandbox, quais dados são copiados e um processo de mudança que usa os dois."
+metaDescription: 'Sandbox do Jira e release tracks: planos que incluem, como criar e atualizar o sandbox, quais dados são copiados e um processo de mudança com os dois.'
+pubDate: 2026-11-20
+tags: ["atlassian-cloud", "jira-administration"]
+author: team
+heroImage: ../../../assets/blog/jira-sandboxes-and-release-tracks.jpg
+heroImageAlt: 'Ilustração em estilo flat: uma pequena caixa de areia verde-azulada com uma pá pêssego à esquerda e uma caixa azul-marinho maior com uma engrenagem dourada à direita, unidas por uma suave seta verde-azulada, sobre fundo creme quente com uma onda verde-azulada embaixo.'
+---
+
+*O Premium e o Enterprise dão dois controles separados: um lugar para ensaiar as suas mudanças e um calendário para as da Atlassian.*
+
+Um sandbox do Jira é uma cópia isolada do seu site de produção, onde você testa mudanças de configuração, apps e as próximas novidades da Atlassian antes que os usuários as vejam. Ele vem com o Premium (um sandbox gratuito por app) e o Enterprise (até cinco por app). Os release tracks definem quando as mudanças da própria Atlassian chegam à produção. Use os dois juntos: produção no track Bundled, sandbox no Preview, e toda mudança de configuração ensaiada antes no sandbox.
+
+Um não substitui o outro. O sandbox protege os usuários das suas mudanças; os release tracks os protegem das mudanças da Atlassian. O que segue reflete os dois recursos como estavam em novembro de 2026.
+
+## O que é um sandbox do Jira e quais planos incluem?
+
+Um sandbox é um ambiente isolado que espelha a produção, então o que você muda nele não afeta o site em uso. Sandboxes existem apenas nos planos Premium e Enterprise, para Jira, Jira Service Management, Jira Product Discovery e Confluence. O Premium inclui um sandbox gratuito por app; o Enterprise inclui até cinco por app.
+
+Os sandboxes do Enterprise podem ser atribuídos a qualquer um dos seus sites de produção e remanejados depois. Sandboxes extras podem ser comprados como complementos para apps em assinatura anual ([cobrança de sandboxes](https://support.atlassian.com/organization-administration/docs/sandbox-limits/)). Algumas regras valem a pena conhecer antes de começar:
+
+- **Não é produção.** Sandboxes não estão cobertos pelos SLAs da Atlassian, e a Atlassian recomenda não guardar ali a única cópia de nenhum dado ([o que é um sandbox](https://support.atlassian.com/organization-administration/docs/what-are-sandboxes)).
+- **O acesso começa fechado.** Quando um sandbox é criado, só os administradores da organização entram; você mesmo libera o acesso para quem vai testar. Sandboxes têm os mesmos limites de usuários do site de produção vinculado.
+- **Apps do Marketplace.** Um app com assinatura paga em produção pode ser adicionado sem custo a até cinco sandboxes vinculados àquele site. Um app que você só testa no sandbox passa a ser cobrado pelos usuários do sandbox quando o período de teste termina.
+- **Deixe o Atlassian Guard de fora.** A Atlassian recomenda não adicionar o Guard a um sandbox.
+
+## Como criar um sandbox do Jira?
+
+Você cria um sandbox no Atlassian Administration, em Apps e depois Sandboxes, com o papel de administrador da organização (ou de administrador de unidade, onde houver unidades). Escolha o site de produção, dê um nome ao site do sandbox, selecione os apps e aguarde. A criação pode levar até 30 minutos, e você recebe um e-mail quando terminar.
+
+Os [passos](https://support.atlassian.com/organization-administration/docs/create-a-sandbox):
+
+1. No Atlassian Administration, selecione sua organização.
+2. Selecione **Apps** e depois **Sandboxes**.
+3. Selecione **Create sandbox**, escolha o site de produção de origem e digite um nome para o novo site do sandbox (dev, test ou uat funcionam bem).
+4. Escolha os apps a replicar, dentro da sua cota de sandboxes.
+5. Aguarde o e-mail e o aviso na página Sandboxes.
+
+Para adicionar o Jira a um site de sandbox que você já tem, localize-o na tabela de Sandboxes e selecione **Add**. Copiar os dados de produção é um passo separado.
+
+## Quais dados são copiados para um sandbox do Jira?
+
+Você escolhe entre todos os projetos ou projetos específicos (as telas do Jira ainda dizem projetos, o nome antigo dos espaços), com ou sem anexos. Uma cópia completa traz usuários e grupos, projetos arquivados e na lixeira, anexos e regras de automação desativadas. Apps do Marketplace e seus dados não são copiados. Webhooks e tokens OAuth nunca são copiados, e os sandboxes desativam as notificações por e-mail.
+
+A cópia de projetos específicos é mais rápida, mas traz menos. Segundo a [lista de dados copiados](https://support.atlassian.com/organization-administration/docs/what-data-is-copied-to-sandboxes) da Atlassian, ela deixa de fora regras de automação, dashboards, permissões globais e a configuração geral, e coloca os projetos copiados no esquema de notificação padrão. No Jira Service Management, os agentes chegam inativos, os clientes só do portal chegam inativos até você habilitar o e-mail de saída e reenviar os convites, e a autenticação do canal de e-mail precisa ser refeita.
+
+Reserve tempo. Uma cópia pode levar [até 14 dias](https://support.atlassian.com/organization-administration/docs/what-happens-when-you-copy-data/), conforme o volume de dados, e deixar os anexos de fora acelera. A Atlassian avisa por e-mail quando a cópia termina. Copiar todos os dados de produção para um sandbox da família Jira também atualiza os outros sandboxes da família Jira já configurados.
+
+## Como atualizar um sandbox com dados de produção?
+
+Atualizar é a mesma ação da primeira cópia: no Atlassian Administration, vá em Apps, depois Sandboxes, abra o menu de mais ações do sandbox e selecione **Copy production data**. Toda cópia sobrescreve os dados que estão no sandbox, então o que você montou ali e não anotou se perde.
+
+Três hábitos tornam as atualizações tranquilas:
+
+1. **Atualize antes de um ciclo de testes, nunca durante.** Uma atualização no meio do teste apaga o trabalho em andamento.
+2. **Prefira a cópia completa quando IDs importam.** A Atlassian avisa que os identificadores só coincidem com a produção depois de uma cópia completa, o que pesa para scripts, filtros e automações que citam IDs.
+3. **Reative só o que for testar.** As automações chegam desativadas; ligue apenas as regras em teste, para que o sandbox não mande surpresas às integrações.
+
+## O que os release tracks controlam?
+
+Os release tracks definem quando as mudanças da Atlassian chegam a um site. O Continuous, padrão, entrega as mudanças assim que ficam prontas. O Bundled agrupa a maior parte delas em uma liberação mensal, que começa às 22:00 UTC da segunda terça-feira do mês. O Preview, só para sandboxes, entrega cada pacote cerca de um mês antes da produção. Release tracks exigem Premium ou Enterprise.
+
+Eles valem para Jira, Jira Service Management, Jira Product Discovery e Confluence, e também para Rovo, Goals e Projects nesses sites. Algumas mudanças ignoram o pacote e chegam na hora: correções de bugs, atualizações de segurança e de desempenho, recursos do Jira Service Management baseados no Opsgenie e liberações longas, como a retirada de um recurso ([o que os release tracks controlam](https://support.atlassian.com/organization-administration/docs/what-are-release-tracks/)).
+
+As mudanças do Jira agora seguem ciclos de lançamentos sazonais, então um pacote do Jira fora desses ciclos pode trazer muito pouco.
+
+Para trocar, vá ao Atlassian Administration, depois **Apps**, **Release management**, **Release tracks**, localize o app, selecione **Change track** e confirme. A Atlassian [recomenda](https://support.atlassian.com/organization-administration/docs/test-upcoming-changes-in-a-sandbox/) Bundled para a produção e Preview para o sandbox; um sandbox deixado no Continuous não consegue mostrar as mudanças antes. Para ver o que vem por aí, use **App updates** em Release management. No track Bundled, os administradores da organização também recebem um e-mail mensal com as próximas mudanças e suas datas.
+
+## Um processo de mudança que usa os dois
+
+1. **Defina os tracks.** Produção no Bundled, sandbox no Preview.
+2. **Mantenha um registro de mudanças.** Uma linha por mudança: o quê, por quê, quem, quando e como desfazer.
+3. **Monte toda mudança de configuração primeiro no sandbox.** Workflows, esquemas, campos, automação e novos apps. A consolidação de status é uma boa primeira candidata; veja [como simplificar workflows no Jira](/pt-BR/blog/simplifying-jira-workflows/).
+4. **Teste com dados reais.** Confira quadros, filtros, dashboards, as regras reativadas e, nos espaços de serviço, o portal e os tipos de solicitação.
+5. **Aplique na produção** em uma janela tranquila, seguindo os passos registrados, e avise os times afetados.
+6. **Faça a checagem mensal do preview.** Quando um pacote chegar ao sandbox, leia o App updates, teste as áreas afetadas e informe os usuários. Você tem cerca de um mês antes de a produção recebê-lo.
+7. **Atualize em calendário fixo.** Trimestralmente, e logo antes de qualquer ciclo grande de testes.
+8. **Feche o ciclo.** Compare o registro de mudanças com o log de auditoria da produção e investigue o que mudou sem registro.
+
+Se você ainda está decidindo se o Premium vale a pena só por esses controles, [Jira Standard ou Premium](/pt-BR/blog/atlassian-cloud-editions-compared/) mostra o que mais vem com ele.
+
+## Em resumo
+
+Um sandbox do Jira, no Premium ou no Enterprise, é onde as suas mudanças são ensaiadas em uma cópia da produção; os release tracks decidem quando chegam as mudanças da Atlassian. Coloque a produção no Bundled e o sandbox no Preview, atualize os dados do sandbox antes de cada ciclo de testes, lembre que a automação chega desativada e que os dados de apps do Marketplace não são copiados, e passe toda mudança de configuração pelo sandbox com um registro por escrito. Para comparar esse registro com o que de fato mudou em cada espaço, o [Configuration Monitor](/pt-BR/apps/configuration-monitor/) registra as mudanças de configuração dos espaços do Jira com os valores de antes e depois.

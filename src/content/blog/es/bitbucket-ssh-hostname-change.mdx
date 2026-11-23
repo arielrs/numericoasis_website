@@ -1,0 +1,96 @@
+---
+lang: es
+translationKey: bitbucket-ssh-hostname-change
+title: "Cambio de SSH en Bitbucket: pasa a ssh.bitbucket.org antes de que se retire el SSH de bitbucket.org el 10 de diciembre"
+metaTitle: 'SSH de Bitbucket: cámbiate a ssh.bitbucket.org'
+description: "Bitbucket Cloud traslada Git por SSH de bitbucket.org a ssh.bitbucket.org. La actualización de Atlassian del 21 de octubre de 2026 convirtió el plazo original del 12 de noviembre en un periodo de transición con cortes programados que empieza hoy y termina con la retirada definitiva el 10 de diciembre de 2026. El calendario, los comandos exactos y dónde se esconden las URL SSH antiguas."
+metaDescription: 'El SSH de Bitbucket Cloud pasa a ssh.bitbucket.org. Cortes del 12 de noviembre al 9 de diciembre de 2026 y retirada el 10 de diciembre. Comandos y pasos.'
+pubDate: 2026-11-12
+tags: ["atlassian-news", "atlassian-cloud"]
+author: team
+heroImage: ../../../assets/blog/bitbucket-ssh-hostname-change.jpg
+heroImageAlt: 'Ilustración plana: dos puertas redondeadas azul marino una junto a otra, la izquierda cerrada por una barrera naranja, la derecha con una llave verde azulado flotando delante y un poste dorado sin letras que señala a la derecha, sobre una ola verde azulada.'
+---
+
+*Los cortes programados empiezan hoy. Todo lo que todavía clona, descarga o sube por SSH a bitbucket.org fallará en ventanas cortas y programadas, y después de forma definitiva el 10 de diciembre.*
+
+El cambio de SSH en Bitbucket traslada todo Git por SSH de `bitbucket.org` a un nuevo nombre de host, `ssh.bitbucket.org`. Atlassian [lo anunció](https://community.atlassian.com/forums/Bitbucket-articles/Upcoming-change-to-Bitbucket-Cloud-SSH-access-move-from/ba-p/3234032) con fecha límite el 12 de noviembre de 2026. Su actualización del 21 de octubre convirtió esa fecha en el inicio de un periodo de transición: del 12 de noviembre al 9 de diciembre, el SSH hacia bitbucket.org se bloquea durante ventanas de corte programadas (brownouts), y el 10 de diciembre de 2026 se retira.
+
+HTTPS no se ve afectado. Los remotes como `https://bitbucket.org/workspace/repo.git`, la web y la API siguen funcionando en bitbucket.org. Tus claves SSH, las deploy keys y las claves de host son las mismas; solo cambia el nombre de host.
+
+Si tus desarrolladores, servidores de build o pipelines usan URL que empiezan por `git@bitbucket.org:`, cada uno necesita un cambio de una línea antes del 10 de diciembre.
+
+## ¿Qué cambia en el SSH de Bitbucket?
+
+Bitbucket Cloud separa el tráfico SSH del HTTPS. Tras el cambio, bitbucket.org solo sirve HTTPS (web y API), y cualquier operación Git por SSH, incluidos clone, fetch, pull y push, debe usar ssh.bitbucket.org. Atlassian explica que la separación mejora su postura de seguridad y protege a los clientes frente a abusos de denegación de servicio.
+
+En la práctica, el cambio queda así:
+
+```text
+Antes:    git@bitbucket.org:<workspace>/<repo>.git
+Después:  git@ssh.bitbucket.org:<workspace>/<repo>.git
+```
+
+Lo mismo vale para la forma larga `ssh://git@bitbucket.org/...`. Atlassian indica que el nuevo nombre de host usa las mismas claves de host SSH que antes y las publica en el anuncio y en [bitbucket.org/site/ssh](https://bitbucket.org/site/ssh), donde ssh.bitbucket.org aparece junto a bitbucket.org.
+
+## ¿Cuándo son los cortes del SSH de bitbucket.org?
+
+Los cortes se producen en días laborables del 12 de noviembre al 9 de diciembre de 2026, en cuatro ventanas diarias que empiezan a las 00:00, 06:00, 12:00 y 18:00 UTC. Las ventanas pasan de 15 minutos a 3 horas. Se excluyen los fines de semana y del 25 al 27 de noviembre. Durante una ventana, el SSH hacia bitbucket.org se bloquea con un error claro. El 10 de diciembre la retirada es definitiva.
+
+| Fechas (2026) | Duración de cada ventana |
+|---|---|
+| 12 y 13 de noviembre | 15 minutos |
+| 16 al 20 de noviembre | 30 minutos |
+| 23 y 24 de noviembre | 1 hora |
+| 30 de noviembre al 2 de diciembre | 2 horas |
+| 3 y 4 de diciembre, 7 al 9 de diciembre | 3 horas |
+| 10 de diciembre | Retirada definitiva |
+
+Un pipeline que falla a las 06:05 UTC y pasa cuando alguien lo relanza a las 06:30 es el síntoma clásico. Mira la hora antes de depurar cualquier otra cosa.
+
+## ¿Cómo se cambia un repositorio a ssh.bitbucket.org?
+
+Cambia la URL del remote en cada clon con `git remote set-url` y, en la primera conexión, acepta la clave de host del nuevo nombre después de comprobar su huella con los valores que publica Atlassian. Tu clave y la ruta del repositorio no cambian. Los clones por HTTPS no necesitan nada.
+
+Los comandos del anuncio de Atlassian:
+
+```bash
+# Comprueba qué remotes siguen apuntando a bitbucket.org
+git remote -v
+
+# Apunta el remote al nuevo nombre de host SSH
+git remote set-url origin git@ssh.bitbucket.org:<workspace>/<repo>.git
+
+# En entornos automatizados: precarga known_hosts con el nuevo nombre
+curl -s https://bitbucket.org/site/ssh | sed 's/bitbucket.org/ssh.bitbucket.org/' >> ~/.ssh/known_hosts
+```
+
+Las huellas SHA256 que publica Atlassian para las claves de host compartidas son `FC73VB6C4OQLSCrjEayhMp9UMxS97caD/Yyi2bhW/J0` (ECDSA), `ybgmFkzwOSotHTHLJgHO0QN8L0xErw6vd0VhFA9m3SM` (ED25519) y `46OSHA1Rmj8E8ERTC6xkNcmGOw9oFxYr0WF6zWW8l1E` (RSA).
+
+Hay una trampa que no aparece en el anuncio, pero que se deriva de cómo funciona OpenSSH: un bloque `Host bitbucket.org` en `~/.ssh/config` solo se aplica cuando te conectas a ese nombre exacto. Si define un `IdentityFile`, las conexiones a ssh.bitbucket.org no usarán esa clave y fallarán con "Permission denied (publickey)". Añade el nuevo nombre a la línea `Host` o crea un bloque equivalente, y pruébalo con `ssh -T git@ssh.bitbucket.org`.
+
+## ¿Y los pipelines de CI/CD, los servidores y los firewalls?
+
+Atlassian enumera todo lo que ejecuta Git por SSH: pipelines de CI/CD, scripts de despliegue, servidores de build, tareas de réplica y sincronización y herramientas internas. Busca en la configuración `git@bitbucket.org:` y `ssh://git@bitbucket.org` y cambia el host. Si el SSH saliente está restringido, permite ssh.bitbucket.org en el puerto 22.
+
+Dónde mirar:
+
+- **Definiciones de pipelines y scripts** que clonan un segundo repositorio, suben etiquetas o actualizan submódulos.
+- **URL de submódulos** en `.gitmodules`, que están versionadas en el repositorio y se pasan por alto con facilidad.
+- **Agentes de build y servidores de despliegue**, incluido el directorio home de cada usuario que ejecuta Git y cualquier tarea de cron.
+- **Réplicas** que suben desde otro sistema a Bitbucket Cloud.
+- **Reglas de firewall y proxy** escritas para bitbucket.org en el puerto 22. Si tu red bloquea el puerto 22 por completo, la [guía de Atlassian para el puerto 22](https://support.atlassian.com/bitbucket-cloud/kb/port-22-is-blocked-on-local-network/) explica la alternativa.
+
+## Qué hacer ahora
+
+1. **Busca en todos los repositorios y pipelines** `git@bitbucket.org:` y `ssh://git@bitbucket.org`, incluido `.gitmodules`.
+2. **Actualiza primero los agentes de build y los servidores**, porque fallan en silencio a las 3 de la madrugada, mientras que las personas solo fallan de día.
+3. **Precarga `known_hosts`** en las máquinas automatizadas con el comando anterior, después de comprobar las huellas.
+4. **Corrige los bloques de `~/.ssh/config`** que solo reconocen bitbucket.org.
+5. **Permite ssh.bitbucket.org en el puerto 22** en las reglas de firewall de salida.
+6. **Avisa a los desarrolladores** con una instrucción de una línea: ejecuta `git remote -v` y, si sale `git@bitbucket.org`, ejecuta `git remote set-url`.
+7. **Vigila las ventanas de corte** en los logs de build y trata cada fallo como una dependencia encontrada, no como un job inestable.
+
+## En resumen
+
+Bitbucket Cloud ya solo sirve SSH en ssh.bitbucket.org. Los cortes en el nombre antiguo van desde hoy, 12 de noviembre, hasta el 9 de diciembre, y el SSH de bitbucket.org se retira el 10 de diciembre de 2026. Cambia el host en cada remote SSH, pipeline y servidor, conserva las mismas claves y revisa los archivos de configuración SSH que reconocen el nombre antiguo. Los nombres de host fijados en el código están entre lo que más se rompe en silencio cuando cambia una plataforma; [integraciones que sobreviven al próximo cambio de API](/es/blog/integrations-that-survive-api-changes/) explica cómo tenerlos en un solo sitio.

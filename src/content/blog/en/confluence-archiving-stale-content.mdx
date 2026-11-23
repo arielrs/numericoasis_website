@@ -1,0 +1,81 @@
+---
+lang: en
+translationKey: confluence-archiving-stale-content
+title: "Archive Confluence pages and spaces: a quarterly routine that keeps search useful"
+metaTitle: 'Archive Confluence pages: a quarterly routine'
+description: "Archiving in Confluence Cloud takes pages out of the page tree and quick search without deleting them, and archiving a space hides it from the directory. How archiving works today, how to find stale content, a review that puts page owners in charge, and a quarterly routine."
+metaDescription: 'How to archive Confluence pages and spaces in Cloud, what archiving does to search and links, how to find stale content, and a quarterly review routine.'
+pubDate: 2026-10-23
+tags: ["confluence-governance", "how-to"]
+author: team
+heroImage: ../../../assets/blog/confluence-archiving-stale-content.jpg
+heroImageAlt: 'Flat illustration: a tall navy bookshelf with a few bright teal books standing upright, several faded grey books sliding into a soft orange archive box with a plain gold plate on its front, and a gentle teal wave along the bottom.'
+---
+
+*Old pages do no harm until someone searches, finds the 2021 version and follows it.*
+
+To archive Confluence pages in Cloud, open the page's More actions menu and choose Archive. The page leaves the page tree and quick search, keeps its content, links and history, and can be restored at any time. Whole spaces archive the same way from the space's menu, and drop out of the space directory.
+
+Archiving is the right default for stale content because it is reversible. The hard part is not the button; it is deciding what is stale and who gets to say so. Here is how archiving works today, how to find candidates, a review that puts page owners in charge, and a routine that fits into a few hours a quarter.
+
+## What happens when you archive a Confluence page?
+
+The page moves out of the page tree into the space's archive. It no longer appears in quick search or analytics, though advanced search can include archived content. Links to it keep working and show an Archived label. Editing, moving and commenting are disabled, and anyone with the archive permission in that space can restore it.
+
+A few details from Atlassian's [archiving article](https://support.atlassian.com/confluence-cloud/docs/archive-pages/) matter in practice:
+
+- **Each space has its own archive**, under Space settings, then Content, then Archived. There is no site-wide archive.
+- **Archiving a parent is all or nothing.** You archive a page with all of its nested pages, or none of them.
+- **Children you can't see stay behind.** Nested pages you can't view or archive stay in the tree and move up a level. Atlassian warns that this can change inherited restrictions, so content may become visible more widely than intended. Check restricted trees before archiving their parents.
+- **Bulk archiving**, up to 500 items at a time, is part of the content manager on Premium and Enterprise.
+
+## What happens when you archive a space?
+
+An archived space disappears from the space directory, quick navigation and activity streams. It is not locked: its pages stay reachable by link, people can still edit according to space permissions, watches and notifications keep working, and a public space can still appear in external search engines. To freeze a space, change its permissions as well.
+
+The steps, and the path to restore a space, are in Atlassian's [space archiving article](https://support.atlassian.com/confluence-cloud/docs/archive-a-space/). The practical point is the one above: archiving a space changes its visibility, not its permissions. For a finished project space, archive it and reduce its roles to viewing. For a space nobody should read any more, restrict access too.
+
+## How do you find stale Confluence content?
+
+There are three native ways. On Premium and Enterprise, the content manager filters a space for inactive pages. With automation, a rule can loop over inactive pages and act on them. And search, sorted by last modified, still works for a quick look. Inactive means no views, edits, comments or other activity in the period you choose.
+
+**The content manager** (Space settings, then Content manager) lists a space's content with filters for last activity (from over 7 days to over 6 months), owner (including deactivated owners), labels, status, contributors and dates. The inactive pages filter skips pages that have children. From the results you can archive up to 500 items at once or change owners in bulk. Details are in Atlassian's [content manager article](https://support.atlassian.com/confluence-cloud/docs/manage-your-content-tree).
+
+**Automation** offers a "For each inactive page" branch that runs conditions or actions on up to 1,000 pages with no activity in a period you set. Activity includes views, edits, comments, attachments and moves, and activity on a child page counts for its parent. A second branch covers pages owned by deactivated accounts, and an "Archive page" action is there when you are ready to act ([Confluence automation branches](https://support.atlassian.com/cloud-automation/docs/branches-in-confluence-automation/)). Automation runs count against your plan's allowance, which [Atlassian meters in steps from December 2026](/blog/jira-automation-usage-limits/).
+
+## An owner-driven review
+
+Whoever owns a page knows whether it still matters. The admin's job is to make that decision easy and the default safe.
+
+1. **Set a threshold per kind of space.** Twelve months without activity suits most team spaces; policies and reference material may warrant longer, meeting notes shorter.
+2. **Build the candidate list.** Use the content manager filter, or an automation rule that adds a label such as `archive-candidate` to inactive pages and notifies their owners.
+3. **Fix ownership first.** Pages owned by deactivated accounts have nobody to ask. Reassign them to the space owner or a team lead before the review starts.
+4. **Ask owners for one of three answers, with a deadline:** keep (and update the page), archive, or delete.
+5. **Check what points at a page before archiving it.** Links keep working, but a page that a live process document sends people to should be replaced, not just archived.
+6. **Archive what nobody claims** once the deadline passes, in bulk where your plan allows it.
+7. **Delete only what is clearly worthless:** empty drafts, duplicates and test pages. Everything else goes to the archive, where it can come back.
+
+## Should you archive, delete or keep a page?
+
+Archive by default, delete rarely, and keep only what someone still uses and owns. Archived pages stay restorable and their links keep working, so archiving is the low-risk choice whenever there is doubt. Deletion suits pages with no value at all. The one case that needs a check first is a restricted page inside a tree you are archiving.
+
+| The page is | Do this |
+| --- | --- |
+| Current and used | Keep, and confirm its owner |
+| Superseded, but someone may need the history | Archive |
+| From a finished project or an old decision | Archive |
+| An empty draft, a duplicate or a test | Delete |
+| Restricted, inside a tree you are archiving | Check its restrictions first |
+
+## A quarterly routine for archiving Confluence pages
+
+- **Week 1:** pull inactive pages per space, plus pages with deactivated owners, and reassign those owners.
+- **Week 2:** owners answer keep, archive or delete.
+- **Week 3:** archive and delete as agreed, and label what was kept so it is not flagged again next quarter.
+- **Once a quarter:** list spaces with no recent activity, archive the finished ones and reduce their roles to viewing.
+
+The first pass is the slow one. After that, the routine is mostly reading short lists and sending a few messages.
+
+## The short version
+
+Archive by default and delete rarely. Archived pages leave the page tree and quick search but keep their links and history; archived spaces leave the directory but stay editable unless you change their permissions too. Find candidates with the content manager or an inactive-page automation, fix ownership, let owners decide by a deadline, and repeat every quarter. If you want the stale list and a "what links here" check inside the pages your space admins already visit, Numeric Oasis's [Expanded Macro Collection](/apps/expanded-macro-collection/) adds a stale content report and a backlinks macro to Confluence.

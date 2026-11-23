@@ -1,0 +1,82 @@
+---
+lang: pt-BR
+translationKey: jsm-knowledge-base-with-confluence
+title: "Base de conhecimento no Jira Service Management: como montar no Confluence para reduzir chamados"
+metaTitle: 'Base de conhecimento no Jira Service Management'
+description: "Uma base de conhecimento no Jira Service Management reduz chamados quando os artigos usam as palavras do cliente, o cliente consegue abri-los e o portal os sugere enquanto a solicitação é digitada. Como vincular o espaço do Confluence, definir permissões, escrever artigos, medir a deflexão e manter o conteúdo atualizado."
+metaDescription: 'Base de conhecimento no Jira Service Management com Confluence: vínculo, permissões, templates, sugestões no portal e relatórios de deflexão.'
+pubDate: 2026-11-13
+tags: ["jira-service-management", "confluence-governance", "how-to"]
+author: team
+heroImage: ../../../assets/blog/jsm-knowledge-base-with-confluence.jpg
+heroImageAlt: 'Ilustração em estilo flat: um livro aberto azul-marinho com páginas verde-azuladas diante de um balcão de atendimento arredondado, uma pequena lâmpada dourada acima do livro e um avião de papel pêssego voltando do balcão, sobre fundo creme quente com uma onda verde-azulada embaixo.'
+---
+
+*Uma base de conhecimento só poupa tempo dos agentes se o cliente encontrar o artigo certo antes de clicar em Criar.*
+
+Uma base de conhecimento no Jira Service Management reduz chamados quando três coisas se alinham: os artigos respondem a dúvidas reais com as palavras que o cliente digita, o cliente tem permissão para abri-los sem atrito, e o portal os sugere no momento em que alguém começa uma solicitação. Vincular um espaço do Confluence leva minutos. A deflexão vem da escrita, das permissões e da medição.
+
+Este guia cobre cada parte no Jira Service Management Cloud como funciona em novembro de 2026, quando os projetos de serviço passaram a se chamar espaços de serviço e o produto é vendido como parte da Service Collection da Atlassian.
+
+## Como configurar uma base de conhecimento no Jira Service Management?
+
+Abra seu espaço de serviço, selecione Knowledge base na barra lateral e depois Set up knowledge base. Escolha uma fonte e selecione ou crie um espaço do Confluence. É preciso ter pelo menos o plano Free do Confluence no mesmo site, e a configuração pode ativá-lo para você. Google Drive e Microsoft SharePoint também aparecem como fontes, e existe a opção Set up with Rovo.
+
+Para vincular um espaço que você já tem, vá em Space settings, Knowledge base e depois Link spaces ([passos da Atlassian](https://support.atlassian.com/jira-service-management-cloud/docs/link-spaces-from-confluence-to-your-team-managed-project/)). Há três restrições: você precisa da permissão View no espaço, o site do Confluence deve ter o mesmo domínio do site do Jira Service Management, e um espaço de serviço vincula espaços de apenas um site do Confluence por vez.
+
+Decida logo entre os dois tipos de base. A base externa é para clientes e aparece na central de ajuda, no portal e no agente de serviço virtual. A interna guarda runbooks e procedimentos só para os agentes, e quem a lê precisa de licença do Confluence ([a diferença](https://support.atlassian.com/jira-service-management-cloud/docs/the-difference-between-internal-and-external-knowledge-bases/)). Mantenha as duas em espaços separados, para que um runbook nunca chegue a um cliente.
+
+## Quem pode ver os artigos da base de conhecimento?
+
+Para cada espaço vinculado, você escolhe quem pode ver os artigos: Anyone, All logged-in users ou Only Confluence users. All logged-in users é a escolha habitual para artigos de clientes: quem entra na sua central de ajuda consegue lê-los ali. Anyone torna os artigos públicos e indexáveis por buscadores, e exige um plano pago do Confluence.
+
+Essa configuração fica em Space settings, Channels & self service, Knowledge base, na aba External ([guia da Atlassian](https://support.atlassian.com/jira-service-management-cloud/docs/manage-knowledge-base-permissions-from-your-service-project/)). A mesma aba define quem pode editar: Service space users permite que os agentes escrevam artigos a partir do Jira Service Management, e Only Confluence users limita a edição a usuários com licença do Confluence. Controles mais finos, como restrições de página, ficam no próprio Confluence; o post [permissões do Confluence Cloud explicadas](/pt-BR/blog/confluence-cloud-permissions-explained/) mostra como essas camadas se combinam.
+
+Uma armadilha: os rótulos (labels) ajudam o portal a escolher artigos, mas não restringem o acesso. Se um artigo não pode chegar ao cliente, o lugar dele é o espaço interno.
+
+## Como escrever artigos que o cliente realmente encontra?
+
+Escreva os títulos com as palavras do cliente. O cliente digita "não consigo conectar na VPN de casa", e não "configuração do cliente de acesso remoto". As sugestões do portal partem do que o cliente digita no resumo da solicitação, então os títulos parecidos com esses resumos são os que aparecem.
+
+A fonte mais rápida de títulos é o seu próprio histórico. Puxe os últimos 90 dias de um tipo de solicitação movimentado com uma JQL como `project = "IT Help" AND created >= -90d ORDER BY created DESC`, leia os resumos e transforme as formulações mais comuns em títulos de artigo.
+
+Depois, dê a todo artigo o mesmo formato:
+
+1. **Título:** o sintoma ou a pergunta, como o cliente formula.
+2. **Primeira linha:** a resposta em uma frase.
+3. **Passos:** numerados, uma ação por passo, com captura de tela só onde a tela for ambígua.
+4. **Ainda com problema?** Um link para o tipo de solicitação que resolve o caso.
+5. **Rótulos** iguais aos do tipo de solicitação, para manter as sugestões relevantes.
+
+O Jira Service Management oferece templates de artigo para manter esse formato. São [sete templates por espaço](https://support.atlassian.com/jira-service-management-cloud/docs/use-templates-to-create-articles/), e os administradores não podem criar outros, então escolha o mais próximo e combine com o time como usá-lo.
+
+## Como os artigos aparecem no portal?
+
+O cliente encontra artigos em três lugares: na busca da central de ajuda, nas sugestões que aparecem enquanto ele digita o resumo de uma solicitação e nas respostas do agente de serviço virtual, se você o usa (incluído na Service Collection Premium e Enterprise). As sugestões nos formulários de solicitação são as que reduzem chamados, porque chegam a um cliente que está prestes a abrir uma solicitação.
+
+Configure sugestões de artigos nos tipos de solicitação que geram perguntas repetidas e use rótulos para que uma solicitação de impressora sugira artigos de impressora, e não o espaço inteiro. Como tipos de solicitação e formulários se encaixam está em [tipos de solicitação, formulários e portal no JSM](/pt-BR/blog/jsm-request-types-forms-and-portal/).
+
+## Como medir a deflexão no Jira Service Management?
+
+O Jira Service Management tem dois relatórios da base de conhecimento, Requests deflected e Requests resolved, em Reports no espaço de serviço. Uma solicitação só conta como evitada quando o cliente começa a digitar o resumo no portal, abre um artigo sugerido e vota que ele ajudou. Requests resolved separa as solicitações resolvidas com artigo (um comentário aponta para ele) das resolvidas sem artigo.
+
+A Atlassian documenta as duas definições no seu [guia de relatórios](https://support.atlassian.com/jira-service-management-cloud/docs/how-are-my-knowledge-base-articles-performing/). O voto de utilidade é o elo fraco: muitos clientes leem a resposta e saem sem votar, então trate o número de deflexões como um piso. Combine-o com:
+
+- **Volume por tipo de solicitação**, mês a mês, antes e depois de publicar artigos sobre ele.
+- **Resolvidas sem artigo.** Cada caso recorrente é candidato a um novo artigo.
+- **Suggested topics**, na Service Collection Premium ou Enterprise com IA ativada. O Jira Service Management lista temas recorrentes de solicitações sem artigo correspondente (um tema precisa de mais de cinco solicitações) e atualiza a lista toda semana ([suggested topics](https://support.atlassian.com/jira-service-management-cloud/docs/address-knowledge-gaps-with-suggested-topics/)).
+
+Uma solicitação evitada nunca entra em fila nem dispara relógio de SLA, o que também facilita cumprir suas [metas de SLA](/pt-BR/blog/jsm-sla-design/).
+
+## Como manter os artigos da base de conhecimento atualizados?
+
+Um artigo desatualizado é pior do que nenhum: o cliente segue passos errados e depois abre a solicitação mesmo assim. Quatro hábitos mantêm a base confiável:
+
+1. **Dê um responsável a cada artigo**, normalmente o time dono do tipo de solicitação correspondente.
+2. **Revise quando algo muda, não por calendário.** Quando um sistema, formulário ou política muda, o responsável atualiza os artigos relacionados na mesma mudança.
+3. **Feche o ciclo a partir das solicitações.** Quando um agente responde a uma dúvida recorrente sem artigo, escreva um e coloque o link na resposta, para que Requests resolved o conte na próxima vez.
+4. **Arquive o que ninguém abre.** Page insights e o arquivamento de páginas do Confluence (plano Standard ou superior) ajudam; veja [como arquivar conteúdo obsoleto no Confluence](/pt-BR/blog/confluence-archiving-stale-content/).
+
+## Em resumo
+
+Vincular o Confluence ao Jira Service Management leva minutos. A redução de chamados vem de títulos com as palavras do cliente, de uma permissão de leitura que deixa clientes logados abrirem os artigos, de sugestões ligadas nos tipos de solicitação que se repetem e de uma olhada mensal em Requests deflected e Requests resolved, lidos como piso e não como retrato completo. Dê um responsável a cada artigo e revise-o quando aquilo que ele descreve mudar. Para ver em todo o espaço quais artigos ficaram obsoletos, o [Expanded Macro Collection](/pt-BR/apps/expanded-macro-collection/) traz consolidações de status e obsolescência de páginas no Confluence, respeitando permissões.

@@ -1,0 +1,96 @@
+---
+lang: en
+translationKey: bitbucket-ssh-hostname-change
+title: "Bitbucket SSH change: switch to ssh.bitbucket.org before SSH on bitbucket.org is removed on December 10"
+metaTitle: 'Bitbucket SSH change: move to ssh.bitbucket.org'
+description: "Bitbucket Cloud is moving Git over SSH from bitbucket.org to ssh.bitbucket.org. Atlassian's October 21, 2026 update turned the original November 12 cutoff into a grace period of scheduled brownouts that starts today and ends with final removal on December 10, 2026. The schedule, the exact commands, and where old SSH URLs hide."
+metaDescription: 'Bitbucket Cloud SSH moves to ssh.bitbucket.org. Brownouts run November 12 to December 9, 2026, and removal is December 10. Commands, host keys and a checklist.'
+pubDate: 2026-11-12
+tags: ["atlassian-news", "atlassian-cloud"]
+author: team
+heroImage: ../../../assets/blog/bitbucket-ssh-hostname-change.jpg
+heroImageAlt: 'Flat illustration: two rounded navy doorways side by side, the left one blocked by a small orange barrier, the right one with a teal key floating in front of it, and a gold signpost without lettering pointing right, above a teal wave.'
+---
+
+*Brownouts start today. Anything still cloning, fetching or pushing over SSH to bitbucket.org will fail for short, scheduled windows, then for good on December 10.*
+
+The Bitbucket SSH change moves all Git over SSH from `bitbucket.org` to a new hostname, `ssh.bitbucket.org`. Atlassian [first announced it](https://community.atlassian.com/forums/Bitbucket-articles/Upcoming-change-to-Bitbucket-Cloud-SSH-access-move-from/ba-p/3234032) with a November 12, 2026 cutoff. Its October 21 update turned that date into the start of a grace period: from November 12 to December 9, SSH to bitbucket.org is blocked during scheduled brownout windows, and on December 10, 2026 it is removed.
+
+HTTPS is not affected. Remotes such as `https://bitbucket.org/workspace/repo.git`, the website and the API keep working on bitbucket.org. Your SSH keys, deploy keys and host keys stay the same; only the hostname changes.
+
+If your developers, build servers or pipelines use URLs that start with `git@bitbucket.org:`, each of them needs a one-line change before December 10.
+
+## What is changing with Bitbucket SSH?
+
+Bitbucket Cloud is separating SSH and HTTPS traffic. After the change, bitbucket.org serves only HTTPS (web and API), and every SSH Git operation, including clone, fetch, pull and push, must use ssh.bitbucket.org. Atlassian says the split improves its security posture and protects customers from denial of service abuse.
+
+In practice, the change looks like this:
+
+```text
+Before:  git@bitbucket.org:<workspace>/<repo>.git
+After:   git@ssh.bitbucket.org:<workspace>/<repo>.git
+```
+
+The same applies to the longer form `ssh://git@bitbucket.org/...`. Atlassian states that the new hostname uses the same SSH host keys as before, and publishes them on the announcement and at [bitbucket.org/site/ssh](https://bitbucket.org/site/ssh), where ssh.bitbucket.org is listed alongside bitbucket.org.
+
+## When do the bitbucket.org SSH brownouts happen?
+
+Brownouts run on weekdays from November 12 to December 9, 2026, in four windows a day starting at 00:00, 06:00, 12:00 and 18:00 UTC. The windows grow from 15 minutes to 3 hours. Weekends and November 25 to 27 are skipped. During a window, SSH to bitbucket.org is blocked with a clear error. On December 10, removal is final.
+
+| Dates (2026) | Length of each window |
+|---|---|
+| November 12 and 13 | 15 minutes |
+| November 16 to 20 | 30 minutes |
+| November 23 and 24 | 1 hour |
+| November 30 to December 2 | 2 hours |
+| December 3 and 4, December 7 to 9 | 3 hours |
+| December 10 | Final removal |
+
+A pipeline that fails at 06:05 UTC and passes when someone retries at 06:30 is the classic symptom. Check the timestamp before you debug anything else.
+
+## How do you switch a repository to ssh.bitbucket.org?
+
+Change the remote URL in each clone with `git remote set-url`, then accept the host key for the new name the first time you connect, after checking its fingerprint against Atlassian's published values. Your key and repository path stay the same. HTTPS clones need no change.
+
+The commands from Atlassian's announcement:
+
+```bash
+# See which remotes still point at bitbucket.org
+git remote -v
+
+# Point the remote at the new SSH hostname
+git remote set-url origin git@ssh.bitbucket.org:<workspace>/<repo>.git
+
+# For automated environments: pre-seed known_hosts for the new name
+curl -s https://bitbucket.org/site/ssh | sed 's/bitbucket.org/ssh.bitbucket.org/' >> ~/.ssh/known_hosts
+```
+
+The SHA256 fingerprints Atlassian publishes for the shared host keys are `FC73VB6C4OQLSCrjEayhMp9UMxS97caD/Yyi2bhW/J0` (ECDSA), `ybgmFkzwOSotHTHLJgHO0QN8L0xErw6vd0VhFA9m3SM` (ED25519) and `46OSHA1Rmj8E8ERTC6xkNcmGOw9oFxYr0WF6zWW8l1E` (RSA).
+
+One trap is not in the announcement but follows from how OpenSSH works: a `Host bitbucket.org` block in `~/.ssh/config` only applies when you connect to that exact name. If it sets an `IdentityFile`, connections to ssh.bitbucket.org will not use that key and fail with "Permission denied (publickey)". Add the new name to the `Host` line or create a matching block, and test with `ssh -T git@ssh.bitbucket.org`.
+
+## What about CI/CD pipelines, servers and firewalls?
+
+Atlassian lists everything that runs Git over SSH: CI/CD pipelines, deployment scripts, build servers, mirroring and sync jobs, and internal tools. Search configuration for `git@bitbucket.org:` and `ssh://git@bitbucket.org` and replace the host. If outbound SSH is restricted, allow ssh.bitbucket.org on port 22.
+
+Where to look:
+
+- **Pipeline definitions and scripts** that clone a second repository, push tags or update submodules.
+- **Submodule URLs** in `.gitmodules`, which are committed to the repository and easy to miss.
+- **Build agents and deployment servers**, including the home directory of every user account that runs Git, and any cron jobs.
+- **Mirrors** that push from another system into Bitbucket Cloud.
+- **Firewall and proxy rules** written for bitbucket.org on port 22. If your network blocks port 22 entirely, Atlassian's [port 22 guidance](https://support.atlassian.com/bitbucket-cloud/kb/port-22-is-blocked-on-local-network/) covers the alternative.
+
+## What to do now
+
+1. **Search every repository and pipeline** for `git@bitbucket.org:` and `ssh://git@bitbucket.org`, including `.gitmodules`.
+2. **Update build agents and servers** first, because they fail silently at 3 a.m. while people only fail during the day.
+3. **Pre-seed `known_hosts`** on automated hosts with the command above, after checking fingerprints.
+4. **Fix `~/.ssh/config` blocks** that only match bitbucket.org.
+5. **Allow ssh.bitbucket.org on port 22** in outbound firewall rules.
+6. **Tell developers** with a one-line instruction: run `git remote -v`, and if it says `git@bitbucket.org`, run `git remote set-url`.
+7. **Watch the brownout windows** in your build logs and treat each failure as a found dependency, not a flaky job.
+
+## The short version
+
+Bitbucket Cloud now serves SSH only on ssh.bitbucket.org. Brownouts on the old hostname run from today, November 12, until December 9, and SSH on bitbucket.org is removed on December 10, 2026. Change the host in every SSH remote, pipeline and server, keep the same keys, and check SSH config files that match the old name. Hardcoded hostnames are one of the most common things that break quietly when a platform changes; [integrations that survive the next API change](/blog/integrations-that-survive-api-changes/) looks at how to keep them in one place.

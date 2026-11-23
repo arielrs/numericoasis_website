@@ -124,6 +124,42 @@ export default defineConfig({
     '/apps/onbudget': '/onbudget/',
     '/es/apps/onbudget': '/es/onbudget/',
     '/pt-BR/apps/onbudget': '/pt-BR/onbudget/',
+
+    // The seven posts about building Kindelve, live from 2026-10-26 to
+    // 2026-11-23 and removed when the Game Studio posts moved to the industry
+    // and the craft rather than to the studio itself. Each locale's URL goes to
+    // that locale's studio page, which carries the game they described.
+    ...Object.fromEntries(
+      [
+        'why-a-software-company-is-making-a-game',
+        'game-simulation-without-floating-point',
+        'a-game-in-five-languages-from-day-one',
+        'designing-a-game-for-a-mid-range-phone',
+        'cloud-saves-that-never-lose-progress',
+        'proving-a-leaderboard-score-by-replay',
+        'money-buys-time-never-power',
+      ].flatMap((slug) =>
+        ['', '/es', '/pt-BR'].map((prefix) => [`${prefix}/blog/${slug}`, `${prefix}/studio/`]),
+      ),
+    ),
+
+    // Kindelve's player documentation moved out of the apps wiki and into the
+    // Game Studio's own (2026-11-23). English only in both places, so there is
+    // no locale prefix to carry.
+    ...Object.fromEntries(
+      [
+        '',
+        '/overview',
+        '/first-delve',
+        '/descent',
+        '/kin',
+        '/builds',
+        '/warden',
+        '/trial',
+        '/saves',
+        '/what-the-game-stores',
+      ].map((page) => [`/documentation/kindelve${page}`, `/studio/wiki/kindelve${page}/`]),
+    ),
   },
 
   // extendMarkdownConfig defaults true, so MDX picks this up as well.

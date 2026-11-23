@@ -1,0 +1,102 @@
+---
+lang: en
+translationKey: atlassian-cloud-offboarding-checklist
+title: "Atlassian offboarding checklist: what to do in Jira, Confluence and Atlassian Administration when someone leaves"
+metaTitle: 'Atlassian offboarding checklist for admins'
+description: "A practical Atlassian Cloud offboarding checklist: when to deactivate, suspend, remove or delete an account, and how to hand over what the person owned, from work items, filters and dashboards to automation rules, Confluence pages, Rovo agents, API tokens and integrations that ran under their name."
+metaDescription: 'Atlassian offboarding checklist: deactivate vs delete, reassign work items, filters, automation rules, Confluence pages, API tokens and integrations.'
+pubDate: 2026-11-09
+tags: ["atlassian-cloud", "jira-administration", "how-to"]
+author: team
+heroImage: ../../../assets/blog/atlassian-cloud-offboarding-checklist.jpg
+heroImageAlt: 'Flat illustration: an open navy door with a teal doormat, a small peach cardboard box holding a blank folder with a gold key on top, and three teal tiles beside it, one faded to grey, above a gentle teal wave.'
+---
+
+*Deactivating the account takes a minute. Finding what it leaves behind takes longer.*
+
+An Atlassian offboarding checklist has two halves. On the last day, cut access: deactivate the managed account (or suspend access if your organization does not manage it), revoke API tokens and remove admin roles. In the days around it, hand over what the person owned: open work items, filters and dashboards, automation rules, Confluence pages, Rovo agents and any integration that runs on their credentials.
+
+The first half is quick. The second half is where things break weeks later: a dashboard goes blank, a rule stops running, an integration starts failing.
+
+## Should you deactivate, suspend, remove or delete an Atlassian account?
+
+For a leaver whose account your organization manages, deactivate it. Deactivation blocks access to every app immediately, stops billing for that account, keeps their history and content in place, and an admin can reverse it. Delete only when personal data must be erased: deletion becomes permanent after a 14-day grace period and the name then shows as "Former user".
+
+| Action | Use it for | Effect | Reversible |
+| --- | --- | --- | --- |
+| Deactivate account | Leavers with a managed account | No access to any app, not billed, name shown with "(Deactivated)", personal data kept | Yes, an admin can reactivate |
+| Suspend access | Accounts you do not manage, or temporary breaks | No access to your organization's apps, not billed | Yes, roles and group memberships come back |
+| Remove user | People who should no longer appear in your organization | Access removed, not billed; Atlassian notes some content may be removed too | Only by inviting them again and reassigning roles and groups |
+| Delete account | Managed accounts whose personal data must go | Deactivated for 14 days, then permanently deleted | Only during the 14 days |
+| Remove app access | People who stay but no longer need one app | Loses that app only | Yes |
+
+Deleting an account does not delete the pages, work items and comments the person created. Profile information stored by Marketplace or custom apps also stays; Atlassian directs you to each app's partner for that.
+
+If you provision users from an identity provider, deleting the user there deactivates the Atlassian account. The [Atlassian Guard SSO and SCIM guide](/blog/atlassian-guard-sso-and-provisioning/) covers that setup.
+
+## Before the last day
+
+Ask the leaver and their manager for a short handover list: integrations and scripts (especially anything on their personal API token), automation rules, shared filters and dashboards, Confluence pages and spaces, Rovo agents and admin roles. Check it against what Jira and Confluence say they own, and name a successor for each item. Moving ownership while the person can still explain things is far easier than reverse-engineering it afterwards.
+
+## On the day: cut access
+
+1. **Deactivate the account** in Atlassian Administration: **Directory**, then **Users**, filter by managed accounts, select the person and choose **Deactivate account**. With SCIM, deactivate or delete them in the identity provider instead.
+2. **Revoke their API tokens.** Deactivation does not revoke tokens. They stop working while the account is deactivated, but they still exist until someone revokes them. Organization admins can do that in Atlassian Administration, from the managed account's page or from the API token activity insights.
+3. **Remove admin roles**, so a later reactivation does not quietly restore them.
+4. **Check the license count.** Deactivated accounts are not billed; see [finding the Atlassian licenses nobody uses](/blog/atlassian-license-reclamation/) for keeping that count honest over time.
+
+## How do you reassign a leaver's work items in Jira?
+
+Search with JQL for unresolved work items (formerly issues) assigned to the person, then use bulk change to give them new assignees. Do it space by space so each team lead chooses the new owner, rather than moving everything to one manager who then redistributes it by hand.
+
+```
+assignee = "ACCOUNT_ID" AND statusCategory != Done ORDER BY project
+```
+
+Then look beyond the assignee field: space lead, component lead, default assignee, approvers in Jira Service Management and any user picker fields your team uses. The [JQL queries for administrators](/blog/jira-jql-queries-for-administrators/) post has more searches of this kind.
+
+## Filters, dashboards and subscriptions
+
+A board stops working for everyone else when its filter is private to someone who left, and a filter can keep sending subscription emails after its owner has gone. Jira admins can fix both: open **Settings**, then **System**, and under **Shared items** select **Filters**. Find the filter, open **More options**, and choose **Change owner** or **Delete filter**. Dashboards are listed in the same section.
+
+Give shared filters and dashboards to a team lead, not to yourself.
+
+## Automation rules: owner and actor
+
+Every automation rule has two people attached:
+
+- **The owner**, usually whoever created the rule. The owner receives the email when the rule fails, so a leaver as owner means failures go unread. Ownership can be transferred in bulk.
+- **The actor**, the user the rule's actions run as. The actor needs the right permissions in each space, and a deactivated account no longer has them. Actors are changed rule by rule.
+
+Move ownership to the team that depends on the rule, and set the actor to the default automation actor or a service account, not to another person.
+
+## Confluence pages, spaces and personal space
+
+Content owners can transfer their pages, and Confluence admins and space admins can transfer ownership on their behalf: open the page details or the byline and choose **Change owner**. The new owner needs access to the space and edit access to the page. Space overview pages and blogs cannot be transferred this way.
+
+On Confluence Premium and Enterprise, the content manager handles this in bulk: in **Space settings**, open **Content manager**, filter the **Owner** column by **Deactivated**, select the pages and change the owner, up to 100 items at a time.
+
+Then decide what happens to the person's personal space: move anything the team still needs into a team space, and check whether pages were restricted to the leaver alone. [Confluence Cloud permissions explained](/blog/confluence-cloud-permissions-explained/) covers how restrictions and space permissions interact.
+
+## Rovo agents, apps and service accounts
+
+- **Rovo agents.** Transfer ownership under **Users and permissions** before the person leaves. If an agent is left with no owner, one of its managers can take ownership, which is why [how to create a Rovo agent](/blog/building-a-first-rovo-agent/) recommends a second manager from the start.
+- **Marketplace and custom apps.** Check each app's own admin settings for per-user roles, scheduled reports or connections set up under the leaver's name.
+- **Integrations on personal tokens.** Move them to a service account: an account not associated with a person, created in Atlassian Administration under **Directory**, then **Service accounts**, with its own API token or OAuth 2.0 credentials. Service accounts with access to Jira or Confluence do not count toward your user limit. How many you can create depends on your plan.
+
+## The Atlassian offboarding checklist
+
+1. Collect the handover list and name a successor for each item.
+2. Deactivate the account, or suspend access if you do not manage it.
+3. Revoke API tokens and remove admin roles.
+4. Reassign open work items, space and component leads, and approvers.
+5. Change the owner of shared filters and dashboards.
+6. Transfer automation rule ownership and replace the leaver as actor.
+7. Transfer Confluence page ownership and review their personal space.
+8. Transfer Rovo agents and check app-specific settings.
+9. Move integrations to a service account.
+10. After 30 to 90 days, decide whether to keep the account deactivated or delete it.
+
+## The short version
+
+Deactivate managed accounts rather than deleting them, revoke API tokens and admin roles the same day, and then hand over everything the person owned: work items, filters and dashboards, automation rules (owner and actor), Confluence pages, Rovo agents and integrations, which belong on service accounts. Run the checklist for every leaver and the cleanup stays small. If you would like help turning it into a repeatable process for your sites, the [Numeric Oasis Atlassian team](/atlassian/) does this kind of administration work.

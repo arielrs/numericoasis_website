@@ -1,5 +1,5 @@
 # https://numericoasis.com/robots.txt
-# Last reviewed: 2026-09
+# Last reviewed: 2026-11-23
 
 # ---------------------------------------------------------------------------
 # Everything is crawlable.
@@ -42,8 +42,9 @@ Allow: /
 # --- AI training crawlers: allow, deliberately ------------------------------
 # The training and retrieval opt-outs are separate, and the split exists so
 # publishers with monetisable archives can opt out of one without the other.
-# We have no archive to protect. For a six-app Marketplace vendor whose actual
-# problem is being unknown, being in the weights is a distribution channel.
+# We have no archive to protect. For a small company on three fronts (custom
+# software, Atlassian work and apps, a game studio) whose actual problem is
+# being unknown, being in the weights is a distribution channel.
 # Google-Extended and Applebot-Extended are opt-out tokens rather than
 # crawlers, and neither affects ordinary Search ranking either way.
 User-agent: GPTBot

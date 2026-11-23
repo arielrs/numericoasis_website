@@ -1,0 +1,89 @@
+---
+lang: es
+translationKey: approving-a-marketplace-app-security-review
+title: "Seguridad de apps del Atlassian Marketplace: qué revisar antes de aprobar una app"
+metaTitle: 'Seguridad de apps del Atlassian Marketplace'
+description: "La revisión de seguridad de una app del Atlassian Marketplace se reduce a cinco comprobaciones: dónde se ejecuta, adónde van tus datos, qué permisos pide, qué asume el proveedor por escrito y qué señales de confianza lo respaldan. Qué significa cada una a finales de 2026, con una lista de control reutilizable para cada solicitud."
+metaDescription: 'Revisión de seguridad de apps del Atlassian Marketplace: Forge o Connect, Runs on Atlassian, egress de datos, scopes, insignias actuales y checklist.'
+pubDate: 2026-11-11
+tags: ["marketplace", "forge", "atlassian-cloud"]
+author: team
+heroImage: ../../../assets/blog/approving-a-marketplace-app-security-review.jpg
+heroImageAlt: 'Ilustración plana: una pieza de puzle dorada y redondeada bajo una lupa azul marino, junto a un portapapeles verde azulado con tres marcas de verificación y un pequeño candado melocotón, sobre fondo crema cálido con una suave ola verde azulado abajo.'
+---
+
+*Antes de que una app lea los datos de tu Jira o Confluence, una revisión breve te dice adónde van esos datos y en quién estás confiando.*
+
+La revisión de seguridad de una app del Atlassian Marketplace responde a cinco preguntas: dónde se ejecuta el código de la app, adónde van tus datos y dónde se guardan, qué permisos pide la app, qué asume el proveedor por escrito y qué señales independientes respaldan esas afirmaciones. Casi todas las respuestas están en la ficha de la app en el Marketplace. El resto lo confirmas en Atlassian Administration durante una prueba.
+
+Esta revisión pesa más a finales de 2026 que hace un año. Connect, la plataforma de apps más antigua, llega al fin del soporte en enero de 2027, y Atlassian ha reorganizado las insignias del Marketplace, así que una política redactada en 2024 puede exigir insignias que ya no existen.
+
+## ¿Qué debe cubrir una revisión de seguridad de una app del Atlassian Marketplace?
+
+Una revisión completa cubre cinco áreas: la plataforma (Forge o Connect), la ubicación y la salida (egress) de los datos, los scopes que pide, los compromisos escritos del proveedor (política de privacidad, pestaña Privacy & Security, acuerdo de tratamiento de datos) y las señales de confianza del Marketplace. Añade una sexta sobre tu propio sitio: quién puede instalar apps.
+
+Ajusta el esfuerzo al riesgo: un gadget de solo lectura para un equipo necesita menos escrutinio que una app que edita todos los elementos de trabajo o sincroniza datos con un servicio externo. Documenta las respuestas en cualquier caso, porque ese registro es lo que enseñarás al auditor.
+
+## ¿La app está hecha con Forge o con Connect?
+
+Las apps Forge se ejecutan en infraestructura que gestiona Atlassian. Las apps Connect las [aloja el proveedor](https://developer.atlassian.com/developer-guide/cloud-app-hosting/), junto con su base de datos, así que tus datos viajan a sus servidores y la revisión tiene que cubrir también ese alojamiento. Además, Connect llega al fin del soporte el 31 de enero de 2027.
+
+Atlassian retrasó esa fecha, prevista para diciembre de 2026, en un [anuncio de agosto de 2026](https://www.atlassian.com/blog/developer/getting-ready-for-connect-end-of-support). A partir de ella, Atlassian solo atenderá problemas de seguridad críticos en Connect, y los cambios de la plataforma pueden romper apps Connect sin previo aviso. Para cualquier app que siga en Connect, pide al proveedor su plan y su fecha de migración a Forge. Los administradores ya ven un [aviso en las apps Connect](https://developer.atlassian.com/platform/adopting-forge-from-connect/what-admins-see/) que enlaza al plan del proveedor cuando este lo ha declarado.
+
+Forge por sí solo no garantiza nada sobre los datos: una app Forge puede seguir llamando a servicios externos que declara, o a un backend que mantiene el proveedor (un Forge remote). La siguiente comprobación se ocupa de eso.
+
+## ¿Qué certifica la insignia Runs on Atlassian?
+
+Runs on Atlassian identifica apps Forge que cumplen tres requisitos: usan solo computación y almacenamiento alojados por Atlassian, admiten una residencia de datos equivalente a la del producto anfitrión, y el cliente controla cualquier salida externa, como analítica y logs, mediante controles de administración. Salvo ese caso de analítica, la app no puede enviar datos fuera.
+
+Según la [página del programa](https://developer.atlassian.com/platform/marketplace/runs-on-atlassian/), la elegibilidad se detecta automáticamente, no la declara el proveedor, y las apps se monitorizan de forma continua. Si una actualización rompe la elegibilidad (por ejemplo, al añadir un backend remoto), se avisa a los clientes y un administrador tiene que aprobar esa actualización. La insignia aparece en la ficha y en la gestión de apps, así que puedes comprobar las que ya tienes instaladas.
+
+Si tu política dice "los datos de clientes se quedan en la nube de Atlassian", esta insignia responde casi toda la cuestión del egress en una línea.
+
+## ¿Adónde envía la app tus datos y dónde los guarda?
+
+Abre la pestaña Privacy & Security de la ficha. Indica si la app guarda End-User Data fuera de los productos de Atlassian, si admite residencia de datos, si comparte datos con subencargados, si ofrece un acuerdo de tratamiento de datos (DPA), qué certificaciones de cumplimiento tiene y si ha completado el cuestionario CAIQ Lite.
+
+Dos advertencias. El [cuestionario es opcional](https://developer.atlassian.com/platform/marketplace/security-privacy-tab/) para los partners, así que una pestaña escasa ya es un hallazgo (la política de privacidad, en cambio, es obligatoria para todos). Y la residencia de datos se decide app por app: las apps Forge que usan el almacenamiento alojado de Forge siguen al producto cuando lo mueves, mientras que las demás tienen que admitir el traslado y pueden necesitar uno propio. Atlassian Administration muestra el estado de cada app, como Eligible o Pinned ([guía de Atlassian](https://support.atlassian.com/security-and-access-policies/docs/moving-your-marketplace-apps-data-to-another-location)).
+
+## ¿Qué permisos (scopes) pide la app?
+
+Compara cada scope con lo que la app dice hacer: una app de informes que pide crear y borrar elementos de trabajo merece una pregunta antes.
+
+En Forge, los scopes y el egress se declaran en el manifest de la app. Añadir un scope o una nueva categoría de egress genera una [versión major](https://developer.atlassian.com/platform/forge/versions/) y, por defecto, una versión major no se aplica a tu sitio hasta que un administrador da su consentimiento. Las versiones minor se actualizan solas. El conjunto de permisos que apruebas es el que la app conserva hasta que apruebes otro, así que lee la solicitud de actualización en lugar de aceptarla sin más.
+
+## ¿Qué señales de confianza del Marketplace siguen contando a finales de 2026?
+
+Cuatro cambios importan si tienes una política de apps por escrito:
+
+- **Atlassian Enterprise Certified (AEC)** se abrió a las apps Forge en octubre de 2026. Exige pruebas de penetración anuales por una empresa con acreditación CREST, participación en bug bounty, SOC 2 Type 2 o ISO 27001, soporte completo de residencia de datos, una página de estado pública, un SLA de respuesta de 24 horas para incidencias críticas y un VPAT ([qué exige AEC](https://support.atlassian.com/organization-administration/docs/what-is-the-atlassian-enterprise-certified-program/)). La búsqueda del Marketplace permite filtrar por ella.
+- **La participación en bug bounty** se muestra en la ficha, y Atlassian exige que todos los programas de bug bounty del Marketplace [pasen a ser públicos](https://developer.atlassian.com/platform/marketplace/atlassian-marketplace-security-bug-bounty-program/).
+- **Cloud Fortified** no admite nuevas solicitudes, y las insignias existentes solo seguirán visibles hasta el 31 de diciembre de 2026, según el [anuncio de AEC](https://community.developer.atlassian.com/t/introducing-atlassian-enterprise-certified-aec/103035).
+- **Cloud Security Participant** se [retiró a finales de marzo de 2026](https://community.developer.atlassian.com/t/request-for-update-on-rfc-124-evolving-the-marketplace-trust-program/100160). Si tu política la exige, sustituye esa línea por la participación en bug bounty.
+
+Runs on Atlassian y AEC responden a preguntas distintas (dónde viven los datos y cómo opera el proveedor), y una app puede tener las dos.
+
+## ¿Quién puede instalar apps en tu sitio?
+
+Quien no es administrador puede solicitar una app del Marketplace desde Apps, luego Find new apps. Los administradores del sitio revisan las solicitudes en Apps, Manage apps, en la pestaña Requested apps ([cómo funcionan las solicitudes](https://support.atlassian.com/organization-administration/docs/managing-marketplace-app-and-user-requests/)). Los usuarios también pueden conectar algunas apps de terceros a sus propias cuentas; para reservarlo a los administradores, selecciona **Block user apps** en la configuración de Connected apps del sitio en Atlassian Administration.
+
+Con Atlassian Guard Standard, las políticas de seguridad de datos también pueden limitar hasta dónde llegan las apps del Marketplace en tu contenido ([guía de Atlassian](https://support.atlassian.com/security-and-access-policies/docs/manage-your-users-third-party-apps/)). Para la parte de identidad de Guard, consulta [Atlassian Guard, SSO y aprovisionamiento](/es/blog/atlassian-guard-sso-and-provisioning/).
+
+## Una lista de control reutilizable para revisar apps
+
+1. Anota la necesidad de negocio, el responsable y qué espacios y usuarios usarán la app.
+2. Plataforma: ¿Forge o Connect? Si es Connect, anota el plan y la fecha de migración del proveedor.
+3. Insignia Runs on Atlassian: sí o no. Si no, enumera los servicios externos a los que la app envía datos.
+4. Pestaña Privacy & Security: datos guardados fuera de Atlassian, subencargados, DPA, certificaciones, CAIQ Lite.
+5. Residencia de datos: ¿la exige tu política? ¿La admite la app?
+6. Scopes: ¿cada uno corresponde a una funcionalidad que de verdad necesitas?
+7. Señales de confianza: AEC, bug bounty y la página de seguridad o de confianza del propio proveedor.
+8. Política de privacidad leída y aceptada por quien responde de la protección de datos.
+9. Prueba primero en un sandbox o con un grupo pequeño, y observa qué hace la app al instalarse.
+10. Anota la aprobación, la versión major aprobada y una fecha de revisión.
+11. En cada solicitud de actualización major, repite los pasos 3 a 6 para lo que haya cambiado.
+12. Cuando la app deje de usarse, desinstálala. En las apps Forge, desinstalar revoca los permisos concedidos a la app como usuario y como sistema.
+
+## En resumen
+
+La revisión de seguridad de una app del Atlassian Marketplace son cinco comprobaciones y un registro: plataforma, ubicación y egress de los datos, scopes, compromisos escritos del proveedor y señales de confianza actuales. Actualiza cualquier política que aún exija Cloud Security Participant o Cloud Fortified, pide a cada proveedor de apps Connect una fecha de migración y usa Runs on Atlassian como la respuesta más rápida a "¿salen nuestros datos de la nube de Atlassian?". Las apps que publica Numeric Oasis son apps Forge con la insignia Runs on Atlassian, y puedes [aplicarles esta misma lista de control](/es/apps/).

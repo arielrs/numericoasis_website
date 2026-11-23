@@ -80,6 +80,8 @@ export const ORG_DETAILS = {
     'Game development',
     'Browser games',
     'Deterministic game simulation',
+    'Video game industry',
+    'Publishing games on Steam',
     'Atlassian Marketplace',
     'Atlassian Forge',
     'Forge app development',
@@ -102,6 +104,16 @@ export const ORG_DETAILS = {
     'Jira project configuration auditing',
     'Jira custom field administration',
     'Atlassian Cloud governance',
+    // The administration topics the blog covers in depth since 2026-11-23,
+    // each one part of the consulting on /atlassian/.
+    'Atlassian Rovo',
+    'Atlassian Guard',
+    'Jira automation',
+    'JQL',
+    'Jira workflows',
+    'Jira Service Management SLAs',
+    'Confluence permissions',
+    'Atlassian Cloud sandboxes',
   ],
 } as const;
 

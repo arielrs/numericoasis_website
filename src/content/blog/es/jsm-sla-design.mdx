@@ -1,0 +1,99 @@
+---
+lang: es
+translationKey: jsm-sla-design
+title: "Configurar SLA en Jira Service Management para medir la espera que de verdad sufre el cliente"
+metaTitle: 'Configurar SLA en Jira Service Management'
+description: "Cómo configurar SLA en Jira Service Management que reflejen la espera real del cliente: condiciones de inicio, pausa y fin, calendarios, objetivos por prioridad o tipo de solicitud, las trampas que mantienen el informe en verde mientras el cliente espera y cómo informar sobre los SLA con JQL."
+metaDescription: 'Configura SLA en Jira Service Management que midan lo que vive el cliente: condiciones, calendarios, objetivos por prioridad, trampas e informes.'
+pubDate: 2026-10-28
+tags: ["jira-service-management", "how-to"]
+author: team
+heroImage: ../../../assets/blog/jsm-sla-design.jpg
+heroImageAlt: 'Ilustración plana: un gran cronómetro azul marino con la esfera verde azulada, detrás un bloque de calendario dorado con casillas vacías y, flotando por encima del calendario, una pequeña forma de pausa melocotón de dos barras redondeadas, sobre una suave ola verde azulada.'
+---
+
+*Un informe de SLA en verde y un cliente molesto pueden convivir. Cuando ocurre, el SLA está midiendo lo que no es.*
+
+Configurar SLA en Jira Service Management consiste en montar un cronómetro con tres reglas (cuándo empezar a contar, cuándo pausar, cuándo parar), más un objetivo y un calendario para cada grupo de solicitudes. Un buen SLA hace que ese cronómetro coincida con la espera que vive el cliente, no con la que resulta cómodo comunicar.
+
+Todo se reduce a cuatro decisiones: qué eventos inician y detienen el reloj, qué pausas son legítimas, qué calendario se aplica y qué objetivo corresponde a cada solicitud. Si las aciertas, el informe de SLA se convierte en algo sobre lo que puedes actuar. Si no, el informe sigue en verde mientras la cola crece.
+
+## ¿Cómo funciona un SLA en Jira Service Management?
+
+Un SLA mide el tiempo de un elemento de trabajo entre una condición de inicio y una de fin, con pausas opcionales entre medias, y lo compara con un objetivo. Cada objetivo se aplica a los elementos de trabajo que encuentra su JQL y solo cuenta tiempo dentro del horario laboral de su calendario.
+
+Los SLA están en la configuración del espacio de servicio, en **Request management** (gestión de solicitudes) y después **SLAs**. Cada SLA tiene tres partes:
+
+- **Condiciones.** "Start counting time when" (empezar a contar cuando), "Pause counting time when" (pausar cuando, opcional) y "Finish counting time when" (terminar cuando). Cada una admite uno o varios eventos, como Issue Created, Entered Status, Comment: For Customers o Resolution: Set. Varias condiciones de inicio significan "cualquiera de ellas".
+- **Objetivos.** Filas de JQL, cada una con un tiempo objetivo y un calendario. Los elementos de trabajo se comparan con los objetivos de arriba abajo.
+- **Calendarios.** Días laborables, franjas horarias, festivos y zona horaria. Los calendarios nuevos vienen con 09:00 a 17:00 por defecto.
+
+La mayoría de los espacios de servicio empiezan con SLA como Time to first response y Time to resolution. Tómalos como punto de partida, no como un diseño terminado.
+
+## Inicio y fin: mide lo que el cliente está esperando
+
+Hazte una pregunta por SLA: ¿qué está esperando el cliente y en qué momento deja de esperar?
+
+- **Time to first response** (tiempo hasta la primera respuesta) debe empezar cuando se crea la solicitud y parar cuando alguien del equipo escribe al cliente: Comment: For Customers. Una nota interna o un cambio de responsable no es una respuesta, porque el cliente nunca lo ve.
+- **Time to resolution** (tiempo hasta la resolución) debe parar cuando el cliente obtiene el resultado, normalmente con Resolution: Set o al entrar en un estado de resuelto. Si tu workflow tiene un estado como "Resuelto, pendiente de confirmación", decide si el cliente sigue esperando ahí. Normalmente no.
+
+No detengas un reloj orientado al cliente con algo que solo ve el equipo, como pasar el elemento de trabajo a En curso. Eso mide lo rápido que clasificas. Merece la pena medir la clasificación, pero en un SLA propio, no bajo el nombre de "respuesta".
+
+## ¿Cuándo debe pausarse un SLA?
+
+Pausa un SLA solo mientras el siguiente paso depende del cliente, normalmente cuando el elemento de trabajo entra en un estado como Waiting for customer (esperando al cliente) después de que un agente haya hecho una pregunta concreta. No lo pauses por nada que dependa de tu lado, como esperar a otro equipo o a un proveedor: eso oculta justo el retraso que nota el cliente.
+
+La pausa es también la parte del diseño de SLA de la que más se abusa. Si Waiting for customer detiene el reloj, aparece un incentivo silencioso para mandar ahí elementos de trabajo con una pregunta vaga. Tres salvaguardas ayudan:
+
+1. Exige un comentario visible para el cliente en la transición a Waiting for customer, por ejemplo con una pantalla de transición en la que el comentario sea obligatorio.
+2. Devuelve el elemento de trabajo automáticamente cuando el cliente responda, con una regla de automatización que se active con un comentario del cliente, para que el reloj vuelva a correr sin depender de la memoria de nadie.
+3. Informa sobre el tiempo en pausa. Un equipo cuyos elementos de trabajo pasan más tiempo en pausa que en tratamiento merece una conversación.
+
+Si quieres ver el tiempo de espera por otro equipo o por un proveedor, dale un SLA aparte en lugar de esconderlo dentro del SLA del cliente.
+
+## Calendarios: cuenta solo las horas en que alguien podía trabajar
+
+Un objetivo de cuatro horas no significa lo mismo a las 16:00 de un viernes que a las 09:00 de un martes. Crea un calendario por cada horario de soporte que de verdad cubres, cada uno con su zona horaria y sus festivos, y asígnalo a los objetivos que correspondan. Si los incidentes críticos tienen guardia 24/7 y todo lo demás va en horario laboral, son dos objetivos con dos calendarios, no un término medio.
+
+Comprueba que todos los calendarios tengan días laborables definidos. La base de conocimientos de Atlassian describe SLA que se pausan nada más empezar porque la semana laboral del calendario se quedó vacía.
+
+## ¿Debe un único objetivo de SLA cubrir todas las solicitudes?
+
+No. Un objetivo único o fija una meta que las solicitudes urgentes incumplen, o una tan holgada que las rutinarias siempre cumplen. Divide los objetivos según lo que cambia la expectativa del cliente, normalmente la prioridad, el tipo de solicitud o ambos, y deja un objetivo genérico al final de la lista.
+
+Un SLA de Time to resolution podría quedar así, de arriba abajo:
+
+```
+issuetype = Incident AND priority = Highest   -> 4h, calendario 24/7
+issuetype = Incident                          -> 16h, horario laboral
+issuetype = "Service Request"                 -> 24h, horario laboral
+Resto de elementos de trabajo                 -> 40h, horario laboral
+```
+
+El orden importa porque se aplica el primer objetivo que coincide, así que pon la JQL más concreta arriba. También puedes agrupar varias prioridades bajo un mismo objetivo, y Atlassian indica que un objetivo agrupado sigue contando como uno solo, lo que ayuda si te acercas al límite de objetivos. Cuando cambia la prioridad de un elemento de trabajo, el temporizador ajusta el tiempo restante al objetivo de la nueva prioridad.
+
+## Las trampas que hacen engañoso un informe de SLA
+
+- **Medir la resolución de trabajo sin dueño.** Si los elementos de trabajo esperan sin asignar en una cola compartida, Time to resolution mide la cola, no al equipo. Añade un SLA corto de tiempo hasta la asignación (empieza en Issue Created y termina en Assignee: From Unassigned) para ver dónde está de verdad la espera.
+- **Parar con un evento que no buscabas.** Resolution: Set también se dispara cuando una regla de automatización cierra solicitudes abandonadas. Decide si esos cierres deben contar como objetivo cumplido.
+- **Olvidar las solicitudes reabiertas.** Un elemento de trabajo reabierto inicia un nuevo ciclo de SLA. La función JQL `breached()` mira solo el último ciclo, mientras que `everBreached()` detecta un incumplimiento en cualquier ciclo. Usa la segunda cuando informes sobre la experiencia del cliente.
+- **Cambiar las reglas sin dejar constancia.** Registra con fecha cada cambio de SLA, para que un salto en las cifras del trimestre siguiente se pueda interpretar.
+
+## ¿Cómo se informa sobre los SLA en Jira Service Management?
+
+Usa dos herramientas. La página de informes del espacio de servicio muestra tendencias, como el porcentaje de cumplimiento de cada SLA por semana, filtrado por tipo de solicitud. Los filtros JQL con funciones de SLA muestran el trabajo en vivo, como los elementos a punto de incumplir. La primera te dice si el diseño funciona; la segunda dice a los agentes qué coger después.
+
+Algunos filtros útiles (cambia los nombres de los SLA por los tuyos):
+
+```
+"Time to first response" < remaining("2h")
+"Time to resolution" = everBreached()
+"Time to resolution" = paused()
+"Time to resolution" >= remaining("0h") AND "Time to resolution" = running()
+```
+
+Pon el primero en una cola o en un dashboard para los agentes. Revisa los demás cada mes por tipo de solicitud y busca dos patrones: objetivos que siempre se cumplen con mucho margen y objetivos que siempre se incumplen. Ambos indican que el objetivo o las condiciones necesitan ajustes. Si la JQL todavía no forma parte de tu rutina, empieza por estas [consultas JQL para administradores](/es/blog/jira-jql-queries-for-administrators/).
+
+## En resumen
+
+Diseña cada SLA en torno a lo que espera el cliente: empieza cuando pide algo, pausa solo mientras el siguiente paso es suyo y para cuando recibe lo que necesitaba. Usa calendarios que coincidan con los horarios que de verdad cubres, divide los objetivos por prioridad o tipo de solicitud con la JQL más concreta primero, añade un SLA de tiempo hasta la asignación para que el trabajo sin dueño salga a la luz e informa del tiempo en pausa y de los ciclos incumplidos alguna vez, no solo del porcentaje principal. Si quieres una segunda opinión sobre un espacio de servicio existente, el [equipo de Atlassian de Numeric Oasis](/es/atlassian/) revisa este tipo de configuración.

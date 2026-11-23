@@ -1,0 +1,90 @@
+---
+lang: es
+translationKey: team-managed-vs-company-managed-spaces
+title: "Team-managed vs company-managed en Jira: ¿espacio gestionado por el equipo o por la empresa?"
+metaTitle: 'Team-managed vs company-managed en Jira'
+description: "Los espacios gestionados por el equipo dejan que el propio equipo configure su espacio de Jira; los gestionados por la empresa comparten esquemas que controlan los administradores de Jira. Qué implica cada opción para la configuración, los campos, los permisos, los tableros, los informes entre espacios y los cambios futuros, con una tabla de decisión."
+metaDescription: 'Team-managed vs company-managed en Jira: quién configura qué, esquemas compartidos, informes entre espacios, cómo mover trabajo y una tabla de decisión.'
+pubDate: 2026-10-19
+tags: ["jira-administration", "how-to"]
+author: team
+heroImage: ../../../assets/blog/team-managed-vs-company-managed-spaces.jpg
+heroImageAlt: 'Ilustración plana: una pequeña casa verde azulada sola, con su propio jardincito y su verja, junto a una fila de casas azul marino idénticas unidas por una única tubería dorada, y una suave ola verde azulada en la parte inferior.'
+---
+
+*La pregunta de fondo no es qué funciones necesita el equipo este mes. Es quién se ocupará de la configuración dentro de dos años.*
+
+Team-managed vs company-managed en Jira se reduce a quién configura el espacio. En un espacio gestionado por el equipo (team-managed), los propios administradores del espacio definen los tipos de trabajo, los campos, los flujos de trabajo y el acceso, y nada de lo que cambian afecta a otro espacio. En un espacio gestionado por la empresa (company-managed), los administradores de Jira configuran esquemas compartidos que usan muchos espacios a la vez.
+
+El gestionado por el equipo arranca antes y es fácil de asumir para el equipo. El gestionado por la empresa es la opción cuando varios espacios necesitan la misma configuración, cuando necesitas más de un tablero o uno que abarque varios espacios, o cuando los informes dependen de que los campos signifiquen lo mismo en todas partes. Puedes mover trabajo entre ambos más adelante, pero algunos datos no sobreviven al viaje, así que elige con calma.
+
+## ¿Qué diferencia hay entre los espacios gestionados por el equipo y por la empresa?
+
+El resumen de la propia Atlassian es que la diferencia clave está en [cómo se administran](https://support.atlassian.com/jira-software-cloud/docs/what-are-team-managed-and-company-managed-spaces/). Los espacios gestionados por el equipo los crea y mantiene el equipo, sin pasar por un administrador de Jira. Los gestionados por la empresa los configuran los administradores de Jira mediante esquemas, y un cambio en un esquema cambia todos los espacios que lo usan.
+
+| | Gestionado por el equipo | Gestionado por la empresa |
+| --- | --- | --- |
+| Quién configura | Administradores del espacio | Administradores de Jira, mediante esquemas |
+| Custom fields | Propios del espacio, hasta 50 | Campos compartidos, configurados por contexto |
+| Flujos y tipos de trabajo | Definidos dentro del espacio | Esquemas compartidos |
+| Acceso | Roles del espacio y un nivel de acceso: abierto, limitado o privado | Un esquema de permisos, normalmente compartido |
+| Tableros | El tablero del propio espacio | Varios tableros por espacio y tableros entre espacios |
+| Esquemas compartidos con otros espacios | Ninguno | Permisos, flujos, pantallas, campos, notificaciones y seguridad de elementos de trabajo |
+
+El tope de 50 campos y los niveles de acceso proceden de las páginas de Atlassian sobre [campos en espacios gestionados por el equipo](https://support.atlassian.com/jira-software-cloud/docs/customize-an-issues-fields-in-team-managed-projects/) y sobre [el acceso a esos espacios](https://support.atlassian.com/jira-software-cloud/docs/manage-how-people-access-your-next-gen-project/).
+
+## ¿Quién configura qué?
+
+En un **espacio gestionado por el equipo**, cualquiera con el rol de administrador del espacio puede añadir campos, cambiar el flujo de trabajo, crear tipos de trabajo y decidir quién entra. El nivel de acceso hace buena parte del trabajo: abierto permite a cualquiera del sitio de Jira ver, crear y editar elementos de trabajo; limitado permite a todos ver y comentar; privado reserva el espacio a los administradores de Jira y a las personas añadidas. Los administradores de Jira controlan quién puede crear espacios gestionados por el equipo con el permiso global "Create team-managed spaces", y la [base de conocimiento](https://support.atlassian.com/jira/kb/disable-team-managed-projects-in-jira-cloud/) de Atlassian explica cómo restringirlo.
+
+En un **espacio gestionado por la empresa**, la configuración vive en esquemas que pertenecen a los administradores de Jira. Los administradores del espacio gestionan quién está en cada rol, pero cambiar cómo funciona el espacio exige pedírselo a un administrador de Jira. Es más lento, y precisamente de eso se trata: un cambio, revisado una vez, aplicado de forma coherente.
+
+## Esquemas compartidos: la ventaja y el riesgo
+
+Compartir es lo que hace eficientes a los espacios gestionados por la empresa. Diez espacios con el mismo esquema de flujo de trabajo se comportan igual, informan igual y se corrigen en un solo sitio.
+
+El riesgo es la otra cara. Editar un esquema compartido para atender la petición de un equipo lo cambia en todos los espacios que lo usan, incluidos aquellos cuyos dueños nadie consultó. Antes de editar cualquier esquema, comprueba qué espacios lo usan. Si solo uno necesita el cambio, copia el esquema y asigna la copia a ese espacio.
+
+Los campos compartidos tienen su propio coste. Un custom field disponible en muchos espacios cuenta para cada uno de ellos, y así es como un sitio se acerca al [límite de 700 custom fields por espacio](/es/blog/jira-700-custom-field-limit/) de Jira. Los espacios gestionados por el equipo lo evitan manteniendo los campos locales, y lo pagan en los informes.
+
+## ¿Se pueden hacer informes entre espacios de ambos tipos?
+
+Sí, con límites. JQL, los filtros y los dashboards buscan en los dos tipos. Lo que falla es todo lo que depende de un campo o un estado compartido: un campo creado en un espacio gestionado por el equipo solo existe en ese espacio, así que un campo "Cliente" en dos espacios de ese tipo son dos campos distintos, y un informe entre espacios no puede tratarlos como uno.
+
+En la práctica:
+
+- **Los tableros entre espacios** son una función de los espacios gestionados por la empresa. La [guía de tableros](https://www.atlassian.com/software/jira/guides/boards/overview) de Atlassian indica que los tableros múltiples y entre espacios están disponibles en los espacios gestionados por la empresa.
+- **Los planes** pueden incluir espacios gestionados por el equipo, pero un campo de esos espacios solo funciona con el trabajo de su propio espacio. Atlassian [sugiere](https://support.atlassian.com/jira-software-cloud/docs/limitations-of-team-managed-projects-in-advanced-roadmaps) pedir a un administrador de Jira que lo convierta en un campo compartible.
+- **Los informes de estado** deben usar `statusCategory` en JQL, porque cada equipo pone nombre a sus propios estados.
+
+## ¿Se puede mover trabajo entre espacios gestionados por el equipo y por la empresa?
+
+Sí, moviendo en bloque los elementos de trabajo a un espacio del otro tipo; Jira no tiene un botón que convierta el espacio. Cuenta con pérdidas. Al pasar a un espacio gestionado por el equipo se pierden los sprints, las estimaciones en story points, los componentes y las versiones. Al pasar a uno gestionado por la empresa, un administrador de Jira tiene que recrear antes los estados, los campos y los tipos de trabajo, o los datos de los campos se pierden.
+
+Los detalles están en la [guía de migración](https://support.atlassian.com/jira-software-cloud/docs/migrate-between-team-managed-and-company-managed-projects/) de Atlassian. Las claves de los elementos cambian y los enlaces a las claves antiguas se redirigen. El historial de informes, como la velocidad y el burnup, no viaja con ellos. Atlassian recomienda una migración de prueba en un sandbox antes. Hazle caso: ejecuta la prueba, compara una muestra de elementos campo a campo y solo entonces programa el cambio real.
+
+## Team-managed vs company-managed: tabla de decisión
+
+| Si esto describe el espacio | Elige |
+| --- | --- |
+| Un equipo con su propio proceso que quiere cambiarlo sin abrir una petición | Gestionado por el equipo |
+| Trabajo de corta duración: un evento, un piloto, un experimento | Gestionado por el equipo |
+| Varios equipos deben compartir flujo, campos o informes | Gestionado por la empresa |
+| Necesita más de un tablero, o un tablero con varios espacios | Gestionado por la empresa |
+| Necesita más de 50 custom fields | Gestionado por la empresa |
+| Algunos elementos deben ocultarse a parte de los miembros con niveles de seguridad | Gestionado por la empresa |
+| La auditoría o el cumplimiento normativo exige control central de los permisos | Gestionado por la empresa |
+
+Si las respuestas salen mezcladas, usa el gestionado por la empresa para todo lo que vaya a alimentar informes entre equipos y deja el gestionado por el equipo para el trabajo que se queda dentro de un solo equipo.
+
+## ¿Cómo evitar que los espacios gestionados por el equipo se multipliquen?
+
+Limita quién puede crearlos, revísalos cada trimestre y archiva los que hayan terminado. Los espacios gestionados por el equipo son fáciles de crear, y eso es a la vez la ventaja y el problema: cada uno trae sus propios campos, estados y ajustes de acceso, y nadie más los vigila.
+
+1. **Decide quién puede crearlos.** Concede "Create team-managed spaces" a un grupo, no a todo el mundo.
+2. **Revísalos cada trimestre.** Busca espacios sin actualizaciones recientes y trabajo abierto sin dueño; las [consultas JQL para administradores de Jira](/es/blog/jira-jql-queries-for-administrators/) cubren las dos cosas.
+3. **Archiva lo que haya terminado.** En Premium y Enterprise, los administradores del espacio pueden archivar espacios gestionados por el equipo y los administradores de Jira pueden restaurarlos, como explica el [artículo sobre archivado](https://support.atlassian.com/jira-cloud-administration/docs/archive-a-project/) de Atlassian.
+
+## En resumen
+
+Elige el gestionado por el equipo cuando un equipo deba encargarse de su propia configuración y su trabajo se quede dentro de él. Elige el gestionado por la empresa cuando los espacios tengan que compartir flujos, campos, tableros o informes, o cuando los permisos necesiten control central. Cambiar después es posible, pero cuesta sprints, estimaciones y cualquier campo que no se haya recreado antes, así que prueba la migración en un sandbox. Si los custom fields compartidos pesan en la decisión, una [auditoría gratuita de custom fields](/es/apps/field-scout/) muestra qué campos usa de verdad cada espacio antes de consolidar.

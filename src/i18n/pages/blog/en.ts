@@ -1,16 +1,16 @@
 export const en = {
   meta: {
     crumb: 'Blog',
-    title: 'Notes on software, Atlassian and games',
+    title: 'Atlassian guides and news, software and games',
     metaDescription:
-      'Notes on custom software, Jira and Confluence work, Forge apps and building a browser game, from the team at Numeric Oasis.',
+      'Guides and news for Jira, Confluence, JSM and Rovo admins, plus articles on custom software and the game industry, from the team at Numeric Oasis.',
     description:
-      'Notes on custom software, Jira and Confluence migrations and administration, Forge apps, and building a browser game, from the team at Numeric Oasis.',
+      'Guides and news for Atlassian Cloud administrators on Jira, Confluence, Jira Service Management and Rovo, plus articles on custom software and the game industry, from the team at Numeric Oasis.',
   },
   index: {
     eyebrow: 'From the workshop',
     headline: 'Notes from the workshop.',
-    lede: 'What we learn building software on three fronts: custom applications, Jira and Confluence work and Forge apps, and a game of our own. Mostly the decisions that are expensive to get wrong, written down so we stop explaining them twice.',
+    lede: 'Guides and news for Atlassian Cloud administrators, notes on building custom software, and articles on the game industry. Each one answers its question in the first lines and links the sources behind it.',
     empty: 'Nothing published yet.',
     allTags: 'All posts',
     tagsLabel: 'Browse by topic',
@@ -60,7 +60,7 @@ export const en = {
         secondary: 'Ask us a question',
       },
       studio: {
-        headline: 'Made by our Game Studio.',
+        headline: 'Play what our Game Studio makes.',
         body: 'Kindelve is a creature-collection dungeon descent that runs in any browser, free, in five languages. The studio page has the game, how it is built, and what comes next.',
         primary: 'The Game Studio',
         secondary: 'Talk to the studio',
@@ -87,6 +87,9 @@ export const en = {
     'atlassian-consulting': 'Atlassian consulting',
     'cloud-migration': 'Cloud migration',
     'game-development': 'Game development',
+    'atlassian-news': 'Atlassian news',
+    'jira-service-management': 'Jira Service Management',
+    'rovo-and-ai': 'Rovo and AI',
   },
 } as const;
 

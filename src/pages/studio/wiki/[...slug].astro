@@ -1,0 +1,115 @@
+---
+/**
+ * One page of a game's player guide, e.g. /studio/wiki/kindelve/descent/.
+ *
+ * The studio twin of /documentation/[...slug]. It ends on the game and on the
+ * players' help desk rather than on a Marketplace listing, and its article is
+ * about the VideoGame node the studio page publishes, so the two pages describe
+ * one game rather than two.
+ */
+import { render } from 'astro:content';
+import DocsLayout from '../../../layouts/DocsLayout.astro';
+import { SITE } from '../../../consts';
+import { docGroups, docOrder, docSlug, groupHref, groupLabel, neighbours, tocFrom, type DocEntry } from '../../../lib/docs';
+import { outbound } from '../../../lib/outbound';
+import { ORG_ID, WEBSITE_ID, type JsonLdNode } from '../../../lib/schema';
+
+export async function getStaticPaths() {
+  const groups = await docGroups('studio');
+  return docOrder(groups).map((entry) => ({
+    params: { slug: docSlug(entry) },
+    props: { entry, groups, ...neighbours(groups, entry) },
+  }));
+}
+
+const { entry, groups, prev, next } = Astro.props as {
+  entry: DocEntry;
+  groups: Awaited<ReturnType<typeof docGroups>>;
+  prev?: DocEntry;
+  next?: DocEntry;
+};
+
+const group = groups.find((g) => g.app === entry.data.app);
+const label = groupLabel(entry.data.app);
+
+/**
+ * "Kindelve: The descent" rather than the apps wiki's "OnBudget overview"
+ * form. Most of these titles open with an article or a possessive ("The
+ * Warden's Trial", "Your first delve"), and lower-casing those reads as a typo.
+ */
+const heading = `${label}: ${entry.data.title}`;
+
+const { Content, headings } = await render(entry);
+const toc = tocFrom(headings);
+
+const pageUrl = new URL(`/studio/wiki/${docSlug(entry)}/`, SITE.url).toString();
+const article: JsonLdNode = {
+  '@type': 'TechArticle',
+  '@id': `${pageUrl}#techarticle`,
+  headline: heading,
+  name: entry.data.title,
+  description: entry.data.description,
+  url: pageUrl,
+  inLanguage: 'en',
+  isPartOf: { '@id': WEBSITE_ID },
+  mainEntityOfPage: { '@id': `${pageUrl}#webpage` },
+  publisher: { '@id': ORG_ID },
+  author: { '@id': ORG_ID },
+  // The same @id the studio page gives its VideoGame node.
+  about: { '@id': `${SITE.url}/studio/#${entry.data.app}` },
+};
+---
+
+<DocsLayout
+  title={heading}
+  description={entry.data.description}
+  groups={groups}
+  section="studio"
+  current={entry}
+  headings={toc}
+  prev={prev}
+  next={next}
+  graph={{
+    breadcrumbs: [
+      { name: 'Game Studio', path: '/studio/' },
+      { name: 'Wiki', path: '/studio/wiki/' },
+      { name: label, path: groupHref(entry.data.app) },
+      { name: entry.data.title, path: `/studio/wiki/${docSlug(entry)}/` },
+    ],
+    extraNodes: [article],
+    primaryEntityId: `${pageUrl}#techarticle`,
+    pageType: 'TechArticle',
+  }}
+>
+  <header>
+    <h1 class="font-display text-3xl font-bold leading-tight tracking-tight text-brand-900 sm:text-4xl">{heading}</h1>
+  </header>
+
+  <div class="prose-custom mt-8">
+    <Content />
+  </div>
+
+  <aside class="mt-14 rounded-2xl border border-sand-200 bg-sand-50 p-7">
+    <h2 class="font-display text-lg font-semibold text-brand-900">{label}</h2>
+    <p class="mt-2 max-w-2xl text-sm leading-relaxed text-slate-600">
+      {group?.blurb} Free, in any modern browser on a phone or a computer, with
+      nothing to install.
+    </p>
+    <div class="mt-5 flex flex-wrap gap-3">
+      {group?.playUrl && (
+        <a
+          href={outbound(group.playUrl, `wiki-${entry.data.app}`, 'doc-article')}
+          class="btn-cta"
+          rel="noopener"
+          target="_blank"
+        >Play {label}</a>
+      )}
+      <a
+        href={outbound(SITE.gameSupportUrl, `wiki-${entry.data.app}`, 'support')}
+        class="btn-secondary !bg-paper"
+        rel="noopener"
+        target="_blank"
+      >Get help with a game</a>
+    </div>
+  </aside>
+</DocsLayout>

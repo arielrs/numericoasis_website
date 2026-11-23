@@ -1,0 +1,85 @@
+---
+lang: en
+translationKey: confluence-cloud-permissions-explained
+title: "Confluence permissions explained: roles, page restrictions, guests and anonymous access"
+metaTitle: 'Confluence permissions explained for Cloud admins'
+description: "Confluence Cloud decides access in layers: product access, site permissions, space roles that are replacing the old permission grid, and page restrictions. How each layer works, what guests and anonymous visitors can reach, and a short procedure for answering who can see a page and why."
+metaDescription: 'Confluence permissions explained: product access, site permissions, space roles, page restrictions, guests, anonymous access and who can see a page.'
+pubDate: 2026-10-26
+tags: ["confluence-governance", "atlassian-cloud"]
+author: team
+heroImage: ../../../assets/blog/confluence-cloud-permissions-explained.jpg
+heroImageAlt: 'Flat illustration: four nested rounded frames shading from navy to teal to peach to gold, a single cream page resting inside the smallest gold frame, a small navy key lying beside the outer frame, and a gentle teal wave along the bottom.'
+---
+
+*Confluence answers "can this person see this page?" in layers. Learn the layers and the answer stops being a mystery.*
+
+Confluence permissions, explained in one line: Confluence Cloud checks four layers from the outside in, and a person sees a page only if every layer lets them through. The layers are product access to Confluence, granted through groups in Atlassian Administration; site permissions, such as who can create spaces; space access, now assigned through roles; and page restrictions on individual content.
+
+The space layer is the one that has changed. Atlassian is replacing the old grid of individual space permissions with roles: four defaults (Admin, Manager, Collaborator, Viewer) plus custom roles. Depending on the site, you are either in a transition period where both models coexist, or already on role-based access only, which is where new sites start.
+
+## How do Confluence permissions work?
+
+Think of four gates in a row. Product access decides whether someone can use Confluence at all. Site permissions decide a few site-wide abilities. Space roles decide what someone can do in each space. Page restrictions narrow access to a page and its children, but never widen it beyond what the space allows. Fail at one gate and the page is invisible.
+
+Guests, anonymous visitors and public links are special routes through those gates, covered further down.
+
+## Site-level permissions
+
+In Confluence administration, under Settings, then Security, then Permissions, the Site permissions tab holds the few site-wide abilities: having a personal space, creating spaces, and viewing user profiles ([Atlassian's global permissions article](https://support.atlassian.com/confluence-cloud/docs/manage-global-permissions/)). Product access itself is granted to groups, not to individuals, and those groups are managed in Atlassian Administration.
+
+Two neighboring tabs matter for audits: Anonymous access, covered below, and JSM access, which controls whether Jira Service Management customers can use Confluence. The audit question at the site level is short: which groups can create spaces? Every new space brings new access decisions, so keep space creation with groups that will make those decisions well.
+
+## Space roles: the new space permission model
+
+Each space grants access by assigning roles to people, groups, teams or user classes such as all Confluence users. The default roles, as Atlassian [describes them](https://support.atlassian.com/confluence-cloud/docs/what-are-confluences-roles/):
+
+| Role | What it can do |
+| --- | --- |
+| Admin | Manages everything in the space |
+| Manager | Manages people and content, not settings |
+| Collaborator | Adds and edits content |
+| Viewer | Views and comments on content |
+
+A site can define up to 10 custom roles. Whoever manages space access can only assign roles whose permissions they hold themselves, so a Manager cannot hand out admin powers.
+
+During the transition, people and groups whose old permission combination doesn't match a role show as **Custom access**. Confluence does not map those to roles for you. Admins use the "Transition to roles" tool to replace each combination with a role across chosen spaces, with a preview of who gains or loses what, as Atlassian's [transition guide](https://support.atlassian.com/confluence-cloud/docs/custom-access-and-how-to-transition-to-roles/) describes. When the transition window ends, anything still on custom access receives a fallback role, and the [roles FAQ](https://support.atlassian.com/confluence-cloud/docs/faq-role-based-access-in-confluence/) says Confluence admins can see their site's transition date in Roles central. Do the mapping yourself, deliberately, before that date.
+
+## How do page restrictions work?
+
+Restrictions narrow access to a page. A page is either Open, where anyone with access to the space can edit it or only view it, or Restricted to specific people. View restrictions are inherited by every page nested below; edit restrictions are not. A restriction never grants more than the space allows, so someone without edit access in the space can't edit an Open page.
+
+Three more points from Atlassian's [restrictions article](https://support.atlassian.com/confluence-cloud/docs/add-or-remove-page-restrictions/):
+
+- **Space admins can change restrictions** on pages in their space, so a restriction is not a secret from them.
+- **Organization admins on Premium and Enterprise** can view and change access to any content using admin key.
+- **The Free plan can't restrict content** at all.
+
+Inherited view restrictions are also why moving or archiving a parent page deserves a check. As the guide on [archiving Confluence pages](/blog/confluence-archiving-stale-content/) explains, child pages left behind can lose a restriction they relied on.
+
+## What can guests do in Confluence?
+
+Guests are external accounts limited to a single space that an admin assigns. By default they see everything in that space unless pages are restricted, and they can't see the people directory or search for users. They can, however, open any space that allows anonymous access. Space admins can't give guests the space admin, export or restrictions permissions.
+
+That one exception is the audit point: if a space is open to anonymous users, every guest can read it too. Atlassian's [guest article](https://support.atlassian.com/confluence-cloud/docs/what-can-guests-see-and-do-on-confluence) has the full list.
+
+## How does anonymous access work in Confluence?
+
+It needs two switches. A Confluence admin turns anonymous access on for the site (Settings, then Security, then Anonymous access), and then a space grants access to anonymous users. Anonymous visitors don't affect your license count, and pages they can read can appear in Google. Public links are a separate route that shares one page with anyone holding the link.
+
+From Atlassian's [anonymous access article](https://support.atlassian.com/confluence-cloud/docs/set-up-public-access/): newer sites block space-level anonymous access unless it is enabled for the site, and some sites offer an option to enforce that site-level control, which turns anonymous access off in spaces where it was on and cannot be undone. Public links, available on paid plans, have their own controls for the site, for each space and for new spaces, described in the [public links article](https://support.atlassian.com/confluence-cloud/docs/set-up-and-manage-public-links/). Spaces allow them by default. If nothing on your site should be public, turn off both anonymous access and public links at the site level.
+
+## Who can see this page, and why?
+
+1. **Product access.** Is the person in a group with Confluence access in Atlassian Administration?
+2. **Guest or member?** A guest reaches only the assigned space, plus any space open to anonymous users.
+3. **Space role.** In the space's settings, find their role: assigned directly, through a group or team, or through a user class such as all Confluence users.
+4. **Restrictions.** Open the page's restrictions. If it is restricted by a parent, follow the chain upward; a view restriction anywhere above the page applies to it.
+5. **Public routes.** Is the space open to anonymous users, or does the page have an active public link?
+6. **Confirm.** On Premium, Inspect permissions in the restrictions dialog shows, for one user, where access is allowed or denied at each level ([Atlassian's article](https://support.atlassian.com/confluence-cloud/docs/inspect-a-users-permissions/)). For one person's reach across spaces, the [User Access feature](https://confluence.atlassian.com/confkb/how-to-check-which-spaces-someone-has-access-to-with-the-user-access-feature-in-confluence-cloud-1608056874.html) in Confluence administration produces a space permissions report.
+
+The same layered approach works in Jira; the [Jira permission scheme audit](/blog/jira-cloud-permission-audit/) walks through the equivalent layers there.
+
+## The short version
+
+Confluence checks product access, then site permissions, then space roles, then page restrictions, and a page is visible only when every layer allows it. Roles are replacing the old permission grid, so move custom access to roles deliberately before your site's transition date. View restrictions inherit and edit restrictions don't; guests are confined to one space except for spaces open to anonymous users; and anonymous access and public links each need a decision at the site level. For pages that need a visible sensitivity label as well as restrictions, Numeric Oasis's [Expanded Macro Collection](/apps/expanded-macro-collection/) includes a page classification banner that carries into PDF and Word exports.

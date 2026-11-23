@@ -6,7 +6,7 @@ export const es = {
     metaDescription:
       'Numeric Oasis crea software a medida, migra y administra Jira y Confluence, publica apps en Forge y tiene un estudio de juegos. Desde Canoas, desde 2011.',
     description:
-      'Numeric Oasis Technologies trabaja en tres frentes: aplicaciones web, integraciones y herramientas internas a medida; consultoría Atlassian, apps del Marketplace y apps en Forge a medida; y un estudio de juegos que está creando Kindelve, un juego de navegador en prueba abierta. Entregas pequeñas, una prueba para cada corrección, en español, inglés y portugués.',
+      'Numeric Oasis Technologies trabaja en tres frentes: aplicaciones web, integraciones y herramientas internas a medida; consultoría Atlassian, apps del Marketplace y apps en Forge a medida; y un estudio de juegos que está creando Kindelve, un juego de navegador en beta abierta. Entregas pequeñas, una prueba para cada corrección, en español, inglés y portugués.',
   },
   hero: {
     eyebrow: 'Numeric Oasis Technologies',
@@ -19,7 +19,7 @@ export const es = {
   fronts: [
     { name: 'Desarrollo a medida', line: 'Aplicaciones web, integraciones y herramientas internas, a la medida de tu trabajo.' },
     { name: 'Atlassian', line: 'Migraciones a Cloud, administración, apps en Forge y una factura de apps más pequeña.' },
-    { name: 'Estudio de Juegos', line: 'Kindelve, un descenso con colección de criaturas, en prueba abierta ya.' },
+    { name: 'Estudio de Juegos', line: 'Kindelve, un descenso con colección de criaturas, en beta abierta ya.' },
   ],
   proof: {
     label: 'Hecho para confiar',
@@ -64,7 +64,7 @@ export const es = {
         headline: 'Un juego para jugar en la pestaña que ya tienes abierta.',
         body: 'Kindelve es un descenso a mazmorras con colección de criaturas que funciona en cualquier navegador, en el móvil o en el ordenador. Está hecho con la misma disciplina que todo lo demás aquí: una simulación que da la misma respuesta en cualquier aparato, cinco idiomas desde la primera versión, y nada a la venta que compre poder.',
         points: [
-          'Kindelve, en prueba abierta y gratis',
+          'Kindelve, en beta abierta y gratis',
           'Un Trial diario en el que la puntuación se demuestra, no se da por buena',
           'Inglés, portugués, español, francés y japonés',
         ],

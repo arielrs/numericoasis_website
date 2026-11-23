@@ -1,0 +1,102 @@
+---
+lang: es
+translationKey: jira-configuration-limits-http-422
+title: "Los límites de configuración de Jira ya devuelven HTTP 422 en la API REST: qué se rompe y cómo comprobarlo"
+metaTitle: 'Límites de configuración de Jira: error 422 en API'
+description: "Desde un despliegue que empezó el 11 y el 12 de noviembre de 2026, Jira Cloud aplica sus límites de configuración en más operaciones de la API REST y responde HTTP 422 cuando una petición superaría alguno. Los scripts que crean opciones de campo, prioridades, esquemas de permisos o componentes pueden fallar donde antes funcionaban. Los límites, los endpoints afectados y cómo gestionar el error."
+metaDescription: 'Jira Cloud ya devuelve HTTP 422 cuando una llamada REST supera los límites de configuración: opciones, prioridades, componentes, esquemas. Qué hacer.'
+pubDate: 2026-11-14
+tags: ["atlassian-news", "jira-administration", "forge"]
+author: team
+heroImage: ../../../assets/blog/jira-configuration-limits-http-422.jpg
+heroImageAlt: 'Ilustración plana: una jarra medidora azul marino con marcas doradas, llena hasta arriba de pequeñas piezas redondeadas verde azulado, una pieza melocotón y otra gris claro rebotando en el borde y una regla azul marino de pie al lado, sobre una ola verde azulada.'
+---
+
+*Los límites no son nuevos. Lo nuevo es que más llamadas REST los aplican, así que un script que funcionaba el mes pasado puede recibir un 422 esta semana.*
+
+Los límites de configuración de Jira ya se aplican en más operaciones de la API REST. La [entrada del changelog para desarrolladores del 13 de noviembre de 2026](https://developer.atlassian.com/changelog/#CHANGE-3560) dice que Atlassian está "extending enforcement of Jira Cloud configuration limits to additional REST API operations", con una ventana de despliegue que empezó el 11 y el 12 de noviembre y que se activa sitio a sitio. Cuando una petición superaría un límite, Jira responde ahora HTTP 422 y la rechaza.
+
+Las operaciones afectadas crean o editan configuración: opciones de custom fields, esquemas de seguridad de elementos de trabajo, esquemas de permisos, prioridades, componentes y plantillas de espacio. Atlassian lo dice sin rodeos: "some requests that previously succeeded will now be rejected".
+
+Si te ocupas de scripts, integraciones o apps que crean configuración de Jira mediante la API, esta es la semana para revisarlos. Si todo se crea a mano en la interfaz, los mensajes de límite del propio producto ya te afectaban.
+
+## ¿Qué significa HTTP 422 en la API REST de Jira Cloud?
+
+En estas operaciones, HTTP 422 significa que la petición es válida, pero llevaría tu sitio por encima de un límite de configuración de Jira, por ejemplo más de 20.000 opciones en un mismo custom field. Jira rechaza la petición y el cuerpo de la respuesta indica qué límite se ha superado. Repetir la misma petición volverá a fallar; antes tiene que cambiar algo.
+
+Es distinto de HTTP 429, que Jira devuelve por [limitación de frecuencia](https://developer.atlassian.com/cloud/jira/platform/rate-limiting/) y que el cliente debe reintentar tras esperar. Tratar un 422 como un 429 convierte una llamada fallida en un bucle de llamadas fallidas.
+
+## ¿Qué límites de configuración de Jira se aplican?
+
+Los límites proceden de la página de [límites de datos y guardrails](https://support.atlassian.com/jira-cloud-administration/docs/data-limits-and-guardrails/) de Atlassian. Los de campos y tipos de trabajo se aplican desde marzo de 2026; el resto empezó a aplicarse en septiembre de 2026 y ahora también rige en estas operaciones de la API.
+
+| Configuración | Límite |
+|---|---|
+| Opciones en un custom field | 20.000 |
+| Niveles de seguridad de elementos de trabajo | 50 por espacio |
+| Concesiones en un permiso | 50 |
+| Prioridades | 100 por espacio |
+| Componentes de Jira | 10.000 por espacio (sin contar los de Compass) |
+| Workflows | 150 por esquema de workflow |
+| Estados | 200 por workflow |
+| Campos | 700 por espacio |
+| Tipos de trabajo | 150 por espacio |
+
+Al llegar al límite, Jira no borra ni modifica la configuración existente, y la gente puede seguir creando y actualizando elementos de trabajo. Una acción masiva que superaría un límite se rechaza entera, no se aplica a medias.
+
+## ¿Qué operaciones REST se ven afectadas?
+
+El changelog enumera seis operaciones en las versiones 2, 3 y latest de la API REST:
+
+- **Crear opciones de custom field (contexto):** `POST /rest/api/3/field/{fieldId}/context/{contextId}/option`
+- **Crear esquema de seguridad**, incluidos sus niveles iniciales: `POST /rest/api/3/issuesecurityschemes`
+- **Crear esquema de permisos**, incluidas sus concesiones iniciales: `POST /rest/api/3/permissionscheme`
+- **Crear prioridad:** `POST /rest/api/3/priority`
+- **Editar elemento de trabajo** cuando añade componentes por encima del límite del espacio: `PUT /rest/api/3/issue/{issueIdOrKey}`. Asignar componentes que ya existen en el espacio no se ve afectado.
+- **Crear plantilla de espacio:** `POST /rest/api/3/project-template`, cuando el origen contiene entidades que podrían superar un límite (opciones de campo, niveles de seguridad, concesiones de permisos, workflows, estados por workflow).
+
+## ¿Quién tiene más probabilidades de toparse con esto?
+
+Administradores y desarrolladores con procesos que hacen crecer la configuración de forma automática, sin que nadie vigile el total. Los candidatos más probables son listas de opciones sincronizadas desde otro sistema, componentes creados por repositorio o por cliente y scripts de aprovisionamiento que montan un esquema de permisos nuevo para cada espacio.
+
+Patrones típicos que conviene buscar:
+
+- Una sincronización nocturna que añade cada nuevo cliente, producto o centro de coste como opción de una lista de selección y nunca elimina las antiguas.
+- Una integración que crea un componente por cada repositorio, cliente o versión.
+- Un script de aprovisionamiento de espacios que clona un esquema con todas sus concesiones en lugar de reutilizar uno compartido.
+- Herramientas de migración o consolidación que crean prioridades por cada espacio de origen.
+- Apps de Forge o Connect que crean configuración al instalarse o bajo demanda.
+
+El [artículo sobre el límite de 700 custom fields](/es/blog/jira-700-custom-field-limit/) explica la misma mecánica para los campos: el recuento es por espacio o por campo, no por sitio, así que un campo o un espacio muy usado puede llegar al límite mientras el resto del sitio parece en orden.
+
+## ¿Cómo deben gestionar un 422 los scripts y las apps?
+
+La recomendación de Atlassian es tratar el 422 como una respuesta posible, no reintentar la misma petición de forma automática, examinar el cuerpo de la respuesta y orientar a los administradores en función de él. Un patrón mínimo:
+
+```python
+resp = session.post(url, json=payload)
+
+if resp.status_code == 422:
+    # Límite de configuración alcanzado: reintentar no servirá
+    log.error("Límite de configuración de Jira: %s", resp.text)
+    alert_jira_admins(resp.text)
+elif resp.status_code == 429:
+    # Limitación de frecuencia: espera y reintenta
+    retry_later(resp.headers.get("Retry-After"))
+else:
+    resp.raise_for_status()
+```
+
+La especificación OpenAPI de cada endpoint afectado documenta ya la respuesta 422, así que los clientes generados a partir de ella pueden exponerla como un error tipado.
+
+## Qué hacer ahora
+
+1. **Haz una lista de todos los scripts, integraciones y apps** que llaman a las seis operaciones anteriores. Si no lo tienes claro, el audit log de Jira muestra qué cuentas han estado creando opciones, prioridades y esquemas.
+2. **Mide los totales más altos.** Cuenta las opciones de las listas sincronizadas con `GET /rest/api/3/field/{fieldId}/context/{contextId}/option` y los componentes de los espacios con más actividad con `GET /rest/api/3/project/{projectIdOrKey}/component`.
+3. **Gestiona el 422 de forma explícita**: detente, registra el cuerpo y avisa a una persona.
+4. **Limpia antes de crecer.** Desactiva o elimina opciones obsoletas y componentes sin uso en lugar de pedir un límite mayor.
+5. **Pregunta a quienes desarrollan tus apps** si crean configuración mediante estos endpoints y cómo gestionan la nueva respuesta.
+
+## En resumen
+
+Jira Cloud aplica ya sus límites de configuración en seis operaciones REST más y devuelve HTTP 422 cuando una petición superaría alguno, con un despliegue sitio a sitio desde el 11 y el 12 de noviembre de 2026. Localiza los procesos que crean opciones de campo, componentes, prioridades y esquemas, dales una vía real para el 422 en lugar de un reintento y limpia las listas más grandes antes de que lleguen al techo. Los hábitos de diseño que permiten a una integración resistir cambios como este se recogen en [integraciones que sobreviven al próximo cambio de API](/es/blog/integrations-that-survive-api-changes/).
