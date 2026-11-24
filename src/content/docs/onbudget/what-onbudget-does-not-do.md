@@ -32,7 +32,7 @@ No. It holds two read scopes on Jira, read:jira-work and read:jira-user, plus st
 
 ## Does OnBudget send your data outside Atlassian?
 
-No. It runs entirely on Forge, inside Atlassian, which is what makes it eligible for Atlassian's Runs on Atlassian program. It stores your report settings and nothing else: never the content of your work items, never the results of a report. Account and group identifiers are hashed before they are used as storage keys. The CSV export is generated in your browser, so the data does not leave Atlassian in order to produce the file. Uninstalling the app purges everything it held.
+No. It runs entirely on Forge, inside Atlassian, which is what makes it eligible for Atlassian's Runs on Atlassian program. It stores your report settings, never the content of your work items and never the results of a report. Those settings name people where a feature needs to: a report keeps its owner's account ID and display name, shares and rate cards keep the account or group IDs and names they apply to, and labels and saved filters keep the text you type. Account and group identifiers are hashed before they are used as storage keys. The CSV export is generated in your browser, so the data does not leave Atlassian in order to produce the file. Uninstalling the app purges everything it held.
 
 ## Is OnBudget free?
 

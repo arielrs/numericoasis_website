@@ -5,8 +5,8 @@ name: OnBudget
 listingName: "OnBudget - Cost Tracking & Budget Reports for Jira"
 descriptor: "Budget tracking and cost reporting for Jira"
 metaDescription: "Turn work already tracked in Jira into budgets, forecasts and cost reports. Budget versus actual by project, epic or team. Read only, built on Forge."
-version: "2.4.0"
-dateModified: 2026-08-19
+version: "2.8.0"
+dateModified: 2026-10-06
 tagline: Budget tracking and cost reporting for Jira. Budget versus actual, health, and forecast, from work your team already tracks.
 description: OnBudget is a Jira Cloud app that turns work already tracked in Jira into money. Measure spend from story points, worklogs priced by rate cards, a numeric field, or counts of work items, then follow budget versus actual with health thresholds, variance, and a linear forecast on a dashboard you can rearrange and share. It works with the fields your Jira already has.
 marketplaceUrl: https://marketplace.atlassian.com/apps/2136850574/onbudget-cost-tracking-budget-reports-for-jira
@@ -21,10 +21,13 @@ priceModel: paid
 icon: ../../../assets/logos/onbudget.png
 ogImage: ../../../assets/og/onbudget.jpg
 runsOnAtlassian: true
-storesPersonalData: false
+storesPersonalData: true
 dataStatement: >-
-  OnBudget keeps your report settings and nothing else. Every read runs with your own Jira
-  permissions, and uninstalling purges everything it held.
+  OnBudget keeps your report settings, never your work item content and never a report's results.
+  Where a feature has to name people, it keeps their details: a report holds its owner's Atlassian
+  account ID and display name, shares and rate cards hold the account or group IDs and names they
+  apply to, and labels and saved filters hold the text you type. Every read runs with your own Jira
+  permissions, nothing leaves Atlassian, and uninstalling purges everything it held.
 
 answerFirst: >-
   OnBudget is a Jira Cloud app for budget tracking and cost reporting. It turns work you already
@@ -196,8 +199,10 @@ faq:
     a: >-
       Inside Atlassian. OnBudget runs entirely on Forge, which makes it eligible for the Runs on Atlassian program, and
       holds two read scopes on Jira plus its own app storage. It stores your report settings and never the content of your work items or the
-      results of a report. Account and group identifiers are hashed before use as storage keys, and
-      uninstalling purges everything.
+      results of a report. Those settings include the account IDs and names of report owners, of the
+      people and groups a report or saved filter is shared with, and of anyone priced in a rate card,
+      plus your labels and saved filters. Account and group identifiers are hashed before use as
+      storage keys, and uninstalling purges everything.
   - q: Can I export the numbers?
     a: >-
       Yes, as CSV with the per work item breakdown behind the totals. The file is generated in your

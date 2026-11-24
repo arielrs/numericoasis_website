@@ -93,8 +93,8 @@ Every report has a dashboard of gadgets that you can drag, resize, and retitle t
 - **Read-only scopes**: the app requests only `read:jira-work`, `read:jira-user`, and `storage:app`. It has no write or manage scopes and cannot change any issue or Jira configuration.
 - **Runs on Atlassian with no egress**: OnBudget runs entirely on Forge and makes no outbound network calls to external services.
 - **Permission-aware**: Jira reads run as the signed-in user, so the app never exposes data you cannot already see. An app-level read is used only to load field and status metadata catalogs.
-- **Results never stored**: only report definitions and settings are stored. Every report is recalculated from live Jira data each time it is opened.
-- **Hashed identifiers**: Atlassian account IDs and group IDs are stored only as one-way hashes, never in plain text.
+- **Results never stored**: OnBudget stores report settings, never report results or work item content. Every report is recalculated from live Jira data each time it is opened.
+- **Identifiers it keeps**: a report stores its owner's Atlassian account ID and display name, each share of a report or saved filter stores the account or group ID and name it was granted to, and worklog rate cards store the account or group IDs, names, and rates they price. Labels and saved filters store the text you type. Storage keys use one-way hashes of account and group IDs.
 - **Deleted on uninstall**: all stored data is deleted automatically when the app is uninstalled.
 
 For full detail, see the child **Privacy Policy** and **Security** pages listed at the top of this page.

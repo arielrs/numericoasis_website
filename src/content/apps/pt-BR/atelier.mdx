@@ -4,13 +4,13 @@ translationKey: atelier
 name: Atelier
 tagline: "Macros de design de página e formatação de conteúdo para o Confluence Cloud."
 description: "O Atelier é um app do Confluence Cloud para design de páginas. Oito macros acrescentam fundos com padrões, banners, cards, botões, painéis de informação, divisores, espaçadores e texto colorido, com 64 padrões de fundo e sem CSS nem HTML. Os administradores do espaço definem uma vez as cores da marca, as predefinições de tema e as fontes sugeridas, e todo autor escolhe a partir delas."
-listingName: "Atelier - Page Design & Content Formatting Macros"
+listingName: "Atelier - Page Design & Text Color Macros for Confluence"
 metaTitle: "Design de páginas no Confluence: banners e fundos"
 descriptor: "Design de páginas no Confluence: fundos, banners e cores da marca"
 metaDescription: "Fundos com padrões, banners, cards e cores hex para páginas do Confluence Cloud, com a paleta da marca por espaço. Teste o Atelier grátis no Marketplace."
 version: "2.3.0"
 dateModified: 2026-04-15
-marketplaceUrl: https://marketplace.atlassian.com/apps/2683700690/atelier-page-design-content-formatting-macros
+marketplaceUrl: https://marketplace.atlassian.com/apps/2683700690/atelier-page-design-text-color-macros-for-confluence
 documentationUrl: /documentation/atelier/overview/
 supportUrl: https://numericoasis.atlassian.net/servicedesk/customer/portal/39
 products: ["confluence"]
@@ -20,7 +20,7 @@ icon: ../../../assets/logos/atelier.png
 ogImage: ../../../assets/og/atelier.jpg
 priceModel: paid
 storesPersonalData: false
-dataStatement: "O Atelier guarda as configurações de design de cada espaço (cores da marca, predefinições de tema e fontes sugeridas) e nada sobre o conteúdo das suas páginas. Essas configurações ficam no armazenamento criptografado do Forge, dentro da Atlassian, o app não tem servidores externos e, ao desinstalar, elas são removidas automaticamente. Uma página incorporada numa macro Background segue as permissões do Confluence de cada leitor."
+dataStatement: "O Atelier guarda as configurações de design de cada espaço (cores da marca, predefinições de tema e fontes sugeridas) e nada sobre o conteúdo das suas páginas. Essas configurações ficam no armazenamento criptografado do Forge, dentro da Atlassian, o app não tem servidores externos e, ao desinstalar, elas são removidas automaticamente. Na tela, uma página incorporada numa macro Background é carregada com as permissões do Confluence de cada leitor. Exportações para PDF e Word usam uma cópia dessa página salva nas configurações da macro, então uma exportação pode incluir conteúdo incorporado que quem exporta não consegue abrir."
 
 answerFirst: "O design de páginas no Confluence começa pelo editor do Cloud: layouts, painéis, imagens de cabeçalho e cores de texto. O Atelier acrescenta oito macros para fundos com padrões, banners, cards, botões, divisores, espaçadores e texto nas suas cores, além de paletas da marca, predefinições de tema e fontes que o administrador do espaço define uma vez para todos."
 
@@ -120,7 +120,7 @@ keyFeatures:
   - "Até 50 cores da marca por espaço"
   - "Até 50 predefinições de tema"
   - "Até 30 fontes sugeridas"
-  - "Página incorporada com permissões"
+  - "Página incorporada na macro Background"
   - "Exportação para PDF e Word"
 
 trustSignals:
@@ -150,7 +150,7 @@ faq:
   - q: "Que dados o Atelier guarda, e ele é seguro?"
     a: "O Atelier guarda as configurações de design de cada espaço, ou seja, cores da marca, predefinições de tema e fontes sugeridas, e nada sobre o conteúdo das suas páginas. O app é construído no Atlassian Forge e roda dentro da Atlassian, sem servidores externos, então as configurações ficam no armazenamento criptografado do Forge. Ao desinstalar, elas são removidas automaticamente, e o Atelier não guarda dados pessoais."
   - q: "Um leitor consegue ver uma página incorporada que ele não tem permissão para abrir?"
-    a: "Não. A página incorporada na macro Background segue as permissões do Confluence de cada leitor, então o conteúdo incorporado aparece somente para quem consegue abrir a página de origem. Restrições de página e permissões de espaço valem exatamente como no resto do Confluence, e o Atelier não amplia o acesso de ninguém."
+    a: "Na tela, não. A macro Background carrega a página incorporada com as permissões do Confluence de cada leitor, então ela aparece somente para quem consegue abrir a página de origem. Exportações para PDF e Word funcionam de outro jeito: usam uma cópia da página de origem salva nas configurações da macro quando o autor salvou a macro pela última vez, e macros salvas antes de essa cópia existir carregam a página como o app. Por isso uma exportação pode incluir conteúdo incorporado que quem exporta não consegue abrir, então deixe páginas restritas fora de macros Background em páginas que outras pessoas exportam."
   - q: "O Atelier funciona no Confluence Data Center?"
     a: "Não. O Atelier é um app do Confluence Cloud construído no Atlassian Forge, e a página dele no Marketplace cobre apenas o Cloud. Times que estão migrando do Data Center podem refazer as páginas estilizadas com as macros dele depois que chegarem ao Cloud, usando cores da marca, predefinições de tema e fontes definidas nas configurações de cada espaço."
   - q: "Quanto custa o Atelier, e tem teste grátis?"

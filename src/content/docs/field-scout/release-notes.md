@@ -8,6 +8,18 @@ sourcePageId: "508297240"
 sourceTitle: "Field Scout - Release Notes"
 ---
 
+## Version 2.30
+
+**Release Date:** April 28, 2026
+
+Fixes to Fields per Project.
+
+### Fields per Project
+
+- **Company-managed counts:** a project that uses its own field configuration scheme now shows the fields of that scheme's field configuration, instead of the default field configuration's.
+- **Team-managed counts:** fields that appear only on a work item's edit or view screens, and not on the create screen, are now counted.
+- **Field count column:** shows the project's total field count, and projects are sorted by field count.
+
 ## Version 1.0
 
 **Release Date:** March 2026
@@ -41,7 +53,7 @@ Initial public release of Field Scout for Jira Cloud.
 
 - **Text Search:** Find fields instantly by name or ID.
 - **Multi-Select Filters:** Filter by classification status, field type, origin, scope, and last-used recency. All filters are combinable.
-- **Toggle Filters:** Quick toggles for Locked Only, Missing Description, Zero Screens, and Zero Contexts.
+- **Toggle Filters:** Quick toggles for Hide Locked, Hide System, Missing Description, Zero Screens, and Zero Contexts.
 - **Scope Filter:** Filter fields by scope, All Spaces, Team-Managed, or Company-Managed.
 - **Clear All:** Reset all active filters with one click.
 

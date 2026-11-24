@@ -80,7 +80,7 @@ If a timesheet discipline already works in your organisation, use it and price t
 
 OnBudget is a Jira Cloud app and it supports Jira Service Management. It is built on Atlassian Forge, so it is Cloud only: there is no Data Center or Server version, and running entirely on Forge is what makes it eligible for the Runs on Atlassian program.
 
-It reads your Jira rather than editing it, and it works with the fields, statuses and worklogs already there. It keeps your report settings and nothing else, and uninstalling purges everything it held. The interface is in English, Portuguese and Spanish. OnBudget is paid, with a free trial, on the Atlassian Marketplace.
+It reads your Jira rather than editing it, and it works with the fields, statuses and worklogs already there. It keeps your report settings, including the account IDs and names of report owners and of the people a report is shared with, and never your work item content or a report's results. Uninstalling purges everything it held. The interface is in English, Portuguese and Spanish. OnBudget is paid, with a free trial, on the Atlassian Marketplace.
 
 ## Try it against your own data
 

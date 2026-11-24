@@ -2,15 +2,15 @@
 title: "Security policy"
 app: "onbudget"
 order: 10
-description: "Read only access, hashed identifiers, no report results stored, and a clean uninstall. How OnBudget handles your data."
+description: "Read only access, hashed storage keys, no report results stored, and a clean uninstall. How OnBudget handles your data."
 # Migrated from Confluence. Kept so a page can be traced back to its origin.
 sourcePageId: "589824001"
 sourceTitle: "OnBudget - Security Policy"
 ---
 
-**Last Updated:** July 2, 2026 **App:** OnBudget **Vendor:** Numeric Oasis
+**Last Updated:** November 24, 2026 **App:** OnBudget **Vendor:** Numeric Oasis
 
-OnBudget is a budget and expense reporting app for Jira Cloud and Jira Service Management, built entirely on Atlassian Forge. This policy describes how the app is architected, how it protects data, and how Numeric Oasis develops, maintains, and responds to security matters. OnBudget runs entirely on Forge, makes no outbound network calls to external services, and requests only read-only access to Jira. This policy applies to Version 1.0, released in July 2026.
+OnBudget is a budget and expense reporting app for Jira Cloud and Jira Service Management, built entirely on Atlassian Forge. This policy describes how the app is architected, how it protects data, and how Numeric Oasis develops, maintains, and responds to security matters. OnBudget runs entirely on Forge, makes no outbound network calls to external services, and requests only read-only access to Jira. This policy applies to Version 2.8, released in October 2026.
 
 ## 1. Security Architecture
 
@@ -26,8 +26,8 @@ OnBudget is built entirely on the Atlassian Forge platform and runs inside your 
 
 OnBudget stores only what is necessary to define and organize reports, and it recalculates results from live Jira data every time a report is opened.
 
-- **Minimal storage.** Using Atlassian Forge storage inside your Atlassian tenant, the app stores report definitions (origin, budget, currency, method, time frame, thresholds, gadget layout, and metadata such as name and timestamps), user preferences, share grants, per-user star and hide records, and project-role rate cards. Report results are never stored.
-- **Hashed identifiers.** Atlassian account IDs and group IDs are stored only as one-way hashes, never in plain text.
+- **Minimal storage.** Using Atlassian Forge storage inside your Atlassian tenant, the app stores report definitions (origin, budget, currency, method, time frame, thresholds, gadget layout, report labels, and metadata such as name and timestamps), the report owner's account ID and display name, user preferences, share grants, per-user star and hide records, personal labels, saved filters and their shares, and rate cards. Report results are never stored.
+- **Hashed storage keys.** Storage keys use one-way hashes of Atlassian account IDs and group IDs. The records themselves keep the IDs and names a feature needs: the report owner, the users and groups a report or saved filter is shared with, and the people or groups a rate card prices.
 - **Transient, in-memory generation.** When a report is opened, the app reads issues, worklogs, story points, numeric custom fields, statuses, and user or group lookups from Jira through the standard REST API, processes them in memory, and does not persist them.
 - **Ownership checks.** Report edit, delete, and share actions are restricted to the report owner.
 - **Permission gate on rate cards.** Writing project-role rate cards requires the Jira "Administer projects" permission.
@@ -76,7 +76,7 @@ Please include enough detail for us to reproduce and understand the issue, such 
 
 OnBudget is designed to support customer compliance obligations through data minimization and by keeping data within Atlassian.
 
-**Data minimization.** The app stores only report definitions and related metadata, user preferences, share grants, per-user star and hide records, and project-role rate cards. Report results are never stored, Atlassian account IDs and group IDs are stored only as one-way hashes, and all stored data is deleted automatically when the app is uninstalled.
+**Data minimization.** The app stores only report definitions and related metadata, the report owner's account ID and display name, user preferences, share grants, per-user star and hide records, personal labels, saved filters and their shares, and rate cards. Report results are never stored, storage keys use one-way hashes of account and group IDs, and all stored data is deleted automatically when the app is uninstalled.
 
 **Runs on Atlassian.** The app operates entirely within Atlassian, with no outbound network calls to external services and no external transfers of data.
 

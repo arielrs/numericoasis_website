@@ -12,7 +12,7 @@ sourceTitle: "Astrolink - Work Item Link Graph for Jira"
 
 Astrolink is an Atlassian Forge app for Jira Cloud that visualizes your work item connections as an interactive star map. See every relationship between work items, epics, subtasks, Confluence pages, and external resources, rendered as a force-directed graph directly in your Jira issue panel, or as a full-page view powered by JQL, a project, or a filter.
 
-Astrolink traverses links and hierarchies up to 10 levels deep and across projects, revealing hidden dependencies, blockers, and relationships that boards and lists cannot show. Find the shortest path between any two work items, run an impact analysis, and spot at-risk dependencies automatically. Navigate to any connected work item with a single click, no matter which project it lives in.
+Astrolink traverses links and hierarchies up to 5 levels deep and across projects, revealing hidden dependencies, blockers, and relationships that boards and lists cannot show. Find the shortest path between any two work items, run an impact analysis, and spot at-risk dependencies automatically. Navigate to any connected work item with a single click, no matter which project it lives in.
 
 ## Why Astrolink?
 
@@ -23,7 +23,7 @@ Astrolink traverses links and hierarchies up to 10 levels deep and across projec
 | **"I don't know what's blocking what"** | Color-coded link types make blockers and critical paths immediately visible. Dependency Health flags at-risk edges (e.g. blocked-by items still in To Do while the source is Done) automatically. |
 | **"What's the shortest path between these two tickets?"** | Path Finder, right-click a node, pick a target, and Astrolink highlights the shortest chain of links between them. |
 | **"If we delay this ticket, what gets affected?"** | Impact Analysis, right-click a node and run a heat-map of every downstream item that depends on it. |
-| **"Our issue map is too complex to understand"** | Powerful filtering by type, status, assignee, label, project, sprint, version, component, or link type. Cluster nodes by project, epic, assignee, sprint, or status. Search nodes instantly. |
+| **"Our issue map is too complex to understand"** | Powerful filtering by type, status, assignee, label, project, sprint, version, component, or link type. Cluster nodes by project, status, assignee, priority, type, component, or sprint. Search nodes instantly. |
 | **"I need to present our work structure to stakeholders"** | Five themes (including High Contrast for projectors), fullscreen mode, customizable node styles, and PNG / SVG / JPG export at viewport or full-graph scope. |
 | **"I want to save my favourite views and reapply them"** | Five built-in presets (Default, Blockers Only, Presentation, Work Breakdown, Status Flow) plus unlimited custom presets per user. Saved Maps store your favourite full-page JQL / project / filter views too. |
 | **"I want to see how things evolved over time"** | Built-in timeline replays how your network of work items grew, with adjustable playback speed. |
@@ -38,7 +38,7 @@ Any Jira user can use Astrolink. It appears as a panel on every issue and as a f
 | Developers | Understand the full dependency chain before starting work. See what blocks you and what you block. Use Path Finder to trace links between two tickets. |
 | Project Managers | Visualize project structure, identify bottlenecks, and present work relationships to stakeholders. Use Impact Analysis to scope schedule risk before reprioritising. |
 | Scrum Masters | Identify cross-team dependencies during sprint planning. Spot disconnected work items and orphan tickets. Watch Dependency Health for at-risk edges. |
-| Product Owners | See the full scope of an epic or initiative, including all linked work across projects. Cluster by epic or sprint to see structure at a glance. |
+| Product Owners | See the full scope of an epic or initiative, including all linked work across projects. Cluster by sprint or component to see structure at a glance. |
 | Product Discovery Teams | Visualize how JPD ideas connect to delivery tickets, epics, and implementation work. |
 
 ## Key Features
@@ -47,7 +47,7 @@ Any Jira user can use Astrolink. It appears as a panel on every issue and as a f
 
 **Interactive Star Map**, Zoom, pan, drag, and click to navigate.
 
-**Deep Traversal**, Follows links, hierarchies, epics, and subtasks up to 10 levels deep across projects.
+**Deep Traversal**, Follows links, hierarchies, epics, and subtasks up to 5 levels deep across projects.
 
 **Cross-Project Navigation**, Click any node to jump directly to that work item, regardless of project.
 
@@ -61,7 +61,7 @@ Any Jira user can use Astrolink. It appears as a panel on every issue and as a f
 
 **Stale Highlighting**, Dim work items not updated in 7, 14, 30, or 90 days.
 
-**Cluster Hulls**, Group nodes by project, epic, assignee, sprint, or status with labelled convex hulls.
+**Cluster Hulls**, Group nodes by project, status, assignee, priority, type, component, or sprint with labelled convex hulls.
 
 **Confluence & External Links**, Linked Confluence pages and external URLs shown as distinct node types.
 

@@ -8,6 +8,19 @@ sourcePageId: "498597890"
 sourceTitle: "Astrolink - Release Notes"
 ---
 
+## Version 3.1, July 2026
+
+**Release Date:** July 9, 2026
+
+Adds Dependency View for graphs that start from one work item.
+
+### Dependency View
+
+- **Dependency View:** the new **1** button in the Depth selector, or the `1` key, shows only the chain of work items blocking the current one (followed through "is blocked by" links), plus sub-tasks. Parents and unrelated siblings of blockers are hidden.
+- **Back to the full graph:** pick a depth from 2 to 5, or press `2` to `5`, to leave Dependency View.
+- **Remembered:** Dependency View stays on when you switch work items or reload the page. Applying a preset does not change it.
+- **Where it applies:** the issue panel, and the Global Page when its source is a single work item. Graphs built from JQL, a project or a filter have no single root, so they keep the full graph.
+
 ## Version 3.0, April 2026
 
 **Release Date:** April 30, 2026
@@ -27,8 +40,8 @@ Click any node to open a side panel with the work item's description, comments, 
 ### Visualization
 
 - **10 node colour modes:** Type, Status, Priority, Assignee, Project, Component, Fix Version, Hierarchy Level, Sprint, Resolution.
-- **11 glow ring modes:** Status, Priority, Assignee, Project, Component, Fix Version, Hierarchy Level, Sprint, Resolution, Type, plus None.
-- **Cluster hulls:** group nodes by project, epic, assignee, sprint, or status with labelled convex hulls and tunable cluster density.
+- **11 glow ring modes:** Status, Priority, Assignee, Project, Component, Fix Version, Hierarchy Level, Sprint, Resolution, Type, plus Off.
+- **Cluster hulls:** group nodes by project, status, assignee, priority, type, component, or sprint with labelled convex hulls and tunable cluster density.
 - **Stale highlighting:** dim work items not updated in 7, 14, 30, or 90 days.
 - **Node Size slider:** dial nodes between 50 % and 150 %.
 - **Show Keys toggle:** overlay the work item key on each node.

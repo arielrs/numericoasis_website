@@ -32,7 +32,7 @@ export const en = {
   dataTable: {
     eyebrow: 'What each app stores',
     headline: 'Per app, in plain terms.',
-    lede: 'Most of our apps read your content and keep none of it. The ones that do hold personal data hold it because the job requires it: an acknowledgement that does not name who acknowledged it is not an acknowledgement, and an audit log that does not name who made the change is not an audit log.',
+    lede: 'Half of our apps read your content and keep none of it. The ones that do hold personal data hold it because the job requires it: an acknowledgement that does not name who acknowledged it is not an acknowledgement, an audit log that does not name who made the change is not an audit log, and a shared budget report has to say whose it is and who it is shared with.',
     columns: {
       app: 'App',
       host: 'Host',

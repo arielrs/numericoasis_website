@@ -5,8 +5,8 @@ name: OnBudget
 listingName: "OnBudget - Cost Tracking & Budget Reports for Jira"
 descriptor: "Control de presupuesto e informes de coste para Jira"
 metaDescription: "Convierte el trabajo ya registrado en Jira en presupuestos, pronósticos e informes de coste. Presupuestado frente a real por proyecto, epic o equipo."
-version: "2.4.0"
-dateModified: 2026-08-19
+version: "2.8.0"
+dateModified: 2026-10-06
 tagline: Control de presupuesto e informes de coste para Jira. Presupuestado frente a real, salud y pronóstico, a partir del trabajo que tu equipo ya registra.
 description: OnBudget es una app para Jira Cloud que convierte en dinero el trabajo que ya está registrado en Jira. Mide el gasto por puntos de historia, por registros de trabajo valorados con tarifarios, por un campo numérico o por el recuento de elementos de trabajo, y sigue el presupuestado frente a real con umbrales de salud, variación y pronóstico lineal en un panel que reorganizas y compartes. Funciona con los campos que tu Jira ya tiene.
 marketplaceUrl: https://marketplace.atlassian.com/apps/2136850574/onbudget-cost-tracking-budget-reports-for-jira
@@ -21,10 +21,14 @@ priceModel: paid
 icon: ../../../assets/logos/onbudget.png
 ogImage: ../../../assets/og/onbudget.jpg
 runsOnAtlassian: true
-storesPersonalData: false
+storesPersonalData: true
 dataStatement: >-
-  OnBudget guarda la configuración de tus informes y nada más. Cada lectura se hace con tus propios
-  permisos de Jira, y desinstalarla borra todo lo que tenía.
+  OnBudget guarda la configuración de tus informes, nunca el contenido de tus elementos de trabajo
+  ni el resultado de un informe. Cuando una función necesita identificar a personas, guarda esos
+  datos: un informe conserva el ID de cuenta de Atlassian y el nombre visible de su propietario, los
+  informes compartidos y los tarifarios conservan los ID y nombres de las cuentas o grupos a los que
+  se aplican, y las etiquetas y los filtros guardados conservan el texto que escribes. Cada lectura se
+  hace con tus propios permisos de Jira, nada sale de Atlassian, y desinstalarla borra todo lo que tenía.
 
 answerFirst: >-
   OnBudget es una app para Jira Cloud de control de presupuesto e informes de coste. Convierte en
@@ -200,8 +204,11 @@ faq:
     a: >-
       Dentro de Atlassian. OnBudget funciona por completo en Forge, lo que lo hace elegible para el programa Runs on Atlassian
       y declara dos permisos de lectura sobre Jira más su propio almacenamiento. Guarda la configuración del informe y nunca el contenido de
-      tus elementos de trabajo ni el resultado de un informe. Los identificadores de cuenta y de grupo
-      pasan por hash antes de usarse como claves de almacenamiento, y desinstalar lo borra todo.
+      tus elementos de trabajo ni el resultado de un informe. Esa configuración incluye los ID de cuenta
+      y los nombres de los propietarios de los informes, de las personas y grupos con quienes se comparte
+      un informe o un filtro guardado y de quien figure en un tarifario, además de tus etiquetas y filtros
+      guardados. Los identificadores de cuenta y de grupo pasan por hash antes de usarse como claves de
+      almacenamiento, y desinstalar lo borra todo.
   - q: ¿Puedo exportar los números?
     a: >-
       Sí, en CSV, con el desglose por elemento de trabajo que hay detrás de los totales. El archivo se

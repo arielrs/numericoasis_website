@@ -8,6 +8,82 @@ sourcePageId: "589791233"
 sourceTitle: "OnBudget - Release Notes"
 ---
 
+## Version 2.8
+
+**Release Date:** October 6, 2026
+
+Labels, saved filters, a Tracking tab, report owner changes, a faster Home page, and the fixes released since 1.0.
+
+### Labels
+
+**Report labels**, set by the report owner, are seen by everyone with access to the report. **My labels** are personal, and only you see them.
+
+Up to 10 labels per report, each up to 40 characters.
+
+Add labels from a report's menu, on the report page, or in the report builder, and edit labels on up to 100 selected reports at once.
+
+Home search matches labels, and the **Labels** filter shows reports with any or all of the labels you pick.
+
+### Saved Filters
+
+Save a Home filter (name or label text, health, labels, currency, scope, and hidden reports) and apply it again from **Saved filters**. Each person can keep up to 50.
+
+Edit, rename, delete, or share a filter with users or groups. Filters shared with you appear under **Shared with me**, where you can save your own copy. A shared filter only shows each person the reports they can already access.
+
+### Tracking Tab
+
+A new **Tracking** tab on Home shows how many reports are over budget, at risk, or on track, for all reports, for each saved filter, and for each label.
+
+Show the counts as stacked bars, bars, columns, a pie, a donut, or a table. Click a segment to open those reports in the Reports tab.
+
+**Key numbers** show, for all reports or for the saved filters you pick, the report counts by health and, per currency, planned, spent, remaining, budget used, and projected overrun. Amounts are never added up across currencies.
+
+### Report Ownership
+
+**Change owner** hands a report to another person after a confirmation step. Existing shares stay, and you can keep view-only access under **Shared with me**.
+
+### Home
+
+The report list appears first, and each report's numbers fill in as they are calculated.
+
+Coming back to Home restores your tab, filters, saved filter, and page. Reports calculated in the last two minutes show their numbers straight away.
+
+Your choice of Cards, List, or Table view is remembered across devices.
+
+Each report shows its health: Over budget, At risk, On track, Not calculated, Data deleted, or No budget set. A report whose spaces or work items were deleted says so.
+
+Long report titles wrap onto two lines beside the star.
+
+### Fixes
+
+Failed actions (saving a layout, starring, hiding, deleting, duplicating, or sharing a report, and saving or deleting a worklog role) now show an error message.
+
+When a report cannot refresh, its last results stay on screen with a message.
+
+A failed Jira search now shows an error instead of zero spend.
+
+Reports with very large numbers of worklogs no longer fail to calculate.
+
+Reports that return no rows keep their number and date formats.
+
+A report with exactly 5,000 work items is no longer rejected as over the limit.
+
+Jira rate limits are retried briefly before a report gives up.
+
+CSV files keep accented characters intact when opened in Excel on Windows.
+
+Charts load only when a report or a preview is shown, so Home and the project settings page load faster.
+
+### Security
+
+Reading a project's worklog roles requires permission to browse that project.
+
+Space (project) IDs in a report's origin are checked before they are used in JQL.
+
+CSV export guards against spreadsheet formula injection.
+
+Dependencies were updated to clear known vulnerabilities.
+
 ## Version 1.0
 
 **Release Date:** July 2026
@@ -88,7 +164,7 @@ Runs entirely on Atlassian Forge with no outbound network calls to external serv
 
 Report definitions and related data are stored in Atlassian Forge storage inside your Atlassian tenant. Report results are never stored; every report is recalculated from live Jira data each time it is opened.
 
-Atlassian account IDs and group IDs are stored only as one-way hashes, never in plain text.
+Storage keys use one-way hashes of Atlassian account IDs and group IDs. The stored records keep the report owner's account ID and display name, the account or group ID and name of each share, and the account or group IDs, names, and rates in worklog rate cards.
 
 Editing, deleting, and sharing a report are restricted to the report owner, and writing project-role rate cards requires the Jira **Administer projects** permission.
 
@@ -106,4 +182,4 @@ Eligible for the Atlassian **Runs on Atlassian** program.
 
 For help or questions, contact **Numeric Oasis** at [contact@numericoasis.com](mailto:contact@numericoasis.com) or through the [Customer Support Portal](https://numericoasis.atlassian.net/servicedesk/customer/portal/39).
 
-**Last Updated:** July 2, 2026
+**Last Updated:** November 24, 2026

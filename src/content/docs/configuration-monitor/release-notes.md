@@ -8,6 +8,42 @@ sourcePageId: "493256705"
 sourceTitle: "CM - Release Notes"
 ---
 
+## Version 4.2
+
+**Release Date:** September 25, 2026
+
+Maintenance release.
+
+- **Steadier hourly sync:** a project with several workflows is no longer treated as changed when Jira returns its workflows in a different order, so hourly syncs skip the full comparison when nothing has changed. What is tracked and shown is unchanged.
+
+---
+
+## Version 4.1
+
+**Release Date:** September 25, 2026
+
+Site-level change tracking, fixes for projects that were not recording changes, and a faster change history.
+
+### Site-Level Changes
+
+- **Three new filters:** Fields, Statuses, and Resolutions.
+- **Global changes:** changes made for the whole site that affect a project are added to its change history with a **Global** label. This covers custom field contexts, field configurations, and custom fields on the project's screens (changes and deletions), statuses used in the project's workflows, resolutions, and the project's work types (shown under Work Types).
+- **When they appear:** site-level changes are read from the Jira audit log and recorded at the project's next sync that detects a configuration change.
+
+### Fixes
+
+- **Projects that recorded no changes:** a project whose first sync had not saved a baseline snapshot recorded nothing afterwards. Every project now gets its baseline on the first hourly sync after the update. Running Refresh Now on a project with no baseline schedules one and says so.
+- **Long histories keep saving:** when a project's history reaches the storage limit, the oldest changes are removed instead of new changes failing to save, and the sync log shows how many were removed. History is now stored compressed, so far more changes fit before that happens.
+- **Sync log:** failed scheduled syncs, warnings, and trimmed changes are now listed. Only successful scheduled syncs with no changes stay hidden.
+- **GDPR Admin Panel and uninstall:** export, anonymize, and uninstall cleanup now also cover data kept for archived and deleted projects.
+
+### Faster Change History
+
+- **Load once:** the change list loads once when you open the page. Filters, dates, and pages then switch instantly, and a **Reload** button fetches the latest changes.
+- **After Refresh Now:** the list updates with what the sync saved, without a second load.
+
+---
+
 ## Version 4.0
 
 **Release Date:** April 2026

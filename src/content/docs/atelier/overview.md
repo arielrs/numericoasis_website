@@ -22,12 +22,12 @@ then picks from that set rather than inventing their own.
 
 | Capability | What it does |
 | --- | --- |
-| 8 design macros | Backgrounds, banners, callouts, dividers, text blocks, info panels and more, designed to sit together on one page. |
+| 8 design macros | Background, Banner, Text Color, Divider, Info Panel, Button, Spacer and Card, designed to sit together on one page. |
 | 64 background patterns | Applied through a config panel with colour pickers and a live preview. |
 | Per space colour palettes | Named brand colours with hex codes and opacity control, set in space settings. |
 | Reusable theme presets | A saved combination an author can apply in one step. |
 | Curated font suggestions | A shortlist chosen by the space admin rather than the full system list. |
-| Page embedding | Embeds another page's content, and respects the reader's own permissions. |
+| Page embedding | Embeds another page's content, fetched with the reader's own permissions on screen. Exports use a saved copy, see below. |
 | PDF and Word export | Styling survives the export rather than collapsing to plain text. |
 
 ## Who it is for
@@ -45,13 +45,17 @@ macro configuration panel on any page.
 
 ## Data and permissions
 
-Atelier stores your space level design settings, the palettes, presets and font
-choices, and nothing about the content of your pages. Storage is encrypted and
+Atelier's own storage holds your space level design settings, the palettes, presets
+and font choices, and nothing about the content of your pages. Storage is encrypted and
 stays inside Atlassian, because the app runs on Atlassian Forge rather than on
 infrastructure of ours.
 
-The page embedding macro shows only what the reader could already open in
-Confluence. It does not widen anyone's access.
+On screen, a page embedded in the Background macro is fetched with the reader's own
+Confluence permissions, so it appears only for people who can open the source page.
+PDF and Word exports work differently. They use a copy of the embedded page that is
+saved in the macro's settings when the author saves the macro, and macros saved before
+that copy existed fetch the page as the app. An export can therefore include embedded
+content that the person exporting cannot open, as it stood when the macro was last saved.
 
 ## Getting help
 

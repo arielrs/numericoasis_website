@@ -34,7 +34,7 @@ export const es = {
   dataTable: {
     eyebrow: 'Qué guarda cada app',
     headline: 'App por app, en lenguaje claro.',
-    lede: 'La mayoría de nuestras apps leen tu contenido y no guardan nada de él. Las que sí guardan datos personales lo hacen porque el trabajo lo exige: una aceptación que no dice quién aceptó no es una aceptación, y un registro de auditoría que no dice quién hizo el cambio no es un registro de auditoría.',
+    lede: 'La mitad de nuestras apps leen tu contenido y no guardan nada de él. Las que sí guardan datos personales lo hacen porque el trabajo lo exige: una aceptación que no dice quién aceptó no es una aceptación, un registro de auditoría que no dice quién hizo el cambio no es un registro de auditoría, y un informe de presupuesto compartido tiene que decir de quién es y con quién se comparte.',
     columns: {
       app: 'App',
       host: 'Producto',

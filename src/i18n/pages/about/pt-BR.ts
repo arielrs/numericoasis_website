@@ -34,7 +34,7 @@ export const ptBR = {
   dataTable: {
     eyebrow: 'O que cada app guarda',
     headline: 'App por app, em linguagem simples.',
-    lede: 'A maioria dos nossos apps lê o seu conteúdo e não guarda nada dele. Os que guardam dados pessoais guardam porque o trabalho exige: um aceite que não diz quem aceitou não é um aceite, e uma trilha de auditoria que não diz quem fez a mudança não é uma trilha de auditoria.',
+    lede: 'Metade dos nossos apps lê o seu conteúdo e não guarda nada dele. Os que guardam dados pessoais guardam porque o trabalho exige: um aceite que não diz quem aceitou não é um aceite, uma trilha de auditoria que não diz quem fez a mudança não é uma trilha de auditoria, e um relatório de orçamento compartilhado precisa dizer de quem ele é e com quem foi compartilhado.',
     columns: {
       app: 'App',
       host: 'Produto',

@@ -58,7 +58,7 @@ Field Scout is designed for **Jira Cloud administrators**. It appears as an admi
 
 **Origin Tracking**, See which product or app created each field: Jira Core, Jira Software, JSM, ScriptRunner, Tempo, Advanced Roadmaps, and more.
 
-**Comprehensive Filtering**, Search by name or ID. Filter by status, field type, origin, scope, and last-used recency. Toggle filters for locked fields, missing descriptions, zero screens, and zero contexts.
+**Comprehensive Filtering**, Search by name or ID. Filter by status, field type, origin, scope, and last-used recency. Toggle filters to hide locked or system fields, or to show only fields with missing descriptions, zero screens, or zero contexts.
 
 **Direct Admin Links**, Click any field name to jump directly to its configuration page in Jira admin. Screen counts link to the field's screen associations.
 
@@ -76,13 +76,14 @@ Field Scout is designed for **Jira Cloud administrators**. It appears as an admi
 
 | Classification | What It Means |
 | --- | --- |
-| **Active** | The field is on screens, has contexts configured, and has been used within the last year. |
+| **Active** | The field is on screens, has contexts configured, and has been used within the last six months. |
 | **Stale (>6 months)** | The field has screens and contexts, but has not been used in 6+ months. It may be trending toward disuse. |
 | **Stale (>1 year)** | The field has screens and contexts, but has not been used in over one year. |
-| **Likely Unused** | The field is missing screen associations or context assignments, or Jira does not track its usage. |
-| **Unused** | The field has zero screens and zero contexts, it is not visible anywhere in Jira. |
+| **Likely Unused** | The field has no context assignments, has no screen associations, or is on screens but has never been used. |
+| **Unused** | The field has zero screens and no recorded usage, it is not visible anywhere in Jira. |
 | **System** | Built-in Jira fields managed by Atlassian. These cannot be deleted or modified. |
-| **Not Tracked** | Team-managed-only fields where Jira does not provide usage tracking data. |
+| **Not Tracked** | Fields whose usage Jira does not track, including team-managed-only fields. |
+| **Locked** | Fields managed by an app. They are excluded from usage calculations. |
 
 ## Security & Privacy
 

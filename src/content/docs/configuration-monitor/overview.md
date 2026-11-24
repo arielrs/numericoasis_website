@@ -21,7 +21,7 @@ Configuration Monitor puts change visibility directly in the hands of Project Ad
 | **"Something broke, but I don't know what changed"** | Instantly see every configuration change with before/after values. Filter by date range to pinpoint exactly when a breaking change was introduced. |
 | **"I don't know who changed our permissions"** | Change attribution identifies the administrator who made each change via audit log correlation. |
 | **"I can't keep track of all the settings that matter"** | Monitors 13 configuration sections automatically, permissions, notifications, workflows, screens, security, roles, work types, components, versions, project settings, JSM queues and request types, and Sprints (for Scrum projects). |
-| **"I need to report on configuration changes for compliance"** | Generate CSV exports of all filtered changes directly in the app. Copy and paste into Excel or Google Sheets for compliance reporting. |
+| **"I need to report on configuration changes for compliance"** | Generate a CSV of the filtered changes on the current page (up to 100 per page) directly in the app. Copy and paste into Excel or Google Sheets for compliance reporting. |
 | **"I only notice problems long after they happen"** | Automatic hourly syncing captures changes within an hour. No manual checking required. |
 | **"Multiple admins manage our project and we step on each other"** | The change log serves as a shared record of all configuration activity. |
 | **"I always have to ask the Site Admin to check what changed"** | Project Admins get full change visibility directly in their project settings, no need to escalate to Site Admins for routine configuration investigations. |
@@ -62,7 +62,7 @@ Configuration Monitor puts change visibility directly in the hands of Project Ad
 - **Automatic Syncing:** Configuration snapshots every hour and on install. Manual sync available. Large instances (100+ projects) use Forge Queue for batched processing.
 - **Change Detection:** Compares snapshots to detect additions, removals, and modifications across all tracked sections.
 - **Change Attribution:** Identifies which administrator made each change via audit log correlation (see *Change Attribution Details* below).
-- **Section Filtering:** Filter changes by any of the 13 tracked sections.
+- **Section Filtering:** Filter changes by any of the 13 tracked sections, plus Fields, Statuses, and Resolutions for site-level changes (see *Site-Level Changes* below).
 - **Date Range Filtering:** Filter changes by start and end date.
 - **Configurable Pagination:** Choose 25, 50, or 100 changes per page.
 - **Change Type Filtering:** Instantly filter your change log by Added, Removed, or Modified changes.
@@ -72,8 +72,8 @@ Configuration Monitor puts change visibility directly in the hands of Project Ad
 - **Project Context Header:** See your project name, key, type, and management style at a glance.
 - **Clear Empty States:** Helpful guidance messages when no changes exist yet or when your filters return no results.
 - **Multiple Author Visibility:** When multiple administrators modify the same configuration in the same period, all contributors are shown.
-- **CSV Export:** Generate CSV of all filtered changes in-app. Copy and paste into Excel or Google Sheets. Includes date, time, section, type, entity, details, changed by (name + account ID), and before/after values. Also available in the GDPR Admin Panel for site-wide user data export with project context.
-- **Sync Log:** View sync history, zero-change syncs are automatically hidden for a clean view. All information displayed on a single line.
+- **CSV Export:** Generate CSV of the filtered changes on the current page (25, 50, or 100 per page) in-app. Copy and paste into Excel or Google Sheets. Includes date, time, section, type, entity, details, changed by (name + account ID), and before/after values. Also available in the GDPR Admin Panel for site-wide user data export with project context.
+- **Sync Log:** View sync history, scheduled syncs with no changes are automatically hidden for a clean view, unless they failed or carry a warning. All information displayed on a single line.
 - **Project Type Detection:** Displays project type (Software/Service Management/Business) and management style (Team-managed/Company-managed).
 - **Smart Team-Managed Handling:** Automatically hides irrelevant sections (Components, Versions) for team-managed projects and shows contextual disclaimers.
 - **Sprint Tracking:** For Jira Software projects using Scrum boards, tracks sprint creation, start, close, reopen, name changes, date changes, and goal updates. Kanban projects are automatically detected and skipped.
@@ -84,7 +84,7 @@ Configuration Monitor puts change visibility directly in the hands of Project Ad
 - **Linked User Profiles:** User names in the audit trail are clickable links to their Jira profile.
 - **Smart Anonymization:** After anonymizing a user, only their historical activity is anonymized. If the same user remains active and makes new changes, those are tracked normally, ensuring ongoing accountability while respecting their right to erasure for past data.
 - **Admin CSV Export:** Export a specific user's change data as CSV directly from the Admin Panel.
-- **Data Retention:** Changes older than 1 year are automatically purged. Maximum 1000 changes per project.
+- **Data Retention:** Changes older than 1 year are automatically purged. Maximum 1000 changes per project. If a project's history reaches the storage limit first, the oldest changes are removed and the sync log shows how many.
 - **Clean Uninstall:** All stored data is removed when the app is uninstalled.
 - **Runs on Atlassian:** Fully eligible for the Runs on Atlassian program. No data egress.
 
@@ -105,6 +105,17 @@ Configuration Monitor puts change visibility directly in the hands of Project Ad
 | Queues (JSM) | Queue additions, removals, JQL filter and column changes | ✅ |
 | Request Types (JSM) | Request type additions, removals, description and portal group changes | ✅ |
 | Sprints | Sprint creation, deletion, start, close, reopen, name changes, date changes, and goal updates (Scrum boards only) | ✅ |
+
+## Site-Level Changes
+
+Some changes are made once for the whole Jira site but still affect a project. Configuration Monitor reads them from the Jira audit log and adds the ones that affect the project to its change history with a **Global** label:
+
+- **Fields:** changes to and deletions of custom field contexts, field configurations, and custom fields on the project's screens.
+- **Statuses:** changes to statuses used in the project's workflows.
+- **Resolutions:** changes to resolutions.
+- **Work Types:** changes to work types the project uses, shown under Work Types.
+
+Site-level changes are recorded at the project's next sync that detects a configuration change, so they can appear later than the change itself.
 
 ## Team-Managed Project Limitations
 

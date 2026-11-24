@@ -4,13 +4,13 @@ translationKey: atelier
 name: Atelier
 tagline: "Page design and content formatting macros for Confluence Cloud."
 description: "Atelier is a Confluence Cloud app for page design. Eight macros add patterned backgrounds, banners, cards, buttons, info panels, dividers, spacers and colored text, with 64 background patterns and no CSS or HTML. Space admins set brand colors, theme presets and suggested fonts once, and every author picks from them."
-listingName: "Atelier - Page Design & Content Formatting Macros"
+listingName: "Atelier - Page Design & Text Color Macros for Confluence"
 metaTitle: "Confluence page design: banners and backgrounds"
 descriptor: "Confluence page design: backgrounds, banners and brand colors"
 metaDescription: "Patterned backgrounds, banners, cards and hex colors for Confluence Cloud pages, with a brand palette set once per space. Try Atelier free on the Marketplace."
 version: "2.3.0"
 dateModified: 2026-04-15
-marketplaceUrl: https://marketplace.atlassian.com/apps/2683700690/atelier-page-design-content-formatting-macros
+marketplaceUrl: https://marketplace.atlassian.com/apps/2683700690/atelier-page-design-text-color-macros-for-confluence
 documentationUrl: /documentation/atelier/overview/
 supportUrl: https://numericoasis.atlassian.net/servicedesk/customer/portal/39
 products: ["confluence"]
@@ -20,7 +20,7 @@ icon: ../../../assets/logos/atelier.png
 ogImage: ../../../assets/og/atelier.jpg
 priceModel: paid
 storesPersonalData: false
-dataStatement: "Atelier keeps each space's design settings (brand colors, theme presets and suggested fonts) and nothing about the content of your pages. The settings sit in encrypted Forge storage inside Atlassian, the app has no external servers, and uninstalling removes them automatically. A page embedded in a Background macro follows each reader's own Confluence permissions."
+dataStatement: "Atelier keeps each space's design settings (brand colors, theme presets and suggested fonts) and nothing about the content of your pages. The settings sit in encrypted Forge storage inside Atlassian, the app has no external servers, and uninstalling removes them automatically. On screen, a page embedded in a Background macro is fetched with each reader's own Confluence permissions. PDF and Word exports use a copy of that page saved in the macro's settings, so an export can include embedded content the person exporting cannot open."
 
 answerFirst: "Confluence page design starts with the Cloud editor: layouts, panels, header images and text colors. Atelier adds eight macros on top for patterned backgrounds, banners, cards, buttons, callouts, dividers, spacers and colored text in your own colors, plus brand palettes, theme presets and fonts that a space admin sets once for every author."
 
@@ -120,7 +120,7 @@ keyFeatures:
   - "Up to 50 brand colors per space"
   - "Up to 50 theme presets"
   - "Up to 30 suggested fonts"
-  - "Page embedding with permissions"
+  - "Page embedding in the Background macro"
   - "PDF and Word export"
 
 trustSignals:
@@ -150,7 +150,7 @@ faq:
   - q: "What data does Atelier store, and is it secure?"
     a: "Atelier stores each space's design settings, meaning brand colors, theme presets and suggested fonts, and nothing about the content of your pages. The app is built on Atlassian Forge and runs inside Atlassian with no external servers, so the settings stay in encrypted Forge storage. Uninstalling removes them automatically, and Atelier holds no personal data."
   - q: "Can a reader see an embedded page they do not have permission to open?"
-    a: "No. Page embedding in the Background macro follows each reader's own Confluence permissions, so the embedded content appears only for people who can open the source page. Page restrictions and space permissions apply exactly as they do elsewhere in Confluence, and Atelier does not widen anyone's access."
+    a: "Not on screen. The Background macro fetches an embedded page with each reader's own Confluence permissions, so it appears only for people who can open the source page. PDF and Word exports work differently: they use a copy of the source page saved in the macro's settings when the author last saved the macro, and macros saved before that copy existed fetch the page as the app. An export can therefore include embedded content that the person exporting cannot open, so keep restricted pages out of Background macros on pages that others export."
   - q: "Does Atelier work on Confluence Data Center?"
     a: "No. Atelier is a Confluence Cloud app built on Atlassian Forge, and its Marketplace listing covers Cloud only. Teams moving from Data Center can rebuild their styled pages with its macros once they are on Cloud, using brand colors, theme presets and fonts set in each space's settings."
   - q: "How much does Atelier cost, and is there a free trial?"
