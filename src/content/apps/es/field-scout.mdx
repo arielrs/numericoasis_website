@@ -141,7 +141,7 @@ useCases:
 
 faq:
   - q: "¿Cómo encontrar campos personalizados sin uso en Jira?"
-    a: "Revisa las pantallas, los contextos y la fecha de último uso de cada campo. En los planes Premium y Enterprise, el Site optimizer de Jira lista los campos personalizados sin uso en ningún space, contexto o pantalla. Field Scout lo hace en cualquier plan: Unused es sin pantallas y sin contextos, Likely Unused es cuando falta uno de los dos o Jira no hace seguimiento del campo, y Stale es configurado pero parado desde hace más de 6 meses o más de un año."
+    a: "Revisa las pantallas, los contextos y la fecha de último uso de cada campo. En los planes Premium y Enterprise, el Site optimizer de Jira lista los campos personalizados sin uso en ningún space, contexto o pantalla. Field Scout lo hace en cualquier plan: Unused es sin pantallas y nunca usado, Likely Unused es sin contextos, sin pantallas o en pantallas pero nunca usado, y Stale es configurado pero parado desde hace más de 6 meses o más de un año."
   - q: "¿Cómo sacar una lista de todos los campos personalizados de Jira?"
     a: "La página Fields de Jira lista todos los campos del sitio, company-managed y team-managed, y Atlassian remite a la REST API o a scripts para las auditorías detalladas. El Full Export de Field Scout vuelca el inventario completo a CSV con ID, nombre, tipo, origen, pantallas, contextos, fecha de último uso, estado, ámbito, bloqueo y descripción. Los modos Cleanup List, Screen Audit y Doc Template recortan esos mismos datos para una tarea concreta."
   - q: "¿Cuál es el límite de campos personalizados en Jira Cloud?"

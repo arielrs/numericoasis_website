@@ -141,7 +141,7 @@ useCases:
 
 faq:
   - q: "How do I find unused custom fields in Jira?"
-    a: "Check each field's screens, contexts and last-used date. On Premium and Enterprise, Jira's Site optimizer lists custom fields not used in any space, context or screen. Field Scout does it on any plan: Unused means no screens and no contexts, Likely Unused means one of them is missing or Jira does not track the field, and Stale means configured but idle for over 6 months or over a year."
+    a: "Check each field's screens, contexts and last-used date. On Premium and Enterprise, Jira's Site optimizer lists custom fields not used in any space, context or screen. Field Scout does it on any plan: Unused means on no screens and never used, Likely Unused means no contexts, no screens, or on screens but never used, and Stale means configured but idle for over 6 months or over a year."
   - q: "How do I get a list of all custom fields in Jira?"
     a: "Jira's Fields page lists every field on the site, company-managed and team-managed, and Atlassian points to the REST API or scripts for detailed audits. Field Scout's Full Export writes the whole inventory to CSV with ID, name, type, origin, screens, contexts, last-used date, status, scope, locked state and description. The Cleanup List, Screen Audit and Doc Template modes cut the same data for one job."
   - q: "What is the custom field limit in Jira Cloud?"
