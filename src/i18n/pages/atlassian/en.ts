@@ -1,6 +1,6 @@
 export const en = {
   meta: {
-    crumb: 'Atlassian',
+    crumb: 'Atlassian consulting',
     title: 'Atlassian consulting and Forge apps',
     metaDescription:
       'Jira and Confluence migrations to Cloud, administration and license clean-up, our Marketplace apps, and custom Forge apps that shrink the app bill.',
@@ -8,11 +8,11 @@ export const en = {
       'Numeric Oasis assesses and runs Jira and Confluence migrations from Data Center to Cloud, sizes ScriptRunner rewrites, moves teams off other tools, cleans up administration and licenses, publishes Forge apps on the Atlassian Marketplace, and builds custom Forge apps that replace several subscriptions.',
   },
   hero: {
-    eyebrow: 'Atlassian',
+    eyebrow: 'Atlassian consulting',
     headline: 'Jira and Confluence, from the migration to the last custom field.',
     lede: 'We have worked inside Atlassian tools for fifteen years, as administrators, consultants and Marketplace partners. We move you to Cloud, keep the site clean once you are there, and build the app you need when the Marketplace does not have it, or charges too much for the part you use.',
     primary: 'Talk to us',
-    secondary: 'See our apps',
+    secondary: 'Browse our Jira and Confluence apps',
   },
   consulting: {
     eyebrow: 'Consulting',
@@ -40,7 +40,7 @@ export const en = {
     eyebrow: 'Marketplace apps',
     headline: 'Our apps for Jira and Confluence Cloud.',
     lede: 'Built on Forge, so they run inside your own Atlassian environment and your data stays there. Each one does one job end to end, and each one says on its own page exactly what it stores.',
-    link: 'All apps',
+    link: 'All our Jira and Confluence apps',
   },
   custom: {
     eyebrow: 'Custom Forge apps',

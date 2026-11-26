@@ -2,107 +2,139 @@ import type { HomeCopy } from './en';
 
 export const es = {
   meta: {
-    title: 'Software a medida, Atlassian y juegos',
+    title: 'Apps para Jira y Confluence: presupuestos',
     metaDescription:
-      'Numeric Oasis crea software a medida, migra y administra Jira y Confluence, publica apps en Forge y tiene un estudio de juegos. Desde Canoas, desde 2011.',
+      'Apps para Jira y Confluence Cloud: presupuestado frente a real, mapa de dependencias, registro de auditoría, diseño de páginas y confirmación de lectura.',
     description:
-      'Numeric Oasis Technologies trabaja en tres frentes: aplicaciones web, integraciones y herramientas internas a medida; consultoría Atlassian, apps del Marketplace y apps en Forge a medida; y un estudio de juegos que está creando Kindelve, un juego de navegador en beta abierta. Entregas pequeñas, una prueba para cada corrección, en español, inglés y portugués.',
+      'Numeric Oasis crea apps del Atlassian Marketplace para Jira y Confluence Cloud, todas hechas en Atlassian Forge. OnBudget lleva el control de presupuesto y los informes de coste, presupuestado frente a real, a partir del trabajo que ya está en Jira. Astrolink dibuja un mapa de dependencias y un grafo de vínculos de los elementos de trabajo. Configuration Monitor mantiene un registro de auditoría de quién cambió los workflows, los permisos y los ajustes de un espacio de Jira. Atelier aporta diseño de páginas, colores de texto y de fondo y banners a Confluence. Expanded Macro Collection añade confirmación de lectura, firmas y estado de página. Numeric Oasis también crea software a medida, ofrece consultoría Atlassian y tiene un estudio de juegos.',
   },
   hero: {
-    eyebrow: 'Numeric Oasis Technologies',
-    headline: 'Tres tipos de software, una sola forma de construirlo.',
-    lede: 'Creamos software a medida para empresas que ya se quedaron cortas con la versión de catálogo, migramos, administramos y ampliamos Jira y Confluence, y nuestro estudio de juegos está haciendo un juego que ya puedes jugar hoy en el navegador. Todo sale en entregas pequeñas, con las pruebas que lo demuestran.',
-    primary: 'Hablemos',
-    secondary: 'Quiénes somos',
-    frontsLabel: 'Qué hacemos',
+    eyebrow: 'Apps en el Atlassian Marketplace',
+    headline: 'Apps para Jira y Confluence Cloud que responden a las preguntas que recibe todo administrador.',
+    lede: 'Numeric Oasis crea apps para Jira y Confluence Cloud: control de presupuesto e informes de coste, un mapa de dependencias, un registro de auditoría de los cambios de configuración, macros de diseño de página y confirmación de lectura con estado de página. Todas están hechas en Atlassian Forge y empiezan con una prueba gratuita en el Atlassian Marketplace.',
+    primary: 'Ver las apps',
+    secondary: 'Nuestras apps en el Atlassian Marketplace',
+    questionsLabel: 'Preguntas que responden nuestras apps',
   },
-  fronts: [
-    { name: 'Desarrollo a medida', line: 'Aplicaciones web, integraciones y herramientas internas, a la medida de tu trabajo.' },
-    { name: 'Atlassian', line: 'Migraciones a Cloud, administración, apps en Forge y una factura de apps más pequeña.' },
-    { name: 'Estudio de Juegos', line: 'Kindelve, un descenso con colección de criaturas, en beta abierta ya.' },
-  ],
-  proof: {
-    label: 'Hecho para confiar',
-    items: [
-      'Construyendo software desde 2011',
-      'Socios en el Atlassian Marketplace',
-      'Entregas pequeñas que salen de verdad',
-      'Cada corrección de un error trae su prueba',
-      'Documentación para todo lo que entregamos',
-      'Soporte en inglés, portugués y español',
-    ],
-  },
-  detail: {
-    eyebrow: 'Qué hacemos',
-    headline: 'Tres frentes, un mismo nivel.',
-    lede: 'Parecen tres empresas. Son un solo equipo que exige lo mismo a tres tipos de trabajo: acotarlo pequeño, entregarlo, probarlo y decirte la verdad sobre lo que cuesta.',
-    sections: [
-      {
-        eyebrow: 'Desarrollo a medida',
-        headline: 'Software hecho para tu forma de trabajar.',
-        body: 'Cuando el producto que compraste cubre el ochenta por ciento del trabajo, el otro veinte por ciento es donde tu equipo pierde la semana. Creamos las aplicaciones web, las integraciones y las herramientas internas que cierran ese hueco, y lo documentamos todo para que tu equipo nunca se quede a ciegas.',
-        points: [
-          'Aplicaciones web y portales para clientes',
-          'Integraciones entre los sistemas que ya pagas',
-          'Herramientas internas en lugar de la hoja de cálculo que nadie se atreve a tocar',
-        ],
-        link: 'Desarrollo a medida',
-      },
-      {
-        eyebrow: 'Atlassian',
-        headline: 'Jira y Confluence, desde la migración hasta el último custom field.',
-        body: 'Quince años dentro de las herramientas de Atlassian. Evaluamos y ejecutamos migraciones de Data Center a Cloud, dimensionamos la reescritura de ScriptRunner antes de que te comprometas, limpiamos lo que una migración deja atrás, publicamos nuestras propias apps en el Marketplace y creamos apps en Forge a medida cuando una app pequeña vale más que tres suscripciones.',
-        points: [
-          'Evaluaciones y migraciones de Data Center a Cloud',
-          'Administración, gobernanza y limpieza de licencias',
-          'Apps del Marketplace, apps en Forge a medida y una factura de apps más pequeña',
-        ],
-        link: 'Servicios Atlassian',
-      },
-      {
-        eyebrow: 'Estudio de Juegos',
-        headline: 'Un juego para jugar en la pestaña que ya tienes abierta.',
-        body: 'Kindelve es un descenso a mazmorras con colección de criaturas que funciona en cualquier navegador, en el móvil o en el ordenador. Está hecho con la misma disciplina que todo lo demás aquí: una simulación que da la misma respuesta en cualquier aparato, cinco idiomas desde la primera versión, y nada a la venta que compre poder.',
-        points: [
-          'Kindelve, en beta abierta y gratis',
-          'Un Trial diario en el que la puntuación se demuestra, no se da por buena',
-          'Inglés, portugués, español, francés y japonés',
-        ],
-        link: 'El Estudio de Juegos',
-      },
-    ],
-  },
-  focus: {
-    eyebrow: 'OnBudget, para Jira Cloud',
-    headline: 'Todos los presupuestos de Jira en una sola pantalla.',
-    lede: 'Presupuestado frente a real, salud y pronóstico, a partir del trabajo que tu equipo ya registra en Jira. Presupuestos de entrega, producto y marketing uno al lado del otro, cada uno en su moneda, y funciona con los campos que tu equipo ya rellena.',
-    custom: {
-      title: 'Da forma al informe, y luego a la pantalla.',
-      report: 'Tú decides qué cubre el informe: espacios completos, elementos de trabajo elegidos por clave o por texto, o una consulta JQL. Tú fijas el presupuesto y su moneda, los dos umbrales que lo ponen en riesgo y luego por encima del presupuesto, y los formatos de número y fecha en que se lee.',
-      dashboard: 'Después reorganiza el panel a tu gusto. Arrastra un gadget a otro hueco, redimensiónalo desde la esquina, clónalo o elimínalo, cámbialo entre barra, línea, área, circular, de anillo, tabla y número simple, y guarda el diseño cuando se lea como tú piensas.',
+  questions: {
+    onbudget: {
+      question: '¿Qué presupuestos van bien, cuáles están en riesgo y cuáles se pasaron?',
+      answer: 'OnBudget, control de presupuesto para Jira',
     },
-    ctaPrimary: 'Mira lo que hace OnBudget',
-    ctaSecondary: 'Ver en el Marketplace',
+    astrolink: {
+      question: '¿Qué bloquea este elemento de trabajo, y qué se retrasa con él?',
+      answer: 'Astrolink, mapa de dependencias para Jira',
+    },
+    'configuration-monitor': {
+      question: '¿Quién cambió el workflow o los permisos de este espacio?',
+      answer: 'Configuration Monitor, registro de auditoría para Jira',
+    },
+    atelier: {
+      question: '¿Cómo hago que una página de Confluence luzca como nuestra marca?',
+      answer: 'Atelier, diseño de páginas para Confluence',
+    },
+    'expanded-macro-collection': {
+      question: '¿Quién ha leído y firmado esta política?',
+      answer: 'Expanded Macro Collection, firmas de lectura para Confluence',
+    },
   },
-  how: {
-    eyebrow: 'Cómo trabajamos',
-    headline: 'Pequeño, terminado y honesto con lo que cuesta.',
-    paragraphs: [
-      'Acotamos la versión más pequeña que ya merece la pena tener, la entregamos, y dejamos que el uso real decida la siguiente versión. Describirlo así es más lento que un gran plan, y terminarlo es mucho más rápido.',
-      'Cada error que corregimos trae una prueba que falla sin la corrección, y la prueba se queda. Nuestros propios productos siguen la misma regla, y por eso podemos decirte qué cambió en una versión y qué no.',
-      'Somos un equipo pequeño en Canoas, en el sur de Brasil, y trabajamos en español, inglés y portugués. Hablas con las personas que escriben el código.',
+  proof: {
+    label: 'Lo que trae cada app',
+    items: [
+      'Hecha en Atlassian Forge',
+      'Runs on Atlassian',
+      'Pruébala gratis en el Marketplace',
+      'Documentación y notas de versión',
+      'Soporte en español, inglés y portugués',
     ],
-    link: 'Más sobre el equipo',
   },
-  blog: {
-    eyebrow: 'Del blog',
-    headline: 'Apuntes del taller.',
-    link: 'Todos los artículos',
+  apps: {
+    eyebrow: 'Las apps',
+    listName: 'Apps de Numeric Oasis para Jira y Confluence Cloud',
+    headline: 'Presupuestos, dependencias y registros de auditoría en Jira. Diseño de páginas y firmas en Confluence.',
+    lede: 'Hechas en Atlassian Forge, se ejecutan dentro de tu propio entorno de Atlassian. Cada una hace un trabajo de principio a fin, y cada una dice en su propia página exactamente qué guarda.',
+    groups: {
+      jira: 'Para Jira Cloud',
+      confluence: 'Para Confluence Cloud',
+    },
+    lead: {
+      badge: 'Para Jira Cloud',
+      headline: 'OnBudget: control de presupuesto e informes de coste para Jira',
+      body: 'Mira qué presupuestos van bien, cuáles están en riesgo y cuáles se pasaron, sin una hoja de cálculo. OnBudget convierte puntos de historia, registros de trabajo valorados con tarifarios, un campo numérico o el recuento de elementos de trabajo en coste, y muestra el presupuestado frente a real, la salud y el pronóstico de cada presupuesto en una sola pantalla.',
+      points: [
+        'Presupuestado frente a real, salud y pronóstico lineal en cada informe',
+        'Cinco métodos de costeo, desde puntos de historia hasta registros de trabajo con tarifario',
+        'Un presupuesto en una de 18 monedas, con los umbrales de en riesgo y por encima del presupuesto que tú defines',
+        'Nueve gadgets de panel, exportación a CSV y uso compartido con usuarios o grupos',
+      ],
+      page: 'Mira cómo OnBudget controla los presupuestos en Jira',
+      marketplace: 'OnBudget en el Atlassian Marketplace',
+    },
+    cards: {
+      astrolink: {
+        descriptor: 'Mapa de dependencias y grafo de vínculos para Jira',
+        body: 'Mira qué bloquea un elemento de trabajo y qué se retrasa con él. Astrolink dibuja un grafo de dependencias interactivo a partir de los vínculos, padres y subtareas de Jira entre espacios, con páginas de Confluence como nodos. Empieza desde un elemento de trabajo, una consulta JQL, un filtro guardado o un espacio.',
+        page: 'Explora el mapa de dependencias de Astrolink',
+        marketplace: 'Astrolink en el Atlassian Marketplace',
+      },
+      'configuration-monitor': {
+        descriptor: 'Registro de auditoría de configuración para espacios de Jira',
+        body: 'Averigua quién cambió los workflows, los permisos, las pantallas y otros ajustes de un espacio, cuándo, y cómo estaba cada uno antes. Configuration Monitor revisa 13 secciones de configuración cada hora y guarda el registro de cambios dentro de cada espacio para sus administradores, con exportación a CSV.',
+        page: 'Mira el registro de auditoría de Configuration Monitor',
+        marketplace: 'Configuration Monitor en el Atlassian Marketplace',
+      },
+      atelier: {
+        descriptor: 'Macros de diseño de página y color de texto para Confluence',
+        body: 'Añade colores de fondo, banners, tarjetas, botones y cualquier color de texto en hex a las páginas de Confluence, con 64 patrones y sin CSS. Los administradores del espacio guardan una vez los colores de marca, los preajustes y las fuentes, y cada autor elige entre ellos.',
+        page: 'Mira lo que Atelier añade a una página de Confluence',
+        marketplace: 'Atelier en el Atlassian Marketplace',
+      },
+      'expanded-macro-collection': {
+        descriptor: 'Confirmación de lectura, firmas y estado de página para Confluence',
+        body: 'Demuestra quién leyó cada versión de una política, sigue el estado de las páginas de un espacio y encuentra las páginas que nadie ha revisado. Trece macros para firmas de lectura, banners de clasificación, resúmenes de estado, enlaces entrantes e informes de contenido obsoleto.',
+        page: 'Mira las trece macros de Expanded Macro Collection',
+        marketplace: 'Expanded Macro Collection en el Atlassian Marketplace',
+      },
+    },
+  },
+  guides: {
+    eyebrow: 'Guías y docs',
+    headline: 'Respuestas para quien administra Jira y Confluence.',
+    lede: 'Guías paso a paso para las preguntas que llegan a la mesa de un administrador, y la documentación de cada app.',
+    postsLabel: 'Guías',
+    allPosts: 'Todas las guías para administradores de Jira y Confluence',
+    docsLabel: 'Documentación de las apps, en inglés',
+    docs: {
+      firstReport: 'Crea tu primer informe de presupuesto en OnBudget',
+      costingMethods: 'Métodos de costeo de OnBudget, con ejemplos',
+      astrolink: 'Cómo leer un mapa de dependencias de Astrolink',
+      configurationMonitor: 'Cómo registra Configuration Monitor los cambios de configuración',
+      atelier: 'Las ocho macros de diseño de página de Atelier',
+      macros: 'Referencia de las macros de Expanded Macro Collection',
+    },
+    allDocs: 'Toda la documentación de las apps',
   },
   cta: {
-    headline: 'Cuéntanos qué estás construyendo.',
-    body: 'Un proyecto, una migración, una app que te gustaría que existiera, o una pregunta sobre cualquiera de ellos. Te responde una persona, en español, inglés o portugués.',
-    primary: 'Hablemos',
-    secondary: 'Ver nuestras apps',
+    headline: 'Prueba una en tu propio Jira o Confluence.',
+    body: 'Cada app de esta página empieza con una prueba gratuita en el Atlassian Marketplace. Si antes tienes una pregunta, te responde una persona, en español, inglés o portugués.',
+    primary: 'Ver las apps',
+    secondary: 'Hacernos una pregunta',
+  },
+  also: {
+    heading: 'También de Numeric Oasis',
+    items: {
+      customDev: {
+        name: 'Desarrollo a medida',
+        line: 'Aplicaciones web, integraciones y herramientas internas, a la medida de tu trabajo.',
+      },
+      consulting: {
+        name: 'Consultoría Atlassian',
+        line: 'Migraciones de Data Center a Cloud, administración y apps de Forge a medida.',
+      },
+      studio: {
+        name: 'Estudio de Juegos',
+        line: 'Kindelve, un descenso con colección de criaturas que juegas en el navegador, en beta abierta.',
+      },
+    },
   },
 } as const satisfies HomeCopy;

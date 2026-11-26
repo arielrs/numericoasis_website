@@ -1,31 +1,38 @@
 ---
 /**
- * The home page for all three locales.
+ * The home page for all three locales: an apps landing.
  *
- * The company leads, then its three fronts, then the app we are pushing.
- * Until 2026-11-06 this was an app vendor's home page, opening on the six app
- * icons and closing on the app grid. The company now works on three fronts
- * (custom development, Atlassian, the Game Studio), so the hero indexes those
- * instead and the app grid moved to /atlassian/. OnBudget keeps its section:
- * it is still where the paid attention goes.
+ * Since 2026-11-25 the site leads with its Atlassian Marketplace apps, because
+ * that is what Jira and Confluence admins arrive looking for. The order:
  *
- * History, kept for the reasoning:
+ *   1. a hero that says what we make, with the question each app answers
+ *   2. what every app comes with
+ *   3. the five paid apps, OnBudget as the large lead card, the other four
+ *      grouped by host product
+ *   4. guides: live posts and docs that answer admin questions
+ *   5. a closing call to action
+ *   6. one quiet strip for the rest of the company
  *
- * The company leads, then the app we are currently pushing, then the range.
- * An earlier version opened with an OnBudget headline and an OnBudget
- * screenshot, which read as a product landing page with a company footer. The
- * hero is now about Numeric Oasis, and OnBudget owns the section immediately
- * below it, framed as where attention is right now rather than as a permanent
- * ranking, since more apps are coming.
+ * Field Scout is free and is deliberately not on this page. It stays in the
+ * /apps/ index, which is where the header call to action and the hero send
+ * anyone who wants the whole range.
+ *
+ * History, kept for the reasoning: from 2026-11-06 this page led with three
+ * fronts as equals (custom development, Atlassian, Game Studio) and kept an
+ * OnBudget section below them. Before that, from August, it was an app
+ * vendor's page that opened on six app icons. The three fronts still have
+ * their own pages and their own nav items; they are now introduced at the foot
+ * of this one rather than at its head.
  */
 import { Image } from 'astro:assets';
-import { getCollection } from 'astro:content';
+import { getCollection, type CollectionEntry } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import CapabilityStrip from '../../components/CapabilityStrip.astro';
-import { outbound } from '../../lib/outbound';
 import HeroCanvas from '../../components/HeroCanvas.astro';
-import PostCard from '../../components/PostCard.astro';
-import { localeStaticPaths, withLocale, type Locale } from '../../i18n';
+import { SITE } from '../../consts';
+import { outbound } from '../../lib/outbound';
+import type { JsonLdNode } from '../../lib/schema';
+import { contentSlug, localeStaticPaths, withLocale, type Locale } from '../../i18n';
 import { home } from '../../i18n/pages/home';
 import { words, wordDelay } from '../../lib/words';
 
@@ -34,58 +41,110 @@ export const getStaticPaths = localeStaticPaths;
 const { lang } = Astro.props as { lang: Locale };
 const t = home[lang];
 
-const apps = (await getCollection('apps', ({ data }) => data.lang === lang)).sort(
-  (a, b) => a.data.order - b.data.order,
+type App = CollectionEntry<'apps'>;
+
+/**
+ * The five paid apps, in the owner's order for this page. Explicit rather than
+ * the collection's `order`, which /apps/, the footer and the docs share and
+ * which groups Expanded Macro Collection third.
+ */
+const LEAD_KEY = 'onbudget';
+const JIRA_KEYS = ['astrolink', 'configuration-monitor'] as const;
+const CONFLUENCE_KEYS = ['atelier', 'expanded-macro-collection'] as const;
+const APP_KEYS = [LEAD_KEY, ...JIRA_KEYS, ...CONFLUENCE_KEYS] as const;
+
+const collection = await getCollection('apps', ({ data }) => data.lang === lang);
+const byKey = (key: string): App => {
+  const app = collection.find((a) => a.data.translationKey === key);
+  // Fail the build rather than ship a home page with a hole in it.
+  if (!app) throw new Error(`home: no "${key}" app in the ${lang} collection`);
+  return app;
+};
+
+const lead = byKey(LEAD_KEY);
+const jiraApps = JIRA_KEYS.map((key) => ({ key, app: byKey(key) }));
+const confluenceApps = CONFLUENCE_KEYS.map((key) => ({ key, app: byKey(key) }));
+
+/** An app with its own landing page links there, not to /apps/<slug>/. */
+const pathOf = (app: App) => app.data.landingPath ?? `/apps/${contentSlug(app.id)}/`;
+const hrefOf = (app: App) => withLocale(lang, pathOf(app));
+
+// The report view is the one frame that shows what OnBudget produces: the
+// health gauge, planned versus actual, and spend over time.
+const leadShot = lead.data.screenshots.find((s) => s.slot === 'report-at-risk');
+
+/**
+ * Guides: posts that answer an admin's question in the area of one of the
+ * apps. Curated, because the newest posts are often Atlassian news, and the
+ * point of this section is the questions a buyer of these apps searches for.
+ *
+ * Drafts are filtered out here as well as by the slug list: two OnBudget
+ * posts are drafts whose URLs redirect to /blog/, and they must never be
+ * linked from the page that sends the most traffic.
+ */
+const GUIDE_SLUGS = [
+  'how-to-choose-a-cost-tracking-app-for-jira',
+  'what-does-your-jira-work-actually-cost',
+  'jira-cloud-permission-audit',
+  'simplifying-jira-workflows',
+  'confluence-cloud-permissions-explained',
+  'confluence-archiving-stale-content',
+] as const;
+
+const allPosts = await getCollection('blog', ({ data }) => data.lang === lang && !data.draft);
+const guides = GUIDE_SLUGS.map((slug) => allPosts.find((p) => contentSlug(p.id) === slug)).filter(
+  (p): p is CollectionEntry<'blog'> => Boolean(p),
 );
-const focusApp = apps.find((a) => a.data.flagship);
 
-/** The three fronts, in the order of the nav and of the copy's `fronts` list. */
-const FRONT_PATHS = ['/custom-development/', '/atlassian/', '/studio/'] as const;
-/** One accent per front, so the hero index and the section markers agree. */
-const FRONT_ACCENTS = ['bg-brand-900', 'bg-water-600', 'bg-sun-500'] as const;
+/**
+ * App documentation that answers a how-to question. The docs are published in
+ * English only, at one URL, so these are not locale prefixed.
+ */
+const DOC_LINKS = [
+  { key: 'firstReport', href: '/documentation/onbudget/build-your-first-budget-report/', app: 'onbudget' },
+  { key: 'costingMethods', href: '/documentation/onbudget/costing-methods/', app: 'onbudget' },
+  { key: 'astrolink', href: '/documentation/astrolink/overview/', app: 'astrolink' },
+  { key: 'configurationMonitor', href: '/documentation/configuration-monitor/overview/', app: 'configuration-monitor' },
+  { key: 'atelier', href: '/documentation/atelier/overview/', app: 'atelier' },
+  { key: 'macros', href: '/documentation/expanded-macro-collection/macros/', app: 'expanded-macro-collection' },
+] as const;
 
-// Two shots, not one. The portfolio grid says "many budgets"; the report view
-// is the only frame on the page that shows what OnBudget actually produces,
-// which is the health gauge, planned versus actual, and spend over time. Both
-// already exist and render on /onbudget/.
-const focusShots = (['hero', 'report-at-risk'] as const)
-  .map((slot) => focusApp?.data.screenshots.find((s) => s.slot === slot))
-  .filter((s): s is NonNullable<typeof s> => Boolean(s));
+/** The rest of the company, in nav order. */
+const ALSO = [
+  { key: 'customDev', href: '/custom-development/', accent: 'bg-brand-900' },
+  { key: 'consulting', href: '/atlassian/', accent: 'bg-water-600' },
+  { key: 'studio', href: '/studio/', accent: 'bg-sun-500' },
+] as const;
 
-// The two shots are 922x795 and 940x858, so at equal width the second rendered
-// 29px taller and the captions did not line up. They now share the taller of
-// the two ratios and letterbox rather than crop, because cropping 6 percent off
-// a screenshot takes a chart axis with it. Both screenshots sit on white, so
-// the padding is invisible against bg-paper.
-//
-// Inline, not a Tailwind class, on purpose. Astro injects
-// :where([data-astro-image]){height:auto} and [data-astro-image-fit=...] after
-// every cascade layer closes, so a layered utility loses to them whatever its
-// specificity. See the note in src/styles/global.css. An inline style outranks
-// both, and with width:100% the height follows from the ratio.
-const shotAspect = focusShots.length
-  ? Math.min(...focusShots.map((s) => s.image.width / s.image.height))
-  : undefined;
-const shotStyle = shotAspect
-  ? `aspect-ratio: ${shotAspect}; object-fit: contain;`
-  : undefined;
+// The five apps as a list, so an answer engine reading the graph gets the
+// range and the URL of each one without parsing the cards. Names and URLs
+// only: the SoftwareApplication nodes live on the app pages, and repeating them
+// here would put two descriptions of one product in the index.
+const canonical = new URL(withLocale(lang, '/'), SITE.url).toString();
+const appList: JsonLdNode = {
+  '@type': 'ItemList',
+  '@id': `${canonical}#apps`,
+  name: t.apps.listName,
+  itemListOrder: 'https://schema.org/ItemListOrderAscending',
+  numberOfItems: APP_KEYS.length,
+  itemListElement: APP_KEYS.map((key, i) => {
+    const app = byKey(key);
+    return {
+      '@type': 'ListItem',
+      position: i + 1,
+      name: app.data.name,
+      url: new URL(hrefOf(app), SITE.url).toString(),
+    };
+  }),
+};
 
-// Written and translated in the app's own frontmatter, and rendered nowhere:
-// the flagship is excluded from the /apps/<slug>/ route that would show them.
-const focusProps = focusApp?.data.valueProps ?? [];
-
-// Edit mode, for the customisation block.
-const editShot = focusApp?.data.screenshots.find((s) => s.slot === 'edit-layout');
-
-const posts = (
-  await getCollection('blog', ({ data }) => data.lang === lang && !data.draft)
-)
-  .sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime())
-  .slice(0, 3);
-
-
-const arrow =
-  '<path d="M5 12h14M13 5l7 7-7 7" />';
+const arrow = '<path d="M5 12h14M13 5l7 7-7 7" />';
+const external = '<path d="M7 17L17 7M7 7h10v10" />';
+const focusRing = 'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sun-500';
+// Inline, not flex: a label that wraps keeps its arrow after the last word
+// instead of pushing it to the far edge of the line.
+const textLink = `inline rounded-md text-sm font-semibold text-water-700 transition hover:text-water-800 ${focusRing}`;
+const marketLink = `inline-block rounded-md border border-sand-200 bg-paper px-3 py-1.5 text-xs font-semibold text-brand-800 transition hover:border-water-400 hover:text-water-700 ${focusRing}`;
 ---
 
 <BaseLayout
@@ -93,28 +152,24 @@ const arrow =
   title={t.meta.title}
   description={t.meta.description}
   metaDescription={t.meta.metaDescription}
+  graph={{ extraNodes: [appList], primaryEntityId: `${canonical}#apps` }}
 >
-  <!-- 1. HERO: the company, not a product.
+  <!-- 1. HERO: what we make, and the question each app answers.
        The canvas is decorative and sits behind everything; the section is
        `relative` only so it has something to anchor to, and `overflow-hidden`
        keeps the waves from painting over the section border. -->
   <section class="relative overflow-hidden border-b border-sand-200 bg-sand-50">
     <HeroCanvas />
-    <div class="container-wide relative grid gap-14 py-16 sm:py-24 lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)] lg:items-center lg:gap-20">
+    <div class="container-wide relative grid gap-12 py-16 sm:py-20 lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)] lg:items-center lg:gap-16 xl:py-24">
       <div data-enter="words">
         <p class="eyebrow">{t.hero.eyebrow}</p>
         <!-- Split per word so the headline assembles itself rather than
-             appearing. The split is done here, at build time, so the spans are
-             in the HTML and no script is involved.
-
-             The space sits BETWEEN the spans, not inside them. A trailing space
-             inside an inline-block is collapsed away, which left innerText as
-             "TheAtlassianappswekeptwishingexisted" and broke copy and paste
-             entirely. The reference site papers over the visual half of that
-             with margin-right; a real text node fixes both halves. -->
+             appearing. The space sits BETWEEN the spans, not inside them: a
+             trailing space inside an inline-block collapses away and breaks
+             copy and paste. -->
         <h1
           data-words
-          class="mt-4 max-w-3xl font-display text-4xl font-bold leading-[1.08] tracking-tight text-brand-900 sm:text-5xl md:text-6xl"
+          class="mt-4 max-w-3xl font-display text-4xl font-bold leading-[1.08] tracking-tight text-brand-900 sm:text-5xl xl:text-[3.5rem]"
         >
           {words(t.hero.headline).map((word, i) => (
             <>
@@ -124,252 +179,287 @@ const arrow =
         </h1>
         <p class="mt-6 max-w-2xl text-lg leading-relaxed text-slate-600">{t.hero.lede}</p>
         <div class="mt-9 flex flex-wrap gap-3">
-          <a href={withLocale(lang, '/contact/')} class="btn-cta">
+          <a href={withLocale(lang, '/apps/')} class="btn-cta">
             {t.hero.primary}
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" set:html={arrow} />
           </a>
-          <a href={withLocale(lang, '/about/')} class="btn-secondary">{t.hero.secondary}</a>
+          <a
+            href={outbound(SITE.marketplaceUrl, 'home', 'hero')}
+            class="btn-secondary"
+            rel="noopener"
+            target="_blank"
+          >
+            {t.hero.secondary}
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" set:html={external} />
+          </a>
         </div>
       </div>
 
-      <!-- The three fronts at a glance. A list of links, not three cards: it is
-           an index of the page and of the site, and it reads as one. -->
-      <nav class="enter" style="--enter-delay: 1650ms" aria-label={t.hero.frontsLabel}>
+      <!-- The question each app answers, as an index of the apps. A list of
+           links rather than five cards: it reads as one object, and every row
+           names the job in the words a buyer would type. -->
+      <nav class="enter" style="--enter-delay: 1500ms" aria-labelledby="home-questions">
+        <h2 id="home-questions" class="eyebrow mb-3">{t.hero.questionsLabel}</h2>
         <ul class="divide-y divide-sand-200 overflow-hidden rounded-2xl border border-sand-200 bg-paper">
-          {t.fronts.map((front, i) => (
-            <li>
-              <a
-                href={withLocale(lang, FRONT_PATHS[i])}
-                class="group flex items-center gap-4 p-5 transition duration-200 ease-out-soft hover:bg-sand-50 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-sun-500 sm:p-6"
-              >
-                <span class:list={['h-10 w-1.5 shrink-0 rounded-full', FRONT_ACCENTS[i]]} aria-hidden="true"></span>
-                <span class="min-w-0 flex-1">
-                  <span class="block font-display text-lg font-semibold text-brand-900">{front.name}</span>
-                  <span class="mt-0.5 block text-sm leading-relaxed text-slate-600">{front.line}</span>
-                </span>
-                <svg class="shrink-0 text-water-700 transition duration-200 ease-out-soft group-hover:translate-x-1" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" set:html={arrow} />
-              </a>
-            </li>
-          ))}
+          {APP_KEYS.map((key) => {
+            const app = byKey(key);
+            const row = t.questions[key];
+            return (
+              <li>
+                <a
+                  href={hrefOf(app)}
+                  class="group flex items-center gap-4 p-4 transition duration-200 ease-out-soft hover:bg-sand-50 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-sun-500 sm:px-5"
+                >
+                  {app.data.icon && (
+                    <Image
+                      src={app.data.icon}
+                      alt=""
+                      width={40}
+                      height={40}
+                      class="h-10 w-10 shrink-0 rounded-xl object-cover ring-1 ring-sand-200"
+                    />
+                  )}
+                  <span class="min-w-0 flex-1">
+                    <span class="block font-display text-base font-semibold leading-snug text-brand-900">{row.question}</span>
+                    <span class="mt-0.5 block text-sm leading-relaxed text-slate-600">{row.answer}</span>
+                  </span>
+                  <svg class="shrink-0 text-water-700 transition duration-200 ease-out-soft group-hover:translate-x-1" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" set:html={arrow} />
+                </a>
+              </li>
+            );
+          })}
         </ul>
       </nav>
     </div>
   </section>
 
-  <!-- 2. PROOF STRIP: six reasons to trust us, not six facts about our stack.
-       The heading was an invisible aria-label reading "How our apps are built",
-       which told the reader the row was about us. It is now visible, and says
-       what our own Marketplace listings say over the same facts. -->
+  <!-- 2. WHAT EVERY APP COMES WITH. Each item holds for all five apps below. -->
   <CapabilityStrip items={t.proof.items} label={t.proof.label} reveal />
 
-  <!-- 3. THE THREE FRONTS: one row each, heading left and substance right,
-       separated by rules. Three identical cards would have been the easy
-       layout and the wrong one: these are not three products on a shelf. -->
-  <section class="py-16 sm:py-24">
+  <!-- 3. THE APPS. OnBudget leads at full width with the report it produces;
+       the other four sit in two host groups as hairline lists, not as four
+       identical boxes. -->
+  <section id="apps" class="scroll-mt-24 py-16 sm:py-24">
     <div class="container-wide">
       <div class="reveal max-w-3xl">
-        <p class="eyebrow">{t.detail.eyebrow}</p>
+        <p class="eyebrow">{t.apps.eyebrow}</p>
         <h2 class="mt-3 font-display text-3xl font-bold tracking-tight text-brand-900 sm:text-4xl">
-          {t.detail.headline}
+          {t.apps.headline}
         </h2>
-        <p class="mt-5 text-lg leading-relaxed text-slate-600">{t.detail.lede}</p>
+        <p class="mt-5 text-lg leading-relaxed text-slate-600">{t.apps.lede}</p>
       </div>
 
-      <div class="mt-14 space-y-14" data-reveal-group>
-        {t.detail.sections.map((section, i) => (
-          <article class="reveal grid gap-8 border-t border-sand-200 pt-10 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-16">
-            <div>
-              <div class="flex items-center gap-3">
-                <span class:list={['h-2.5 w-2.5 rounded-full', FRONT_ACCENTS[i]]} aria-hidden="true"></span>
-                <p class="eyebrow">{section.eyebrow}</p>
-              </div>
-              <h3 class="mt-3 font-display text-2xl font-bold tracking-tight text-brand-900 sm:text-3xl">
-                {section.headline}
-              </h3>
-            </div>
-            <div>
-              <p class="text-base leading-relaxed text-slate-600">{section.body}</p>
-              <ul class="mt-6 space-y-2.5">
-                {section.points.map((point) => (
-                  <li class="flex gap-3 text-sm leading-relaxed text-slate-700">
-                    <svg class="mt-0.5 shrink-0 text-water-700" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5" /></svg>
-                    {point}
-                  </li>
-                ))}
-              </ul>
-              <p class="mt-7">
-                <a
-                  href={withLocale(lang, FRONT_PATHS[i])}
-                  class="inline-flex items-center gap-1.5 rounded-md text-sm font-semibold text-water-700 transition hover:text-water-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sun-500"
-                >
-                  {section.link}
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" set:html={arrow} />
-                </a>
-              </p>
-            </div>
-          </article>
-        ))}
-      </div>
-    </div>
-  </section>
-
-  <!-- 4. ONBUDGET: the app we lead with, given the room to actually sell.
-       This used to be one screenshot, two hedged paragraphs and a text link.
-       It now shows what a report looks like and closes with a real CTA. -->
-  <section class="bg-sand-50 py-16 sm:py-24">
-    <div class="container-wide">
-      <div class="max-w-3xl" data-reveal-group>
-        <p class="eyebrow" data-reveal-words>
-          {words(t.focus.eyebrow).map((word, i) => (
-            <>
-              <span class="hero-word" style={`--word-delay: ${wordDelay(i, 0, 90)}ms`}>{word}</span>{' '}
-            </>
-          ))}
-        </p>
-        <h2
-          class="mt-3 font-display text-3xl font-bold tracking-tight text-brand-900 sm:text-4xl"
-          data-reveal-words
-        >
-          {words(t.focus.headline).map((word, i) => (
-            <>
-              <span class="hero-word" style={`--word-delay: ${wordDelay(i, 0, 110)}ms`}>{word}</span>{' '}
-            </>
-          ))}
-        </h2>
-        <p class="mt-5 text-lg leading-relaxed text-slate-700">{t.focus.lede}</p>
-      </div>
-
-      {focusShots.length > 0 && (
-        <div class="mt-12 grid gap-8 lg:grid-cols-2" data-reveal-group>
-          {focusShots.map((shot) => (
-            <figure class="reveal">
+      <!-- 3a. The lead card. -->
+      <article class="reveal mt-12 grid gap-10 overflow-hidden rounded-3xl border border-sand-200 bg-sand-50 p-6 sm:p-10 lg:grid-cols-[minmax(0,5fr)_minmax(0,6fr)] lg:items-center lg:gap-12">
+        <div>
+          <div class="flex items-center gap-4">
+            {lead.data.icon && (
               <Image
-                src={shot.image}
-                alt={shot.alt ?? shot.caption}
-                width={960}
-                sizes="(min-width: 1024px) 620px, 100vw"
-                class="w-full rounded-2xl border border-sand-200 bg-paper"
-                style={shotStyle}
-                loading="lazy"
+                src={lead.data.icon}
+                alt=""
+                width={64}
+                height={64}
+                class="h-16 w-16 shrink-0 rounded-2xl object-cover ring-1 ring-sand-200"
               />
-              <figcaption class="mt-3 px-1 text-sm leading-relaxed text-slate-600">
-                {shot.caption}
-              </figcaption>
-            </figure>
-          ))}
-        </div>
-      )}
-
-      {focusProps.length > 0 && (
-        <ul class="mt-12 grid gap-6 md:grid-cols-3" data-reveal-group>
-          {focusProps.map((vp) => (
-            <li class="reveal rounded-2xl border border-sand-200 bg-paper p-6 transition duration-200 ease-out-soft hover:-translate-y-1 hover:border-water-400 hover:shadow-[var(--shadow-soft)]">
-              {vp.icon && <p class="text-2xl" aria-hidden="true">{vp.icon}</p>}
-              <h3 class="mt-3 font-display text-lg font-semibold tracking-tight text-brand-900">
-                {vp.title}
-              </h3>
-              <p class="mt-2 text-sm leading-relaxed text-slate-600">{vp.body}</p>
-            </li>
-          ))}
-        </ul>
-      )}
-
-      {editShot && (
-        <div class="mt-14 grid gap-10 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:items-center lg:gap-14" data-reveal-group>
-          <div class="reveal">
-            <h3 class="font-display text-2xl font-bold tracking-tight text-brand-900 sm:text-3xl">
-              {t.focus.custom.title}
-            </h3>
-            <p class="mt-5 text-base leading-relaxed text-slate-700">{t.focus.custom.report}</p>
-            <p class="mt-4 text-base leading-relaxed text-slate-700">{t.focus.custom.dashboard}</p>
+            )}
+            <!-- The name is in the heading below, so the icon only carries the
+                 host product. Showing it twice read as a stutter on a phone. -->
+            <p class="rounded-full bg-water-50 px-3 py-1 text-xs font-semibold text-water-700">{t.apps.lead.badge}</p>
           </div>
-          <figure class="reveal">
+          <h3 class="mt-6 font-display text-2xl font-bold leading-tight tracking-tight text-brand-900 sm:text-3xl">
+            {t.apps.lead.headline}
+          </h3>
+          <p class="mt-4 text-base leading-relaxed text-slate-700">{t.apps.lead.body}</p>
+          <ul class="mt-6 space-y-2.5">
+            {t.apps.lead.points.map((point) => (
+              <li class="flex gap-3 text-sm leading-relaxed text-slate-700">
+                <svg class="mt-0.5 shrink-0 text-water-700" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5" /></svg>
+                {point}
+              </li>
+            ))}
+          </ul>
+          <div class="mt-8 flex flex-wrap items-center gap-3">
+            <a href={hrefOf(lead)} class="btn-cta">
+              {t.apps.lead.page}
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" set:html={arrow} />
+            </a>
+            {lead.data.marketplaceUrl && (
+              <a
+                href={outbound(lead.data.marketplaceUrl, 'home', 'focus-section')}
+                class="btn-secondary"
+                rel="noopener"
+                target="_blank"
+              >
+                {t.apps.lead.marketplace}
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" set:html={external} />
+              </a>
+            )}
+          </div>
+        </div>
+        {leadShot && (
+          <figure>
             <Image
-              src={editShot.image}
-              alt={editShot.alt ?? editShot.caption}
-              width={1007}
-              sizes="(min-width: 1024px) 700px, 100vw"
+              src={leadShot.image}
+              alt={leadShot.alt ?? leadShot.caption}
+              width={960}
+              sizes="(min-width: 1024px) 620px, 100vw"
               class="w-full rounded-2xl border border-sand-200 bg-paper"
               loading="lazy"
             />
-            <figcaption class="mt-3 px-1 text-sm leading-relaxed text-slate-600">
-              {editShot.caption}
-            </figcaption>
+            <figcaption class="mt-3 px-1 text-sm leading-relaxed text-slate-600">{leadShot.caption}</figcaption>
           </figure>
-        </div>
-      )}
-
-      <div class="mt-14 flex flex-wrap gap-3">
-        <a href={withLocale(lang, '/onbudget/')} class="btn-cta">
-          {t.focus.ctaPrimary}
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" set:html={arrow} />
-        </a>
-        {focusApp?.data.marketplaceUrl && (
-          <a
-            href={outbound(focusApp.data.marketplaceUrl, 'home', 'focus-section')}
-            class="btn-secondary"
-            rel="noopener"
-            target="_blank"
-          >{t.focus.ctaSecondary}</a>
         )}
-      </div>
-    </div>
-  </section>
+      </article>
 
-  <!-- 5. HOW WE WORK: prose, not cards -->
-  <section class="py-16 sm:py-24">
-    <div class="container-wide grid gap-12 lg:grid-cols-[minmax(0,4fr)_minmax(0,6fr)] lg:gap-16">
-      <div>
-        <p class="eyebrow">{t.how.eyebrow}</p>
-        <h2 class="mt-3 font-display text-3xl font-bold tracking-tight text-brand-900 sm:text-4xl">
-          {t.how.headline}
-        </h2>
-      </div>
-      <div>
-        {t.how.paragraphs.map((paragraph) => (
-          <p class="mb-5 text-base leading-relaxed text-slate-600 last:mb-0">{paragraph}</p>
-        ))}
-        <p class="mt-7">
-          <a
-            href={withLocale(lang, '/about/')}
-            class="inline-flex items-center gap-1.5 rounded-md text-sm font-semibold text-water-700 transition hover:text-water-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sun-500"
-          >
-            {t.how.link}
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" set:html={arrow} />
-          </a>
-        </p>
-      </div>
-    </div>
-  </section>
-
-  <!-- 6. FROM THE BLOG: 2 + 1, not three identical cards -->
-  {posts.length > 0 && (
-    <section class="border-t border-sand-200 py-16 sm:py-24">
-      <div class="container-wide">
-        <div class="flex flex-wrap items-end justify-between gap-4">
-          <div>
-            <p class="eyebrow">{t.blog.eyebrow}</p>
-            <h2 class="mt-3 font-display text-3xl font-bold tracking-tight text-brand-900 sm:text-4xl">
-              {t.blog.headline}
-            </h2>
+      <!-- 3b. The other four, by host product. -->
+      <div class="mt-14 grid gap-12 lg:grid-cols-2 lg:gap-10">
+        {[
+          { label: t.apps.groups.jira, items: jiraApps },
+          { label: t.apps.groups.confluence, items: confluenceApps },
+        ].map((group) => (
+          <div class="reveal">
+            <h3 class="eyebrow">{group.label}</h3>
+            <ul class="mt-4 divide-y divide-sand-200 rounded-2xl border border-sand-200 bg-paper">
+              {group.items.map(({ key, app }) => {
+                const card = t.apps.cards[key];
+                return (
+                  <li class="p-6 sm:p-8">
+                    <div class="flex items-start gap-4">
+                      {app.data.icon && (
+                        <Image
+                          src={app.data.icon}
+                          alt=""
+                          width={56}
+                          height={56}
+                          class="h-14 w-14 shrink-0 rounded-2xl object-cover ring-1 ring-sand-200"
+                        />
+                      )}
+                      <div class="min-w-0">
+                        <h4 class="font-display text-xl font-semibold tracking-tight text-brand-900">{app.data.name}</h4>
+                        <p class="mt-1 text-sm font-medium leading-snug text-slate-700">{card.descriptor}</p>
+                      </div>
+                    </div>
+                    <p class="mt-4 text-base leading-relaxed text-slate-600">{card.body}</p>
+                    <div class="mt-5 flex flex-wrap items-center gap-x-5 gap-y-3">
+                      <a href={hrefOf(app)} class={textLink}>
+                        {card.page}
+                        <svg class="ml-1.5 inline-block align-[-0.05em]" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" set:html={arrow} />
+                      </a>
+                      {app.data.marketplaceUrl && (
+                        <a
+                          href={outbound(app.data.marketplaceUrl, 'home', 'app-card')}
+                          class={marketLink}
+                          rel="noopener"
+                          target="_blank"
+                        >
+                          {card.marketplace}
+                          <svg class="ml-1.5 inline-block align-[-0.05em]" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" set:html={external} />
+                        </a>
+                      )}
+                    </div>
+                  </li>
+                );
+              })}
+            </ul>
           </div>
-          <a
-            href={withLocale(lang, '/blog/')}
-            class="inline-flex items-center gap-1.5 rounded-md text-sm font-semibold text-water-700 transition hover:text-water-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sun-500"
-          >
-            {t.blog.link}
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" set:html={arrow} />
-          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. GUIDES: posts on the left, app documentation on the right. Lists of
+       titles rather than cards, because the title is the answer a reader is
+       scanning for. -->
+  <section class="border-t border-sand-200 py-16 sm:py-24">
+    <div class="container-wide">
+      <div class="reveal max-w-3xl">
+        <p class="eyebrow">{t.guides.eyebrow}</p>
+        <h2 class="mt-3 font-display text-3xl font-bold tracking-tight text-brand-900 sm:text-4xl">
+          {t.guides.headline}
+        </h2>
+        <p class="mt-5 text-lg leading-relaxed text-slate-600">{t.guides.lede}</p>
+      </div>
+
+      <div class="mt-12 grid gap-12 lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)] lg:gap-14">
+        <div class="reveal">
+          <h3 class="eyebrow">{t.guides.postsLabel}</h3>
+          <ul class="mt-4 divide-y divide-sand-200 border-y border-sand-200">
+            {guides.map((post) => (
+              <li>
+                <a
+                  href={withLocale(lang, `/blog/${contentSlug(post.id)}/`)}
+                  class={`group flex gap-5 rounded-md py-5 ${focusRing}`}
+                >
+                  {post.data.heroImage && (
+                    <Image
+                      src={post.data.heroImage}
+                      alt=""
+                      width={240}
+                      sizes="120px"
+                      class="hidden aspect-video w-28 shrink-0 self-start rounded-lg border border-sand-200 object-cover sm:block"
+                      loading="lazy"
+                    />
+                  )}
+                  <span class="min-w-0">
+                    <span class="block font-display text-lg font-semibold leading-snug text-brand-900 transition group-hover:text-water-700">
+                      {post.data.title}
+                    </span>
+                    <span class="mt-1.5 block text-sm leading-relaxed text-slate-600 max-sm:line-clamp-3">{post.data.description}</span>
+                  </span>
+                </a>
+              </li>
+            ))}
+          </ul>
+          <p class="mt-6">
+            <a href={withLocale(lang, '/blog/')} class={textLink}>
+              {t.guides.allPosts}
+              <svg class="ml-1.5 inline-block align-[-0.05em]" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" set:html={arrow} />
+            </a>
+          </p>
         </div>
 
-        <div class="mt-10 grid gap-6 md:grid-cols-3" data-reveal-group>
-          {posts.map((post) => <PostCard post={post} lang={lang} reveal />)}
+        <div class="reveal">
+          <h3 class="eyebrow">{t.guides.docsLabel}</h3>
+          <ul class="mt-4 rounded-2xl border border-sand-200 bg-sand-50 p-2">
+            {DOC_LINKS.map((doc) => {
+              const app = byKey(doc.app);
+              return (
+                <li>
+                  <a
+                    href={doc.href}
+                    class="group flex items-center gap-3 rounded-xl px-3 py-3 transition duration-200 ease-out-soft hover:bg-paper focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-sun-500"
+                  >
+                    {app.data.icon && (
+                      <Image
+                        src={app.data.icon}
+                        alt=""
+                        width={28}
+                        height={28}
+                        class="h-7 w-7 shrink-0 rounded-lg object-cover ring-1 ring-sand-200"
+                        loading="lazy"
+                      />
+                    )}
+                    <span class="min-w-0 flex-1 text-sm font-semibold leading-snug text-brand-900 group-hover:text-water-700">
+                      {t.guides.docs[doc.key]}
+                    </span>
+                    <svg class="shrink-0 text-water-700 transition duration-200 ease-out-soft group-hover:translate-x-0.5" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" set:html={arrow} />
+                  </a>
+                </li>
+              );
+            })}
+          </ul>
+          <p class="mt-6">
+            <a href="/documentation/" class={textLink}>
+              {t.guides.allDocs}
+              <svg class="ml-1.5 inline-block align-[-0.05em]" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" set:html={arrow} />
+            </a>
+          </p>
         </div>
       </div>
-    </section>
-  )}
+    </div>
+  </section>
 
-  <!-- 7. CTA -->
+  <!-- 5. CTA -->
   <section class="pb-16 sm:pb-24">
     <div class="container-wide">
       <div class="reveal rounded-3xl bg-brand-900 p-10 sm:p-16">
@@ -379,11 +469,35 @@ const arrow =
           </h2>
           <p class="mt-4 text-lg leading-relaxed text-brand-100">{t.cta.body}</p>
           <div class="mt-8 flex flex-wrap gap-3">
-            <a href={withLocale(lang, '/contact/')} class="btn-cta">{t.cta.primary}</a>
-            <a href={withLocale(lang, '/apps/')} class="btn-secondary !bg-paper">{t.cta.secondary}</a>
+            <a href={withLocale(lang, '/apps/')} class="btn-cta">{t.cta.primary}</a>
+            <a href={withLocale(lang, '/contact/')} class="btn-secondary !bg-paper">{t.cta.secondary}</a>
           </div>
         </div>
       </div>
+    </div>
+  </section>
+
+  <!-- 6. ALSO FROM NUMERIC OASIS: the rest of the company, one short strip.
+       Each item has its own page and its own nav entry; this only says they
+       exist, to a reader who came for the apps. -->
+  <section class="border-t border-sand-200 py-10 sm:py-12" aria-labelledby="home-also">
+    <div class="container-wide">
+      <h2 id="home-also" class="eyebrow">{t.also.heading}</h2>
+      <ul class="mt-5 grid gap-6 md:grid-cols-3 md:gap-0 md:divide-x md:divide-sand-200">
+        {ALSO.map((item, i) => {
+          const copy = t.also.items[item.key];
+          return (
+            <li class:list={['md:px-8', i === 0 && 'md:pl-0', i === ALSO.length - 1 && 'md:pr-0']}>
+              <a href={withLocale(lang, item.href)} class={`group inline-flex items-center gap-2.5 rounded-md ${focusRing}`}>
+                <span class:list={['h-2.5 w-2.5 shrink-0 rounded-full', item.accent]} aria-hidden="true"></span>
+                <span class="font-display text-base font-semibold text-brand-900 transition group-hover:text-water-700">{copy.name}</span>
+                <svg class="shrink-0 text-water-700 transition duration-200 ease-out-soft group-hover:translate-x-0.5" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" set:html={arrow} />
+              </a>
+              <p class="mt-1.5 text-sm leading-relaxed text-slate-600">{copy.line}</p>
+            </li>
+          );
+        })}
+      </ul>
     </div>
   </section>
 </BaseLayout>

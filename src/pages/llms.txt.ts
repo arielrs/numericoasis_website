@@ -17,20 +17,30 @@
  * three weeks after the site started leading with three fronts. Every page
  * description now comes from the page's own English dictionary, so this file
  * cannot drift from the page it summarises again.
+ *
+ * Reordered on 2026-11-25, when the site went back to leading with its apps:
+ * the apps, their documentation and the admin guides come first, and Atlassian
+ * consulting, custom development and the Game Studio follow under "Also from
+ * Numeric Oasis", the same order as the home page.
  */
 import { getCollection, type CollectionEntry } from 'astro:content';
 import { SITE, PRODUCT_LABELS } from '../consts';
 import { contentSlug } from '../i18n/paths';
 import { atlassian } from '../i18n/pages/atlassian';
 import { customDev } from '../i18n/pages/custom-development';
+import { home } from '../i18n/pages/home';
 import { studio } from '../i18n/pages/studio';
 import { docGroups, docHref, groupHref, SECTIONS } from '../lib/docs';
 
 type Post = CollectionEntry<'blog'>;
 
 export async function GET() {
+  // Paid apps first, then the collection order, so OnBudget leads and Field
+  // Scout, the free one, closes the list.
   const apps = (await getCollection('apps', ({ data }) => data.lang === 'en')).sort(
-    (a, b) => a.data.order - b.data.order,
+    (a, b) =>
+      Number(a.data.priceModel === 'free') - Number(b.data.priceModel === 'free') ||
+      a.data.order - b.data.order,
   );
 
   const posts = (
@@ -71,27 +81,35 @@ export async function GET() {
     '',
     `> ${SITE.description}`,
     '',
-    'A software company in Canoas, Brazil, working on three fronts: custom software development;',
-    'Atlassian consulting, Marketplace apps and custom Forge apps for Jira, Confluence and Jira Service',
-    'Management Cloud; and a game studio. A partner in the Atlassian Marketplace. Every Marketplace app',
-    'is built on Atlassian Forge and runs inside the customer\'s own Atlassian environment.',
+    'A partner in the Atlassian Marketplace that makes apps for Jira and Confluence Cloud. Every app is',
+    'built on Atlassian Forge and runs inside the customer\'s own Atlassian environment, and each app\'s',
+    'page says exactly what it stores. The company also builds custom software, offers Atlassian',
+    'consulting and runs a game studio, from Canoas, Brazil.',
     'The site is published in English (/), Portuguese (/pt-BR/) and Spanish (/es/); the documentation',
     'and the Game Studio wiki are in English.',
     '',
-    '## Atlassian',
+    '## Apps for Jira and Confluence Cloud',
     '',
-    `- [Atlassian services](${SITE.url}/atlassian/): ${atlassian.en.meta.description}`,
-    `- [All apps](${SITE.url}/apps/): the Marketplace apps, grouped by product.`,
+    `- [Home](${SITE.url}/): ${home.en.meta.description}`,
+    `- [All apps](${SITE.url}/apps/): every Marketplace app, grouped by product.`,
     ...apps.map(appLine),
+    '',
+    '## App documentation',
+    '',
     `- [Documentation](${SITE.url}${SECTIONS.apps.base}): setup, features, release notes and policies for every app.`,
     ...appDocs.map((g) => `  - [${g.label}](${SITE.url}${groupHref(g.app)}): ${g.blurb}`),
     '',
-    '## Custom development',
+    '## Guides',
     '',
+    'Guides and news for Jira and Confluence Cloud administrators. Each post answers its question in the',
+    'opening lines and links its sources.',
+    '',
+    ...section('Guides for Jira and Confluence admins', guides),
+    ...section('Atlassian news', news),
+    '## Also from Numeric Oasis',
+    '',
+    `- [Atlassian consulting](${SITE.url}/atlassian/): ${atlassian.en.meta.description}`,
     `- [Custom development](${SITE.url}/custom-development/): ${customDev.en.meta.description}`,
-    '',
-    '## Game Studio',
-    '',
     `- [Game Studio](${SITE.url}/studio/): ${studio.en.meta.description}`,
     `- [Game Studio wiki](${SITE.url}${SECTIONS.studio.base}): player guides for the studio's games.`,
     ...gameDocs.flatMap((g) => [
@@ -99,14 +117,7 @@ export async function GET() {
       ...g.pages.map((p) => `    - [${p.data.title}](${SITE.url}${docHref(p)}): ${p.data.description}`),
     ]),
     '',
-    '## Blog',
-    '',
-    'Guides and news for Atlassian Cloud administrators, notes on custom software, and articles on the',
-    'game industry. Each post answers its question in the opening lines and links its sources.',
-    '',
-    ...section('Atlassian news', news),
-    ...section('Atlassian guides', guides),
-    ...section('Custom development', custom),
+    ...section('Notes on custom development', custom),
     ...section('Game development and the game industry', games),
     '## Optional',
     '',

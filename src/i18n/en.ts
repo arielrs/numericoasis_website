@@ -3,21 +3,19 @@ import type { Shape } from './shape';
 export const en = {
   site: {
     description:
-      'Numeric Oasis builds custom software, migrates and runs Jira and Confluence, publishes Forge apps on the Atlassian Marketplace, and runs a game studio. Small, finished releases, since 2011.',
+      'Numeric Oasis makes Atlassian Marketplace apps for Jira and Confluence Cloud: budget tracking, a dependency map, a configuration audit log, page design and read sign-off. It also builds custom software, offers Atlassian consulting and runs a game studio.',
     location: 'Canoas, RS, Brazil',
     slogan: 'Small, finished software, on three fronts.',
   },
   nav: {
-    customDev: 'Custom Dev',
-    atlassian: 'Atlassian',
     apps: 'Apps',
-    docs: 'Wiki',
-    blog: 'Blog',
+    guides: 'Guides',
+    docs: 'Docs',
+    customDev: 'Custom development',
+    consulting: 'Atlassian consulting',
     studio: 'Game Studio',
     about: 'About',
-    contact: 'Contact',
-    tryApps: 'Try our apps',
-    talkToUs: 'Talk to us',
+    browseApps: 'Browse the apps',
     toggleMenu: 'Toggle menu',
     mainNavLabel: 'Main',
     homeAriaLabel: (siteName: string) => `${siteName} home`,

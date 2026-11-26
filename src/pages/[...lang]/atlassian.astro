@@ -1,14 +1,17 @@
 ---
 /**
- * Atlassian, the second of the three fronts, for all three locales.
+ * Atlassian consulting, for all three locales. The nav calls it that since
+ * 2026-11-25, when the home page became an apps landing and the apps got their
+ * own top-level nav item.
  *
  * Consulting, the Marketplace apps, and custom Forge apps that shrink the app
  * bill, in that order: a reader arriving here usually has a site to move or to
  * tidy, and the apps are the proof that we know the platform from the inside.
+ * The hero's second button goes to /apps/, the apps' own index, rather than to
+ * the grid below, so a reader who came for an app lands where the apps live.
  *
- * The app grid moved here from the home page on 2026-11-06, when the home page
- * stopped being an app vendor's and became the company's. It is the same grid,
- * grouped by host, generated from the collection.
+ * The app grid moved here from the home page on 2026-11-06. It is the same
+ * grid, grouped by host, generated from the collection.
  */
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
@@ -67,7 +70,7 @@ const arrow = '<path d="M5 12h14M13 5l7 7-7 7" />';
       <p class="mt-6 max-w-2xl text-lg leading-relaxed text-slate-600">{t.hero.lede}</p>
       <div class="mt-9 flex flex-wrap gap-3">
         <a href={withLocale(lang, '/contact/')} class="btn-cta">{t.hero.primary}</a>
-        <a href="#apps" class="btn-secondary">{t.hero.secondary}</a>
+        <a href={withLocale(lang, '/apps/')} class="btn-secondary">{t.hero.secondary}</a>
       </div>
     </div>
   </section>

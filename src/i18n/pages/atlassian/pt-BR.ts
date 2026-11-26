@@ -2,7 +2,7 @@ import type { AtlassianCopy } from './en';
 
 export const ptBR = {
   meta: {
-    crumb: 'Atlassian',
+    crumb: 'Consultoria Atlassian',
     title: 'Consultoria Atlassian e apps em Forge',
     metaDescription:
       'Migração de Jira e Confluence para o Cloud, administração e limpeza de licenças, nossos apps no Marketplace e apps em Forge sob medida que reduzem a conta.',
@@ -10,11 +10,11 @@ export const ptBR = {
       'A Numeric Oasis avalia e executa migrações de Jira e Confluence do Data Center para o Cloud, dimensiona reescritas do ScriptRunner, tira equipes de outras ferramentas, organiza a administração e as licenças, publica apps em Forge no Atlassian Marketplace e cria apps em Forge sob medida que substituem várias assinaturas.',
   },
   hero: {
-    eyebrow: 'Atlassian',
+    eyebrow: 'Consultoria Atlassian',
     headline: 'Jira e Confluence, da migração até o último custom field.',
     lede: 'Trabalhamos dentro das ferramentas da Atlassian há quinze anos, como administradores, consultores e parceiros do Marketplace. Levamos você para o Cloud, mantemos o site organizado depois que você chega lá, e criamos o app de que você precisa quando o Marketplace não tem, ou cobra caro demais pela parte que você usa.',
     primary: 'Fale com a gente',
-    secondary: 'Veja nossos apps',
+    secondary: 'Conheça nossos apps para Jira e Confluence',
   },
   consulting: {
     eyebrow: 'Consultoria',
@@ -42,7 +42,7 @@ export const ptBR = {
     eyebrow: 'Apps no Marketplace',
     headline: 'Nossos apps para Jira e Confluence Cloud.',
     lede: 'Feitos em Forge, então rodam dentro do seu próprio ambiente Atlassian e os seus dados ficam lá. Cada um faz um trabalho do começo ao fim, e cada um diz na própria página exatamente o que guarda.',
-    link: 'Todos os apps',
+    link: 'Todos os nossos apps para Jira e Confluence',
   },
   custom: {
     eyebrow: 'Apps em Forge sob medida',

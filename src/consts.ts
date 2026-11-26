@@ -8,16 +8,18 @@ export const SITE = {
    */
   shortName: 'Numeric Oasis',
   url: 'https://numericoasis.com',
-  tagline: 'Custom software, Atlassian consulting and Forge apps, and a game studio.',
+  tagline: 'Apps for Jira and Confluence Cloud, plus custom software, Atlassian consulting and a game studio.',
   /**
-   * The canonical English description, used for the Organization node and as a
-   * last-resort meta description. Localised copy lives in the dictionaries.
+   * The canonical English description, used by /llms.txt and as a last-resort
+   * meta description. The Organization and WebSite nodes take the localised
+   * `site.description` from the dictionaries instead.
    *
-   * Three fronts since 2026-11-06: custom development, Atlassian (consulting,
-   * Marketplace apps and custom Forge apps), and the Game Studio.
+   * Apps first since 2026-11-25: the site leads with the Marketplace apps, and
+   * custom development, Atlassian consulting and the Game Studio follow. From
+   * 2026-11-06 to then it led with those three fronts as equals.
    */
   description:
-    'Numeric Oasis builds custom software, migrates and runs Jira and Confluence, publishes Forge apps on the Atlassian Marketplace, and runs a game studio. From Canoas, Brazil, since 2011.',
+    'Numeric Oasis makes Atlassian Marketplace apps for Jira and Confluence Cloud: budget tracking, a dependency map, a configuration audit log, page design and read sign-off. It also builds custom software, offers Atlassian consulting and runs a game studio, from Canoas, Brazil, since 2011.',
   email: 'contact@numericoasis.com',
   supportUrl: 'https://numericoasis.atlassian.net/servicedesk/customer/portal/39',
   /**
@@ -32,24 +34,30 @@ export const SITE = {
 } as const;
 
 /**
- * The three fronts lead, in the order the home page presents them. Contact
- * left the list for the call to action, which now carries it: with three
- * fronts there is no single range to point the button at, and a conversation
- * is the next step for all of them.
+ * Apps first, then what helps an admin use them, then the rest of the company.
+ *
+ * Since 2026-11-25 the site leads with the Marketplace apps, so the nav does
+ * too: Apps, Guides (the blog, under the name of what it holds), Docs, and only
+ * then custom development, Atlassian consulting (the /atlassian/ page) and the
+ * Game Studio. Every item is top level, with no dropdown to hide one in.
  */
 export const NAV_LINKS = [
-  { href: '/custom-development/', labelKey: 'customDev' },
-  { href: '/atlassian/', labelKey: 'atlassian' },
-  // Localised like the rest of the marketing pages, unlike /documentation/,
-  // which exists in English only.
-  { href: '/studio/', labelKey: 'studio' },
-  { href: '/blog/', labelKey: 'blog' },
+  { href: '/apps/', labelKey: 'apps' },
+  { href: '/blog/', labelKey: 'guides' },
+  // Not locale prefixed: the documentation is published in English only.
   { href: '/documentation/', labelKey: 'docs', absolute: true },
+  { href: '/custom-development/', labelKey: 'customDev' },
+  { href: '/atlassian/', labelKey: 'consulting' },
+  { href: '/studio/', labelKey: 'studio' },
   { href: '/about/', labelKey: 'about' },
 ] as const;
 
-/** The header call to action. Pages selling one thing override it. See Nav.astro. */
-export const NAV_CTA = { href: '/contact/', labelKey: 'talkToUs' } as const;
+/**
+ * The header call to action. Pages selling one thing override it, and so does
+ * /apps/ itself, where this would be a link to the page already open. See
+ * Nav.astro.
+ */
+export const NAV_CTA = { href: '/apps/', labelKey: 'browseApps' } as const;
 
 export const PRODUCT_LABELS: Record<string, string> = {
   jira: 'Jira',
