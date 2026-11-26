@@ -2,9 +2,9 @@ import type { HomeCopy } from './en';
 
 export const es = {
   meta: {
-    title: 'Apps para Jira y Confluence: presupuestos',
+    title: 'Apps Jira y Confluence: presupuesto y auditoría',
     metaDescription:
-      'Apps para Jira y Confluence Cloud: presupuestado frente a real, mapa de dependencias, registro de auditoría, diseño de páginas y confirmación de lectura.',
+      'Apps para Jira y Confluence Cloud: presupuesto frente a real, mapa de dependencias, auditoría de configuración, diseño de páginas y firmas. Pruébalas gratis.',
     description:
       'Numeric Oasis crea apps del Atlassian Marketplace para Jira y Confluence Cloud, todas hechas en Atlassian Forge. OnBudget lleva el control de presupuesto y los informes de coste, presupuestado frente a real, a partir del trabajo que ya está en Jira. Astrolink dibuja un mapa de dependencias y un grafo de vínculos de los elementos de trabajo. Configuration Monitor mantiene un registro de auditoría de quién cambió los workflows, los permisos y los ajustes de un espacio de Jira. Atelier aporta diseño de páginas, colores de texto y de fondo y banners a Confluence. Expanded Macro Collection añade confirmación de lectura, firmas y estado de página. Numeric Oasis también crea software a medida, ofrece consultoría Atlassian y tiene un estudio de juegos.',
   },
@@ -60,11 +60,11 @@ export const es = {
     lead: {
       badge: 'Para Jira Cloud',
       headline: 'OnBudget: control de presupuesto e informes de coste para Jira',
-      body: 'Mira qué presupuestos van bien, cuáles están en riesgo y cuáles se pasaron, sin una hoja de cálculo. OnBudget convierte puntos de historia, registros de trabajo valorados con tarifarios, un campo numérico o el recuento de elementos de trabajo en coste, y muestra el presupuestado frente a real, la salud y el pronóstico de cada presupuesto en una sola pantalla.',
+      body: 'Mira qué presupuestos van bien, cuáles están en riesgo y cuáles se pasaron, sin una hoja de cálculo. OnBudget convierte puntos de historia, registros de trabajo valorados con tarifarios, un campo numérico o el recuento de elementos de trabajo en coste, y muestra lo presupuestado frente a lo real, la salud y el pronóstico de cada presupuesto en una sola pantalla.',
       points: [
         'Presupuestado frente a real, salud y pronóstico lineal en cada informe',
         'Cinco métodos de costeo, desde puntos de historia hasta registros de trabajo con tarifario',
-        'Un presupuesto en una de 18 monedas, con los umbrales de en riesgo y por encima del presupuesto que tú defines',
+        'Un presupuesto en una de 18 monedas, con los umbrales de riesgo y de sobrecoste que tú defines',
         'Nueve gadgets de panel, exportación a CSV y uso compartido con usuarios o grupos',
       ],
       page: 'Mira cómo OnBudget controla los presupuestos en Jira',

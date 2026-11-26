@@ -2,9 +2,9 @@ import type { HomeCopy } from './en';
 
 export const ptBR = {
   meta: {
-    title: 'Apps para Jira e Confluence: orçamentos',
+    title: 'Apps Jira e Confluence: orçamento e auditoria',
     metaDescription:
-      'Apps para Jira e Confluence Cloud: orçado versus realizado, mapa de dependências, log de auditoria de configuração, design de páginas e aceite de leitura.',
+      'Apps para Jira e Confluence Cloud: orçado versus realizado, mapa de dependências, auditoria de configuração, design de páginas e aceite. Teste grátis.',
     description:
       'A Numeric Oasis cria apps do Atlassian Marketplace para Jira e Confluence Cloud, todos feitos no Atlassian Forge. O OnBudget faz o controle de orçamento e os relatórios de custo, orçado versus realizado, a partir do trabalho que já está no Jira. O Astrolink desenha um mapa de dependências e um grafo de vínculos dos itens de trabalho. O Configuration Monitor mantém um log de auditoria de quem mudou os workflows, as permissões e as configurações de um espaço do Jira. O Atelier traz design de páginas, cores de texto e de fundo e banners para o Confluence. O Expanded Macro Collection acrescenta confirmação de leitura, aceite e status de página. A Numeric Oasis também cria software sob medida, faz consultoria Atlassian e mantém um estúdio de jogos.',
   },
@@ -64,7 +64,7 @@ export const ptBR = {
       points: [
         'Orçado versus realizado, saúde e previsão linear em cada relatório',
         'Cinco métodos de custeio, de pontos de história a registros de trabalho com tabela de valores',
-        'Orçamento em uma de 18 moedas, com os limites de em risco e acima do orçamento que você define',
+        'Orçamento em uma de 18 moedas, com os limites de risco e de estouro que você define',
         'Nove gadgets de painel, exportação em CSV e compartilhamento com usuários ou grupos',
       ],
       page: 'Veja como o OnBudget controla orçamentos no Jira',
